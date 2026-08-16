@@ -52,10 +52,12 @@ def solar_absorption_opaque(
     df: pd.DataFrame,
     ground_reflectance: float = 0.2,
 ) -> np.ndarray:
-    """Hourly solar radiation absorbed [W] by an opaque element.
+    """Hourly solar heat gain [W] reaching the interior through an opaque element.
 
-    Only the absorbed part is returned; the dynamic storage/delay inside the
-    construction is handled later by the thermal-balance model.
+    Implements the ISO 52016-1 reduction concept: only the fraction
+    ``solar_reduction_factor`` of absorbed radiation is treated as an
+    instantaneous internal heat gain; the rest is stored/delayed by the
+    construction mass.
 
     Parameters
     ----------
@@ -68,7 +70,7 @@ def solar_absorption_opaque(
     Returns
     -------
     np.ndarray
-        Absorbed solar power [W].
+        Effective solar heat gain at the internal air node [W].
     """
     I_surf = radiation_on_surface(
         df,
@@ -76,7 +78,12 @@ def solar_absorption_opaque(
         surface_azimuth=element.orientation_azimuth,
         ground_reflectance=ground_reflectance,
     )
-    return element.area * element.solar_absorptance * np.asarray(I_surf)
+    return (
+        element.area
+        * element.solar_absorptance
+        * element.solar_reduction_factor
+        * np.asarray(I_surf)
+    )
 
 
 def total_solar_gains(

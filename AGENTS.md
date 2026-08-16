@@ -9,10 +9,26 @@ Budowa aplikacji webowej do obliczeń charakterystyki energetycznej budynków zg
 - `backend/app/engine` – silnik obliczeniowy (Python, Pydantic, NumPy, Pandas).
 - `backend/app/api` – endpointy FastAPI.
 - `backend/app/schemas` – modele Pydantic dla API.
-- `backend/data/tmy` – predefiniowane dane klimatyczne TMY (EPW/CSV).
+- `backend/data/tmy` – predefiniowane dane klimatyczne TMY (EPW).
 - `frontend/app` – aplikacja Next.js (App Router).
 - `frontend/components` – komponenty React (preferowane shadcn/ui).
 - `frontend/lib` – utils, typy TypeScript, API client.
+
+## Uruchamianie lokalne
+
+```bash
+# Terminal 1: backend
+cd backend
+source .venv/bin/activate
+PYTHONPATH=$(pwd) uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+# Terminal 2: frontend
+cd frontend
+pnpm dev --port 3001   # port 3000 jest często zajęty
+```
+
+Backend udostępnia API pod `http://localhost:8000` (np. `/api/calculate/`, `/api/climate/stations`).
+Frontend domyślnie startuje na `http://localhost:3001`.
 
 ## Konwencje
 

@@ -93,10 +93,9 @@ def _aggregate_zone_results(
         project.ventilation, zone, zone.setpoint_heating, df["T_e"]
     )
 
-    # Solar gains
+    # Solar gains (transparent + reduced opaque absorption per ISO 52016-1)
     q_sol_trans, q_sol_abs = total_solar_gains(transparent, opaque, df)
-    # Simplified: treat 50% of absorbed opaque solar as delayed -> use 50% now
-    q_solar = q_sol_trans + 0.5 * q_sol_abs
+    q_solar = q_sol_trans + q_sol_abs
 
     # Internal gains
     q_int = total_internal_gains(

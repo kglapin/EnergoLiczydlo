@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
-import { useForm, useFieldArray } from "react-hook-form"
+import { useForm, useFieldArray, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
@@ -17,7 +17,14 @@ import {
 } from "@/components/ui/accordion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { calculate } from "@/lib/api"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { calculate, fetchStations } from "@/lib/api"
 import { useAppStore } from "@/lib/store"
 
 const zoneSchema = z.object({
@@ -40,6 +47,8 @@ const opaqueSchema = z.object({
   inclination: z.coerce.number(),
   area: z.coerce.number().positive(),
   u_value: z.coerce.number().positive(),
+  solar_absorptance: z.coerce.number().min(0).max(1).optional(),
+  solar_reduction_factor: z.coerce.number().min(0).max(1).optional(),
   adjacent_space_type: z.string().optional(),
 })
 
@@ -53,6 +62,8 @@ const transparentSchema = z.object({
   area: z.coerce.number().positive(),
   u_value: z.coerce.number().positive(),
   g_value: z.coerce.number().min(0).max(1),
+  frame_factor: z.coerce.number().min(0).max(1).optional(),
+  shading_factor: z.coerce.number().min(0).max(1).optional(),
 })
 
 const formSchema = z.object({
@@ -115,6 +126,8 @@ const defaultValues: FormValues = {
       inclination: 90,
       area: 40,
       u_value: 0.25,
+      solar_absorptance: 0.6,
+      solar_reduction_factor: 0.08,
       adjacent_space_type: "outdoor",
     },
     {
@@ -126,6 +139,8 @@ const defaultValues: FormValues = {
       inclination: 90,
       area: 40,
       u_value: 0.25,
+      solar_absorptance: 0.6,
+      solar_reduction_factor: 0.08,
       adjacent_space_type: "outdoor",
     },
     {
@@ -137,6 +152,8 @@ const defaultValues: FormValues = {
       inclination: 0,
       area: 90,
       u_value: 0.18,
+      solar_absorptance: 0.6,
+      solar_reduction_factor: 0.08,
       adjacent_space_type: "outdoor",
     },
     {
@@ -148,6 +165,8 @@ const defaultValues: FormValues = {
       inclination: 180,
       area: 90,
       u_value: 0.25,
+      solar_absorptance: 0.6,
+      solar_reduction_factor: 0.08,
       adjacent_space_type: "ground",
     },
   ],
@@ -162,6 +181,8 @@ const defaultValues: FormValues = {
       area: 10,
       u_value: 1.0,
       g_value: 0.6,
+      shading_factor: 0.7,
+      frame_factor: 0.2,
     },
   ],
   ventilation: {
@@ -199,6 +220,44 @@ export default function BuildingFormPage() {
     resolver: zodResolver(formSchema),
     defaultValues,
   })
+
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [stations, setStations] = useState<{ id: string; name: string }[]>([])
+  const [stationLoading, setStationLoading] = useState(true)
+
+  useEffect(() => {
+    fetchStations()
+      .then(setStations)
+      .catch(() => setError("Nie udało się pobrać stacji klimatycznych"))
+      .finally(() => setStationLoading(false))
+  }, [])
+
+  function handleExport() {
+    const values = form.getValues()
+    const blob = new Blob([JSON.stringify(values, null, 2)], { type: "application/json" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `${values.project_name || "project"}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  function handleImport(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      try {
+        const parsed = JSON.parse(e.target?.result as string)
+        form.reset(parsed)
+      } catch (err) {
+        setError("Nieprawidłowy plik JSON")
+      }
+    }
+    reader.readAsText(file)
+    event.target.value = ""
+  }
 
   const zonesFieldArray = useFieldArray({ control: form.control, name: "thermal_zones" })
   const opaqueFieldArray = useFieldArray({ control: form.control, name: "opaque_building_elements" })
@@ -244,7 +303,24 @@ export default function BuildingFormPage() {
 
   return (
     <main className="container mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold mb-6">Nowa analiza energetyczna</h1>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+        <h1 className="text-3xl font-bold">Nowa analiza energetyczna</h1>
+        <div className="flex gap-2">
+          <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()}>
+            Wczytaj JSON
+          </Button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="application/json"
+            className="hidden"
+            onChange={handleImport}
+          />
+          <Button type="button" variant="outline" onClick={handleExport}>
+            Zapisz JSON
+          </Button>
+        </div>
+      </div>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Accordion type="multiple" defaultValue={["general"]} className="space-y-4">
           <AccordionItem value="general">
@@ -285,7 +361,28 @@ export default function BuildingFormPage() {
                 </div>
                 <div>
                   <Label htmlFor="climate_station_id">Stacja klimatyczna</Label>
-                  <Input id="climate_station_id" {...form.register("climate_station_id")} className={inputClass} />
+                  <Controller
+                    name="climate_station_id"
+                    control={form.control}
+                    render={({ field }) => (
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                        disabled={stationLoading}
+                      >
+                        <SelectTrigger className={inputClass}>
+                          <SelectValue placeholder="Wybierz stację" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {stations.map((s) => (
+                            <SelectItem key={s.id} value={s.id}>
+                              {s.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
                 </div>
               </div>
             </AccordionContent>
@@ -331,6 +428,8 @@ export default function BuildingFormPage() {
                       <Input type="number" step="0.1" placeholder="Nachylenie" {...form.register(`opaque_building_elements.${index}.inclination`)} />
                       <Input type="number" step="0.1" placeholder="Powierzchnia (m²)" {...form.register(`opaque_building_elements.${index}.area`)} />
                       <Input type="number" step="0.01" placeholder="U (W/m²K)" {...form.register(`opaque_building_elements.${index}.u_value`)} />
+                      <Input type="number" step="0.01" placeholder="Absorpcja słońca" {...form.register(`opaque_building_elements.${index}.solar_absorptance`)} />
+                      <Input type="number" step="0.01" placeholder="Redukcja zysków" {...form.register(`opaque_building_elements.${index}.solar_reduction_factor`)} />
                       <Input placeholder="Przestrzeń sąsiednia" {...form.register(`opaque_building_elements.${index}.adjacent_space_type`)} />
                     </CardContent>
                   </Card>
@@ -362,6 +461,8 @@ export default function BuildingFormPage() {
                       <Input type="number" step="0.1" placeholder="Powierzchnia (m²)" {...form.register(`transparent_building_elements.${index}.area`)} />
                       <Input type="number" step="0.01" placeholder="U (W/m²K)" {...form.register(`transparent_building_elements.${index}.u_value`)} />
                       <Input type="number" step="0.01" placeholder="g" {...form.register(`transparent_building_elements.${index}.g_value`)} />
+                      <Input type="number" step="0.01" placeholder="Udział ramy" {...form.register(`transparent_building_elements.${index}.frame_factor`)} />
+                      <Input type="number" step="0.01" placeholder="Współczynnik ekranowania" {...form.register(`transparent_building_elements.${index}.shading_factor`)} />
                     </CardContent>
                   </Card>
                 ))}

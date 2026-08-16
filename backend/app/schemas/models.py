@@ -109,6 +109,9 @@ class OpaqueElement(BaseModel):
     u_value: float = Field(..., gt=0.0)
     solar_absorptance: float = Field(0.6, ge=0.0, le=1.0)
     emissivity: float = Field(0.9, ge=0.0, le=1.0)
+    # Fraction of absorbed solar radiation that reaches the internal node
+    # (ISO 52016-1 reduction factor, typically 0.05-0.15 for heavy constructions)
+    solar_reduction_factor: float = Field(0.08, ge=0.0, le=1.0)
     adjacent_space_type: AdjacentSpaceType = AdjacentSpaceType.OUTDOOR
     adjacent_temperature: Optional[float] = None
 
