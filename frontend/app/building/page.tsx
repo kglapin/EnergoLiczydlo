@@ -9,6 +9,7 @@ import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { FormField } from "@/components/form-field"
+import { FormSelect } from "@/components/form-select"
 import {
   Accordion,
   AccordionContent,
@@ -338,9 +339,20 @@ export default function BuildingFormPage() {
                 <FormField label="Nazwa budynku" tooltip="Pełna nazwa obiektu, np. „Budynek biurowy ABC”.">
                   <Input id="building_name" {...form.register("general.building_name")} className={inputClass} />
                 </FormField>
-                <FormField label="Typ budynku" tooltip="Kategoria budynku używana do profilów wewnętrznych: residential, office, commercial, public.">
-                  <Input id="building_type" {...form.register("general.building_type")} className={inputClass} />
-                </FormField>
+                <FormSelect
+                  name="general.building_type"
+                  control={form.control}
+                  label="Typ budynku"
+                  tooltip="Kategoria budynku używana do profilów wewnętrznych i OZE."
+                  placeholder="Wybierz typ budynku"
+                  className={inputClass}
+                  options={[
+                    { value: "residential", label: "Mieszkalny" },
+                    { value: "office", label: "Biurowy" },
+                    { value: "commercial", label: "Handlowo-usługowy" },
+                    { value: "public", label: "Użyteczności publicznej" },
+                  ]}
+                />
                 <FormField label="Rok budowy" tooltip="Rok ukończenia budowy – wpływa na domyślne założenia normowe.">
                   <Input id="construction_year" type="number" {...form.register("general.construction_year")} className={inputClass} />
                 </FormField>
@@ -402,8 +414,23 @@ export default function BuildingFormPage() {
                       <FormField label="Nazwa" tooltip="Czytelna nazwa strefy, np. „Parter” lub „Mieszkanie 1”.">
                         <Input placeholder="np. Parter" {...form.register(`thermal_zones.${index}.name`)} />
                       </FormField>
-                      <FormField label="Typ" tooltip="Typ strefy: heated (ogrzewana), cooled (chłodzona), unconditioned (nieogrzewana).">
-                        <Input placeholder="heated" {...form.register(`thermal_zones.${index}.zone_type`)} />
+                      <FormField label="Typ strefy" tooltip="Rodzaj strefy: ogrzewana, chłodzona lub nieogrzewana.">
+                        <Controller
+                          name={`thermal_zones.${index}.zone_type` as any}
+                          control={form.control}
+                          render={({ field }) => (
+                            <Select value={field.value} onValueChange={field.onChange}>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Wybierz typ" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="heated">Ogrzewana</SelectItem>
+                                <SelectItem value="cooled">Chłodzona</SelectItem>
+                                <SelectItem value="unconditioned">Nieogrzewana</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          )}
+                        />
                       </FormField>
                       <FormField label="Powierzchnia (m²)" tooltip="Powierzchnia podłogi strefy, używana do podziału strat ciepła i obciążeń.">
                         <Input type="number" step="0.1" placeholder="np. 150" {...form.register(`thermal_zones.${index}.floor_area`)} />
@@ -452,8 +479,25 @@ export default function BuildingFormPage() {
                       <FormField label="ID strefy" tooltip="Strefa, do której ta przegroda należy (musi pasować do ID w sekcji stref).">
                         <Input placeholder="np. z1" {...form.register(`opaque_building_elements.${index}.zone_id`)} />
                       </FormField>
-                      <FormField label="Typ" tooltip="Rodzaj przegrody: external_wall, roof, ground_floor, floor_ceiling, party_wall.">
-                        <Input placeholder="np. external_wall" {...form.register(`opaque_building_elements.${index}.element_type`)} />
+                      <FormField label="Typ przegrody" tooltip="Rodzaj przegrody – ściana, dach, strop, podłoga na gruncie lub ściana między lokalami.">
+                        <Controller
+                          name={`opaque_building_elements.${index}.element_type` as any}
+                          control={form.control}
+                          render={({ field }) => (
+                            <Select value={field.value} onValueChange={field.onChange}>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Wybierz typ" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="external_wall">Ściana zewnętrzna</SelectItem>
+                                <SelectItem value="roof">Dach / stropodach</SelectItem>
+                                <SelectItem value="ground_floor">Podłoga na gruncie</SelectItem>
+                                <SelectItem value="floor_ceiling">Strop nad piwnicą / poddaszem</SelectItem>
+                                <SelectItem value="party_wall">Ściana między lokalami</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          )}
+                        />
                       </FormField>
                       <FormField label="Azymut (°)" tooltip="Kierunek ściany: 0 = północ, 90 = wschód, 180 = południe, 270 = zachód. Dla poziomych (dach, podłoga) wpisz 0.">
                         <Input type="number" step="0.1" placeholder="0-360" {...form.register(`opaque_building_elements.${index}.orientation_azimuth`)} />
@@ -473,8 +517,24 @@ export default function BuildingFormPage() {
                       <FormField label="Redukcja zysków (F_ol)" tooltip="Udział promieniowania słonecznego pochłanianego przez płaszcz zewnętrzny. Standardowo ok. 0.08.">
                         <Input type="number" step="0.01" placeholder="np. 0.08" {...form.register(`opaque_building_elements.${index}.solar_reduction_factor`)} />
                       </FormField>
-                      <FormField label="Przestrzeń sąsiednia" tooltip="Co jest po drugiej stronie: outdoor (zewnętrze), ground (grunt), unheated (nieogrzewane pomieszczenie), adjacent (inna ogrzewana strefa).">
-                        <Input placeholder="outdoor" {...form.register(`opaque_building_elements.${index}.adjacent_space_type`)} />
+                      <FormField label="Przestrzeń sąsiednia" tooltip="Co znajduje się po drugiej stronie przegrody. Ma wpływ na temperaturę i straty ciepła.">
+                        <Controller
+                          name={`opaque_building_elements.${index}.adjacent_space_type` as any}
+                          control={form.control}
+                          render={({ field }) => (
+                            <Select value={field.value} onValueChange={field.onChange}>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Wybierz przestrzeń" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="outdoor">Powietrze zewnętrzne</SelectItem>
+                                <SelectItem value="ground">Grunt</SelectItem>
+                                <SelectItem value="unheated">Nieogrzewane pomieszczenie</SelectItem>
+                                <SelectItem value="adjacent">Inna ogrzewana strefa</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          )}
+                        />
                       </FormField>
                     </CardContent>
                   </Card>
@@ -511,8 +571,23 @@ export default function BuildingFormPage() {
                       <FormField label="ID strefy" tooltip="Strefa, do której należy okno (musi pasować do ID strefy).">
                         <Input placeholder="np. z1" {...form.register(`transparent_building_elements.${index}.zone_id`)} />
                       </FormField>
-                      <FormField label="Typ" tooltip="Rodzaj elementu: window, door, skylight.">
-                        <Input placeholder="np. window" {...form.register(`transparent_building_elements.${index}.element_type`)} />
+                      <FormField label="Typ transparentu" tooltip="Rodzaj elementu przeszklonego: okno, drzwi przeszklone, świetlik.">
+                        <Controller
+                          name={`transparent_building_elements.${index}.element_type` as any}
+                          control={form.control}
+                          render={({ field }) => (
+                            <Select value={field.value} onValueChange={field.onChange}>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Wybierz typ" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="window">Okno</SelectItem>
+                                <SelectItem value="door">Drzwi przeszklone</SelectItem>
+                                <SelectItem value="skylight">Świetlik</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          )}
+                        />
                       </FormField>
                       <FormField label="Azymut (°)" tooltip="Kierunek okna: 0 = północ, 90 = wschód, 180 = południe, 270 = zachód.">
                         <Input type="number" step="0.1" placeholder="0-360" {...form.register(`transparent_building_elements.${index}.orientation_azimuth`)} />
@@ -558,9 +633,19 @@ export default function BuildingFormPage() {
                 zmian powietrza.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormField label="Typ wentylacji" tooltip="Typ instalacji: natural (gravitacyjna), mechanical (mechaniczna z wentylatorami), mechanical_with_recovery (z rekuperacją).">
-                  <Input placeholder="np. natural" {...form.register("ventilation.ventilation_type")} className={inputClass} />
-                </FormField>
+                <FormSelect
+                  name="ventilation.ventilation_type"
+                  control={form.control}
+                  label="Typ wentylacji"
+                  tooltip="Rodzaj instalacji wentylacyjnej."
+                  placeholder="Wybierz typ wentylacji"
+                  className={inputClass}
+                  options={[
+                    { value: "natural", label: "Grawitacyjna" },
+                    { value: "mechanical", label: "Mechaniczna" },
+                    { value: "mechanical_with_recovery", label: "Mechaniczna z rekuperacją" },
+                  ]}
+                />
                 <FormField label="Strumień powietrza (m³/h)" tooltip="Roczny lub zimowy strumień powietrza wentylacyjnego. Np. 120 m³/h dla niedużego mieszkania.">
                   <Input type="number" step="0.1" placeholder="np. 120" {...form.register("ventilation.airflow_rate")} className={inputClass} />
                 </FormField>
