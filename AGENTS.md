@@ -16,11 +16,19 @@ Budowa aplikacji webowej do obliczeń charakterystyki energetycznej budynków zg
 
 ## Uruchamianie lokalne
 
+Najszybszy sposób – jednoczesne uruchomienie backendu i frontendu:
+
+```bash
+# Z głównego katalogu projektu (wymaga zainstalowanych zależności backendu i frontendu)
+pnpm dev
+```
+
+Osobno (np. do debugowania):
+
 ```bash
 # Terminal 1: backend
 cd backend
-source .venv/bin/activate
-PYTHONPATH=$(pwd) uvicorn app.main:app --host 0.0.0.0 --port 8000
+PYTHONPATH=$(pwd) .venv/bin/python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 
 # Terminal 2: frontend
 cd frontend
@@ -29,6 +37,16 @@ pnpm dev --port 3001   # port 3000 jest często zajęty
 
 Backend udostępnia API pod `http://localhost:8000` (np. `/api/calculate/`, `/api/climate/stations`).
 Frontend domyślnie startuje na `http://localhost:3001`.
+
+Weryfikacja po zmianach:
+
+```bash
+# Testy backendu + typecheck frontendu
+pnpm test
+
+# Build frontendu
+pnpm build
+```
 
 ## Konwencje
 

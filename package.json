@@ -1,0 +1,17 @@
+{
+  "name": "energoliczydlo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"pnpm dev:backend\" \"pnpm dev:frontend\"",
+    "dev:backend": "cd backend && PYTHONPATH=$(pwd) .venv/bin/python -m uvicorn app.main:app --host 0.0.0.0 --port 8000",
+    "dev:frontend": "cd frontend && pnpm dev --port 3001",
+    "setup": "pnpm install && cd backend && python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt && cd ../frontend && pnpm install",
+    "test": "cd backend && .venv/bin/python -m pytest tests -q && cd ../frontend && pnpm typecheck",
+    "build": "cd frontend && pnpm build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "packageManager": "pnpm@10.14.0+sha512.ad27a79641b49c3e481a16a805baa71817a04bbe06a38d17e60e2eaee83f6a146c6a688125f5792e48dd5ba30e7da52a5cda4c3992b9ccf333f9ce223af84748"
+}
