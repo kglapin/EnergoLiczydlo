@@ -1,8 +1,13 @@
 import numpy as np
 import pytest
 
-from app.engine.climate import load_epw, make_synthetic_year, radiation_on_surface
-from app.engine.climate import AIR_DENSITY_KG_M3, AIR_SPECIFIC_HEAT_J_KGK
+from app.engine.climate import (
+    AIR_DENSITY_KG_M3,
+    AIR_SPECIFIC_HEAT_J_KGK,
+    load_epw,
+    make_synthetic_year,
+    radiation_on_surface,
+)
 
 
 def test_load_epw_returns_8760_hours(shared_data_dir):
@@ -36,4 +41,4 @@ def test_radiation_horizontal_surface_matches_ghi():
 
 def test_air_specific_heat_constants():
     # Sanity check: volumetric heat capacity ~ 1206 J/(m3*K)
-    assert AIR_DENSITY_KG_M3 * AIR_SPECIFIC_HEAT_J_KGK == pytest.approx(1206.0, abs=1.0)
+    assert pytest.approx(1206.0, abs=1.0) == AIR_DENSITY_KG_M3 * AIR_SPECIFIC_HEAT_J_KGK

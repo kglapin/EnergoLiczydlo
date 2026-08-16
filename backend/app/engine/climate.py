@@ -12,7 +12,6 @@ import numpy as np
 import pandas as pd
 import pvlib
 
-
 # Approximate physical constants
 AIR_DENSITY_KG_M3 = 1.2  # kg/m3
 AIR_SPECIFIC_HEAT_J_KGK = 1005  # J/(kg*K)
@@ -31,7 +30,7 @@ def load_epw(path: str | Path) -> pd.DataFrame:
     df, meta = pvlib.iotools.read_epw(str(path), coerce_year=2023)
     # Ensure a clean hourly index (pvlib returns a DatetimeIndex)
     df.index = pd.date_range(
-        start=f"2023-01-01 00:00:00", periods=len(df), freq="h", tz=df.index.tz
+        start="2023-01-01 00:00:00", periods=len(df), freq="h", tz=df.index.tz
     )
 
     # Standard EPW column names used by pvlib:

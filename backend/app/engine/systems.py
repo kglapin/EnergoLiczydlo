@@ -106,8 +106,10 @@ def dhw_energy_demand(
 
 
 def final_energy_dhw(
-    Q_demand_wh: float, efficiency: float, standby_loss_factor: float = 1.0
-) -> float:
+    Q_demand_wh: float | np.ndarray,
+    efficiency: float,
+    standby_loss_factor: float = 1.0,
+) -> float | np.ndarray:
     """Final energy for DHW [Wh] including storage and distribution losses."""
     if efficiency <= 0:
         raise ValueError("Efficiency must be positive")

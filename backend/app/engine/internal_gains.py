@@ -53,10 +53,7 @@ def evaluate_schedule(schedule: Schedule, datetimes: pd.DatetimeIndex) -> np.nda
         profile = np.empty(HOURS_IN_YEAR, dtype=float)
         for i, dt in enumerate(datetimes):
             dow = dt.weekday()
-            if dow < 5:
-                arr = schedule.weekday
-            else:
-                arr = schedule.sunday or schedule.weekday
+            arr = schedule.weekday if dow < 5 else schedule.sunday or schedule.weekday
             if arr is None:
                 raise ValueError("WEEKDAY_WEEKEND schedule requires weekday profile")
             profile[i] = arr[dt.hour]
@@ -92,18 +89,19 @@ def internal_gains(
     profile = evaluate_schedule(source.schedule, datetimes)
     # For occupancy the power_density is interpreted as W per person.
     total_power = source.power_density * occupancy_density * floor_area
-    return total_power * profile
+    return np.asarray(total_power * profile, dtype=float)
 
 
 def total_internal_gains(
     occupancy_density: float,
     floor_area: float,
-    gains: "InternalGains",  # noqa: F821
+    gains: InternalGains,  # noqa: F821
     datetimes: pd.DatetimeIndex,
 ) -> np.ndarray:
     """Sum hourly internal gains [W] from occupancy, lighting and equipment."""
-    return (
+    return np.asarray(
         internal_gains(occupancy_density, floor_area, gains.occupancy, datetimes)
         + internal_gains(occupancy_density, floor_area, gains.lighting, datetimes)
-        + internal_gains(occupancy_density, floor_area, gains.equipment, datetimes)
+        + internal_gains(occupancy_density, floor_area, gains.equipment, datetimes),
+        dtype=float,
     )

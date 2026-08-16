@@ -12,7 +12,6 @@ import pandas as pd
 from app.engine.climate import AIR_DENSITY_KG_M3, AIR_SPECIFIC_HEAT_J_KGK
 from app.schemas.models import ThermalZone, Ventilation
 
-
 CP_AIR_VOLUMETRIC = AIR_DENSITY_KG_M3 * AIR_SPECIFIC_HEAT_J_KGK  # J/(m3*K) ~= 1206
 
 
@@ -54,5 +53,5 @@ def ventilation_heat_loss(
     H_ve = ventilation_heat_transfer_coefficient(ventilation, zone)
     dT = np.asarray(T_int) - np.asarray(T_e)
     if schedule_profile is not None:
-        return schedule_profile * H_ve * dT
-    return H_ve * dT
+        return np.asarray(schedule_profile * H_ve * dT, dtype=float)
+    return np.asarray(H_ve * dT, dtype=float)

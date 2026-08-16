@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
 from fastapi import APIRouter, HTTPException
 
@@ -23,7 +24,7 @@ def list_stations() -> list[dict[str, str]]:
 
 
 @router.get("/stations/{station_id}/summary")
-def station_summary(station_id: str) -> dict:
+def station_summary(station_id: str) -> dict[str, Any]:
     """Return a quick annual summary for a station."""
     path = DATA_DIR / f"{station_id}.epw"
     if not path.exists():

@@ -98,4 +98,4 @@ def test_total_transmission_coefficient():
         ]
     )
     H = total_transmission_coefficient(opaque, [], bridges)
-    assert H == pytest.approx(10.0 * 0.2 + 0.05 * 10.0)
+    assert pytest.approx(10.0 * 0.2 + 0.05 * 10.0) == H

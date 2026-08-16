@@ -34,10 +34,11 @@ from app.schemas.models import (
     CalculationResult,
     ComplianceCheck,
     MonthlyResult,
+    OpaqueElement,
     ThermalZone,
+    TransparentElement,
     VentilationType,
 )
-
 
 DATA_DIR = Path(os.environ.get("TMY_DATA_PATH", Path(__file__).parents[3] / "data" / "tmy"))
 
@@ -73,15 +74,19 @@ def _aggregate_zone_results(
     project: BuildingProject,
 ) -> dict[str, Any]:
     # Filter elements for this zone
-    opaque = [el for el in project.opaque_building_elements if el.zone_id == zone.id]
-    transparent = [el for el in project.transparent_building_elements if el.zone_id == zone.id]
+    opaque: list[OpaqueElement] = [
+        el for el in project.opaque_building_elements if el.zone_id == zone.id
+    ]
+    transparent: list[TransparentElement] = [
+        el for el in project.transparent_building_elements if el.zone_id == zone.id
+    ]
 
     # Transmission losses per element
     q_tr_elements = np.zeros(len(df), dtype=float)
-    for el in opaque:
-        q_tr_elements += compute_opaque_heat_loss(el, zone.setpoint_heating, df["T_e"])
-    for el in transparent:
-        q_tr_elements += compute_transparent_heat_loss(el, zone.setpoint_heating, df["T_e"])
+    for o_el in opaque:
+        q_tr_elements += compute_opaque_heat_loss(o_el, zone.setpoint_heating, df["T_e"])
+    for t_el in transparent:
+        q_tr_elements += compute_transparent_heat_loss(t_el, zone.setpoint_heating, df["T_e"])
     q_bridges = compute_thermal_bridge_loss(
         project.thermal_bridges, zone, zone.setpoint_heating, df["T_e"]
     )
@@ -109,7 +114,6 @@ def _aggregate_zone_results(
     H_tr = total_transmission_coefficient(
         opaque, transparent, project.thermal_bridges
     )
-    H_total = H_tr + H_ve
 
     # Dynamic thermal-balance solver
     C_m = thermal_capacity(zone.floor_area)
@@ -169,7 +173,6 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
     heating_sys = project.systems.get("heating", {})
     sys_type = heating_sys.get("system_type", "heat_pump_air")
     fuel = heating_sys.get("fuel_or_carrier", "electricity")
-    nominal_power = heating_sys.get("nominal_power", 10.0)
     distribution_loss = heating_sys.get("distribution_loss_factor", 0.95)
 
     if sys_type.startswith("heat_pump"):
@@ -194,15 +197,19 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
 
     # DHW
     # Use the first heated zone for occupancy/floor-area reference
-    heated_zones = [z for z in project.thermal_zones if z.zone_type.value in ("heated", "heated_and_cooled")]
+    allowed_zone_types = {"heated", "heated_and_cooled"}
+    heated_zones = [
+        z for z in project.thermal_zones if z.zone_type in allowed_zone_types
+    ]
     if heated_zones:
         ref_zone = heated_zones[0]
+        dhw_system = project.systems.get("dhw", {})
         Q_dhw_year = dhw_energy_demand(
-            daily_demand_per_person=project.systems.get("dhw", {}).get("daily_demand_per_person", 50.0),
+            daily_demand_per_person=dhw_system.get("daily_demand_per_person", 50.0),
             occupancy_density=ref_zone.occupancy_density,
             floor_area=ref_zone.floor_area,
-            target_temperature=project.systems.get("dhw", {}).get("target_temperature", 55.0),
-            cold_water_temperature=project.systems.get("dhw", {}).get("cold_water_temperature", 10.0),
+            target_temperature=dhw_system.get("target_temperature", 55.0),
+            cold_water_temperature=dhw_system.get("cold_water_temperature", 10.0),
         )
         # Distribute DHW demand over hours proportionally to occupancy schedule
         dhw_schedule = total_internal_gains(
@@ -226,13 +233,16 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
         E_k_vent = np.zeros(len(df), dtype=float)
 
     # Aggregate final energy by carrier (simple mapping)
+    dhw_system_type = dhw_system.get("system_type", "")
     final_energy_by_carrier: dict[str, float] = {}
     final_energy_by_carrier[fuel] = float(np.sum(E_k_H)) + float(np.sum(E_k_C))
     final_energy_by_carrier["electricity"] = float(np.sum(E_k_vent)) + (
-        float(np.sum(E_k_DHW)) if project.systems.get("dhw", {}).get("system_type", "").startswith("electric") else 0.0
+        float(np.sum(E_k_DHW)) if dhw_system_type.startswith("electric") else 0.0
     )
     # Ensure no double counting if fuel is electricity for heating
-    final_energy_by_carrier["electricity"] = max(final_energy_by_carrier.get("electricity", 0.0), 0.0)
+    final_energy_by_carrier["electricity"] = max(
+        final_energy_by_carrier.get("electricity", 0.0), 0.0
+    )
 
     # Useful energy Eu = Q_H + Q_C + DHW useful energy [Wh/year]
     E_u_total_wh = float(np.sum(total_Q_H)) + float(np.sum(total_Q_C)) + float(np.sum(Q_dhw_hourly))

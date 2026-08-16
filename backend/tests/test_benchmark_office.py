@@ -129,11 +129,7 @@ def office_project() -> BuildingProject:
             heat_recovery_efficiency=0.6,
             mechanical_fan_power=0.5 * floor_area,  # 0.5 W/m2
         ),
-        internal_gains=InternalGains(
-            occupancy=InternalGains.model_fields["occupancy"].default,
-            lighting=InternalGains.model_fields["lighting"].default,
-            equipment=InternalGains.model_fields["equipment"].default,
-        ),
+        internal_gains=InternalGains(),
         systems={
             "heating": {
                 "system_type": "heat_pump_air",

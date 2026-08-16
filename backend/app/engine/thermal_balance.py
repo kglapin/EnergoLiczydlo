@@ -9,8 +9,6 @@ extended to a more detailed multi-node representation as the project matures.
 from __future__ import annotations
 
 import numpy as np
-import pandas as pd
-
 
 # Wh/K per m2 of conditioned floor area; typical ranges:
 # light-weight construction ~ 30, medium ~ 80, heavy ~ 160

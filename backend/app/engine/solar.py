@@ -94,12 +94,12 @@ def total_solar_gains(
 ) -> tuple[np.ndarray, np.ndarray]:
     """Return (total_transparent_gains, total_opaque_absorption) in [W]."""
     trans_gains = np.zeros(len(df), dtype=float)
-    for el in transparent_elements:
-        trans_gains += solar_gains_transparent(el, df, ground_reflectance)
+    for t_el in transparent_elements:
+        trans_gains += solar_gains_transparent(t_el, df, ground_reflectance)
 
     opaque_abs = np.zeros(len(df), dtype=float)
-    for el in opaque_elements:
-        if el.adjacent_space_type.value == "outdoor":
-            opaque_abs += solar_absorption_opaque(el, df, ground_reflectance)
+    for o_el in opaque_elements:
+        if o_el.adjacent_space_type.value == "outdoor":
+            opaque_abs += solar_absorption_opaque(o_el, df, ground_reflectance)
 
     return trans_gains, opaque_abs

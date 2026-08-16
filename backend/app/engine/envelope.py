@@ -17,7 +17,6 @@ from app.schemas.models import (
     TransparentElement,
 )
 
-
 # Ground temperature model: deep-ground temperature approximated as
 # average annual outdoor temperature + a seasonal sinusoidal term.
 # This is a placeholder; proper implementation should use ISO 13370 / 52016-1 Annex.
@@ -25,11 +24,11 @@ DEFAULT_GROUND_TEMP_AMPLITUDE = 5.0  # K
 
 
 def adjacent_temperature(
-    element: OpaqueElement | TransparentElement,
+    element: OpaqueElement,
     T_e: pd.Series | np.ndarray,
     unheated_zone_temperature: pd.Series | np.ndarray | None = None,
 ) -> np.ndarray:
-    """Return the adjacent-space temperature [°C] for an element hour-by-hour."""
+    """Return the adjacent-space temperature [°C] for an opaque element hour-by-hour."""
     adj = element.adjacent_space_type
     if adj == AdjacentSpaceType.OUTDOOR:
         return np.asarray(T_e, dtype=float)
@@ -67,7 +66,7 @@ def compute_opaque_heat_loss(
     """Hourly transmission heat loss [W] through one opaque element."""
     T_adj = adjacent_temperature(element, T_e, unheated_zone_temperature)
     delta_T = np.asarray(T_int) - T_adj
-    return element.area * element.u_value * delta_T
+    return np.asarray(element.area * element.u_value * delta_T, dtype=float)
 
 
 def compute_transparent_heat_loss(
@@ -77,7 +76,7 @@ def compute_transparent_heat_loss(
 ) -> np.ndarray:
     """Hourly transmission heat loss [W] through one transparent element."""
     delta_T = np.asarray(T_int) - np.asarray(T_e)
-    return element.area * element.u_value * delta_T
+    return np.asarray(element.area * element.u_value * delta_T, dtype=float)
 
 
 def compute_thermal_bridge_loss(
@@ -104,7 +103,7 @@ def compute_thermal_bridge_loss(
         if pb.zone_id != zone.id:
             continue
         loss += pb.chi_value * pb.count * dT
-    return loss
+    return np.asarray(loss, dtype=float)
 
 
 def total_transmission_coefficient(

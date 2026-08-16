@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from enum import Enum
-from typing import List, Optional
+from enum import StrEnum
+from typing import Any
 
 from pydantic import BaseModel, Field, field_validator
 
 
-class BuildingType(str, Enum):
+class BuildingType(StrEnum):
     RESIDENTIAL = "residential"
     OFFICE = "office"
     SCHOOL = "school"
@@ -15,7 +15,7 @@ class BuildingType(str, Enum):
     OTHER = "other"
 
 
-class ZoneType(str, Enum):
+class ZoneType(StrEnum):
     HEATED = "heated"
     COOLED = "cooled"
     HEATED_AND_COOLED = "heated_and_cooled"
@@ -23,7 +23,7 @@ class ZoneType(str, Enum):
     SEMI_HEATED = "semi_heated"
 
 
-class AdjacentSpaceType(str, Enum):
+class AdjacentSpaceType(StrEnum):
     OUTDOOR = "outdoor"
     GROUND = "ground"
     UNHEATED_ZONE = "unheated_zone"
@@ -31,7 +31,7 @@ class AdjacentSpaceType(str, Enum):
     CONSTANT_TEMPERATURE = "constant_temperature"
 
 
-class ElementType(str, Enum):
+class ElementType(StrEnum):
     EXTERNAL_WALL = "external_wall"
     ROOF = "roof"
     GROUND_FLOOR = "ground_floor"
@@ -41,20 +41,20 @@ class ElementType(str, Enum):
     PARTY_WALL = "party_wall"
 
 
-class TransparentType(str, Enum):
+class TransparentType(StrEnum):
     WINDOW = "window"
     GLASS_DOOR = "glass_door"
     SKYLIGHT = "skylight"
 
 
-class VentilationType(str, Enum):
+class VentilationType(StrEnum):
     NATURAL = "natural"
     MECHANICAL = "mechanical"
     HYBRID = "hybrid"
     NONE = "none"
 
 
-class ScheduleType(str, Enum):
+class ScheduleType(StrEnum):
     CONSTANT = "constant"
     WEEKDAY_WEEKEND = "weekday_weekend"
     HOURLY_PROFILE = "hourly_profile"
@@ -62,15 +62,22 @@ class ScheduleType(str, Enum):
 
 class Schedule(BaseModel):
     type: ScheduleType = ScheduleType.CONSTANT
-    constant_value: Optional[float] = Field(1.0, ge=0.0, le=1.0)
-    weekday: Optional[List[float]] = None
-    saturday: Optional[List[float]] = None
-    sunday: Optional[List[float]] = None
-    holiday: Optional[List[float]] = None
+    constant_value: float | None = 1.0
+    weekday: list[float] | None = None
+    saturday: list[float] | None = None
+    sunday: list[float] | None = None
+    holiday: list[float] | None = None
+
+    @field_validator("constant_value")
+    @classmethod
+    def _check_constant_value(cls, v: float | None) -> float | None:
+        if v is not None and not 0.0 <= v <= 1.0:
+            raise ValueError("constant_value must be between 0.0 and 1.0")
+        return v
 
     @field_validator("weekday", "saturday", "sunday", "holiday")
     @classmethod
-    def _check_hourly_length(cls, v: Optional[List[float]]) -> Optional[List[float]]:
+    def _check_hourly_length(cls, v: list[float] | None) -> list[float] | None:
         if v is not None and len(v) != 24:
             raise ValueError("Hourly profile must contain exactly 24 values")
         return v
@@ -84,7 +91,7 @@ class GeneralInfo(BaseModel):
     usable_floor_area: float = Field(..., gt=0.0)
     heated_volume: float = Field(..., gt=0.0)
     number_of_storeys: int = Field(1, ge=1)
-    location_address: Optional[str] = None
+    location_address: str | None = None
 
 
 class ThermalZone(BaseModel):
@@ -94,7 +101,7 @@ class ThermalZone(BaseModel):
     floor_area: float = Field(..., gt=0.0)
     volume: float = Field(..., gt=0.0)
     setpoint_heating: float = Field(20.0)
-    setpoint_cooling: Optional[float] = Field(None)
+    setpoint_cooling: float | None = Field(None)
     occupancy_density: float = Field(0.03, ge=0.0)
 
 
@@ -113,7 +120,7 @@ class OpaqueElement(BaseModel):
     # (ISO 52016-1 reduction factor, typically 0.05-0.15 for heavy constructions)
     solar_reduction_factor: float = Field(0.08, ge=0.0, le=1.0)
     adjacent_space_type: AdjacentSpaceType = AdjacentSpaceType.OUTDOOR
-    adjacent_temperature: Optional[float] = None
+    adjacent_temperature: float | None = None
 
 
 class TransparentElement(BaseModel):
@@ -136,7 +143,7 @@ class LinearThermalBridge(BaseModel):
     psi_value: float = Field(..., ge=0.0)
     length: float = Field(..., ge=0.0)
     zone_id: str
-    element_id: Optional[str] = None
+    element_id: str | None = None
 
 
 class PointThermalBridge(BaseModel):
@@ -149,8 +156,8 @@ class PointThermalBridge(BaseModel):
 
 class ThermalBridgeConfig(BaseModel):
     auto_calculate: bool = False
-    linear_bridges: List[LinearThermalBridge] = []
-    point_bridges: List[PointThermalBridge] = []
+    linear_bridges: list[LinearThermalBridge] = []
+    point_bridges: list[PointThermalBridge] = []
 
 
 class Ventilation(BaseModel):
@@ -158,8 +165,8 @@ class Ventilation(BaseModel):
     airflow_rate: float = Field(0.0, ge=0.0)
     heat_recovery_efficiency: float = Field(0.0, ge=0.0, le=1.0)
     infiltration_rate: float = Field(0.5, ge=0.0)
-    supply_temperature: Optional[float] = None
-    mechanical_fan_power: Optional[float] = Field(0.0, ge=0.0)
+    supply_temperature: float | None = None
+    mechanical_fan_power: float | None = Field(0.0, ge=0.0)
     schedule: Schedule = Schedule()
 
 
@@ -178,7 +185,7 @@ class SystemHeatingCooling(BaseModel):
     system_type: str = "heat_pump_air"
     fuel_or_carrier: str = "electricity"
     nominal_power: float = Field(10.0, gt=0.0)
-    efficiency_or_cop_map: dict = {"constant": True, "value": 3.0}
+    efficiency_or_cop_map: dict[str, Any] = {"constant": True, "value": 3.0}
     distribution_loss_factor: float = Field(0.95, ge=0.0, le=1.0)
     control_factor: float = Field(1.0, ge=0.0)
     auxiliary_energy: float = Field(0.0, ge=0.0)
@@ -208,16 +215,16 @@ class PrimaryEnergyFactors(BaseModel):
 class BuildingProject(BaseModel):
     version: str = "0.1.0"
     project_name: str = ""
-    metadata: dict = {}
+    metadata: dict[str, Any] = {}
     general: GeneralInfo
     climate_station_id: str
-    thermal_zones: List[ThermalZone]
-    opaque_building_elements: List[OpaqueElement]
-    transparent_building_elements: List[TransparentElement]
+    thermal_zones: list[ThermalZone]
+    opaque_building_elements: list[OpaqueElement]
+    transparent_building_elements: list[TransparentElement]
     thermal_bridges: ThermalBridgeConfig = ThermalBridgeConfig()
     ventilation: Ventilation
     internal_gains: InternalGains = InternalGains()
-    systems: dict = {}  # Will be refined once schema is stable
+    systems: dict[str, Any] = {}  # Will be refined once schema is stable
     primary_energy: PrimaryEnergyFactors = PrimaryEnergyFactors()
 
 
@@ -253,6 +260,6 @@ class CalculationResult(BaseModel):
     project_id: str
     status: str
     annual_indicators: AnnualIndicators
-    monthly: List[MonthlyResult]
-    hourly: Optional[dict] = None
-    compliance: List[ComplianceCheck]
+    monthly: list[MonthlyResult]
+    hourly: dict[str, Any] | None = None
+    compliance: list[ComplianceCheck]
