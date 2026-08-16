@@ -8,7 +8,7 @@ import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { FormField } from "@/components/form-field"
 import {
   Accordion,
   AccordionContent,
@@ -326,41 +326,37 @@ export default function BuildingFormPage() {
           <AccordionItem value="general">
             <AccordionTrigger>Informacje ogólne</AccordionTrigger>
             <AccordionContent>
+              <p className="text-sm text-slate-600 mb-4">
+                Wprowadź podstawowe dane budynku. Większość pól posiada ikonę „?”
+                z wyjaśnieniem. Wszystkie wymiary i objętości muszą być podane w
+                jednostkach metrycznych.
+              </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="project_name">Nazwa projektu</Label>
+                <FormField label="Nazwa projektu" tooltip="Nazwa własna analizy – służy do identyfikacji wyników i plików JSON.">
                   <Input id="project_name" {...form.register("project_name")} className={inputClass} />
-                </div>
-                <div>
-                  <Label htmlFor="building_name">Nazwa budynku</Label>
+                </FormField>
+                <FormField label="Nazwa budynku" tooltip="Pełna nazwa obiektu, np. „Budynek biurowy ABC”.">
                   <Input id="building_name" {...form.register("general.building_name")} className={inputClass} />
-                </div>
-                <div>
-                  <Label htmlFor="building_type">Typ budynku</Label>
+                </FormField>
+                <FormField label="Typ budynku" tooltip="Kategoria budynku używana do profilów wewnętrznych: residential, office, commercial, public.">
                   <Input id="building_type" {...form.register("general.building_type")} className={inputClass} />
-                </div>
-                <div>
-                  <Label htmlFor="construction_year">Rok budowy</Label>
+                </FormField>
+                <FormField label="Rok budowy" tooltip="Rok ukończenia budowy – wpływa na domyślne założenia normowe.">
                   <Input id="construction_year" type="number" {...form.register("general.construction_year")} className={inputClass} />
-                </div>
-                <div>
-                  <Label htmlFor="conditioned_floor_area">Powierzchnia ogrzewana (m²)</Label>
-                  <Input id="conditioned_floor_area" type="number" step="0.1" {...form.register("general.conditioned_floor_area")} className={inputClass} />
-                </div>
-                <div>
-                  <Label htmlFor="usable_floor_area">Powierzchnia użytkowa (m²)</Label>
-                  <Input id="usable_floor_area" type="number" step="0.1" {...form.register("general.usable_floor_area")} className={inputClass} />
-                </div>
-                <div>
-                  <Label htmlFor="heated_volume">Kubatura ogrzewana (m³)</Label>
-                  <Input id="heated_volume" type="number" step="0.1" {...form.register("general.heated_volume")} className={inputClass} />
-                </div>
-                <div>
-                  <Label htmlFor="number_of_storeys">Liczba kondygnacji</Label>
+                </FormField>
+                <FormField label="Powierzchnia ogrzewana (m²)" tooltip="Suma powierzchni podłóg we wszystkich strefach ogrzewanych. To mianownik do obliczenia EU/EK/EP.">
+                  <Input id="conditioned_floor_area" type="number" step="0.1" placeholder="np. 150" {...form.register("general.conditioned_floor_area")} className={inputClass} />
+                </FormField>
+                <FormField label="Powierzchnia użytkowa (m²)" tooltip="Powierzchnia użytkowa wg polskiej metodologii (Pu).">
+                  <Input id="usable_floor_area" type="number" step="0.1" placeholder="np. 150" {...form.register("general.usable_floor_area")} className={inputClass} />
+                </FormField>
+                <FormField label="Kubatura ogrzewana (m³)" tooltip="Objętość powietrza we wszystkich ogrzewanych strefach, potrzebna do obliczeń wentylacji.">
+                  <Input id="heated_volume" type="number" step="0.1" placeholder="np. 375" {...form.register("general.heated_volume")} className={inputClass} />
+                </FormField>
+                <FormField label="Liczba kondygnacji" tooltip="Liczba pełnych kondygnacji nadziemnych.">
                   <Input id="number_of_storeys" type="number" {...form.register("general.number_of_storeys")} className={inputClass} />
-                </div>
-                <div>
-                  <Label htmlFor="climate_station_id">Stacja klimatyczna</Label>
+                </FormField>
+                <FormField label="Stacja klimatyczna" tooltip="Predefiniowany zbiór danych TMY (Typical Meteorological Year) używany do symulacji godzinowej. Wybierz najbliższą lokalizację.">
                   <Controller
                     name="climate_station_id"
                     control={form.control}
@@ -383,7 +379,7 @@ export default function BuildingFormPage() {
                       </Select>
                     )}
                   />
-                </div>
+                </FormField>
               </div>
             </AccordionContent>
           </AccordionItem>
@@ -391,18 +387,39 @@ export default function BuildingFormPage() {
           <AccordionItem value="zones">
             <AccordionTrigger>Strefy termiczne</AccordionTrigger>
             <AccordionContent>
+              <p className="text-sm text-slate-600 mb-4">
+                Strefa termiczna = obszar budynku o jednolitych warunkach
+                wewnętrznych (np. piętro, mieszkanie, ogrzewana część). Każda
+                strefa musi mieć przypisane przegrody i/lub okna.
+              </p>
               <div className="space-y-4">
                 {zonesFieldArray.fields.map((field, index) => (
                   <Card key={field.id}>
                     <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
-                      <Input placeholder="ID" {...form.register(`thermal_zones.${index}.id`)} />
-                      <Input placeholder="Nazwa" {...form.register(`thermal_zones.${index}.name`)} />
-                      <Input placeholder="Typ" {...form.register(`thermal_zones.${index}.zone_type`)} />
-                      <Input type="number" step="0.1" placeholder="Powierzchnia (m²)" {...form.register(`thermal_zones.${index}.floor_area`)} />
-                      <Input type="number" step="0.1" placeholder="Kubatura (m³)" {...form.register(`thermal_zones.${index}.volume`)} />
-                      <Input type="number" step="0.1" placeholder="Temp. ogrzewania" {...form.register(`thermal_zones.${index}.setpoint_heating`)} />
-                      <Input type="number" step="0.1" placeholder="Temp. chłodzenia" {...form.register(`thermal_zones.${index}.setpoint_cooling`)} />
-                      <Input type="number" step="0.001" placeholder="Os./m²" {...form.register(`thermal_zones.${index}.occupancy_density`)} />
+                      <FormField label="ID" tooltip="Krótki identyfikator, np. z1, z2. Używany do łączenia stref z przegrodami.">
+                        <Input placeholder="np. z1" {...form.register(`thermal_zones.${index}.id`)} />
+                      </FormField>
+                      <FormField label="Nazwa" tooltip="Czytelna nazwa strefy, np. „Parter” lub „Mieszkanie 1”.">
+                        <Input placeholder="np. Parter" {...form.register(`thermal_zones.${index}.name`)} />
+                      </FormField>
+                      <FormField label="Typ" tooltip="Typ strefy: heated (ogrzewana), cooled (chłodzona), unconditioned (nieogrzewana).">
+                        <Input placeholder="heated" {...form.register(`thermal_zones.${index}.zone_type`)} />
+                      </FormField>
+                      <FormField label="Powierzchnia (m²)" tooltip="Powierzchnia podłogi strefy, używana do podziału strat ciepła i obciążeń.">
+                        <Input type="number" step="0.1" placeholder="np. 150" {...form.register(`thermal_zones.${index}.floor_area`)} />
+                      </FormField>
+                      <FormField label="Kubatura (m³)" tooltip="Objętość powietrza w strefie – podstawa do obliczeń wentylacji i strat.">
+                        <Input type="number" step="0.1" placeholder="np. 375" {...form.register(`thermal_zones.${index}.volume`)} />
+                      </FormField>
+                      <FormField label="Temp. ogrzewania (°C)" tooltip="Zadana temperatura wewnętrzna w sezonie grzewczym.">
+                        <Input type="number" step="0.1" placeholder="np. 20" {...form.register(`thermal_zones.${index}.setpoint_heating`)} />
+                      </FormField>
+                      <FormField label="Temp. chłodzenia (°C)" tooltip="Górna temperatura akceptowalna w sezonie chłodniczym. Jeśli brak chłodzenia, zostaw puste.">
+                        <Input type="number" step="0.1" placeholder="np. 26" {...form.register(`thermal_zones.${index}.setpoint_cooling`)} />
+                      </FormField>
+                      <FormField label="Gęstość zaludnienia (os./m²)" tooltip="Liczba osób na m² powierzchni użytkowej. Np. 0.03 to 1 osoba na 33 m².">
+                        <Input type="number" step="0.001" placeholder="np. 0.03" {...form.register(`thermal_zones.${index}.occupancy_density`)} />
+                      </FormField>
                     </CardContent>
                   </Card>
                 ))}
@@ -416,21 +433,49 @@ export default function BuildingFormPage() {
           <AccordionItem value="opaque">
             <AccordionTrigger>Przegrody nieprzezroczyste</AccordionTrigger>
             <AccordionContent>
+              <p className="text-sm text-slate-600 mb-4">
+                Ściany zewnętrzne, dachy, stropy, podłogi na gruncie itp. Dla
+                każdej przegrody podaj powierzchnię i współczynnik przenikania
+                ciepła U. Nazwy typów: external_wall, roof, ground_floor,
+                floor_ceiling, party_wall.
+              </p>
               <div className="space-y-4">
                 {opaqueFieldArray.fields.map((field, index) => (
                   <Card key={field.id}>
                     <CardContent className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4">
-                      <Input placeholder="ID" {...form.register(`opaque_building_elements.${index}.id`)} />
-                      <Input placeholder="Nazwa" {...form.register(`opaque_building_elements.${index}.name`)} />
-                      <Input placeholder="ID strefy" {...form.register(`opaque_building_elements.${index}.zone_id`)} />
-                      <Input placeholder="Typ" {...form.register(`opaque_building_elements.${index}.element_type`)} />
-                      <Input type="number" step="0.1" placeholder="Azymut" {...form.register(`opaque_building_elements.${index}.orientation_azimuth`)} />
-                      <Input type="number" step="0.1" placeholder="Nachylenie" {...form.register(`opaque_building_elements.${index}.inclination`)} />
-                      <Input type="number" step="0.1" placeholder="Powierzchnia (m²)" {...form.register(`opaque_building_elements.${index}.area`)} />
-                      <Input type="number" step="0.01" placeholder="U (W/m²K)" {...form.register(`opaque_building_elements.${index}.u_value`)} />
-                      <Input type="number" step="0.01" placeholder="Absorpcja słońca" {...form.register(`opaque_building_elements.${index}.solar_absorptance`)} />
-                      <Input type="number" step="0.01" placeholder="Redukcja zysków" {...form.register(`opaque_building_elements.${index}.solar_reduction_factor`)} />
-                      <Input placeholder="Przestrzeń sąsiednia" {...form.register(`opaque_building_elements.${index}.adjacent_space_type`)} />
+                      <FormField label="ID" tooltip="Unikalny skrót, np. wall_n, roof. Używany w raportach.">
+                        <Input placeholder="np. wall_n" {...form.register(`opaque_building_elements.${index}.id`)} />
+                      </FormField>
+                      <FormField label="Nazwa" tooltip="Czytelna nazwa, np. „Ściana północna”.">
+                        <Input placeholder="np. Ściana północna" {...form.register(`opaque_building_elements.${index}.name`)} />
+                      </FormField>
+                      <FormField label="ID strefy" tooltip="Strefa, do której ta przegroda należy (musi pasować do ID w sekcji stref).">
+                        <Input placeholder="np. z1" {...form.register(`opaque_building_elements.${index}.zone_id`)} />
+                      </FormField>
+                      <FormField label="Typ" tooltip="Rodzaj przegrody: external_wall, roof, ground_floor, floor_ceiling, party_wall.">
+                        <Input placeholder="np. external_wall" {...form.register(`opaque_building_elements.${index}.element_type`)} />
+                      </FormField>
+                      <FormField label="Azymut (°)" tooltip="Kierunek ściany: 0 = północ, 90 = wschód, 180 = południe, 270 = zachód. Dla poziomych (dach, podłoga) wpisz 0.">
+                        <Input type="number" step="0.1" placeholder="0-360" {...form.register(`opaque_building_elements.${index}.orientation_azimuth`)} />
+                      </FormField>
+                      <FormField label="Nachylenie (°)" tooltip="Kąt do płaszczyzny poziomej. Ściana = 90°, dach płaski = 0°, podłoga na gruncie = 180°.">
+                        <Input type="number" step="0.1" placeholder="0-180" {...form.register(`opaque_building_elements.${index}.inclination`)} />
+                      </FormField>
+                      <FormField label="Powierzchnia (m²)" tooltip="Powierzchnia brutto przegrody (bez pomniejszania o okna – okna dodawane są osobno).">
+                        <Input type="number" step="0.1" placeholder="np. 40" {...form.register(`opaque_building_elements.${index}.area`)} />
+                      </FormField>
+                      <FormField label="U (W/m²K)" tooltip="Współczynnik przenikania ciepła. Niższa wartość = mniejsze straty ciepła.">
+                        <Input type="number" step="0.01" placeholder="np. 0.25" {...form.register(`opaque_building_elements.${index}.u_value`)} />
+                      </FormField>
+                      <FormField label="Absorpcja słońca (α)" tooltip="Współczynnik absorpcji promieniowania słonecznego powierzchni (0 = odbija wszystko, 1 = pochłania wszystko). Dla farb jasnych ~0.4, ciemnych ~0.8.">
+                        <Input type="number" step="0.01" placeholder="0-1" {...form.register(`opaque_building_elements.${index}.solar_absorptance`)} />
+                      </FormField>
+                      <FormField label="Redukcja zysków (F_ol)" tooltip="Udział promieniowania słonecznego pochłanianego przez płaszcz zewnętrzny. Standardowo ok. 0.08.">
+                        <Input type="number" step="0.01" placeholder="np. 0.08" {...form.register(`opaque_building_elements.${index}.solar_reduction_factor`)} />
+                      </FormField>
+                      <FormField label="Przestrzeń sąsiednia" tooltip="Co jest po drugiej stronie: outdoor (zewnętrze), ground (grunt), unheated (nieogrzewane pomieszczenie), adjacent (inna ogrzewana strefa).">
+                        <Input placeholder="outdoor" {...form.register(`opaque_building_elements.${index}.adjacent_space_type`)} />
+                      </FormField>
                     </CardContent>
                   </Card>
                 ))}
@@ -448,21 +493,48 @@ export default function BuildingFormPage() {
           <AccordionItem value="transparent">
             <AccordionTrigger>Przegrody transparentne</AccordionTrigger>
             <AccordionContent>
+              <p className="text-sm text-slate-600 mb-4">
+                Okna, drzwi przeszklone, świetliki. Powierzchnia okna to
+                ościeżnica, a współczynnik g i udział ramy redukują zyski
+                solarne.
+              </p>
               <div className="space-y-4">
                 {transparentFieldArray.fields.map((field, index) => (
                   <Card key={field.id}>
                     <CardContent className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4">
-                      <Input placeholder="ID" {...form.register(`transparent_building_elements.${index}.id`)} />
-                      <Input placeholder="Nazwa" {...form.register(`transparent_building_elements.${index}.name`)} />
-                      <Input placeholder="ID strefy" {...form.register(`transparent_building_elements.${index}.zone_id`)} />
-                      <Input placeholder="Typ" {...form.register(`transparent_building_elements.${index}.element_type`)} />
-                      <Input type="number" step="0.1" placeholder="Azymut" {...form.register(`transparent_building_elements.${index}.orientation_azimuth`)} />
-                      <Input type="number" step="0.1" placeholder="Nachylenie" {...form.register(`transparent_building_elements.${index}.inclination`)} />
-                      <Input type="number" step="0.1" placeholder="Powierzchnia (m²)" {...form.register(`transparent_building_elements.${index}.area`)} />
-                      <Input type="number" step="0.01" placeholder="U (W/m²K)" {...form.register(`transparent_building_elements.${index}.u_value`)} />
-                      <Input type="number" step="0.01" placeholder="g" {...form.register(`transparent_building_elements.${index}.g_value`)} />
-                      <Input type="number" step="0.01" placeholder="Udział ramy" {...form.register(`transparent_building_elements.${index}.frame_factor`)} />
-                      <Input type="number" step="0.01" placeholder="Współczynnik ekranowania" {...form.register(`transparent_building_elements.${index}.shading_factor`)} />
+                      <FormField label="ID" tooltip="Unikalny skrót, np. win_s, drzwi_e.">
+                        <Input placeholder="np. win_s" {...form.register(`transparent_building_elements.${index}.id`)} />
+                      </FormField>
+                      <FormField label="Nazwa" tooltip="Czytelna nazwa, np. „Okno południowe”.">
+                        <Input placeholder="np. Okno południowe" {...form.register(`transparent_building_elements.${index}.name`)} />
+                      </FormField>
+                      <FormField label="ID strefy" tooltip="Strefa, do której należy okno (musi pasować do ID strefy).">
+                        <Input placeholder="np. z1" {...form.register(`transparent_building_elements.${index}.zone_id`)} />
+                      </FormField>
+                      <FormField label="Typ" tooltip="Rodzaj elementu: window, door, skylight.">
+                        <Input placeholder="np. window" {...form.register(`transparent_building_elements.${index}.element_type`)} />
+                      </FormField>
+                      <FormField label="Azymut (°)" tooltip="Kierunek okna: 0 = północ, 90 = wschód, 180 = południe, 270 = zachód.">
+                        <Input type="number" step="0.1" placeholder="0-360" {...form.register(`transparent_building_elements.${index}.orientation_azimuth`)} />
+                      </FormField>
+                      <FormField label="Nachylenie (°)" tooltip="Kąt do poziomu. Standardowe okno = 90°, świetlik = 0°.">
+                        <Input type="number" step="0.1" placeholder="0-180" {...form.register(`transparent_building_elements.${index}.inclination`)} />
+                      </FormField>
+                      <FormField label="Powierzchnia (m²)" tooltip="Powierzchnia całkowita okna wraz z ramą.">
+                        <Input type="number" step="0.1" placeholder="np. 10" {...form.register(`transparent_building_elements.${index}.area`)} />
+                      </FormField>
+                      <FormField label="U (W/m²K)" tooltip="Współczynnik przenikania ciepła okna (U_w).">
+                        <Input type="number" step="0.01" placeholder="np. 1.0" {...form.register(`transparent_building_elements.${index}.u_value`)} />
+                      </FormField>
+                      <FormField label="g" tooltip="Współczynnik przenikania energii słonecznej szyby (g_lw). Np. dla szyby zwykłej ~0.75, dla przeciwsłonecznej ~0.4.">
+                        <Input type="number" step="0.01" placeholder="0-1" {...form.register(`transparent_building_elements.${index}.g_value`)} />
+                      </FormField>
+                      <FormField label="Udział ramy" tooltip="Udział powierzchni ramy w całkowitej powierzchni okna (0-1). Typowo 0.15-0.30.">
+                        <Input type="number" step="0.01" placeholder="0-1" {...form.register(`transparent_building_elements.${index}.frame_factor`)} />
+                      </FormField>
+                      <FormField label="Współczynnik ekranowania" tooltip="Udział promieniowania słonecznego docierającego do wnętrza po uwzględnieniu zacienień zewnętrznych (0 = całkowicie zacienione, 1 = brak zacienienia).">
+                        <Input type="number" step="0.01" placeholder="0-1" {...form.register(`transparent_building_elements.${index}.shading_factor`)} />
+                      </FormField>
                     </CardContent>
                   </Card>
                 ))}
@@ -480,23 +552,24 @@ export default function BuildingFormPage() {
           <AccordionItem value="ventilation">
             <AccordionTrigger>Wentylacja</AccordionTrigger>
             <AccordionContent>
+              <p className="text-sm text-slate-600 mb-4">
+                Parametry wentylacji i infiltracji. Strumień powietrza może być
+                podany jako przepływ objętościowy (m³/h) lub obliczony z liczby
+                zmian powietrza.
+              </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label>Typ wentylacji</Label>
-                  <Input {...form.register("ventilation.ventilation_type")} className={inputClass} />
-                </div>
-                <div>
-                  <Label>Strumień powietrza (m³/h)</Label>
-                  <Input type="number" step="0.1" {...form.register("ventilation.airflow_rate")} className={inputClass} />
-                </div>
-                <div>
-                  <Label>Sprawność odzysku</Label>
-                  <Input type="number" step="0.01" {...form.register("ventilation.heat_recovery_efficiency")} className={inputClass} />
-                </div>
-                <div>
-                  <Label>Współczynnik infiltracji (1/h)</Label>
-                  <Input type="number" step="0.01" {...form.register("ventilation.infiltration_rate")} className={inputClass} />
-                </div>
+                <FormField label="Typ wentylacji" tooltip="Typ instalacji: natural (gravitacyjna), mechanical (mechaniczna z wentylatorami), mechanical_with_recovery (z rekuperacją).">
+                  <Input placeholder="np. natural" {...form.register("ventilation.ventilation_type")} className={inputClass} />
+                </FormField>
+                <FormField label="Strumień powietrza (m³/h)" tooltip="Roczny lub zimowy strumień powietrza wentylacyjnego. Np. 120 m³/h dla niedużego mieszkania.">
+                  <Input type="number" step="0.1" placeholder="np. 120" {...form.register("ventilation.airflow_rate")} className={inputClass} />
+                </FormField>
+                <FormField label="Sprawność odzysku" tooltip="Sprawność rekuperatora (0 = brak, 0.8 = wysoka). Dla wentylacji grawitacyjnej zostaw 0.">
+                  <Input type="number" step="0.01" placeholder="0-1" {...form.register("ventilation.heat_recovery_efficiency")} className={inputClass} />
+                </FormField>
+                <FormField label="Współczynnik infiltracji (1/h)" tooltip="Liczba wymian powietrza na godzinę w wyniku nieszczelności. Dla budynków szczelnych 0.1-0.3, dla starszych 0.5-1.0.">
+                  <Input type="number" step="0.01" placeholder="np. 0.5" {...form.register("ventilation.infiltration_rate")} className={inputClass} />
+                </FormField>
               </div>
             </AccordionContent>
           </AccordionItem>
