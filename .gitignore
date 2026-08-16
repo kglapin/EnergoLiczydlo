@@ -1,0 +1,32 @@
+# Dependencies
+frontend/node_modules/
+backend/.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.so
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Next.js
+frontend/.next/
+frontend/out/
+frontend/dist/
+frontend/tsconfig.tsbuildinfo
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data artifacts (keep source files, exclude generated large files)
+*.zip
