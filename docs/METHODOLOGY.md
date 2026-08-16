@@ -51,7 +51,19 @@ Po obliczeniu `T_int(t)`:
 - jeśli `T_int(t) < T_int,H,set` → `Q_H(t) = (T_int,H,set - T_int(t)) · (H_tr + H_ve)` oraz korekta `T_int(t) = T_int,H,set`,
 - jeśli `T_int(t) > T_int,C,set` → `Q_C(t) = (T_int(t) - T_int,C,set) · (H_tr + H_ve)` oraz korekta `T_int(t) = T_int,C,set`.
 
-Dokładna forma równania zgodna z PN-EN ISO 52016-1 (model wielowęzłowy lub uproszczony 5R1C) jest implementowana w module `thermal_balance`.
+Dokładna forma równania zgodna z PN-EN ISO 52016-1 (uproszczona godzinowa
+metoda sieci 5R1C wg ISO 13790 Annex C / ISO 52016-1) jest implementowana w
+module `thermal_balance`. Sieć łączy węzły powietrza, powierzchni wewnętrznych
+i masy termicznej przez H_ve, H_tr,is = 3,45·A_t, H_tr,w (okna), H_tr,ms = 9,1·A_m
+i H_tr,em = 1/(1/H_tr,op + 1/H_tr,ms), przy domyślnych relacjach A_t = 4,5·A_f
+i A_m = 2,5·A_f. Zyski dzielone są na węzły: Φ_ia = 0,5·Φ_int oraz Φ_m i Φ_st
+proporcjonalnie do A_m/A_t (formuły C.2 normy). Równania węzłów rozwiązywane
+są jednocześnie jako układ liniowy z dyskretyzacją Cranka–Nicolsona węzła
+masy; zapotrzebowanie Φ_HC wynika z rozwiązania zamkniętego (bez iteracji).
+Elementy przyległe do gruntu, przestrzeni nieogrzewanych i o stałej
+temperaturze napędzane są własnymi temperaturami (grunt: sinusoida
+średnioroczna z opóźnieniem ~2 mies.), a przegrody między strefami o tej
+samej temperaturze nie przenoszą ciepła.
 
 ## Straty przez przenikanie
 
@@ -97,7 +109,19 @@ Q_ve(t) = H_ve · (T_int(t) - T_e(t))
    Q_sol,win = A_win · g_total · I_surface · F_sh
    ```
    `g_total` – całkowity współczynnik przepuszczania energii słonecznej; `F_sh` – czynnik ekranowania.
-5. Zyski pochłonięte przez przegrody nieprzezroczyste są częściowo opóźnione (pojemność cieplna) zgodnie z modelem węzłowym.
+5. Zyski pochłonięte przez przegrody nieprzezroczyste: promieniowanie pochłone
+   podnosi temperaturę powierzchni zewnętrznej (efekt sol-air), a dodatkowy
+   przepływ do wewnątrz wynosi `q_in = A·α·U·R_se·I` (R_se = 0,04 m²K/W wg
+   PN-EN ISO 6946). Dla dobrze ocieplonych przegród to ~0,8% pochłoniętego
+   promieniowania; opóźnienie wynika z podziału zysków i pojemności cieplnej
+   sieci 5R1C.
+
+## Zyski wewnętrzne (wartości normowe)
+
+Domyślne gęstości zysków wewnętrznych pochodzą z tabeli 26 rozporządzenia
+(Dz.U. 2015 poz. 376): jednorodzinny 6,8 W/m², wielorodzinny 7,1 W/m²,
+biurowy 5,7 W/m² (przykład standardowy P₁=0,6, β=0,3), pozostałe wiersze
+wg wzorów q = a·β + b·(1−β) przy β = 0,3. Wartości są edytowalne w UI.
 
 ## Zyski wewnętrzne
 
@@ -147,6 +171,34 @@ Aplikacja porównuje obliczone wskaźniki `Eu`, `Ek`, `Ep` z wymaganiami prawnym
 - Strefy termiczne traktowane są jako jednorodne pod względem temperatury (brak CFD).
 - Domyślnie przyjmuje się dane TMYx z `climate.onebuilding.org`; wersja produkcyjna powinna wykorzystywać oficjalne polskie dane TLY / TMY (np. z projektu TLM2000).
 - Przypadki, w których norma dopuszcza wiele wariantów obliczeń, są parametryzowane i jawnie udokumentowane.
+
+## Zaimplementowane elementy uzupełniające (2026-08)
+
+- **Straty zasobnika CWU (tabela 13, wzory 29–30)**: po podaniu pojemności
+  zasobnika straty postoju ΔQ_W,s wyznaczane są z tabeli 13 (q_S wg
+  lokalizacji, pojemności, rodzaju i izolacji), a energia końcowa
+  Q_k,W = (Q_W,nd + ΔQ_W,d + ΔQ_W,s)/η_W,g.
+- **Energia pomocnicza E_el,pom (tabela 20, wzory 37–38)**: pompy obiegowe
+  i napedy źródeł (kocioł, PC, węzeł) oraz wentylatory (wiersze 12/13, czas
+  pracy 8760·β) wliczane do energii końcowej elektrycznej.
+- **Wentylacja normatywna (tabele 21/22/24/25)**: przy strumieniu 0 m³/h
+  podstawowy strumień V0 pobierany jest wg profilu użytkowania budynku,
+  z redukcją r_n = 0,75 dla nawiewno-wywiewnej i udziałem β poza okresem
+  użytkowania (0,2·V0 / 0,1·V_ex / 0 zależnie od typu wentylacji).
+- **Oświetlenie wbudowane (wzór (35))**: Q_k,L = LENI·A_L wg PN-EN 15193;
+  pole opcjonalne dla budynków niemieszkalnych (dla mieszkalnych nie wyznacza
+  się wg metodologii).
+
+## Pozostałe ograniczenia (świadome)
+
+- **Pełny model gruntu ISO 13370** — podłogi gruntowane napędzane są
+  sinusoidą średnioroczną (amp. 5 K, opóźnienie ~2 mies.) zamiast pełnym
+  modelem równoważnej płyty (B', d_t); tekst normy jest płatny, a stałych
+  nie wolno zgadywać. Wprowadzenie wymaga dostępu do PN-EN ISO 13370.
+- **Straty przesyłu CWU z tabeli 10** (długości i izolacje odcinków) —
+  aproksymowane multiplikatywną sprawnością ηW,d (tabela 12).
+- **Infiltracja z tabeli 23** (V_inf wg wyposażenia w wiatrołapy) —
+  przyjmowana jako zadana krotność wymian ACH.
 
 ## Benchmarki
 

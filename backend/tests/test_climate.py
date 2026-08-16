@@ -1,11 +1,15 @@
 import numpy as np
 import pytest
 
+from app.api import climate as climate_api
 from app.engine.climate import (
     AIR_DENSITY_KG_M3,
     AIR_SPECIFIC_HEAT_J_KGK,
+    ClimateStation,
+    haversine_distance_km,
     load_epw,
     make_synthetic_year,
+    nearest_climate_station,
     radiation_on_surface,
 )
 
@@ -42,3 +46,34 @@ def test_radiation_horizontal_surface_matches_ghi():
 def test_air_specific_heat_constants():
     # Sanity check: volumetric heat capacity ~ 1206 J/(m3*K)
     assert pytest.approx(1206.0, abs=1.0) == AIR_DENSITY_KG_M3 * AIR_SPECIFIC_HEAT_J_KGK
+
+
+def test_haversine_distance_is_zero_for_the_same_point():
+    assert haversine_distance_km(52.2297, 21.0122, 52.2297, 21.0122) == pytest.approx(0.0)
+
+
+def test_nearest_climate_station_returns_shortest_distance():
+    stations = [
+        ClimateStation("west", "West", 52.4, 16.8),
+        ClimateStation("east", "East", 52.2, 21.0),
+    ]
+
+    station, distance_km = nearest_climate_station(52.23, 21.01, stations)
+
+    assert station.station_id == "east"
+    assert distance_km == pytest.approx(haversine_distance_km(52.23, 21.01, 52.2, 21.0))
+
+
+def test_resolve_location_selects_station_nearest_to_geocoded_point(monkeypatch):
+    monkeypatch.setattr(
+        climate_api,
+        "_geocode_location",
+        lambda query: ("Warszawa, Mazowieckie, Polska", 52.2297, 21.0122),
+    )
+
+    result = climate_api.resolve_location(" Warszawa ")
+
+    assert result["query"] == "Warszawa"
+    assert result["matched_location"] == "Warszawa, Mazowieckie, Polska"
+    assert result["station"]["id"] == "POL_MZ_Okecie-Warszawa-Chopina.Intl.AP.123750_TMYx.2009-2023"
+    assert result["station"]["distance_km"] > 0

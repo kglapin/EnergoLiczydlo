@@ -9,6 +9,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
+from app.engine.thermal_balance import TransmissionNetwork
 from app.schemas.models import (
     AdjacentSpaceType,
     OpaqueElement,
@@ -18,9 +19,30 @@ from app.schemas.models import (
 )
 
 # Ground temperature model: deep-ground temperature approximated as
-# average annual outdoor temperature + a seasonal sinusoidal term.
-# This is a placeholder; proper implementation should use ISO 13370 / 52016-1 Annex.
+# average annual outdoor temperature + a seasonal sinusoidal term
+# (first harmonic).  The phase lags the outdoor wave by roughly a quarter
+# period at typical slab depth: phase shift z*sqrt(pi/(a*P)) ~ 1 rad at
+# z ~ 2.5 m for soil diffusivity a ~ 0.7e-6 m2/s, i.e. about 2 months.
+# This is a documented simplification; a production implementation should
+# use the full ISO 13370 periodic ground model.
 DEFAULT_GROUND_TEMP_AMPLITUDE = 5.0  # K
+GROUND_TEMP_LAG_HOURS = 1460.0  # ~ 2 months
+
+
+# External surface heat transfer resistance for horizontal / upward heat
+# flow, PN-EN ISO 6946 Table A.1.  Used to convert absorbed solar radiation
+# on opaque surfaces into an extra inward heat flow (sol-air equivalent).
+R_SE_M2K_W = 0.04
+
+
+def ground_temperature(T_e: pd.Series | np.ndarray) -> np.ndarray:
+    """Hourly ground temperature [°C] adjacent to ground-coupled elements."""
+    T_mean = float(np.mean(T_e))
+    n = len(np.asarray(T_e))
+    hours = np.arange(n)
+    return T_mean - DEFAULT_GROUND_TEMP_AMPLITUDE * np.cos(
+        2 * np.pi * (hours - GROUND_TEMP_LAG_HOURS) / 8760
+    )
 
 
 def adjacent_temperature(
@@ -34,16 +56,12 @@ def adjacent_temperature(
     if adj == AdjacentSpaceType.OUTDOOR:
         return np.asarray(T_e, dtype=float)
     if adj == AdjacentSpaceType.GROUND:
-        # Simplified ground model: annual mean outdoor temperature
-        T_mean = float(np.mean(T_e))
-        n = len(np.asarray(T_e))
-        hours = np.arange(n)
-        return T_mean - DEFAULT_GROUND_TEMP_AMPLITUDE * np.cos(
-            2 * np.pi * hours / 8760
-        )
+        return ground_temperature(T_e)
     if adj == AdjacentSpaceType.UNHEATED_ZONE:
         if unheated_zone_temperature is None:
-            # Approximation: unheated zone = outdoor + 3 K buffer
+            # Approximation per EN ISO 13790 Annex G style buffer: the
+            # unheated space floats close to outdoor air plus a few kelvin
+            # from transmission through the heated envelope.
             return np.asarray(T_e, dtype=float) + 3.0
         return np.asarray(unheated_zone_temperature, dtype=float)
     if adj == AdjacentSpaceType.CONSTANT_TEMPERATURE:
@@ -126,16 +144,73 @@ def total_transmission_coefficient(
     Includes opaque/transparent U*A and thermal bridges. When ``zone_id`` is
     given, only bridges assigned to that zone are included; when None, all
     bridges are counted (building-level total).
+
+    Note: this is the *aggregate* coefficient used for reporting.  Elements
+    adjacent to other heated zones (internal partitions) contribute no net
+    transfer and are excluded.
     """
-    h_opaque = sum(el.area * el.u_value for el in opaque_elements)
-    h_transparent = sum(el.area * el.u_value for el in transparent_elements)
-    h_bridges = sum(
-        lb.psi_value * lb.length
-        for lb in bridges.linear_bridges
-        if zone_id is None or lb.zone_id == zone_id
-    ) + sum(
-        pb.chi_value * pb.count
-        for pb in bridges.point_bridges
-        if zone_id is None or pb.zone_id == zone_id
+    network = zone_transmission_network(
+        opaque_elements, transparent_elements, bridges, None, zone_id
     )
-    return h_opaque + h_transparent + h_bridges
+    return network.h_total
+
+
+def zone_transmission_network(
+    opaque_elements: list[OpaqueElement],
+    transparent_elements: list[TransparentElement],
+    bridges: ThermalBridgeConfig,
+    T_e: pd.Series | np.ndarray | None,
+    zone_id: str | None = None,
+    unheated_zone_temperature: pd.Series | np.ndarray | None = None,
+) -> TransmissionNetwork:
+    """Build the 5R1C transmission network of a zone.
+
+    Opaque elements (including thermal bridges, which act towards outdoor
+    air) are lumped into ``h_opaque`` with a U*A-weighted driving temperature
+    built from each element's adjacent-space temperature.  Transparent
+    elements couple the internal-surfaces node directly to outdoor air.
+    Elements adjacent to another heated zone are excluded: with both sides at
+    the same (solved) temperature they transfer no net heat.
+
+    ``T_e`` may be None for aggregate (non-simulated) use; the driving
+    temperatures are then placeholders and only the conductances are valid.
+    """
+    network = TransmissionNetwork()
+    # Placeholder drive used when only conductances are needed (T_e is None);
+    # the weighted average then carries no physical meaning.
+    placeholder = np.zeros(1)
+
+    def _driving(element: OpaqueElement) -> np.ndarray:
+        if T_e is None:
+            return placeholder
+        return adjacent_temperature(
+            element, T_e, unheated_zone_temperature, T_int=None
+        )
+
+    for el in opaque_elements:
+        if zone_id is not None and el.zone_id != zone_id:
+            continue
+        conductance = el.area * el.u_value
+        if el.adjacent_space_type == AdjacentSpaceType.HEATED_ZONE:
+            continue  # partition between equally conditioned spaces: no net flow
+        network.add_opaque(conductance, _driving(el))
+
+    bridge_conductance = 0.0
+    for lb in bridges.linear_bridges:
+        if zone_id is None or lb.zone_id == zone_id:
+            bridge_conductance += lb.psi_value * lb.length
+    for pb in bridges.point_bridges:
+        if zone_id is None or pb.zone_id == zone_id:
+            bridge_conductance += pb.chi_value * pb.count
+    if bridge_conductance > 0.0:
+        drive = placeholder if T_e is None else np.asarray(T_e, dtype=float)
+        network.add_opaque(bridge_conductance, drive)
+
+    for t_el in transparent_elements:
+        if zone_id is not None and t_el.zone_id != zone_id:
+            continue
+        conductance = t_el.area * t_el.u_value
+        drive = placeholder if T_e is None else np.asarray(T_e, dtype=float)
+        network.add_surface(conductance, drive)
+
+    return network

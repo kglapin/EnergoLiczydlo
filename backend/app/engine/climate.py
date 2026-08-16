@@ -5,6 +5,9 @@ Implements helpers required by PN-EN ISO 52010-1 / 52016-1 hourly calculations.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
+from dataclasses import dataclass
+from math import asin, cos, radians, sin, sqrt
 from pathlib import Path
 from typing import Any
 
@@ -15,6 +18,55 @@ import pvlib
 # Approximate physical constants
 AIR_DENSITY_KG_M3 = 1.2  # kg/m3
 AIR_SPECIFIC_HEAT_J_KGK = 1005  # J/(kg*K)
+EARTH_RADIUS_KM = 6371.0088
+
+
+@dataclass(frozen=True)
+class ClimateStation:
+    """Location of a weather station used by the climate-data selector."""
+
+    station_id: str
+    name: str
+    latitude: float
+    longitude: float
+
+
+def haversine_distance_km(
+    latitude_a: float,
+    longitude_a: float,
+    latitude_b: float,
+    longitude_b: float,
+) -> float:
+    """Return the great-circle distance between two WGS84 points in kilometres."""
+    lat_delta = radians(latitude_b - latitude_a)
+    lon_delta = radians(longitude_b - longitude_a)
+    latitude_a_rad = radians(latitude_a)
+    latitude_b_rad = radians(latitude_b)
+
+    haversine = (
+        sin(lat_delta / 2) ** 2
+        + cos(latitude_a_rad) * cos(latitude_b_rad) * sin(lon_delta / 2) ** 2
+    )
+    return 2 * EARTH_RADIUS_KM * asin(sqrt(haversine))
+
+
+def nearest_climate_station(
+    latitude: float,
+    longitude: float,
+    stations: Sequence[ClimateStation],
+) -> tuple[ClimateStation, float]:
+    """Select the closest station and return it with its distance in kilometres."""
+    if not stations:
+        raise ValueError("At least one climate station is required")
+
+    nearest = min(
+        stations,
+        key=lambda station: haversine_distance_km(
+            latitude, longitude, station.latitude, station.longitude
+        ),
+    )
+    distance = haversine_distance_km(latitude, longitude, nearest.latitude, nearest.longitude)
+    return nearest, distance
 
 
 def load_epw(path: str | Path) -> pd.DataFrame:

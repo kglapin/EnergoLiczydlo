@@ -17,13 +17,14 @@ interface FormFieldProps {
   tooltip?: string
   children: React.ReactNode
   className?: string
+  error?: string
 }
 
-export function FormField({ label, tooltip, children, className }: FormFieldProps) {
+export function FormField({ label, tooltip, children, className, error }: FormFieldProps) {
   return (
     <div className={cn("space-y-1.5", className)}>
       <div className="flex items-center gap-1.5">
-        <Label className="text-sm font-medium">{label}</Label>
+        <Label className={cn("text-sm font-medium", error && "text-destructive")}>{label}</Label>
         {tooltip ? (
           <TooltipProvider delayDuration={100}>
             <Tooltip>
@@ -42,6 +43,7 @@ export function FormField({ label, tooltip, children, className }: FormFieldProp
         ) : null}
       </div>
       {children}
+      {error ? <p className="text-sm text-destructive">{error}</p> : null}
     </div>
   )
 }

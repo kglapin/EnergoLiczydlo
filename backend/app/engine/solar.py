@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 
 from app.engine.climate import radiation_on_surface
+from app.engine.envelope import R_SE_M2K_W
 from app.schemas.models import OpaqueElement, TransparentElement
 
 
@@ -52,12 +53,17 @@ def solar_absorption_opaque(
     df: pd.DataFrame,
     ground_reflectance: float = 0.2,
 ) -> np.ndarray:
-    """Hourly solar heat gain [W] reaching the interior through an opaque element.
+    """Hourly solar heat gain [W] flowing inward through an opaque element.
 
-    Implements the ISO 52016-1 reduction concept: only the fraction
-    ``solar_reduction_factor`` of absorbed radiation is treated as an
-    instantaneous internal heat gain; the rest is stored/delayed by the
-    construction mass.
+    Absorbed solar radiation raises the external surface temperature
+    (sol-air effect); the extra inward heat flow through the construction is
+
+        q_in = A * alpha * U * R_se * I_surf
+
+    with R_se the external surface resistance (PN-EN ISO 6946).  For a
+    well-insulated wall (U ~ 0.2 W/(m2*K)) only ~0.8 % of the absorbed
+    radiation reaches the interior, mostly delayed by the construction mass;
+    the 5R1C gain splitting and mass node provide that delay.
 
     Parameters
     ----------
@@ -70,7 +76,7 @@ def solar_absorption_opaque(
     Returns
     -------
     np.ndarray
-        Effective solar heat gain at the internal air node [W].
+        Solar heat gain at the interior [W].
     """
     I_surf = radiation_on_surface(
         df,
@@ -81,7 +87,8 @@ def solar_absorption_opaque(
     return (
         element.area
         * element.solar_absorptance
-        * element.solar_reduction_factor
+        * element.u_value
+        * R_SE_M2K_W
         * np.asarray(I_surf)
     )
 
@@ -99,7 +106,8 @@ def total_solar_gains(
 
     opaque_abs = np.zeros(len(df), dtype=float)
     for o_el in opaque_elements:
-        if o_el.adjacent_space_type.value == "outdoor":
+        adjacent = str(getattr(o_el.adjacent_space_type, "value", o_el.adjacent_space_type))
+        if adjacent == "outdoor":
             opaque_abs += solar_absorption_opaque(o_el, df, ground_reflectance)
 
     return trans_gains, opaque_abs

@@ -8,6 +8,7 @@ export interface BuildingProject {
   general: {
     building_name: string
     building_type: string
+    dhw_usage_profile: string
     construction_year: number
     conditioned_floor_area: number
     usable_floor_area: number
@@ -33,6 +34,8 @@ export interface BuildingProject {
     element_type: string
     orientation_azimuth: number
     inclination: number
+    height: number
+    width: number
     area: number
     u_value: number
     solar_absorptance?: number
@@ -47,6 +50,8 @@ export interface BuildingProject {
     element_type: string
     orientation_azimuth: number
     inclination: number
+    height: number
+    width: number
     area: number
     u_value: number
     g_value: number
@@ -71,13 +76,42 @@ export interface BuildingProject {
     lighting: { power_density: number }
     equipment: { power_density: number }
   }
-  systems?: Record<string, unknown>
+  systems?: {
+    heating: {
+      system_type: string
+      fuel_or_carrier: string
+      nominal_power?: number
+      generation_efficiency?: number
+      distribution_efficiency?: number
+      storage_efficiency?: number
+      control_efficiency?: number
+      sink_temperature?: number
+    }
+    cooling?: {
+      system_type: string
+      fuel_or_carrier: string
+      generation_efficiency?: number
+      distribution_efficiency?: number
+      storage_efficiency?: number
+      control_efficiency?: number
+    }
+    dhw: {
+      system_type: string
+      fuel_or_carrier: string
+      generation_efficiency?: number
+      storage_efficiency?: number
+      distribution_efficiency?: number
+      utilization_efficiency?: number
+      distribution_type?: string
+    }
+  }
   primary_energy?: Record<string, unknown>
 }
 
 export interface CalculationResult {
   project_id: string
   status: string
+  design_heating_power_kw?: number
   annual_indicators: {
     eu_kwh_m2_year: number
     ek_kwh_m2_year: number
@@ -105,25 +139,108 @@ export interface CalculationResult {
   }>
 }
 
+export interface HistoryItem {
+  id: string
+  project_name: string
+  building_name: string
+  eu: number | null
+  ek: number | null
+  ep: number | null
+  savedAt: string
+  project: BuildingProject
+  result: CalculationResult | null
+}
+
 interface AppState {
   project: BuildingProject | null
   result: CalculationResult | null
+  history: HistoryItem[]
+  activeHistoryId: string | null
   setProject: (project: BuildingProject) => void
   setResult: (result: CalculationResult | null) => void
+  autoSaveProject: (project: BuildingProject) => string
+  addToHistory: () => void
+  loadHistoryItem: (id: string) => void
+  removeHistoryItem: (id: string) => void
+  startNewProject: () => void
   reset: () => void
 }
 
 const initialState = {
   project: null,
   result: null,
+  history: [],
+  activeHistoryId: null,
+}
+
+function createDraftId() {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return `draft-${crypto.randomUUID()}`
+  }
+  return `draft-${Date.now()}-${Math.random().toString(36).slice(2)}`
 }
 
 export const useAppStore = create<AppState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       ...initialState,
       setProject: (project) => set({ project }),
       setResult: (result) => set({ result }),
+      autoSaveProject: (project) => {
+        const { activeHistoryId, history, result } = get()
+        const id = activeHistoryId ?? createDraftId()
+        const previousItem = history.find((item) => item.id === id)
+        const savedResult = result ?? previousItem?.result ?? null
+        const item: HistoryItem = {
+          id,
+          project_name: project.project_name,
+          building_name: project.general.building_name,
+          eu: savedResult?.annual_indicators.eu_kwh_m2_year ?? previousItem?.eu ?? null,
+          ek: savedResult?.annual_indicators.ek_kwh_m2_year ?? previousItem?.ek ?? null,
+          ep: savedResult?.annual_indicators.ep_kwh_m2_year ?? previousItem?.ep ?? null,
+          savedAt: new Date().toISOString(),
+          project,
+          result: savedResult,
+        }
+        set((state) => ({
+          project,
+          history: [item, ...state.history.filter((historyItem) => historyItem.id !== id)],
+          activeHistoryId: id,
+        }))
+        return id
+      },
+      addToHistory: () => {
+        const { project, result, activeHistoryId } = get()
+        if (!project || !result) return
+        const item: HistoryItem = {
+          id: activeHistoryId ?? result.project_id,
+          project_name: project.project_name,
+          building_name: project.general.building_name,
+          eu: result.annual_indicators.eu_kwh_m2_year,
+          ek: result.annual_indicators.ek_kwh_m2_year,
+          ep: result.annual_indicators.ep_kwh_m2_year,
+          savedAt: new Date().toISOString(),
+          project,
+          result,
+        }
+        set((state) => ({
+          history: [item, ...state.history.filter((h) => h.id !== item.id)],
+          activeHistoryId: item.id,
+        }))
+      },
+      loadHistoryItem: (id) => {
+        const item = get().history.find((h) => h.id === id)
+        if (item) {
+          set({ project: item.project, result: item.result, activeHistoryId: item.id })
+        }
+      },
+      removeHistoryItem: (id) => {
+        set((state) => ({
+          history: state.history.filter((h) => h.id !== id),
+          activeHistoryId: state.activeHistoryId === id ? null : state.activeHistoryId,
+        }))
+      },
+      startNewProject: () => set({ project: null, result: null, activeHistoryId: null }),
       reset: () => set(initialState),
     }),
     {

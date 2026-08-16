@@ -17,26 +17,29 @@ def annual_primary_energy(
         Final energy per carrier in Wh. Carrier names must match the
         attribute names of PrimaryEnergyFactors (e.g. 'electricity').
     factors : PrimaryEnergyFactors
+        ``fp`` is the non-renewable primary energy factor [-] and ``we`` the
+        CO2 emission indicator in kg CO2/kWh (per metodologię: t CO2/TJ ==
+        kg CO2/kWh / 3.6).
 
     Returns
     -------
     ep_wh : float
         Primary energy [Wh].
-    ec_kg : float
-        CO2 emissions [kg].
+    ec_t : float
+        CO2 emissions [tonnes].
     """
     ep_wh = 0.0
-    ec_kg = 0.0
+    ec_t = 0.0
 
-    for carrier, e_kwh in final_energy_by_carrier.items():
+    for carrier, e_wh in final_energy_by_carrier.items():
         factor = getattr(factors, carrier, None)
         if factor is None:
-            # Unknown carrier: assume primary factor 1.0 and warn
-            factor = factors.renewable  # safest fallback
-        ep_wh += e_kwh * factor.fp
-        ec_kg += e_kwh * factor.we / 1_000_000  # we is kg CO2 / MWh typically
+            # Unknown carrier: assume renewable (zero) and let the caller warn
+            factor = factors.renewable
+        ep_wh += e_wh * factor.fp
+        ec_t += e_wh / 1000.0 * factor.we / 1000.0  # Wh -> kWh -> t CO2
 
-    return ep_wh, ec_kg
+    return ep_wh, ec_t
 
 
 def share_of_renewable_energy(

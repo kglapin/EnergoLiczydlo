@@ -4,7 +4,6 @@ from app.engine.calculator import calculate_building_energy
 from app.schemas.models import (
     BuildingProject,
     GeneralInfo,
-    InternalGains,
     OpaqueElement,
     ThermalZone,
     TransparentElement,
@@ -18,6 +17,7 @@ def make_test_project() -> BuildingProject:
         general=GeneralInfo(
             building_name="Dom jednorodzinny",
             building_type="residential",
+            dhw_usage_profile="residential_single_family",
             construction_year=2020,
             conditioned_floor_area=150.0,
             usable_floor_area=150.0,
@@ -104,15 +104,11 @@ def make_test_project() -> BuildingProject:
             "heating": {
                 "system_type": "heat_pump_air",
                 "fuel_or_carrier": "electricity",
-                "nominal_power": 10.0,
                 "efficiency_or_cop_map": {"constant": True, "value": 3.5},
                 "sink_temperature": 35.0,
             },
             "dhw": {
                 "system_type": "electric_storage",
-                "daily_demand_per_person": 50.0,
-                "target_temperature": 55.0,
-                "cold_water_temperature": 10.0,
                 "efficiency": 0.9,
             },
         },

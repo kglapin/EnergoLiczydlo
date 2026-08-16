@@ -11,8 +11,12 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify(body),
     })
 
-    const data = await res.json()
+    const data: unknown = await res.json()
     if (!res.ok) {
+      console.warn(
+        "[api/calculate] Backend rejected calculation input",
+        JSON.stringify({ status: res.status, data }),
+      )
       return NextResponse.json(data, { status: res.status })
     }
     return NextResponse.json(data)

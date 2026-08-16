@@ -35,14 +35,16 @@ from app.engine.primary_energy import (
     share_of_renewable_energy,
 )
 from app.engine.systems import (
+    annual_dhw_useful_energy,
     constant_efficiency_final_energy,
-    dhw_energy_demand,
     final_energy_dhw,
     heat_pump_cop_map,
 )
 from app.engine.thermal_balance import (
-    solve_hourly_balance,
+    TransmissionNetwork,
+    solve_zone_5r1c,
     thermal_capacity,
+    zone_thermal_properties,
 )
 from app.engine.ventilation import (
     ventilation_heat_loss,
@@ -158,16 +160,22 @@ class TestEnvelope:
         np.testing.assert_allclose(loss, 5.0 * 1.4 * 25.0)  # 175 W
 
     def test_adjacent_temperature_ground_sinusoid_analytic(self):
-        """T_gruntu = mean(T_e) - 5*cos(2*pi*h/8760); minimum w styczniu."""
+        """T_gruntu = mean(T_e) - 5*cos(2*pi*(h-lag)/8760); minimum ~2 mies. po
+        minimum fali zewnętrznej (opóźnienie fazowe przeguby gruntowej)."""
+        from app.engine.envelope import GROUND_TEMP_LAG_HOURS
+
         floor = _opaque(
             element_type=ElementType.GROUND_FLOOR, inclination=180.0,
             adjacent_space_type=AdjacentSpaceType.GROUND,
         )
         T_e = np.full(8760, 8.0)
         T_adj = adjacent_temperature(floor, T_e)
-        assert T_adj[0] == pytest.approx(8.0 - 5.0)          # h=0: cos(0)=1
-        assert T_adj[2190] == pytest.approx(8.0, abs=1e-9)   # równonoc: cos(pi/2)=0
-        assert T_adj[4380] == pytest.approx(8.0 + 5.0)       # lipiec: cos(pi)=-1
+        lag = int(GROUND_TEMP_LAG_HOURS)
+        assert T_adj[lag] == pytest.approx(8.0 - 5.0)              # minimum
+        assert T_adj[lag + 2190] == pytest.approx(8.0, abs=1e-9)   # cos(pi/2)=0
+        assert T_adj[lag + 4380] == pytest.approx(8.0 + 5.0)       # maksimum
+        # Minimum w lutym/marcu (a nie w styczniu jak temperatura zewnętrzna)
+        assert np.argmin(T_adj[: 3 * 8760 // 12]) >= 31 * 24
 
     def test_adjacent_temperature_unheated_zone_plus_3k(self):
         wall = _opaque(adjacent_space_type=AdjacentSpaceType.UNHEATED_ZONE)
@@ -319,89 +327,141 @@ class TestInternalGains:
 
 class TestThermalBalance:
     def test_thermal_capacity_analytic(self):
-        assert thermal_capacity(150.0) == pytest.approx(150.0 * 60.0)
+        # C_m = kappa * A_m = 165 kJ/(m2*K) * 2.5 * Af, zwrócone w Wh/K
+        assert thermal_capacity(150.0) == pytest.approx(165_000.0 * 2.5 * 150.0 / 3600.0)
+
+    def _net(self, drive: float, n: int = 8760) -> TransmissionNetwork:
+        net = TransmissionNetwork()
+        net.add_opaque(50.0, np.full(n, drive))
+        net.add_surface(30.0, np.full(n, drive))
+        return net
 
     def test_steady_state_heating_analytic(self):
-        """Stan ustalony: Q_H/h = H*(T_set - T_e) = 80*30 = 2400 Wh."""
+        """Stan ustalony bez zysków: zapotrzebowanie > 0, powietrze dokładnie
+        na setpoincie (węzły sieci mają gradienty, więc nie ma jednej
+        lumped wartości oczekiwanej)."""
         n = 8760
-        T_int, Q_H, Q_C, _ = solve_hourly_balance(
-            H_tr=50.0, H_ve=30.0,
-            Q_int=np.zeros(n), Q_sol=np.zeros(n), T_e=np.full(n, -10.0),
-            T_set_heating=20.0, T_set_cooling=None, C_m=3000.0,
+        solution = solve_zone_5r1c(
+            network=self._net(-10.0),
+            h_ve=30.0,
+            t_e=np.full(n, -10.0),
+            phi_int=np.zeros(n),
+            phi_sol=np.zeros(n),
+            properties=zone_thermal_properties(100.0),
+            t_set_heating=20.0,
+            t_set_cooling=None,
         )
-        np.testing.assert_allclose(Q_H, 80.0 * 30.0)
-        assert Q_C.sum() == 0.0
-        np.testing.assert_allclose(T_int, 20.0)
+        assert np.all(solution.q_heating[500:] > 0.0)
+        assert solution.q_cooling.sum() == 0.0
+        np.testing.assert_allclose(solution.t_air[500:], 20.0, atol=1e-9)
 
     def test_steady_state_cooling_analytic(self):
-        """Po rozruchu (~10 h od inicjalizacji w 20°C): Q_C/h = 1820 Wh."""
+        """Po rozruchu: chłodzenie > 0, powietrze na setpoincie 26°C."""
         n = 8760
-        T_int, Q_H, Q_C, _ = solve_hourly_balance(
-            H_tr=50.0, H_ve=30.0,
-            Q_int=np.full(n, 1500.0), Q_sol=np.zeros(n), T_e=np.full(n, 30.0),
-            T_set_heating=20.0, T_set_cooling=26.0, C_m=3000.0,
+        solution = solve_zone_5r1c(
+            network=self._net(30.0),
+            h_ve=30.0,
+            t_e=np.full(n, 30.0),
+            phi_int=np.full(n, 1500.0),
+            phi_sol=np.zeros(n),
+            properties=zone_thermal_properties(100.0),
+            t_set_heating=20.0,
+            t_set_cooling=26.0,
         )
-        assert np.all(Q_C[:8] == 0.0)  # rozruch termiczny (pojemność cieplna)
-        np.testing.assert_allclose(Q_C[24:], 1500.0 + 80.0 * (30.0 - 26.0))
-        assert Q_H.sum() == 0.0
-        np.testing.assert_allclose(T_int[24:], 26.0)
+        assert np.all(solution.q_cooling[:8] == 0.0)  # rozruch termiczny
+        assert np.all(solution.q_cooling[3000:] > 0.0)
+        assert solution.q_heating.sum() == 0.0
+        np.testing.assert_allclose(solution.t_air[3000:], 26.0, atol=1e-9)
 
     def test_free_float_converges_to_analytic_equilibrium(self):
-        """Swobodne wahania: T = T_e + (Q_int+Q_sol)/H = 10 + 400/80 = 15°C."""
+        """Swobodne wahania bez HVAC: brak zapotrzebowania, temperatura
+        powietrza wokół T_e + zyski/H_tot."""
         n = 8760
-        T_int, Q_H, Q_C, _ = solve_hourly_balance(
-            H_tr=50.0, H_ve=30.0,
-            Q_int=np.full(n, 400.0), Q_sol=np.zeros(n), T_e=np.full(n, 10.0),
-            T_set_heating=5.0, T_set_cooling=45.0, C_m=3000.0,
+        solution = solve_zone_5r1c(
+            network=self._net(10.0),
+            h_ve=30.0,
+            t_e=np.full(n, 10.0),
+            phi_int=np.full(n, 400.0),
+            phi_sol=np.zeros(n),
+            properties=zone_thermal_properties(100.0),
+            t_set_heating=5.0,
+            t_set_cooling=45.0,
         )
-        assert Q_H.sum() == 0.0
-        assert Q_C.sum() == 0.0
-        assert T_int[-1] == pytest.approx(15.0, abs=0.01)
+        assert solution.q_heating.sum() == 0.0
+        assert solution.q_cooling.sum() == 0.0
+        assert 13.0 < solution.t_air[-1] < 16.0
+        assert abs(solution.t_air[-1] - solution.t_mass[-1]) < 2.0
 
     def test_energy_conservation_free_floating(self):
-        """C_m*dT/dt = Q_int + Q_sol - H*(T_int - T_e) w każdej godzinie."""
+        """Bilans węzła masy w każdej godzinie (Crank-Nicolson):
+        C_m/3600*(Tm[t]-Tm[t-1]) = phi_m + Hms*(Ts-Tm_avg) + Hem*(T_drive-Tm_avg)."""
         n = 8760
         hours = np.arange(n)
         T_e = 10.0 + 8.0 * np.sin(2 * np.pi * hours / 8760.0)
         Q = 300.0 + 200.0 * np.sin(2 * np.pi * (hours % 24) / 24.0)
-        C_m, H = 3000.0, 80.0
-        T_int, Q_H, Q_C, _ = solve_hourly_balance(
-            H_tr=50.0, H_ve=30.0, Q_int=Q, Q_sol=np.zeros(n), T_e=T_e,
-            T_set_heating=5.0, T_set_cooling=45.0, C_m=C_m,  # swobodne wahania
+        solution = solve_zone_5r1c(
+            network=self._net(0.0),
+            h_ve=30.0,
+            t_e=T_e,
+            phi_int=Q,
+            phi_sol=np.zeros(n),
+            properties=zone_thermal_properties(100.0),
+            t_set_heating=0.0,
+            t_set_cooling=45.0,  # swobodne wahania (T_air ~5-12°C)
         )
-        assert Q_H.sum() == 0.0 and Q_C.sum() == 0.0
-        T_prev = np.concatenate(([5.0], T_int[:-1]))
-        residual = C_m * (T_int - T_prev) - (Q - H * (T_int - T_e))
-        assert np.max(np.abs(residual)) < 1e-6
+        assert solution.q_heating.sum() == 0.0 and solution.q_cooling.sum() == 0.0
+
+        props = zone_thermal_properties(100.0)
+        h_ms, h_em = props.h_tr_ms, 1.0 / (1.0 / 50.0 + 1.0 / props.h_tr_ms)
+        t_s = (solution.t_operative - 0.3 * solution.t_air) / 0.7
+        t_m = solution.t_mass
+        # Warunek początkowy solvera: masa startuje od setpointu ogrzewania.
+        t_m_prev = np.concatenate(([0.0], t_m[:-1]))
+        t_m_avg = (t_m + t_m_prev) / 2.0
+        phi_m = (2.5 / 4.5) * (0.5 * Q + np.zeros(n))  # frac_mass*(0.5*phi_int+phi_sol)
+        d_u = props.capacity / 3600.0 * (t_m - t_m_prev)
+        flows = phi_m + h_ms * (t_s - t_m_avg) + h_em * (0.0 - t_m_avg)
+        np.testing.assert_allclose(d_u, flows, atol=1e-6)
 
     def test_hvac_hours_pin_temperature_to_setpoint(self):
         n = 8760
         rng = np.random.default_rng(42)
         T_e = rng.uniform(-15.0, 35.0, n)
         Q_int = rng.uniform(0.0, 2000.0, n)
-        T_int, Q_H, Q_C, _ = solve_hourly_balance(
-            H_tr=50.0, H_ve=30.0, Q_int=Q_int, Q_sol=np.zeros(n), T_e=T_e,
-            T_set_heating=20.0, T_set_cooling=26.0, C_m=3000.0,
+        solution = solve_zone_5r1c(
+            network=self._net(0.0),
+            h_ve=30.0,
+            t_e=T_e,
+            phi_int=Q_int,
+            phi_sol=np.zeros(n),
+            properties=zone_thermal_properties(100.0),
+            t_set_heating=20.0,
+            t_set_cooling=26.0,
         )
-        # Tam gdzie jest zapotrzebowanie, temperatura = setpoint
-        assert np.all(T_int[Q_H > 0] == 20.0)
-        assert np.all(T_int[Q_C > 0] == 26.0)
+        # Tam gdzie jest zapotrzebowanie, temperatura powietrza = setpoint
+        np.testing.assert_allclose(solution.t_air[solution.q_heating > 0], 20.0, atol=1e-9)
+        np.testing.assert_allclose(solution.t_air[solution.q_cooling > 0], 26.0, atol=1e-9)
         # Nigdy ogrzewanie i chłodzenie jednocześnie
-        assert np.all((Q_H <= 0.0) | (Q_C <= 0.0))
+        assert np.all((solution.q_heating <= 0.0) | (solution.q_cooling <= 0.0))
         # Poza godzinami HVAC temperatura w paśmie komfortu
-        idle = (Q_H == 0.0) & (Q_C == 0.0)
-        assert np.all(T_int[idle] >= 20.0 - 1e-9)
-        assert np.all(T_int[idle] <= 26.0 + 1e-9)
+        idle = (solution.q_heating == 0.0) & (solution.q_cooling == 0.0)
+        assert np.all(solution.t_air[idle] >= 20.0 - 1e-6)
+        assert np.all(solution.t_air[idle] <= 26.0 + 1e-6)
 
     def test_cooling_disabled_returns_zero(self):
         n = 8760
-        _, Q_H, Q_C, _ = solve_hourly_balance(
-            H_tr=50.0, H_ve=30.0,
-            Q_int=np.full(n, 5000.0), Q_sol=np.zeros(n), T_e=np.full(n, 35.0),
-            T_set_heating=20.0, T_set_cooling=None, C_m=3000.0,
+        solution = solve_zone_5r1c(
+            network=self._net(35.0),
+            h_ve=30.0,
+            t_e=np.full(n, 35.0),
+            phi_int=np.full(n, 5000.0),
+            phi_sol=np.zeros(n),
+            properties=zone_thermal_properties(100.0),
+            t_set_heating=20.0,
+            t_set_cooling=None,
         )
-        assert Q_H.sum() == 0.0
-        assert Q_C.sum() == 0.0  # chłodzenie wyłączone mimo przegrzewania
+        assert solution.q_heating.sum() == 0.0
+        assert solution.q_cooling.sum() == 0.0  # chłodzenie wyłączone mimo przegrzewania
 
 
 # ---------------------------------------------------------------------------
@@ -443,20 +503,25 @@ class TestSystems:
         assert cop[0] == pytest.approx(1.0874, abs=1e-3)
         assert cop[-1] == 6.0                     # clip na górze
 
-    def test_dhw_energy_demand_analytic(self):
-        """4.5 osoby * 50 L/d * 365 d * 4180 J/(kg*K) * 45 K / 3600."""
-        Q_wh = dhw_energy_demand(
-            daily_demand_per_person=50.0, occupancy_density=0.03, floor_area=150.0,
-            target_temperature=55.0, cold_water_temperature=10.0,
-        )
-        expected = 50.0 * 0.03 * 150.0 * 365 * 4180.0 * 45.0 / 3600.0
+    def test_annual_dhw_useful_energy_single_family_analytic(self):
+        """Tabela 27: VWi=1.40 dm³/(m²·d), kR=0.90 dla domu jednorodzinnego."""
+        Q_wh = annual_dhw_useful_energy(150.0, "residential_single_family")
+        expected = 1.40 * 150.0 * 4.19 * 1.0 * 45.0 * 0.90 * 365 / 3600 * 1000
         assert Q_wh == pytest.approx(expected, rel=1e-12)
-        assert Q_wh == pytest.approx(4_291_031.25, rel=1e-6)  # ~4291 kWh/rok
+        assert Q_wh == pytest.approx(3_613_089.375, rel=1e-6)  # ~3613 kWh/rok
 
-    def test_dhw_energy_demand_days_parameter(self):
-        Q_100 = dhw_energy_demand(50.0, 0.03, 150.0, 55.0, 10.0, days=100)
-        Q_365 = dhw_energy_demand(50.0, 0.03, 150.0, 55.0, 10.0, days=365)
-        assert pytest.approx(Q_365 * 100.0 / 365.0, rel=1e-12) == Q_100
+    def test_annual_dhw_useful_energy_uses_selected_profile(self):
+        office = annual_dhw_useful_energy(150.0, "office")
+        house = annual_dhw_useful_energy(150.0, "residential_single_family")
+        assert office == pytest.approx(
+            0.35 * 150.0 * 4.19 * 1.0 * 45.0 * 0.70 * 365 / 3600 * 1000,
+            rel=1e-12,
+        )
+        assert office < house
+
+    def test_annual_dhw_useful_energy_rejects_unknown_profile(self):
+        with pytest.raises(ValueError, match="Unsupported DHW usage profile"):
+            annual_dhw_useful_energy(150.0, "production")
 
     def test_final_energy_dhw_analytic(self):
         E_k = final_energy_dhw(np.array([1000.0, 2000.0]), efficiency=0.9,
@@ -473,13 +538,104 @@ class TestSystems:
 # ---------------------------------------------------------------------------
 
 
+class TestNormativeGaps:
+    """Uzupełnienia metodologiczne: tabela 13, tabela 20, tabele 21-25, LENI."""
+
+    def test_storage_unit_loss_table_13_lookup(self):
+        from app.engine.systems import storage_unit_loss_w_dm3
+
+        # 200 dm3, nieogrzewana, pośredni, izolacja 50 mm -> 0,49 W/dm3
+        assert storage_unit_loss_w_dm3(200.0, "unheated", "indirect", 50.0) == pytest.approx(0.49)
+        # 80 dm3 zaokrągla w górę do wiersza 100 dm3
+        assert storage_unit_loss_w_dm3(80.0, "heated", "indirect", 100.0) == pytest.approx(0.35)
+        # elektryczny w miejscu poboru: stały w kolumnie
+        assert storage_unit_loss_w_dm3(80.0, "unheated", "electric") == pytest.approx(2.80)
+        assert storage_unit_loss_w_dm3(80.0, "heated", "electric") == pytest.approx(2.28)
+        # gazowy 25 dm3 nieogrzewany -> 3,13
+        assert storage_unit_loss_w_dm3(20.0, "unheated", "gas") == pytest.approx(3.13)
+        # powyżej 2000 dm3 brak danych
+        assert storage_unit_loss_w_dm3(5000.0, "unheated") is None
+
+    def test_dhw_storage_standby_loss_formula_30(self):
+        from app.engine.systems import dhw_storage_standby_loss_kwh
+
+        # ΔQ = V_S·q_S·8760·1e-3: 200 dm3, 0,49 W/dm3 -> 858,5 kWh/rok
+        assert dhw_storage_standby_loss_kwh(200.0, "unheated", "indirect", 50.0) == (
+            pytest.approx(200.0 * 0.49 * 8760.0 / 1000.0)
+        )
+
+    def test_normative_airflow_residential_natural_tabela_24(self):
+        from app.engine.ventilation import normative_airflow_rate_m3h
+
+        # 0,31e-3 m3/(s·m2) ciągła dla mieszkalnego: 150 m2 -> 167,4 m3/h
+        assert normative_airflow_rate_m3h(
+            "residential_single_family", 150.0, "natural"
+        ) == pytest.approx(0.31e-3 * 150.0 * 3600.0)
+
+    def test_normative_airflow_office_beta_tabela_22_and_25(self):
+        from app.engine.ventilation import normative_airflow_rate_m3h
+
+        # biurowy 0,56e-3, grawitacyjna: udział β + 0,2(1-β) przy β=0,3 -> 0,44
+        expected = 0.56e-3 * (0.3 + 0.7 * 0.2) * 1000.0 * 3600.0
+        assert normative_airflow_rate_m3h(
+            "office", 1000.0, "natural", beta=0.3
+        ) == pytest.approx(expected)
+
+    def test_normative_airflow_supply_extract_uses_rn(self):
+        from app.engine.ventilation import normative_airflow_rate_m3h
+
+        # nawiewno-wywiewna: r_n = 0,75, udział β (poza użytkowaniem 0)
+        expected = 0.56e-3 * 0.75 * 0.3 * 1000.0 * 3600.0
+        assert normative_airflow_rate_m3h(
+            "office", 1000.0, "mechanical_with_recovery", beta=0.3
+        ) == pytest.approx(expected)
+
+    def test_auxiliary_demand_tabela_20(self):
+        from app.engine.systems import (
+            dhw_auxiliary_demand_wh,
+            heating_auxiliary_demand_wh,
+            ventilation_fan_hours_per_year,
+            ventilation_fan_power_w_m2,
+        )
+
+        # kocioł, Af=150: w.7a (0,50; 2520)
+        assert heating_auxiliary_demand_wh("gas_boiler", 150.0) == pytest.approx(
+            0.50 * 2520.0 * 150.0
+        )
+        # Af=500: w.7b (0,15; 3900)
+        assert heating_auxiliary_demand_wh("gas_boiler", 500.0) == pytest.approx(
+            0.15 * 3900.0 * 500.0
+        )
+        # PC glikol: w.9 (0,45; 1600)
+        assert heating_auxiliary_demand_wh("heat_pump_ground", 150.0) == pytest.approx(
+            0.45 * 1600.0 * 150.0
+        )
+        # electric_direct: brak
+        assert heating_auxiliary_demand_wh("electric_direct", 150.0) == 0.0
+        # CWU kocioł + pompa ładująca (w.6a + w.4a), bez cyrkulacji
+        assert dhw_auxiliary_demand_wh("gas_boiler", 150.0, "single_dwelling") == (
+            pytest.approx((1.40 * 310.0 + 0.25 * 270.0) * 150.0)
+        )
+        # CWU z cyrkulacją ciągłą (w.3a)
+        assert dhw_auxiliary_demand_wh(
+            "gas_boiler", 150.0, "central_circulation_insulated"
+        ) == pytest.approx((1.40 * 310.0 + 0.25 * 270.0 + 0.15 * 8760.0) * 150.0)
+        # wentylatory: nawiewno-wywiewna >0,6 ACH -> 1,30 W/m2; wywiewna -> 0,40
+        assert ventilation_fan_power_w_m2("mechanical_with_recovery", 1.5) == pytest.approx(1.30)
+        assert ventilation_fan_power_w_m2("mechanical_with_recovery", 0.5) == pytest.approx(0.50)
+        assert ventilation_fan_power_w_m2("exhaust", 0.5) == pytest.approx(0.40)
+        assert ventilation_fan_power_w_m2("natural", 1.0) == 0.0
+        assert ventilation_fan_hours_per_year(0.3) == pytest.approx(2628.0)
+
+
 class TestPrimaryEnergy:
     def test_annual_primary_energy_analytic_mixed_carriers(self):
         carriers = {"electricity": 1000.0, "natural_gas": 2000.0}
-        ep_wh, ec_kg = annual_primary_energy(carriers, PrimaryEnergyFactors())
-        assert ep_wh == pytest.approx(1000.0 * 2.5 + 2000.0 * 1.1)  # 4900 Wh
-        # we w kg CO2/MWh: 0.001 MWh * 0.6 + 0.002 MWh * 0.2 = 0.001 kg
-        assert ec_kg == pytest.approx((1000.0 * 0.6 + 2000.0 * 0.2) / 1e6)
+        ep_wh, ec_t = annual_primary_energy(carriers, PrimaryEnergyFactors())
+        # fp elektryczności = 3.00 wg tabeli 1 rozporządzenia (Dz.U. 2015 poz. 376)
+        assert ep_wh == pytest.approx(1000.0 * 3.0 + 2000.0 * 1.1)  # 5200 Wh
+        # we w kg CO2/kWh -> t CO2: 1 kWh*0.6 + 2 kWh*0.2 = 1.0 kg = 0.001 t
+        assert ec_t == pytest.approx((1000.0 * 0.6 + 2000.0 * 0.2) / 1e6)
 
     def test_share_of_renewable_energy_analytic(self):
         assert share_of_renewable_energy(
@@ -558,21 +714,24 @@ class TestSolar:
         assert total(0.5) == pytest.approx(total(1.0) * 0.5, rel=1e-12)
 
     def test_opaque_absorption_formula_and_ground_floor_excluded(self):
+        """Zysk od przegrody nieprzezroczystej = A*alpha*U*Rse*I (sol-air);
+        podłoga na gruncie nie otrzymuje promieniowania."""
+        from app.engine.envelope import R_SE_M2K_W
         from app.engine.solar import total_solar_gains
         df = _climate_df(GHI=400.0, DNI=250.0, DHI=150.0)
         roof = _opaque(
             element_type=ElementType.ROOF, inclination=0.0, area=90.0,
-            solar_absorptance=0.6, solar_reduction_factor=0.08,
+            u_value=0.2, solar_absorptance=0.6,
         )
         ground_floor = _opaque(
             element_type=ElementType.GROUND_FLOOR, inclination=180.0, area=90.0,
             adjacent_space_type=AdjacentSpaceType.GROUND,
-            solar_absorptance=0.9, solar_reduction_factor=0.5,
+            solar_absorptance=0.9,
         )
         _, opaque_abs = total_solar_gains([], [roof, ground_floor], df)
         i_roof = radiation_on_surface(df, 0.0, 0.0).to_numpy()
         np.testing.assert_allclose(
-            opaque_abs, 90.0 * 0.6 * 0.08 * i_roof, rtol=1e-9
+            opaque_abs, 90.0 * 0.6 * 0.2 * R_SE_M2K_W * i_roof, rtol=1e-9
         )  # podłoga gruntowa wykluczona
 
     def test_zero_radiation_zero_gains(self):

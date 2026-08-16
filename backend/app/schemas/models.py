@@ -3,7 +3,7 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Any
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 
 class BuildingType(StrEnum):
@@ -13,6 +13,27 @@ class BuildingType(StrEnum):
     RETAIL = "retail"
     HEALTHCARE = "healthcare"
     OTHER = "other"
+
+
+class DHWUsageProfile(StrEnum):
+    """Standard hot-water-use profiles from table 27 of the methodology.
+
+    The profile controls the annual useful DHW demand QW,nd.  It is separate
+    from the DHW source because the source only converts useful energy to
+    final and primary energy.
+    """
+
+    RESIDENTIAL_SINGLE_FAMILY = "residential_single_family"
+    RESIDENTIAL_MULTI_FAMILY_LUMP_SUM = "residential_multi_family_lump_sum"
+    RESIDENTIAL_MULTI_FAMILY_INDIVIDUAL_METERING = (
+        "residential_multi_family_individual_metering"
+    )
+    OFFICE = "office"
+    EDUCATION = "education"
+    HEALTHCARE = "healthcare"
+    RETAIL_SERVICES = "retail_services"
+    COLLECTIVE_RESIDENTIAL = "collective_residential"
+    WAREHOUSE = "warehouse"
 
 
 class ZoneType(StrEnum):
@@ -50,8 +71,75 @@ class TransparentType(StrEnum):
 class VentilationType(StrEnum):
     NATURAL = "natural"
     MECHANICAL = "mechanical"
+    MECHANICAL_WITH_RECOVERY = "mechanical_with_recovery"
+    EXHAUST = "exhaust"
     HYBRID = "hybrid"
     NONE = "none"
+
+
+class EnergyCarrier(StrEnum):
+    """Energy carriers used for the final and primary-energy balance."""
+
+    ELECTRICITY = "electricity"
+    NATURAL_GAS = "natural_gas"
+    LPG = "lpg"
+    HEATING_OIL = "heating_oil"
+    HARD_COAL = "hard_coal"
+    LIGNITE = "lignite"
+    BIOMASS = "biomass"
+    BIOGAS = "biogas"
+    DISTRICT_HEATING = "district_heating"
+    SOLAR = "solar"
+    WIND = "wind"
+    GEOTHERMAL = "geothermal"
+
+
+class SystemSourceType(StrEnum):
+    """Controlled source catalogue for heating and cooling systems."""
+
+    NONE = "none"
+    ELECTRIC_DIRECT = "electric_direct"
+    GAS_BOILER = "gas_boiler"
+    GAS_CONDENSING = "gas_condensing"
+    OIL_BOILER = "oil_boiler"
+    BIOMASS_BOILER = "biomass_boiler"
+    COAL_BOILER = "coal_boiler"
+    FIREPLACE = "fireplace"
+    HEAT_PUMP_AIR = "heat_pump_air"
+    HEAT_PUMP_GROUND = "heat_pump_ground"
+    HEAT_PUMP_WATER = "heat_pump_water"
+    DISTRICT_HEATING = "district_heating"
+    SPLIT_AC = "split_ac"
+    MULTISPLIT_VRV = "multisplit_vrv"
+    VRV = "vrv"
+    LIQUID_CHILLER_AIR = "liquid_chiller_air"
+    LIQUID_CHILLER_WATER = "liquid_chiller_water"
+    PASSIVE_GROUND_COOLING = "passive_ground_cooling"
+    ABSORPTION_COOLING = "absorption_cooling"
+
+
+class DHWSourceType(StrEnum):
+    NONE = "none"
+    ELECTRIC_STORAGE = "electric_storage"
+    ELECTRIC_INSTANTANEOUS = "electric_instantaneous"
+    GAS_INSTANTANEOUS = "gas_instantaneous"
+    GAS_BOILER = "gas_boiler"
+    GAS_CONDENSING = "gas_condensing"
+    HEAT_PUMP_AIR = "heat_pump_air"
+    HEAT_PUMP_GROUND = "heat_pump_ground"
+    HEAT_PUMP_WATER = "heat_pump_water"
+    DISTRICT_HEATING = "district_heating"
+
+
+class DHWDistributionType(StrEnum):
+    """Distribution variants represented in table 12 of the methodology."""
+
+    POINT_OF_USE = "point_of_use"
+    SINGLE_DWELLING = "single_dwelling"
+    CENTRAL_NO_CIRCULATION = "central_no_circulation"
+    CENTRAL_CIRCULATION_UNINSULATED = "central_circulation_uninsulated"
+    CENTRAL_CIRCULATION_INSULATED = "central_circulation_insulated"
+    CENTRAL_CIRCULATION_TIME_LIMITED = "central_circulation_time_limited"
 
 
 class ScheduleType(StrEnum):
@@ -86,16 +174,23 @@ class Schedule(BaseModel):
 class GeneralInfo(BaseModel):
     building_name: str = ""
     building_type: BuildingType = BuildingType.RESIDENTIAL
+    dhw_usage_profile: DHWUsageProfile = DHWUsageProfile.RESIDENTIAL_SINGLE_FAMILY
     construction_year: int = Field(2020, ge=1900, le=2100)
     conditioned_floor_area: float = Field(..., gt=0.0)
     usable_floor_area: float = Field(..., gt=0.0)
     heated_volume: float = Field(..., gt=0.0)
     number_of_storeys: int = Field(1, ge=1)
     location_address: str | None = None
+    # Wskaźnik LENI [kWh/(m2·rok)] wg PN-EN 15193 dla wbudowanej instalacji
+    # oświetlenia (wzór (35)). Stosowany wyłącznie dla budynków
+    # niemieszkalnych; None = oświetlenie nie jest liczone.
+    lighting_indicator_leni: float | None = Field(None, ge=0.0)
+    # Powierzchnia pomieszczeń z oświetleniem A_L [m2]; domyślnie Af.
+    lighting_area_m2: float | None = Field(None, gt=0.0)
 
 
 class ThermalZone(BaseModel):
-    id: str
+    id: str = Field(..., min_length=1)
     name: str
     zone_type: ZoneType = ZoneType.HEATED
     floor_area: float = Field(..., gt=0.0)
@@ -108,33 +203,56 @@ class ThermalZone(BaseModel):
 class OpaqueElement(BaseModel):
     id: str
     name: str
-    zone_id: str
+    zone_id: str = Field(..., min_length=1)
     element_type: ElementType = ElementType.EXTERNAL_WALL
     orientation_azimuth: float = Field(0.0, ge=0.0, lt=360.0)
     inclination: float = Field(90.0, ge=0.0, le=180.0)
+    height: float | None = Field(None, gt=0.0)
+    width: float | None = Field(None, gt=0.0)
     area: float = Field(..., gt=0.0)
     u_value: float = Field(..., gt=0.0)
     solar_absorptance: float = Field(0.6, ge=0.0, le=1.0)
     emissivity: float = Field(0.9, ge=0.0, le=1.0)
-    # Fraction of absorbed solar radiation that reaches the internal node
-    # (ISO 52016-1 reduction factor, typically 0.05-0.15 for heavy constructions)
-    solar_reduction_factor: float = Field(0.08, ge=0.0, le=1.0)
+    # Deprecated: retained only so older project files keep validating. The
+    # engine derives the inward solar fraction physically from U * R_se and
+    # ignores this field.
+    solar_reduction_factor: float = Field(0.08, ge=0.0, le=1.0, deprecated=True)
     adjacent_space_type: AdjacentSpaceType = AdjacentSpaceType.OUTDOOR
     adjacent_temperature: float | None = None
+
+    @model_validator(mode="after")
+    def calculate_area_from_dimensions(self) -> OpaqueElement:
+        """Derive the envelope area from height and width when supplied."""
+        if (self.height is None) != (self.width is None):
+            raise ValueError("Both height and width must be provided together")
+        if self.height is not None and self.width is not None:
+            self.area = self.height * self.width
+        return self
 
 
 class TransparentElement(BaseModel):
     id: str
     name: str
-    zone_id: str
+    zone_id: str = Field(..., min_length=1)
     element_type: TransparentType = TransparentType.WINDOW
     orientation_azimuth: float = Field(0.0, ge=0.0, lt=360.0)
     inclination: float = Field(90.0, ge=0.0, le=180.0)
+    height: float | None = Field(None, gt=0.0)
+    width: float | None = Field(None, gt=0.0)
     area: float = Field(..., gt=0.0)
     u_value: float = Field(..., gt=0.0)
     g_value: float = Field(..., ge=0.0, le=1.0)
     frame_factor: float = Field(0.2, ge=0.0, le=1.0)
     shading_factor: float = Field(1.0, ge=0.0, le=1.0)
+
+    @model_validator(mode="after")
+    def calculate_area_from_dimensions(self) -> TransparentElement:
+        """Derive the glazed area from height and width when supplied."""
+        if (self.height is None) != (self.width is None):
+            raise ValueError("Both height and width must be provided together")
+        if self.height is not None and self.width is not None:
+            self.area = self.height * self.width
+        return self
 
 
 class LinearThermalBridge(BaseModel):
@@ -162,9 +280,16 @@ class ThermalBridgeConfig(BaseModel):
 
 class Ventilation(BaseModel):
     ventilation_type: VentilationType = VentilationType.NATURAL
+    # Budynkowy strumień powietrza [m3/h]. Wartość 0 oznacza pobranie
+    # strumienia normatywnego z tabel 21/22/24/25 rozporządzenia (V0 wg
+    # profilu użytkowania, z β i r_n dla wentylacji mechanicznej).
     airflow_rate: float = Field(0.0, ge=0.0)
     heat_recovery_efficiency: float = Field(0.0, ge=0.0, le=1.0)
     infiltration_rate: float = Field(0.5, ge=0.0)
+    # Udział czasu użytkowania budynku β (§ 5.5.2). None = 1,0 dla
+    # mieszkalnych (praca ciągła), 0,3 dla pozostałych (analogicznie do
+    # przykładu standardowego z tabeli 26).
+    usage_share_beta: float | None = Field(None, ge=0.0, le=1.0)
     supply_temperature: float | None = None
     mechanical_fan_power: float | None = Field(0.0, ge=0.0)
     schedule: Schedule = Schedule()
@@ -176,27 +301,129 @@ class InternalGainSource(BaseModel):
 
 
 class InternalGains(BaseModel):
+    """Internal heat gains; defaults reproduce tabela 26 of the methodology.
+
+    The default split (occupancy 80 W/person with the default zone density of
+    0.03 person/m2, lighting 2.0 W/m2, equipment 2.4 W/m2) sums to 6.8 W/m2 -
+    the normative q_int for a single-family residential building
+    (rozporządzenie Dz.U. 2015 poz. 376, tabela 26).  Other building types
+    should use ``normative_internal_gains`` from app.engine.internal_gains.
+    """
+
     occupancy: InternalGainSource = InternalGainSource(power_density=80.0)
-    lighting: InternalGainSource = InternalGainSource(power_density=10.0)
-    equipment: InternalGainSource = InternalGainSource(power_density=5.0)
+    lighting: InternalGainSource = InternalGainSource(power_density=2.0)
+    equipment: InternalGainSource = InternalGainSource(power_density=2.4)
 
 
 class SystemHeatingCooling(BaseModel):
-    system_type: str = "heat_pump_air"
-    fuel_or_carrier: str = "electricity"
-    nominal_power: float = Field(10.0, gt=0.0)
-    efficiency_or_cop_map: dict[str, Any] = {"constant": True, "value": 3.0}
-    distribution_loss_factor: float = Field(0.95, ge=0.0, le=1.0)
-    control_factor: float = Field(1.0, ge=0.0)
+    """Heating/cooling source and seasonal system-efficiency parameters.
+
+    ``generation_efficiency`` is ηH,g for heating and SEER for cooling.
+    The remaining fields correspond to the distribution, storage and
+    regulation/use components of the seasonal efficiency.
+    """
+
+    system_type: SystemSourceType = SystemSourceType.HEAT_PUMP_AIR
+    fuel_or_carrier: EnergyCarrier = EnergyCarrier.ELECTRICITY
+    # Retained only to import older JSON files. It is ignored: heating power
+    # is derived from calculated peak heat losses and cooling Q_C,nd is
+    # obtained from the hourly thermal balance.
+    nominal_power: float | None = Field(None, deprecated=True)
+    generation_efficiency: float | None = Field(None, gt=0.0)
+    distribution_efficiency: float | None = Field(None, gt=0.0, le=1.0)
+    storage_efficiency: float = Field(1.0, gt=0.0, le=1.0)
+    control_efficiency: float = Field(1.0, gt=0.0, le=1.0)
+    # Legacy input retained for imported JSON files from the previous schema.
+    efficiency_or_cop_map: dict[str, Any] = Field(
+        default_factory=lambda: {"constant": True, "value": 3.0}
+    )
+    distribution_loss_factor: float | None = Field(None, gt=0.0, le=1.0)
+    control_factor: float | None = Field(None, gt=0.0)
+    sink_temperature: float = Field(35.0, gt=0.0)
+    # Constant heat-source temperature [degC] for ground/water heat pumps
+    # (brine or water).  When None, a ground/water heat pump runs at its
+    # rated COP all year instead of following the outdoor air temperature.
+    source_temperature: float | None = Field(None)
     auxiliary_energy: float = Field(0.0, ge=0.0)
 
 
 class SystemDHW(BaseModel):
-    system_type: str = "electric_storage"
-    daily_demand_per_person: float = Field(50.0, ge=0.0)
-    target_temperature: float = Field(55.0)
-    cold_water_temperature: float = Field(10.0)
-    efficiency: float = Field(0.9, ge=0.0, le=1.0)
+    """DHW source and ηW,g/ηW,s/ηW,d/ηW,e input parameters."""
+
+    system_type: DHWSourceType = DHWSourceType.ELECTRIC_STORAGE
+    fuel_or_carrier: EnergyCarrier = EnergyCarrier.ELECTRICITY
+    # Legacy demand inputs are intentionally ignored. Q_W,nd is calculated
+    # from GeneralInfo.dhw_usage_profile and Af according to § 5.3/table 27.
+    daily_demand_per_person: float | None = Field(None, deprecated=True)
+    number_of_users: float | None = Field(None, deprecated=True)
+    target_temperature: float | None = Field(None, deprecated=True)
+    cold_water_temperature: float | None = Field(None, deprecated=True)
+    generation_efficiency: float | None = Field(None, gt=0.0)
+    storage_efficiency: float = Field(1.0, gt=0.0, le=1.0)
+    distribution_efficiency: float = Field(0.6, gt=0.0, le=1.0)
+    utilization_efficiency: float = Field(1.0, gt=0.0, le=1.0)
+    distribution_type: DHWDistributionType = DHWDistributionType.CENTRAL_NO_CIRCULATION
+    # Straty zasobnika wg tabeli 13 / wzoru (30). Gdy objętość jest podana,
+    # straty postoju ΔQ_W,s wyznaczane są z tabeli 13 (ηW,s z wzoru (29));
+    # w przeciwnym razie stosowane jest pole storage_efficiency.
+    storage_volume_dm3: float | None = Field(None, gt=0.0)
+    storage_location: str | None = Field(None)  # "heated" / "unheated"
+    storage_insulation_mm: float | None = Field(None, gt=0.0)  # 100/50/20
+    # Legacy input retained for imported JSON files from the previous schema.
+    efficiency: float | None = Field(None, gt=0.0)
+
+
+HEATING_SOURCE_TYPES = frozenset(
+    {
+        SystemSourceType.NONE,
+        SystemSourceType.ELECTRIC_DIRECT,
+        SystemSourceType.GAS_BOILER,
+        SystemSourceType.GAS_CONDENSING,
+        SystemSourceType.OIL_BOILER,
+        SystemSourceType.BIOMASS_BOILER,
+        SystemSourceType.COAL_BOILER,
+        SystemSourceType.FIREPLACE,
+        SystemSourceType.HEAT_PUMP_AIR,
+        SystemSourceType.HEAT_PUMP_GROUND,
+        SystemSourceType.HEAT_PUMP_WATER,
+        SystemSourceType.DISTRICT_HEATING,
+    }
+)
+
+COOLING_SOURCE_TYPES = frozenset(
+    {
+        SystemSourceType.NONE,
+        SystemSourceType.SPLIT_AC,
+        SystemSourceType.MULTISPLIT_VRV,
+        SystemSourceType.VRV,
+        SystemSourceType.LIQUID_CHILLER_AIR,
+        SystemSourceType.LIQUID_CHILLER_WATER,
+        SystemSourceType.PASSIVE_GROUND_COOLING,
+        SystemSourceType.ABSORPTION_COOLING,
+    }
+)
+
+
+class BuildingSystems(BaseModel):
+    """Technical systems used by the three energy-service calculations."""
+
+    heating: SystemHeatingCooling = Field(
+        default_factory=lambda: SystemHeatingCooling.model_construct()
+    )
+    cooling: SystemHeatingCooling | None = None
+    dhw: SystemDHW = Field(default_factory=lambda: SystemDHW.model_construct())
+
+    @model_validator(mode="after")
+    def validate_service_sources(self) -> BuildingSystems:
+        if self.heating.system_type not in HEATING_SOURCE_TYPES:
+            raise ValueError(
+                f"Invalid heating system source: {self.heating.system_type}"
+            )
+        if self.cooling is not None and self.cooling.system_type not in COOLING_SOURCE_TYPES:
+            raise ValueError(
+                f"Invalid cooling system source: {self.cooling.system_type}"
+            )
+        return self
 
 
 class PrimaryEnergyFactor(BaseModel):
@@ -205,11 +432,29 @@ class PrimaryEnergyFactor(BaseModel):
 
 
 class PrimaryEnergyFactors(BaseModel):
-    electricity: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=2.5, we=0.6)
+    """Non-renewable primary energy factors w_i and CO2 emission indicators.
+
+    ``fp`` defaults follow tabela 1 of the methodology (Dz.U. 2015 poz. 376):
+    electricity 3.00, local fossil fuels 1.10, biomass 0.20, biogas 0.50.
+    District heating depends on the source plant (cogeneration 0.80 coal/gas
+    or 0.15 biomass; heat-only plant 1.30 coal or 1.20 gas/oil) - 1.20 is
+    kept as a neutral default that the user should adjust per project.
+    ``we`` is expressed in kg CO2/kWh; override with current KOBiZE values.
+    """
+
+    electricity: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=3.0, we=0.6)
     natural_gas: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=1.1, we=0.2)
+    lpg: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=1.1, we=0.2)
+    heating_oil: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=1.1, we=0.27)
+    hard_coal: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=1.1, we=0.34)
+    lignite: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=1.1, we=0.34)
     district_heating: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=1.2, we=0.25)
-    biomass: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=1.0, we=0.05)
-    renewable: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=1.0, we=0.0)
+    biomass: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=0.2, we=0.05)
+    biogas: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=0.5, we=0.05)
+    solar: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=0.0, we=0.0)
+    wind: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=0.0, we=0.0)
+    geothermal: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=0.0, we=0.0)
+    renewable: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=0.0, we=0.0)
 
 
 class BuildingProject(BaseModel):
@@ -224,8 +469,31 @@ class BuildingProject(BaseModel):
     thermal_bridges: ThermalBridgeConfig = ThermalBridgeConfig()
     ventilation: Ventilation
     internal_gains: InternalGains = InternalGains()
-    systems: dict[str, Any] = {}  # Will be refined once schema is stable
+    systems: BuildingSystems = Field(default_factory=BuildingSystems)
     primary_energy: PrimaryEnergyFactors = PrimaryEnergyFactors()
+
+    @model_validator(mode="after")
+    def validate_zone_references(self) -> BuildingProject:
+        zone_ids = [zone.id for zone in self.thermal_zones]
+        if len(zone_ids) != len(set(zone_ids)):
+            raise ValueError("Thermal zone IDs must be unique")
+
+        referenced_zone_ids = [
+            element.zone_id for element in self.opaque_building_elements
+        ] + [
+            element.zone_id for element in self.transparent_building_elements
+        ]
+        referenced_zone_ids.extend(
+            bridge.zone_id for bridge in self.thermal_bridges.linear_bridges
+        )
+        referenced_zone_ids.extend(
+            bridge.zone_id for bridge in self.thermal_bridges.point_bridges
+        )
+        missing_zone_ids = sorted(set(referenced_zone_ids) - set(zone_ids))
+        if missing_zone_ids:
+            missing = ", ".join(missing_zone_ids)
+            raise ValueError(f"Unknown thermal zone ID referenced by an element: {missing}")
+        return self
 
 
 class MonthlyResult(BaseModel):
@@ -259,6 +527,7 @@ class ComplianceCheck(BaseModel):
 class CalculationResult(BaseModel):
     project_id: str
     status: str
+    design_heating_power_kw: float = Field(0.0, ge=0.0)
     annual_indicators: AnnualIndicators
     monthly: list[MonthlyResult]
     hourly: dict[str, Any] | None = None

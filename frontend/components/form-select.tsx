@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { FormField } from "@/components/form-field"
+import { cn } from "@/lib/utils"
 
 interface Option {
   value: string
@@ -25,6 +26,7 @@ interface FormSelectProps<T extends FieldValues> {
   options: Option[]
   placeholder?: string
   className?: string
+  onChange?: (value: string) => void
 }
 
 export function FormSelect<T extends FieldValues>({
@@ -35,15 +37,27 @@ export function FormSelect<T extends FieldValues>({
   options,
   placeholder = "Wybierz...",
   className,
+  onChange,
 }: FormSelectProps<T>) {
   return (
-    <FormField label={label} tooltip={tooltip}>
-      <Controller
-        name={name}
-        control={control}
-        render={({ field }) => (
-          <Select value={field.value} onValueChange={field.onChange}>
-            <SelectTrigger className={className}>
+    <Controller
+      name={name}
+      control={control}
+      render={({ field, fieldState }) => (
+        <FormField label={label} tooltip={tooltip} error={fieldState.error?.message}>
+          <Select
+            name={field.name}
+            value={field.value}
+            onValueChange={(value) => {
+              field.onChange(value)
+              onChange?.(value)
+            }}
+          >
+            <SelectTrigger
+              className={cn(className, fieldState.invalid && "border-destructive ring-1 ring-destructive")}
+              aria-invalid={fieldState.invalid}
+              data-field-path={field.name}
+            >
               <SelectValue placeholder={placeholder} />
             </SelectTrigger>
             <SelectContent>
@@ -54,8 +68,8 @@ export function FormSelect<T extends FieldValues>({
               ))}
             </SelectContent>
           </Select>
-        )}
-      />
-    </FormField>
+        </FormField>
+      )}
+    />
   )
 }

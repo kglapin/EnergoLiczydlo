@@ -54,6 +54,7 @@ def office_project() -> BuildingProject:
         general=GeneralInfo(
             building_name="Biurowiec Łódź",
             building_type="office",
+            dhw_usage_profile="office",
             construction_year=2025,
             conditioned_floor_area=floor_area,
             usable_floor_area=floor_area,
@@ -134,7 +135,6 @@ def office_project() -> BuildingProject:
             "heating": {
                 "system_type": "heat_pump_air",
                 "fuel_or_carrier": "electricity",
-                "nominal_power": 200.0,
                 "efficiency_or_cop_map": {"constant": True, "value": 4.1},
                 "sink_temperature": 35.0,
                 "distribution_loss_factor": 0.95,
@@ -142,14 +142,10 @@ def office_project() -> BuildingProject:
             "cooling": {
                 "system_type": "vrv",
                 "fuel_or_carrier": "electricity",
-                "nominal_power": 150.0,
                 "efficiency_or_cop_map": {"constant": True, "value": 4.1},
             },
             "dhw": {
                 "system_type": "electric_storage",
-                "daily_demand_per_person": 10.0,
-                "target_temperature": 55.0,
-                "cold_water_temperature": 10.0,
                 "efficiency": 4.5,
             },
         },
