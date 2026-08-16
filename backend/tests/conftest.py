@@ -5,7 +5,8 @@ import pytest
 
 @pytest.fixture(scope="session")
 def project_root() -> Path:
-    return Path(__file__).parents[3]
+    # tests/ -> backend/ -> repo root
+    return Path(__file__).parents[2]
 
 
 @pytest.fixture(scope="session")
