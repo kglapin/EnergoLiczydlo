@@ -162,4 +162,10 @@ def make_synthetic_year(
     )
     df["sun_zenith"] = solar_pos["apparent_zenith"]
     df["sun_azimuth"] = solar_pos["azimuth"]
+    # Physical realism: no solar radiation while the sun is below the horizon.
+    # Without this, a constant DNI broadcast at night produces spurious direct
+    # irradiance on vertical surfaces (pvlib does not clip the beam projection
+    # for a sun below the horizon).
+    night = df["sun_zenith"] >= 90.0
+    df.loc[night, ["GHI", "DNI", "DHI"]] = 0.0
     return df

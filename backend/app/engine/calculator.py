@@ -38,9 +38,14 @@ from app.schemas.models import (
     ThermalZone,
     TransparentElement,
     VentilationType,
+    ZoneType,
 )
 
 DATA_DIR = Path(os.environ.get("TMY_DATA_PATH", Path(__file__).parents[3] / "data" / "tmy"))
+
+# Zone types for which the solver enforces heating / cooling setpoints.
+HEATED_ZONE_TYPES = {ZoneType.HEATED, ZoneType.HEATED_AND_COOLED, ZoneType.SEMI_HEATED}
+COOLED_ZONE_TYPES = {ZoneType.COOLED, ZoneType.HEATED_AND_COOLED}
 
 
 def _monthly_sums(series: np.ndarray) -> list[float]:
@@ -112,12 +117,20 @@ def _aggregate_zone_results(
 
     # Thermal-balance coefficients
     H_tr = total_transmission_coefficient(
-        opaque, transparent, project.thermal_bridges
+        opaque, transparent, project.thermal_bridges, zone_id=zone.id
     )
 
-    # Dynamic thermal-balance solver
+    # Dynamic thermal-balance solver. Setpoints apply only to zones whose
+    # zone_type declares heating / cooling; unheated zones free-float.
     C_m = thermal_capacity(zone.floor_area)
-    T_set_cooling = zone.setpoint_cooling
+    T_set_heating = (
+        zone.setpoint_heating if zone.zone_type in HEATED_ZONE_TYPES else None
+    )
+    T_set_cooling = (
+        zone.setpoint_cooling
+        if zone.zone_type in COOLED_ZONE_TYPES and zone.setpoint_cooling is not None
+        else None
+    )
 
     T_int, Q_H, Q_C, Q_bal = solve_hourly_balance(
         H_tr=H_tr,
@@ -125,7 +138,7 @@ def _aggregate_zone_results(
         Q_int=q_int,
         Q_sol=q_solar,
         T_e=df["T_e"].to_numpy(),
-        T_set_heating=zone.setpoint_heating,
+        T_set_heating=T_set_heating,
         T_set_cooling=T_set_cooling,
         C_m=C_m,
     )
@@ -156,6 +169,8 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
     total_q_solar = np.zeros(len(df), dtype=float)
     total_q_transmission = np.zeros(len(df), dtype=float)
     total_q_ventilation = np.zeros(len(df), dtype=float)
+    total_T_int = np.zeros(len(df), dtype=float)
+    total_zone_area = 0.0
 
     conditioned_area = project.general.conditioned_floor_area
 
@@ -318,7 +333,9 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
         hourly={
             "Q_H": total_Q_H.tolist(),
             "Q_C": total_Q_C.tolist(),
-            "T_int": df["T_e"].to_numpy().tolist(),
+            "T_int": (
+                total_T_int / total_zone_area if total_zone_area > 0 else df["T_e"].to_numpy()
+            ).tolist(),
         },
         compliance=compliance,
     )

@@ -31,7 +31,8 @@ def evaluate_schedule(schedule: Schedule, datetimes: pd.DatetimeIndex) -> np.nda
         Hourly profile values in [0, 1] (or arbitrary if constant_value).
     """
     if schedule.type == ScheduleType.CONSTANT:
-        return np.full(HOURS_IN_YEAR, schedule.constant_value or 1.0)
+        value = schedule.constant_value if schedule.constant_value is not None else 1.0
+        return np.full(HOURS_IN_YEAR, value)
 
     if schedule.type == ScheduleType.HOURLY_PROFILE:
         profile = np.empty(HOURS_IN_YEAR, dtype=float)
@@ -67,6 +68,7 @@ def internal_gains(
     floor_area: float,
     source: InternalGainSource,
     datetimes: pd.DatetimeIndex,
+    per_person: bool = False,
 ) -> np.ndarray:
     """Compute hourly internal gains [W] for one source.
 
@@ -77,9 +79,13 @@ def internal_gains(
     floor_area : float
         Zone floor area [m2].
     source : InternalGainSource
-        Power density [W/m2] and schedule.
+        Power density and schedule.
     datetimes : pd.DatetimeIndex
         8760 hourly datetimes.
+    per_person : bool
+        True for the occupancy source, where ``power_density`` is W per
+        person; False for lighting/equipment, where ``power_density`` is
+        W per m2 of floor area.
 
     Returns
     -------
@@ -87,8 +93,10 @@ def internal_gains(
         Hourly gains [W].
     """
     profile = evaluate_schedule(source.schedule, datetimes)
-    # For occupancy the power_density is interpreted as W per person.
-    total_power = source.power_density * occupancy_density * floor_area
+    if per_person:
+        total_power = source.power_density * occupancy_density * floor_area
+    else:
+        total_power = source.power_density * floor_area
     return np.asarray(total_power * profile, dtype=float)
 
 
@@ -100,7 +108,8 @@ def total_internal_gains(
 ) -> np.ndarray:
     """Sum hourly internal gains [W] from occupancy, lighting and equipment."""
     return np.asarray(
-        internal_gains(occupancy_density, floor_area, gains.occupancy, datetimes)
+        internal_gains(occupancy_density, floor_area, gains.occupancy, datetimes,
+                       per_person=True)
         + internal_gains(occupancy_density, floor_area, gains.lighting, datetimes)
         + internal_gains(occupancy_density, floor_area, gains.equipment, datetimes),
         dtype=float,

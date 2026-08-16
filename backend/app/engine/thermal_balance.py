@@ -26,7 +26,7 @@ def solve_hourly_balance(
     Q_int: np.ndarray,
     Q_sol: np.ndarray,
     T_e: np.ndarray,
-    T_set_heating: float,
+    T_set_heating: float | None,
     T_set_cooling: float | None,
     C_m: float,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
@@ -44,8 +44,9 @@ def solve_hourly_balance(
         Solar gains entering the internal air node [W] per hour (8760).
     T_e : np.ndarray
         Outdoor air temperature [°C] per hour (8760).
-    T_set_heating : float
-        Heating setpoint [°C].
+    T_set_heating : float | None
+        Heating setpoint [°C]; if None, heating is disabled (free-floating
+        lower bound removed — e.g. unheated zones).
     T_set_cooling : float | None
         Cooling setpoint [°C]; if None, cooling is disabled.
     C_m : float
@@ -71,8 +72,9 @@ def solve_hourly_balance(
     Q_C = np.zeros(n, dtype=float)
     Q_bal = np.zeros(n, dtype=float)
 
-    # Initial temperature guess = heating setpoint
-    T_prev = float(T_set_heating)
+    # Initial temperature guess = heating setpoint (or outdoor temperature
+    # for zones without heating, e.g. unheated spaces)
+    T_prev = float(T_set_heating) if T_set_heating is not None else float(T_e[0])
 
     # Common denominator for the implicit Euler discretisation
     denom = C_m / dt + H
@@ -82,7 +84,7 @@ def solve_hourly_balance(
         T_free = (C_m / dt * T_prev + Q_int[t] + Q_sol[t] + H * T_e[t]) / denom
 
         # Heating demand if too cold
-        if T_free < T_set_heating:
+        if T_set_heating is not None and T_free < T_set_heating:
             T_int[t] = T_set_heating
             Q_H[t] = (T_set_heating - T_free) * denom * dt  # Wh
             Q_C[t] = 0.0

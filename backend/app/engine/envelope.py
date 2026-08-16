@@ -27,6 +27,7 @@ def adjacent_temperature(
     element: OpaqueElement,
     T_e: pd.Series | np.ndarray,
     unheated_zone_temperature: pd.Series | np.ndarray | None = None,
+    T_int: pd.Series | np.ndarray | None = None,
 ) -> np.ndarray:
     """Return the adjacent-space temperature [°C] for an opaque element hour-by-hour."""
     adj = element.adjacent_space_type
@@ -52,8 +53,14 @@ def adjacent_temperature(
             )
         return np.full(len(np.asarray(T_e)), element.adjacent_temperature)
     if adj == AdjacentSpaceType.HEATED_ZONE:
-        # Internal partition: no heat transfer across zones in simplified model
-        return np.zeros(len(np.asarray(T_e)))
+        # Internal partition between conditioned spaces: both sides share the
+        # indoor temperature, so there is no net heat transfer (dT = 0).
+        if T_int is None:
+            raise ValueError(
+                f"Element {element.id} has HEATED_ZONE adjacent space; "
+                "T_int is required to evaluate the adjacent temperature"
+            )
+        return np.asarray(T_int, dtype=float)
     raise ValueError(f"Unknown adjacent_space_type: {adj}")
 
 
@@ -64,7 +71,9 @@ def compute_opaque_heat_loss(
     unheated_zone_temperature: pd.Series | np.ndarray | None = None,
 ) -> np.ndarray:
     """Hourly transmission heat loss [W] through one opaque element."""
-    T_adj = adjacent_temperature(element, T_e, unheated_zone_temperature)
+    T_adj = adjacent_temperature(
+        element, T_e, unheated_zone_temperature, T_int=np.asarray(T_int)
+    )
     delta_T = np.asarray(T_int) - T_adj
     return np.asarray(element.area * element.u_value * delta_T, dtype=float)
 
@@ -110,14 +119,23 @@ def total_transmission_coefficient(
     opaque_elements: list[OpaqueElement],
     transparent_elements: list[TransparentElement],
     bridges: ThermalBridgeConfig,
+    zone_id: str | None = None,
 ) -> float:
-    """Total H_tr [W/K] for the building at design deltaT = 1 K.
+    """Total H_tr [W/K] for a zone (or the whole building) at design deltaT = 1 K.
 
-    Includes opaque/transparent U*A and thermal bridges.
+    Includes opaque/transparent U*A and thermal bridges. When ``zone_id`` is
+    given, only bridges assigned to that zone are included; when None, all
+    bridges are counted (building-level total).
     """
     h_opaque = sum(el.area * el.u_value for el in opaque_elements)
     h_transparent = sum(el.area * el.u_value for el in transparent_elements)
     h_bridges = sum(
-        lb.psi_value * lb.length for lb in bridges.linear_bridges
-    ) + sum(pb.chi_value * pb.count for pb in bridges.point_bridges)
+        lb.psi_value * lb.length
+        for lb in bridges.linear_bridges
+        if zone_id is None or lb.zone_id == zone_id
+    ) + sum(
+        pb.chi_value * pb.count
+        for pb in bridges.point_bridges
+        if zone_id is None or pb.zone_id == zone_id
+    )
     return h_opaque + h_transparent + h_bridges
