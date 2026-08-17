@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import numpy as np
 import pytest
+from pydantic import ValidationError
 
+from app.engine.audited_calculator import prepare_project_for_audited_calculation
 from app.engine.design_load import calculate_design_heat_load
 from app.engine.ground_iso13370 import (
     characteristic_dimension_m,
@@ -20,8 +22,14 @@ from app.engine.heat_recovery import (
 )
 from app.engine.normative_models import (
     DesignConditionsSettings,
+    GroundElementSettings,
     GroundISO13370Settings,
     HeatRecoverySettings,
+    LegalProvenanceSettings,
+)
+from app.engine.ventilation import (
+    ventilation_effective_supply_temperature,
+    ventilation_heat_transfer_coefficient,
 )
 from app.schemas.models import OpaqueElement, ThermalZone, Ventilation
 from scripts.test_building import make_test_project
@@ -51,6 +59,11 @@ def test_iso13370_more_floor_resistance_reduces_ground_u_value() -> None:
     assert strong < weak
 
 
+def test_ground_periodic_coefficients_must_be_supplied_as_pair() -> None:
+    with pytest.raises(ValidationError, match="must be supplied together"):
+        GroundElementSettings(periodic_amplitude_ratio=0.2)
+
+
 def test_soil_penetration_depth_and_diagnostic_response_are_physical() -> None:
     penetration = soil_penetration_depth_m(2.0, 1800.0, 900.0)
     ratio, lag_days = diagnostic_periodic_response(2.0, 2.0, 1800.0, 900.0)
@@ -62,13 +75,20 @@ def test_soil_penetration_depth_and_diagnostic_response_are_physical() -> None:
 def test_periodic_ground_temperature_preserves_annual_mean_and_attenuates() -> None:
     hours = np.arange(8760, dtype=float)
     outdoor = 8.0 + 12.0 * np.cos(2.0 * np.pi * hours / 8760.0)
-    ground = periodic_ground_temperature(outdoor, amplitude_ratio=0.25, phase_shift_days=60.0)
+    ground = periodic_ground_temperature(
+        outdoor,
+        amplitude_ratio=0.25,
+        phase_shift_days=60.0,
+    )
     assert float(np.mean(ground)) == pytest.approx(8.0, abs=1e-9)
-    assert (float(np.max(ground)) - float(np.min(ground))) == pytest.approx(6.0, rel=1e-3)
+    assert float(np.max(ground)) - float(np.min(ground)) == pytest.approx(
+        6.0,
+        rel=1e-3,
+    )
 
 
 def test_ground_certificate_mode_refuses_missing_material_properties() -> None:
-    with pytest.raises(ValueError, match="requires explicit material inputs"):
+    with pytest.raises(ValidationError, match="requires explicit material inputs"):
         GroundISO13370Settings(enabled=True, certificate_mode=True)
 
 
@@ -106,6 +126,33 @@ def test_dynamic_recovery_matches_sensible_heat_exchanger_equation() -> None:
     assert state.supply_temperature_c[0] == pytest.approx(16.0)
     assert state.exhaust_outlet_temperature_c[0] == pytest.approx(4.0)
     assert state.effective_efficiency[0] == pytest.approx(0.8)
+
+
+def test_detailed_recovery_keeps_physical_airflow_and_uses_supply_temperature() -> None:
+    settings = HeatRecoverySettings(enabled=True)
+    ventilation = _detailed_ventilation(settings)
+    zone = _recovery_zone()
+    outdoor = np.asarray([0.0])
+    operation = np.ones(1)
+
+    h_ve = ventilation_heat_transfer_coefficient(
+        ventilation,
+        zone,
+        100.0,
+        operation_profile=operation,
+    )
+    supply = ventilation_effective_supply_temperature(
+        ventilation,
+        zone,
+        outdoor,
+        building_floor_area=100.0,
+        operation_profile=operation,
+    )
+
+    assert float(np.asarray(h_ve).reshape(-1)[0]) == pytest.approx(
+        200.0 / 3600.0 * 1200.0
+    )
+    assert supply[0] == pytest.approx(16.0)
 
 
 def test_summer_bypass_disables_recovery_when_outdoor_air_can_free_cool() -> None:
@@ -179,7 +226,8 @@ def test_central_preheater_capacity_is_not_multiplied_by_zone_count() -> None:
     )
     assert first.preheater_power_w[0] <= 500.0 + 1e-9
     assert second.preheater_power_w[0] <= 500.0 + 1e-9
-    assert first.preheater_power_w[0] + second.preheater_power_w[0] <= 1000.0 + 1e-9
+    total_preheater = first.preheater_power_w[0] + second.preheater_power_w[0]
+    assert total_preheater <= 1000.0 + 1e-9
 
 
 def test_dew_point_increases_with_relative_humidity() -> None:
@@ -187,6 +235,11 @@ def test_dew_point_increases_with_relative_humidity() -> None:
     humid = dew_point_temperature_c(20.0, 0.70)
     assert humid > dry
     assert humid < 20.0
+
+
+def test_heat_recovery_certificate_mode_requires_performance_provenance() -> None:
+    with pytest.raises(ValidationError, match="performance_source"):
+        HeatRecoverySettings(enabled=True, certificate_mode=True)
 
 
 def test_design_load_uses_explicit_design_temperature_not_tmy_or_cop() -> None:
@@ -225,3 +278,56 @@ def test_design_load_uses_explicit_design_temperature_not_tmy_or_cop() -> None:
     assert result.zones[0].ventilation_w == pytest.approx(0.0)
     assert result.zones[0].heat_up_w == pytest.approx(40.0)
     assert result.total_w == pytest.approx(100.0)
+
+
+def test_formal_design_load_requires_explicit_ground_design_temperature() -> None:
+    project = make_test_project()
+    project.transparent_building_elements = []
+    project.opaque_building_elements = [
+        OpaqueElement(
+            id="floor",
+            name="Ground floor",
+            zone_id="zone_1",
+            element_type="ground_floor",
+            area=100.0,
+            u_value=0.25,
+            adjacent_space_type="ground",
+        )
+    ]
+    project.ventilation = Ventilation(
+        ventilation_type="none",
+        airflow_rate=0.0,
+        infiltration_rate=0.0,
+    )
+    settings = DesignConditionsSettings(
+        enabled=True,
+        certificate_mode=True,
+        outdoor_design_temperature_c=-20.0,
+        source="verified project conditions",
+    )
+    with pytest.raises(ValueError, match="explicit ground adjacent temperature"):
+        calculate_design_heat_load(project, settings, annual_mean_outdoor_c=8.0)
+
+    settings.ground_adjacent_temperature_by_element_c = {"floor": 5.0}
+    result = calculate_design_heat_load(project, settings, annual_mean_outdoor_c=8.0)
+    assert result.total_w == pytest.approx(100.0 * 0.25 * (20.0 - 5.0))
+
+
+def test_formal_legal_mode_requires_source_metadata() -> None:
+    with pytest.raises(ValidationError, match="provenance fields"):
+        LegalProvenanceSettings(certificate_mode=True)
+
+
+def test_formal_project_refuses_legacy_ground_fallback() -> None:
+    project = make_test_project()
+    project.metadata["normative"] = {
+        "legal": {
+            "certificate_mode": True,
+            "calculation_date": "2026-08-17",
+            "methodology_source": "Dz.U. 2015 poz. 376 z późn. zm.",
+            "climate_data_source": "verified test climate source",
+            "primary_energy_factor_sources": {"electricity": "supplier/test source"},
+        }
+    }
+    with pytest.raises(ValueError, match="ISO 13370 ground model"):
+        prepare_project_for_audited_calculation(project)
