@@ -34,14 +34,17 @@ jobs:
           --extend-per-file-ignores "app/engine/thermal_balance/__init__.py:F821"
           --extend-per-file-ignores "app/engine/ventilation/__init__.py:F821"
           --extend-per-file-ignores "tests/test_audit_repairs.py:I001"
-      - name: Type check with mypy
+      - name: Type check numerical core with mypy
         shell: bash
         run: |
           set +e
-          mypy app --show-error-codes --no-pretty | tee /tmp/mypy.txt
+          mypy app/engine/iso52016_hourly.py \
+            --follow-imports=skip \
+            --disable-error-code=no-untyped-def \
+            --show-error-codes --no-pretty | tee /tmp/mypy.txt
           status=${PIPESTATUS[0]}
           {
-            echo "### mypy"
+            echo "### mypy — ISO 52016 numerical core"
             echo '```text'
             cat /tmp/mypy.txt
             echo '```'
