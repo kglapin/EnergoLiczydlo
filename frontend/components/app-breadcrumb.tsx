@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { usePathname, useRouter } from "next/navigation"
-import { ChevronLeft, Settings2 } from "lucide-react"
+import { ChevronLeft, FileCheck2, Settings2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -19,6 +19,7 @@ const routeMap: Record<string, { label: string; parent?: string }> = {
   "/building": { label: "Nowa analiza", parent: "/" },
   "/results": { label: "Wyniki", parent: "/building" },
   "/normative": { label: "Ustawienia normatywne", parent: "/building" },
+  "/normative/legal": { label: "Tryb formalny", parent: "/normative" },
 }
 
 export function AppBreadcrumb() {
@@ -30,8 +31,11 @@ export function AppBreadcrumb() {
   const crumbs: { href: string; label: string; current?: boolean }[] = [
     { href: "/", label: "Strona główna" },
   ]
-  if (current.parent === "/building") {
+  if (current.parent === "/building" || current.parent === "/normative") {
     crumbs.push({ href: "/building", label: "Nowa analiza" })
+  }
+  if (current.parent === "/normative") {
+    crumbs.push({ href: "/normative", label: "Ustawienia normatywne" })
   }
   crumbs.push({ href: pathname, label: current.label, current: true })
 
@@ -39,7 +43,7 @@ export function AppBreadcrumb() {
 
   return (
     <header className="container mx-auto px-4 py-4">
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-3">
         {canGoBack ? (
           <Button
             type="button"
@@ -68,14 +72,24 @@ export function AppBreadcrumb() {
             ))}
           </BreadcrumbList>
         </Breadcrumb>
-        {pathname !== "/normative" ? (
-          <Button variant="outline" size="sm" asChild className="ml-auto shrink-0">
-            <a href="/normative">
-              <Settings2 className="mr-2 h-4 w-4" />
-              Ustawienia normatywne
-            </a>
-          </Button>
-        ) : null}
+        <div className="ml-auto flex flex-wrap items-center gap-2">
+          {pathname !== "/normative" ? (
+            <Button variant="outline" size="sm" asChild className="shrink-0">
+              <a href="/normative">
+                <Settings2 className="mr-2 h-4 w-4" />
+                Ustawienia normatywne
+              </a>
+            </Button>
+          ) : null}
+          {pathname !== "/normative/legal" ? (
+            <Button variant="outline" size="sm" asChild className="shrink-0">
+              <a href="/normative/legal">
+                <FileCheck2 className="mr-2 h-4 w-4" />
+                Tryb formalny
+              </a>
+            </Button>
+          ) : null}
+        </div>
       </div>
     </header>
   )
