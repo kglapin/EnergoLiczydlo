@@ -1,10 +1,10 @@
 """Runtime calculator with repaired hourly-solver selection.
 
-Old projects keep the reduced 5R1C analytical path. A project that enables
-``metadata.normative.hourly_iso52016.enabled`` uses the per-construction
-five-node solver from ``iso52016_hourly``. In certificate mode that detailed
-path fails closed unless every opaque construction has explicit nodal
-capacities and resistances.
+Direct low-level core calls retain the reduced 5R1C path unless they explicitly
+enable ``metadata.normative.hourly_iso52016.enabled``. Projects prepared by
+the public ``audited_calculator`` use the per-construction five-node solver by
+default unless the project explicitly opts out. This preserves low-level
+regression semantics while fixing the user-facing calculation path.
 
 Detailed heat recovery is solved iteratively with the resulting zone-air
 (extract) temperature instead of being frozen at the heating setpoint.
@@ -74,6 +74,17 @@ def _setpoints(zone):
     return heating, cooling
 
 
+def _detailed_hourly_enabled(project, settings) -> bool:
+    """Resolve solver selection while preserving explicit project choice."""
+    normative = project.metadata.get("normative", {})
+    if isinstance(normative, dict):
+        hourly = normative.get("hourly_iso52016", {})
+        if isinstance(hourly, dict) and "enabled" in hourly:
+            return bool(settings.hourly_iso52016.enabled)
+    # The audited public path attaches validated settings before calling core.
+    return getattr(project, "_normative_settings", None) is not None
+
+
 def _aggregate_zone_results(
     zone,
     df,
@@ -116,15 +127,12 @@ def _aggregate_zone_results(
     t_set_heating, t_set_cooling = _setpoints(zone)
 
     settings = load_normative_settings(project)
-    detailed_hourly = settings.hourly_iso52016.enabled
+    detailed_hourly = _detailed_hourly_enabled(project, settings)
     recovery_is_detailed = detailed_heat_recovery_settings(ventilation) is not None
     extract_temperature: np.ndarray | None = None
     solution = None
     t_supply = t_e.copy()
 
-    # Heat-recovery supply temperature and zone temperature are mutually
-    # dependent. Iterate the full annual vectors with damping; without detailed
-    # recovery the loop executes exactly once.
     for _ in range(8):
         t_supply = ventilation_effective_supply_temperature(
             ventilation,
@@ -182,7 +190,6 @@ def _aggregate_zone_results(
     if solution is None:  # pragma: no cover
         raise RuntimeError("Hourly zone solver did not produce a solution")
 
-    # One final supply-temperature evaluation uses the converged zone vector.
     if recovery_is_detailed and extract_temperature is not None:
         t_supply = ventilation_effective_supply_temperature(
             ventilation,
@@ -237,17 +244,11 @@ def _aggregate_zone_results(
     }
 
 
-# The legacy annual aggregation resolves this global at call time.
 _legacy._aggregate_zone_results = _aggregate_zone_results
 
 
 def calculate_building_energy(project):
-    """Run the legacy annual aggregation with patched runtime globals.
-
-    Test suites and callers historically monkeypatch ``app.engine.calculator``
-    helpers such as ``_load_climate``. Synchronize those helpers into the
-    loaded legacy module before every run so that behaviour remains compatible.
-    """
+    """Run annual aggregation while preserving historical monkeypatch hooks."""
     _legacy._aggregate_zone_results = _aggregate_zone_results
     _legacy._load_climate = globals()["_load_climate"]
     return _legacy.calculate_building_energy(project)
