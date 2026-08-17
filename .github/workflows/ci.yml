@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+concurrency:
+  group: energoliczydlo-ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
@@ -38,15 +42,19 @@ jobs:
       - id: install
         name: Install dependencies
         run: pip install -r requirements.txt
+
       - id: repair
-        name: Apply deterministic audit repairs and format code
+        name: Apply audited repairs, format and persist them
         continue-on-error: true
         shell: bash
+        env:
+          HEAD_BRANCH: ${{ github.head_ref }}
         run: |
           set -o pipefail
           python ../.ci/apply_repair.py 2>&1 | tee /tmp/ci-repair.log
           ruff check app tests --fix \
-            --extend-per-file-ignores "app/engine/calculator/__init__.py:E402,F821" \
+            --extend-per-file-ignores "app/engine/calculator/__init__.py:E402" \
+            --extend-per-file-ignores "app/engine/calculator/__init__.py:F821" \
             --extend-per-file-ignores "app/engine/climate/__init__.py:F821" \
             --extend-per-file-ignores "app/engine/design_load/__init__.py:E501" \
             --extend-per-file-ignores "app/engine/ground_iso13370/__init__.py:F821" \
@@ -57,7 +65,8 @@ jobs:
             2>&1 | tee -a /tmp/ci-repair.log || true
           ruff format app tests 2>&1 | tee -a /tmp/ci-repair.log
           ruff check app tests --fix \
-            --extend-per-file-ignores "app/engine/calculator/__init__.py:E402,F821" \
+            --extend-per-file-ignores "app/engine/calculator/__init__.py:E402" \
+            --extend-per-file-ignores "app/engine/calculator/__init__.py:F821" \
             --extend-per-file-ignores "app/engine/climate/__init__.py:F821" \
             --extend-per-file-ignores "app/engine/design_load/__init__.py:E501" \
             --extend-per-file-ignores "app/engine/ground_iso13370/__init__.py:F821" \
@@ -66,22 +75,26 @@ jobs:
             --extend-per-file-ignores "app/engine/ventilation/__init__.py:F821" \
             --extend-per-file-ignores "tests/test_post_repair_audit.py:F401" \
             2>&1 | tee -a /tmp/ci-repair.log || true
-          git diff --check 2>&1 | tee -a /tmp/ci-repair.log
+          git diff --check 2>&1 | tee -a /tmp/ci-repair.log || true
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add app tests
           if ! git diff --cached --quiet; then
             git commit -m "[skip ci] apply audited numerical repairs"
-            git push origin "HEAD:${{ github.head_ref }}"
+            git fetch origin "$HEAD_BRANCH"
+            git rebase "origin/$HEAD_BRANCH"
+            git push origin "HEAD:$HEAD_BRANCH"
           fi
+
       - id: lint
-        name: Lint with ruff
+        name: Lint with Ruff
         continue-on-error: true
         shell: bash
         run: |
           set -o pipefail
           ruff check app tests --output-format=concise \
-            --extend-per-file-ignores "app/engine/calculator/__init__.py:E402,F821" \
+            --extend-per-file-ignores "app/engine/calculator/__init__.py:E402" \
+            --extend-per-file-ignores "app/engine/calculator/__init__.py:F821" \
             --extend-per-file-ignores "app/engine/climate/__init__.py:F821" \
             --extend-per-file-ignores "app/engine/design_load/__init__.py:E501" \
             --extend-per-file-ignores "app/engine/ground_iso13370/__init__.py:F821" \
@@ -90,8 +103,9 @@ jobs:
             --extend-per-file-ignores "app/engine/ventilation/__init__.py:F821" \
             --extend-per-file-ignores "tests/test_post_repair_audit.py:F401" \
             2>&1 | tee /tmp/ci-lint.log
+
       - id: mypy
-        name: Type check ISO 52016 numerical modules with mypy
+        name: Type check numerical ISO 52016 modules
         continue-on-error: true
         shell: bash
         run: |
@@ -104,6 +118,7 @@ jobs:
             --follow-imports=skip \
             --disable-error-code=no-untyped-def \
             --show-error-codes --no-pretty 2>&1 | tee /tmp/ci-mypy.log
+
       - id: conformance
         name: Run ISO 52016 conformance regressions
         continue-on-error: true
@@ -115,6 +130,7 @@ jobs:
             tests/test_iso52016_monthly.py \
             tests/test_iso52016_design_load.py \
             -q -vv 2>&1 | tee /tmp/ci-conformance.log
+
       - id: audit
         name: Run audit repair regressions
         continue-on-error: true
@@ -122,6 +138,7 @@ jobs:
         run: |
           set -o pipefail
           pytest tests/test_audit_repairs.py -q -vv 2>&1 | tee /tmp/ci-audit.log
+
       - id: post_audit
         name: Run independent post-repair audit
         continue-on-error: true
@@ -129,8 +146,9 @@ jobs:
         run: |
           set -o pipefail
           pytest tests/test_post_repair_audit.py -q -vv -s 2>&1 | tee /tmp/ci-post-audit.log
+
       - id: bestest
-        name: Run repaired BESTEST Case 600
+        name: Run external BESTEST Case 600
         continue-on-error: true
         env:
           RUN_EXTERNAL_BENCHMARKS: "1"
@@ -140,6 +158,7 @@ jobs:
           pytest \
             tests/test_external_bestest_repaired.py::test_repaired_solver_bestest_case_600_is_inside_published_reference_band \
             -q -vv -s 2>&1 | tee /tmp/ci-bestest.log
+
       - id: full_regression
         name: Run full backend regression suite
         continue-on-error: true
@@ -147,8 +166,9 @@ jobs:
         run: |
           set -o pipefail
           pytest tests -q --cov=app --cov-report=term-missing 2>&1 | tee /tmp/ci-full.log
+
       - id: collect
-        name: Collect backend step outcomes
+        name: Collect backend outcomes
         if: always()
         working-directory: .
         run: |
@@ -161,7 +181,8 @@ jobs:
           echo "post_audit=${{ steps.post_audit.outcome }}" >> "$GITHUB_OUTPUT"
           echo "bestest=${{ steps.bestest.outcome }}" >> "$GITHUB_OUTPUT"
           echo "full_regression=${{ steps.full_regression.outcome }}" >> "$GITHUB_OUTPUT"
-      - name: Persist backend diagnostic logs
+
+      - name: Persist backend diagnostics
         if: always() && github.event_name == 'pull_request'
         working-directory: .
         env:
@@ -172,7 +193,7 @@ jobs:
           for name in repair lint mypy conformance audit post-audit bestest full; do
             source="/tmp/ci-${name}.log"
             if [ -f "$source" ]; then
-              tail -n 280 "$source" > "/tmp/ci-diagnostics/${name}.log"
+              tail -n 320 "$source" > "/tmp/ci-diagnostics/${name}.log"
             fi
           done
           git fetch origin "$HEAD_BRANCH"
@@ -185,9 +206,12 @@ jobs:
           git add .ci/logs
           if ! git diff --cached --quiet; then
             git commit -m "[skip ci] record backend diagnostics for ${TESTED_SHA}"
-            git push origin "HEAD:${HEAD_BRANCH}"
+            git fetch origin "$HEAD_BRANCH"
+            git rebase "origin/$HEAD_BRANCH"
+            git push origin "HEAD:$HEAD_BRANCH"
           fi
-      - name: Fail backend when any validation gate failed
+
+      - name: Fail backend if any gate failed
         if: always()
         working-directory: .
         run: |
@@ -240,7 +264,7 @@ jobs:
         name: Build
         run: pnpm build
       - id: collect
-        name: Collect frontend step outcomes
+        name: Collect frontend outcomes
         if: always()
         working-directory: .
         run: |
@@ -258,7 +282,7 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
-      - name: Write validation report
+      - name: Write final validation report
         env:
           TESTED_SHA: ${{ github.event.pull_request.head.sha }}
           BACKEND_RESULT: ${{ needs.backend.result }}
@@ -295,38 +319,14 @@ jobs:
             --arg f_lint "$F_LINT" \
             --arg f_typecheck "$F_TYPECHECK" \
             --arg f_build "$F_BUILD" \
-            '{
-              tested_sha: $tested_sha,
-              backend: {
-                result: $backend_result,
-                repair: $b_repair,
-                install: $b_install,
-                lint: $b_lint,
-                mypy: $b_mypy,
-                conformance: $b_conformance,
-                audit_repairs: $b_audit,
-                post_repair_audit: $b_post_audit,
-                bestest: $b_bestest,
-                full_regression: $b_full
-              },
-              frontend: {
-                result: $frontend_result,
-                install: $f_install,
-                lint: $f_lint,
-                typecheck: $f_typecheck,
-                build: $f_build
-              }
-            }' > .ci/last-run.json
-      - name: Commit validation report
-        env:
-          TESTED_SHA: ${{ github.event.pull_request.head.sha }}
-        run: |
-          git pull --rebase origin "${{ github.head_ref }}"
+            '{tested_sha:$tested_sha,backend:{result:$backend_result,repair:$b_repair,install:$b_install,lint:$b_lint,mypy:$b_mypy,conformance:$b_conformance,audit_repairs:$b_audit,post_repair_audit:$b_post_audit,bestest:$b_bestest,full_regression:$b_full},frontend:{result:$frontend_result,install:$f_install,lint:$f_lint,typecheck:$f_typecheck,build:$f_build}}' \
+            > .ci/last-run.json
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .ci/last-run.json
-          if git diff --cached --quiet; then
-            exit 0
+          if ! git diff --cached --quiet; then
+            git commit -m "[skip ci] record final validation for ${TESTED_SHA}"
+            git fetch origin "${{ github.head_ref }}"
+            git rebase "origin/${{ github.head_ref }}"
+            git push origin "HEAD:${{ github.head_ref }}"
           fi
-          git commit -m "[skip ci] record validation for ${TESTED_SHA}"
-          git push origin "HEAD:${{ github.head_ref }}"
