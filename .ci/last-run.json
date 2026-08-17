@@ -1,7 +1,7 @@
 {
-  "tested_sha": "9e0742fb05e65b7815b185132a554cefe59cd2ff",
+  "tested_sha": "beee315e0317498b267a2a7e84409782f530d4aa",
   "backend": {
-    "result": "failure",
+    "result": "cancelled",
     "repair": "success",
     "install": "success",
     "lint": "success",
@@ -10,13 +10,13 @@
     "audit_repairs": "failure",
     "post_repair_audit": "failure",
     "bestest": "failure",
-    "full_regression": "failure"
+    "full_regression": "cancelled"
   },
   "frontend": {
-    "result": "success",
+    "result": "cancelled",
     "install": "success",
     "lint": "success",
     "typecheck": "success",
-    "build": "success"
+    "build": "cancelled"
   }
 }
