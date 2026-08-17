@@ -1,12 +1,10 @@
 """Compatibility layer for the historical 5R1C solver.
 
-The legacy 5R1C model remains available for old analytical projects, but an
-8760-hour run is now preceded by periodic warm-up cycles. This removes the
-artificial first-year energy credit caused by initializing the single mass
-node at the heating setpoint on 1 January.
-
-The detailed per-construction hourly solver lives in ``iso52016_hourly.py``;
-this module is deliberately labelled as the legacy reduced model.
+The legacy 5R1C model remains available for old analytical projects. Periodic
+warm-up is an explicit option so low-level unit callers can still inspect a
+single cold-start cycle. Production annual calculations request warm-up
+explicitly; the repaired default hourly engine uses the separate
+per-construction solver in ``iso52016_hourly.py``.
 """
 
 from __future__ import annotations
@@ -155,15 +153,11 @@ def solve_zone_5r1c(
     t_set_heating: float | None,
     t_set_cooling: float | None,
     t_supply: np.ndarray | None = None,
-    periodic_warmup: bool = True,
+    periodic_warmup: bool = False,
     max_warmup_cycles: int = 30,
     warmup_tolerance_k: float = 1e-8,
 ):
-    """Solve the reduced 5R1C model with a periodic annual initial state.
-
-    Warm-up is applied only to a full 8760-hour climate sequence. Short unit
-    test sequences retain the historical single-cycle behaviour.
-    """
+    """Solve the reduced 5R1C model, optionally from a periodic annual state."""
     t_e = np.asarray(t_e, dtype=float)
     t_sup = t_e if t_supply is None else np.asarray(t_supply, dtype=float)
     phi_int = np.asarray(phi_int, dtype=float)
@@ -218,9 +212,6 @@ def solve_zone_5r1c(
         residual = abs(final_mass - initial)
         initial = final_mass
         if residual <= warmup_tolerance_k:
-            # Re-run once from the converged periodic state so every reported
-            # hour belongs to the stabilized cycle rather than the convergence
-            # cycle that established it.
             solution, _ = _solve_zone_cycle(
                 network=network,
                 h_ve_hourly=h_ve_hourly,
