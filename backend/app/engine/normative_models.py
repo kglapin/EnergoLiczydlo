@@ -3,11 +3,12 @@
 The public API schema stays backward compatible: advanced parameters live in
 ``BuildingProject.metadata["normative"]``. This lets older project files keep
 working while the audited calculator can require additional normative inputs
-when certificate-grade modes are enabled.
+when formal calculation modes are enabled.
 """
 
 from __future__ import annotations
 
+from datetime import date
 from typing import Literal
 
 from pydantic import BaseModel, Field, model_validator
@@ -146,6 +147,40 @@ class DesignConditionsSettings(BaseModel):
         return self
 
 
+class LegalProvenanceSettings(BaseModel):
+    """Evidence trail required before a result is presented as formal-ready.
+
+    This model does not decide whether a certificate is legally valid. It
+    records the calculation date, methodology/climate sources and provenance
+    of each primary-energy factor so the calculation is auditable against the
+    Polish rules applicable on that date.
+    """
+
+    certificate_mode: bool = False
+    calculation_date: date | None = None
+    methodology_source: str | None = None
+    climate_data_source: str | None = None
+    primary_energy_factor_sources: dict[str, str] = Field(default_factory=dict)
+
+    @model_validator(mode="after")
+    def require_formal_provenance(self) -> LegalProvenanceSettings:
+        if not self.certificate_mode:
+            return self
+        missing: list[str] = []
+        if self.calculation_date is None:
+            missing.append("calculation_date")
+        if not (self.methodology_source or "").strip():
+            missing.append("methodology_source")
+        if not (self.climate_data_source or "").strip():
+            missing.append("climate_data_source")
+        if missing:
+            raise ValueError(
+                "Formal calculation mode requires provenance fields: "
+                + ", ".join(missing)
+            )
+        return self
+
+
 class NormativeSettings(BaseModel):
     """Advanced calculation settings read from ``metadata.normative``."""
 
@@ -154,6 +189,7 @@ class NormativeSettings(BaseModel):
     design_conditions: DesignConditionsSettings = Field(
         default_factory=DesignConditionsSettings
     )
+    legal: LegalProvenanceSettings = Field(default_factory=LegalProvenanceSettings)
 
 
 def load_normative_settings(project: BuildingProject) -> NormativeSettings:
