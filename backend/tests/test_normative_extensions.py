@@ -31,7 +31,7 @@ from app.engine.ventilation import (
     ventilation_effective_supply_temperature,
     ventilation_heat_transfer_coefficient,
 )
-from app.schemas.models import OpaqueElement, ThermalZone, Ventilation
+from app.schemas.models import DesignRoom, OpaqueElement, ThermalZone, Ventilation
 from scripts.test_building import make_test_project
 
 
@@ -309,6 +309,20 @@ def test_formal_design_load_requires_explicit_ground_design_temperature() -> Non
         calculate_design_heat_load(project, settings, annual_mean_outdoor_c=8.0)
 
     settings.ground_adjacent_temperature_by_element_c = {"floor": 5.0}
+    with pytest.raises(ValueError, match="design_rooms"):
+        calculate_design_heat_load(project, settings, annual_mean_outdoor_c=8.0)
+
+    project.design_rooms = [
+        DesignRoom(
+            id="room_1",
+            name="Cały budynek",
+            zone_id="zone_1",
+            floor_area=150.0,
+            volume=375.0,
+            design_temperature_c=20.0,
+            opaque_element_ids=["floor"],
+        )
+    ]
     result = calculate_design_heat_load(project, settings, annual_mean_outdoor_c=8.0)
     assert result.total_w == pytest.approx(100.0 * 0.25 * (20.0 - 5.0))
 
