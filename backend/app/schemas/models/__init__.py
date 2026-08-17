@@ -34,6 +34,31 @@ MassDistributionClass = Literal[
 ]
 
 
+class ThermalZone(_legacy.ThermalZone):
+    """Thermal zone with explicit dynamic and moisture inputs.
+
+    All additions are optional so historical project JSON remains valid. The
+    detailed hourly solver may require selected values when strict conformance
+    or the moisture calculation is explicitly enabled.
+    """
+
+    air_furniture_heat_capacity_kj_m2k: float | None = Field(None, ge=0.0)
+    operative_air_weight: float | None = Field(None, ge=0.0, le=1.0)
+    moisture_generation_kg_s: float | None = Field(None, ge=0.0)
+    relative_humidity_min: float | None = Field(None, ge=0.0, le=1.0)
+    relative_humidity_max: float | None = Field(None, ge=0.0, le=1.0)
+
+    @model_validator(mode="after")
+    def validate_humidity_band(self) -> ThermalZone:
+        if (
+            self.relative_humidity_min is not None
+            and self.relative_humidity_max is not None
+            and self.relative_humidity_min > self.relative_humidity_max
+        ):
+            raise ValueError("relative_humidity_min cannot exceed relative_humidity_max")
+        return self
+
+
 class OpaqueElement(_legacy.OpaqueElement):
     """Opaque element with explicit ISO 52016 surface and five-node inputs.
 
@@ -87,6 +112,7 @@ class TransparentElement(_legacy.TransparentElement):
     h_ri_w_m2k: float | None = Field(None, ge=0.0)
     h_ce_w_m2k: float | None = Field(None, ge=0.0)
     h_re_w_m2k: float | None = Field(None, ge=0.0)
+    core_thermal_resistance_m2k_w: float | None = Field(None, gt=0.0)
     sky_view_factor: float | None = Field(None, ge=0.0, le=1.0)
 
 
@@ -110,6 +136,7 @@ class DesignRoom(_legacy.BaseModel):
 class BuildingProject(_legacy.BuildingProject):
     """Project schema extended without breaking historical JSON payloads."""
 
+    thermal_zones: list[ThermalZone]
     opaque_building_elements: list[OpaqueElement]
     transparent_building_elements: list[TransparentElement]
     design_rooms: list[DesignRoom] = Field(default_factory=list)
