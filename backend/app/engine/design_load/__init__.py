@@ -34,6 +34,8 @@ for _name in dir(_legacy):
     if not _name.startswith("__"):
         globals()[_name] = getattr(_legacy, _name)
 
+_legacy_calculate_design_heat_load = _legacy.calculate_design_heat_load
+
 
 @dataclass(frozen=True)
 class RoomDesignLoad:
@@ -53,12 +55,7 @@ class BuildingDesignLoad:
     rooms: tuple[RoomDesignLoad, ...] = ()
 
 
-def _room_transmission_load_w(
-    project,
-    room,
-    settings,
-    annual_mean_outdoor_c: float,
-) -> float:
+def _room_transmission_load_w(project, room, settings, annual_mean_outdoor_c: float) -> float:
     outdoor = _legacy._design_outdoor_temperature(settings)
     zone = next(zone for zone in project.thermal_zones if zone.id == room.zone_id)
     indoor = float(
@@ -130,9 +127,6 @@ def _room_ventilation_load_w(
     )
     room_ventilation = ventilation
     if room.ventilation_airflow_m3h is not None:
-        # The ventilation function interprets airflow_rate as a building total
-        # and multiplies by floor-area share. Scale it so this synthetic room
-        # receives exactly the explicitly specified design flow.
         building_equivalent = float(room.ventilation_airflow_m3h) * (
             building_floor_area / room.floor_area
         )
@@ -199,11 +193,7 @@ def _validate_room_assignment_for_certificate(project) -> None:
         )
 
 
-def calculate_design_heat_load(
-    project,
-    settings,
-    annual_mean_outdoor_c: float,
-) -> BuildingDesignLoad:
+def calculate_design_heat_load(project, settings, annual_mean_outdoor_c: float) -> BuildingDesignLoad:
     if not settings.enabled:
         return BuildingDesignLoad(zones=(), total_w=0.0, rooms=())
     _legacy._design_outdoor_temperature(settings)
@@ -214,7 +204,7 @@ def calculate_design_heat_load(
                 "Certificate-grade PN-EN 12831-1 design load requires "
                 "BuildingProject.design_rooms"
             )
-        legacy_result = _legacy.calculate_design_heat_load(
+        legacy_result = _legacy_calculate_design_heat_load(
             project,
             settings,
             annual_mean_outdoor_c,
@@ -290,6 +280,3 @@ def calculate_design_heat_load(
         total_w=float(sum(room.total_w for room in room_results)),
         rooms=tuple(room_results),
     )
-
-
-_legacy.calculate_design_heat_load = calculate_design_heat_load
