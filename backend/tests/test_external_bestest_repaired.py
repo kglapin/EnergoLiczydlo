@@ -202,7 +202,9 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         ),
         # The published geometry marks the floor as Outdoors + NoSun + NoWind.
         # It is therefore driven by outdoor air, not by an invented 10°C ground
-        # boundary. Solar is explicitly suppressed below.
+        # boundary. Solar is explicitly suppressed below. The project schema
+        # uses "ground_floor" as the closest semantic element type while the
+        # adjacent-space field retains the benchmark's OUTDOOR boundary.
         opaque(
             "floor",
             "Floor",
@@ -210,7 +212,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             floor_u,
             floor_nodes,
             inclination=180.0,
-            element_type="floor",
+            element_type="ground_floor",
         ),
     ]
     transparent = [
