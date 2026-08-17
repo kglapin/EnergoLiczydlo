@@ -1,0 +1,193 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /opt/hostedtoolcache/Python/3.11.15/x64/bin/python
+cachedir: .pytest_cache
+hypothesis profile 'ci' -> database=None, deadline=None, print_blob=True, derandomize=True, suppress_health_check=(HealthCheck.too_slow,)
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /home/runner/work/EnergoLiczydlo/EnergoLiczydlo/backend
+configfile: pyproject.toml
+plugins: hypothesis-6.165.10, anyio-4.14.2, benchmark-5.2.3, asyncio-1.4.0, cov-6.3.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 1 item
+
+tests/test_external_bestest_repaired.py::test_repaired_solver_bestest_case_600_is_inside_published_reference_band POST_REPAIR_BESTEST_CASE_600= {'annual_heating_kwh': 5722.516743044783, 'annual_cooling_kwh': 7454.061977662703, 'peak_heating_w': 4182.884116846427, 'peak_cooling_w': 6264.225019380397}
+POST_REPAIR_BESTEST_REFERENCE= {'annual_heating_kwh': (4296.0, 5709.0), 'annual_cooling_kwh': (6137.0, 7964.0), 'peak_heating_w': (3437.0, 4354.0), 'peak_cooling_w': (5965.0, 6827.0)}
+POST_REPAIR_BESTEST_PERIODIC_RESIDUAL_K= 0.0
+FAILED
+
+=================================== FAILURES ===================================
+___ test_repaired_solver_bestest_case_600_is_inside_published_reference_band ___
+
+tmp_path = PosixPath('/tmp/pytest-of-runner/pytest-0/test_repaired_solver_bestest_c0')
+
+    @pytest.mark.skipif(
+        os.environ.get("RUN_EXTERNAL_BENCHMARKS") != "1",
+        reason="set RUN_EXTERNAL_BENCHMARKS=1 to download public BESTEST weather",
+    )
+    def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
+        tmp_path,
+    ) -> None:
+        epw_path = tmp_path / "DRYCOLDTMY.epw"
+        _download_bestest_weather(epw_path)
+        climate = load_epw(epw_path)
+    
+        wall_u = 1.0 / (0.009 / 0.14 + 0.066 / 0.04 + 0.012 / 0.16 + 0.13 + 0.04)
+        roof_u = 1.0 / (0.019 / 0.14 + 0.1118 / 0.04 + 0.01 / 0.16 + 0.10 + 0.04)
+        floor_u = 1.0 / (25.075 + 0.025 / 0.14 + 0.17 + 0.04)
+        window_u = 1.0 / (2.0 * 0.003175 / 1.06 + 0.1588 + 0.13 + 0.04)
+    
+        wall_nodes = _five_node_construction(
+            WALL_LAYERS_OUTSIDE_TO_INSIDE,
+            r_si=0.13,
+            r_se=0.04,
+        )
+        roof_nodes = _five_node_construction(
+            ROOF_LAYERS_OUTSIDE_TO_INSIDE,
+            r_si=0.10,
+            r_se=0.04,
+        )
+        floor_nodes = _five_node_construction(
+            FLOOR_LAYERS_BOUNDARY_TO_INSIDE,
+            r_si=0.17,
+            r_se=0.04,
+        )
+    
+        def opaque(
+            element_id: str,
+            name: str,
+            area: float,
+            u_value: float,
+            nodes: tuple[list[float], list[float]],
+            *,
+            azimuth: float = 0.0,
+            inclination: float = 90.0,
+            element_type: str = "external_wall",
+            adjacent: AdjacentSpaceType = AdjacentSpaceType.OUTDOOR,
+            adjacent_temperature: float | None = None,
+        ) -> OpaqueElement:
+            capacities, resistances = nodes
+            return OpaqueElement(
+                id=element_id,
+                name=name,
+                zone_id="bestest",
+                element_type=element_type,
+                orientation_azimuth=azimuth,
+                inclination=inclination,
+                area=area,
+                u_value=u_value,
+                solar_absorptance=0.6,
+                adjacent_space_type=adjacent,
+                adjacent_temperature=adjacent_temperature,
+                thermal_node_capacities_kj_m2k=capacities,
+                thermal_node_resistances_m2k_w=resistances,
+            )
+    
+        opaque_elements = [
+            opaque("east", "East", 16.2, wall_u, wall_nodes, azimuth=90.0),
+            opaque("north", "North", 16.2, wall_u, wall_nodes, azimuth=0.0),
+            opaque("south", "South", 9.6, wall_u, wall_nodes, azimuth=180.0),
+            opaque("west", "West", 16.2, wall_u, wall_nodes, azimuth=270.0),
+            opaque(
+                "roof",
+                "Roof",
+                48.0,
+                roof_u,
+                roof_nodes,
+                inclination=0.0,
+                element_type="roof",
+            ),
+            opaque(
+                "floor",
+                "Ground floor",
+                48.0,
+                floor_u,
+                floor_nodes,
+                inclination=180.0,
+                element_type="ground_floor",
+                adjacent=AdjacentSpaceType.CONSTANT_TEMPERATURE,
+                adjacent_temperature=10.0,
+            ),
+        ]
+        transparent = [
+            TransparentElement(
+                id="south-window-1",
+                name="South window 1",
+                zone_id="bestest",
+                orientation_azimuth=180.0,
+                area=6.0,
+                u_value=window_u,
+                g_value=0.68,
+                frame_factor=0.0,
+            ),
+            TransparentElement(
+                id="south-window-2",
+                name="South window 2",
+                zone_id="bestest",
+                orientation_azimuth=180.0,
+                area=6.0,
+                u_value=window_u,
+                g_value=0.68,
+                frame_factor=0.0,
+            ),
+        ]
+    
+        transparent_solar = sum(
+            (solar_gains_transparent(element, climate) for element in transparent),
+            np.zeros(8760, dtype=float),
+        )
+        opaque_solar: dict[str, np.ndarray] = {}
+        for element in opaque_elements:
+            if element.adjacent_space_type != AdjacentSpaceType.OUTDOOR:
+                opaque_solar[element.id] = np.zeros(8760, dtype=float)
+                continue
+            irradiance = radiation_on_surface(
+                climate,
+                float(element.inclination),
+                float(element.orientation_azimuth),
+            )
+            opaque_solar[element.id] = (
+                float(element.area)
+                * float(element.solar_absorptance)
+                * np.asarray(irradiance, dtype=float)
+            )
+    
+        solution = solve_zone_iso52016(
+            opaque_elements=opaque_elements,
+            transparent_elements=transparent,
+            bridges=ThermalBridgeConfig(),
+            zone_id="bestest",
+            # Published LBL detailed Case 600 uses 0.414 ACH at the test altitude,
+            # corresponding to 0.5 ACH at sea level.
+            h_ve=0.414 * 129.6 * 1200.0 / 3600.0,
+            t_e=climate["T_e"].to_numpy(dtype=float),
+            phi_int=np.full(8760, 200.0),
+            phi_sol_transparent=np.asarray(transparent_solar, dtype=float),
+            opaque_solar_absorbed_w_by_element=opaque_solar,
+            t_set_heating=20.0,
+            t_set_cooling=27.0,
+            internal_convective_fraction=0.4,
+            require_explicit_construction_nodes=True,
+            max_warmup_cycles=30,
+            warmup_tolerance_k=0.01,
+        )
+    
+        actual = {
+            "annual_heating_kwh": float(solution.q_heating.sum()) / 1000.0,
+            "annual_cooling_kwh": float(solution.q_cooling.sum()) / 1000.0,
+            "peak_heating_w": float(solution.q_heating.max()),
+            "peak_cooling_w": float(solution.q_cooling.max()),
+        }
+        print("POST_REPAIR_BESTEST_CASE_600=", actual)
+        print("POST_REPAIR_BESTEST_REFERENCE=", CASE_600_REFERENCE)
+        print("POST_REPAIR_BESTEST_PERIODIC_RESIDUAL_K=", solution.periodic_residual_k)
+    
+        for key, value in actual.items():
+            lower, upper = CASE_600_REFERENCE[key]
+>           assert lower <= value <= upper, (key, value, lower, upper)
+E           AssertionError: ('annual_heating_kwh', 5722.516743044783, 4296.0, 5709.0)
+E           assert 5722.516743044783 <= 5709.0
+
+tests/test_external_bestest_repaired.py:248: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_external_bestest_repaired.py::test_repaired_solver_bestest_case_600_is_inside_published_reference_band - AssertionError: ('annual_heating_kwh', 5722.516743044783, 4296.0, 5709.0)
+assert 5722.516743044783 <= 5709.0
+============================== 1 failed in 2.45s ===============================

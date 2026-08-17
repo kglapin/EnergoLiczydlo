@@ -1,0 +1,240 @@
+            id="wall",
+            name="Ściana",
+            zone_id="z1",
+            area=25.0,
+            u_value=1.0,
+            areal_heat_capacity=200.0,
+            mass_distribution_class="distributed",
+        )
+>       with pytest.raises(ValueError, match="explicit five-node"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'explicit five-node'
+E         Actual message: 'Explicit five-node construction data are required: provide thermal_node_capacities_kj_m2k and thermal_node_resistances_m2k_w for every opaque element in the zone.'
+
+tests/test_audit_repairs.py:397: AssertionError
+__________________ test_edge_negative_ventilation_is_rejected __________________
+
+    def test_edge_negative_ventilation_is_rejected() -> None:
+>       with pytest.raises(ValueError, match="non-negative"):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_post_repair_audit.py:409: Failed
+_________ test_three_day_new_solver_energy_balance_closes_hour_by_hour _________
+
+    def test_three_day_new_solver_energy_balance_closes_hour_by_hour() -> None:
+        wall = _explicit_wall()
+        outdoor = np.concatenate(
+            [np.full(24, -10.0), np.full(24, 10.0), np.full(24, 32.0)]
+        )
+        h_ve = np.full(72, 60.0)
+        phi_int = np.full(72, 200.0)
+        solution = solve_zone_iso52016(
+            opaque_elements=[wall],
+            transparent_elements=[],
+            bridges=ThermalBridgeConfig(),
+            zone_id="z1",
+            h_ve=h_ve,
+            t_e=outdoor,
+            t_supply=outdoor,
+            phi_int=phi_int,
+            phi_sol_transparent=np.zeros(72),
+            opaque_solar_absorbed_w_by_element={"wall": np.zeros(72)},
+            t_set_heating=20.0,
+            t_set_cooling=26.0,
+            require_explicit_construction_nodes=True,
+        )
+        capacities = np.asarray([40.0] * 5) * 25.0 * 1000.0
+        nodes = solution.construction_node_temperatures["wall"]
+        previous = np.vstack([np.full((1, 5), 20.0), nodes[:-1]])
+        storage_w = np.sum(capacities * (nodes - previous), axis=1) / 3600.0
+        ventilation_loss = h_ve * (solution.t_air - outdoor)
+        hvac = solution.q_heating - solution.q_cooling
+        residual = storage_w - (
+            phi_int + hvac - solution.q_transmission - ventilation_loss
+        )
+        day_max = {
+            "winter": float(np.max(np.abs(residual[:24]))),
+            "transition": float(np.max(np.abs(residual[24:48]))),
+            "summer": float(np.max(np.abs(residual[48:]))),
+        }
+        print("POST_REPAIR_3DAY_BALANCE_W=", day_max)
+>       assert max(day_max.values()) < 1e-7
+E       AssertionError: assert 125.0568867790007 < 1e-07
+E        +  where 125.0568867790007 = max(dict_values([5.172751116333529e-12, 5.5706550483591855e-12, 125.0568867790007]))
+E        +    where dict_values([5.172751116333529e-12, 5.5706550483591855e-12, 125.0568867790007]) = <built-in method values of dict object at 0x7fa355424ec0>()
+E        +      where <built-in method values of dict object at 0x7fa355424ec0> = {'winter': 5.172751116333529e-12, 'transition': 5.5706550483591855e-12, 'summer': 125.0568867790007}.values
+
+tests/test_post_repair_audit.py:468: AssertionError
+----------------------------- Captured stdout call -----------------------------
+POST_REPAIR_3DAY_BALANCE_W= {'winter': 5.172751116333529e-12, 'transition': 5.5706550483591855e-12, 'summer': 125.0568867790007}
+__________ test_hourly_and_monthly_match_constant_reference_and_units __________
+
+    def test_hourly_and_monthly_match_constant_reference_and_units() -> None:
+        wall = _explicit_wall()
+        hourly = solve_zone_iso52016(
+            opaque_elements=[wall],
+            transparent_elements=[],
+            bridges=ThermalBridgeConfig(),
+            zone_id="z1",
+            h_ve=0.0,
+            t_e=np.zeros(8760),
+            phi_int=np.zeros(8760),
+            phi_sol_transparent=np.zeros(8760),
+            opaque_solar_absorbed_w_by_element={"wall": np.zeros(8760)},
+            t_set_heating=20.0,
+            t_set_cooling=None,
+            require_explicit_construction_nodes=True,
+            warmup_tolerance_k=0.001,
+        )
+        project = _monthly_reference_project()
+        monthly = calculate_polish_monthly_certificate(
+            project,
+            PolishCertificateMonthlySettings(
+                enabled=True,
+                official_bip_climate_data=True,
+                monthly_outdoor_temperature_c=[0.0] * 12,
+                heating_internal_temperature_c_by_zone={"z1": [20.0] * 12},
+                heating_gain_utilization_by_zone={"z1": [1.0] * 12},
+                internal_gain_density_w_m2_by_zone={"z1": 0.0},
+            ),
+        )
+        hourly_kwh = float(hourly.q_heating.sum()) / 1000.0
+        expected_kwh = 25.0 * 1.0 * 20.0 * 8760.0 / 1000.0
+        relative = abs(hourly_kwh - monthly.heating_useful_kwh) / expected_kwh
+        print(
+            "POST_REPAIR_ENGINE_CROSSCHECK=",
+            {
+                "hourly_kwh": hourly_kwh,
+                "monthly_kwh": monthly.heating_useful_kwh,
+                "manual_kwh": expected_kwh,
+                "relative_difference": relative,
+            },
+        )
+>       assert hourly_kwh == pytest.approx(expected_kwh, rel=1e-4)
+E       assert 3528.193325661678 == 4380.0 ± 0.438
+E         
+E         comparison failed
+E         Obtained: 3528.193325661678
+E         Expected: 4380.0 ± 0.438
+
+tests/test_post_repair_audit.py:517: AssertionError
+----------------------------- Captured stdout call -----------------------------
+POST_REPAIR_ENGINE_CROSSCHECK= {'hourly_kwh': 3528.193325661678, 'monthly_kwh': 4380.0, 'manual_kwh': 4380.0, 'relative_difference': 0.19447640966628355}
+___________ test_unit_conversion_constant_1000w_for_year_is_8760kwh ____________
+
+    def test_unit_conversion_constant_1000w_for_year_is_8760kwh() -> None:
+        wall = _explicit_wall(area=50.0)
+        hourly = solve_zone_iso52016(
+            opaque_elements=[wall],
+            transparent_elements=[],
+            bridges=ThermalBridgeConfig(),
+            zone_id="z1",
+            h_ve=0.0,
+            t_e=np.zeros(8760),
+            phi_int=np.zeros(8760),
+            phi_sol_transparent=np.zeros(8760),
+            opaque_solar_absorbed_w_by_element={"wall": np.zeros(8760)},
+            t_set_heating=20.0,
+            t_set_cooling=None,
+            require_explicit_construction_nodes=True,
+            warmup_tolerance_k=0.001,
+        )
+>       assert float(hourly.q_heating.sum()) / 1000.0 == pytest.approx(8760.0, rel=1e-4)
+E       assert 7056.386651323356 == 8760.0 ± 0.876
+E         
+E         comparison failed
+E         Obtained: 7056.386651323356
+E         Expected: 8760.0 ± 0.876
+
+tests/test_post_repair_audit.py:539: AssertionError
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.11.15-final-0 _______________
+
+Name                                                Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------------------
+app/__init__.py                                         0      0   100%
+app/api/__init__.py                                     0      0   100%
+app/api/calculate.py                                   15     15     0%   3-26
+app/api/climate.py                                     60     26    57%   30, 56-92, 98, 106, 128-132
+app/api/health.py                                       5      5     0%   3-10
+app/data_paths.py                                      10      0   100%
+app/engine/__init__.py                                  2      0   100%
+app/engine/audited_calculator.py                      164    164     0%   10-439
+app/engine/audited_calculator/__init__.py             170    108    36%   44, 46, 48, 54-75, 99-170, 197-199, 208-229, 250, 258, 284-319, 333-371, 386, 407-459
+app/engine/calculator.py                              252     21    92%   68, 199, 235-319, 493, 497
+app/engine/calculator/__init__.py                     128     38    70%   48-49, 79-80, 91-104, 111-142, 238-246, 251, 294
+app/engine/climate.py                                 147     55    63%   78-105, 120-169, 252, 272, 275, 279-280, 310, 357-379, 427
+app/engine/climate/__init__.py                         30      0   100%
+app/engine/design_load.py                             121     43    64%   61, 68, 76, 92, 100-104, 127-146, 161, 169, 176-178, 186-187, 193-194, 212-228, 238, 250
+app/engine/design_load/__init__.py                    115     23    80%   88-89, 95-96, 98-99, 112-157, 190, 198, 270
+app/engine/envelope.py                                 93     10    89%   56-61, 69, 80, 85, 192, 195, 211
+app/engine/ground_iso13370.py                         120     71    41%   32, 42, 52-56, 75-89, 96, 133, 152, 170, 174-176, 182-198, 212-228, 237-346
+app/engine/ground_iso13370/__init__.py                 60     27    55%   39, 41, 75-82, 87-125
+app/engine/heat_recovery.py                           112     66    41%   47, 54, 68-71, 82, 85, 126-219
+app/engine/heat_recovery/__init__.py                   89     19    79%   33, 35, 37, 46, 67, 70, 76, 80-82, 88-92, 115, 117-123
+app/engine/internal_gains.py                           76     10    87%   55, 61-67, 121, 135
+app/engine/iso52016_design_load.py                     86      7    92%   58-59, 97, 100, 112, 191-192
+app/engine/iso52016_hourly.py                         387     71    82%   120, 135, 168, 175, 178, 181, 187, 190, 201, 208-226, 232-239, 262-264, 270-294, 324-327, 329, 341, 352, 397, 408, 429, 493
+app/engine/iso52016_hourly/__init__.py                 73      8    89%   47-49, 64, 72, 94, 106, 111
+app/engine/iso52016_moisture.py                        97     16    84%   57, 61, 99, 108, 112, 115, 121, 134-141, 156-158
+app/engine/iso52016_monthly.py                         65      5    92%   33, 38, 44, 81, 83
+app/engine/normative_models.py                        165     17    90%   45, 73, 110, 115, 117, 123, 147, 151, 156, 216, 259, 308-313
+app/engine/normative_models/__init__.py               122     19    84%   38-43, 52-59, 91, 93-96, 98, 100, 118, 134-141, 187, 189
+app/engine/normative_runtime.py                        57     40    30%   36, 44-86, 94-129
+app/engine/polish_certificate_monthly.py              307    102    67%   88, 101, 115, 128-136, 154-175, 189, 197, 207-209, 219-220, 222-223, 240, 244-246, 260-266, 293-295, 298-300, 313-321, 330-339, 410, 440-468, 491-496, 500-501, 520-522, 524, 537-551, 554, 558-559, 576-587, 596, 614, 686
+app/engine/polish_certificate_monthly/__init__.py      23      1    96%   41
+app/engine/preflight_geometry.py                       94     12    87%   45, 49, 52, 54, 83, 88, 107, 116, 178, 233-235
+app/engine/preflight_systems.py                        62      6    90%   42-43, 62, 80, 87, 108
+app/engine/primary_energy.py                           18      1    94%   47
+app/engine/solar.py                                    48     19    60%   25-36, 44-49, 94-101
+app/engine/systems.py                                 126     11    91%   62, 86, 193, 233, 318, 325, 329, 337, 359, 361, 363
+app/engine/thermal_balance.py                         145     74    49%   73, 113, 157, 170, 230-347
+app/engine/thermal_balance/__init__.py                105     12    89%   98, 172, 174, 182, 184, 186, 188, 212-227
+app/engine/ventilation.py                             136     39    71%   59-60, 77, 96, 101, 103, 115, 117, 179, 191-196, 224, 236-287, 314, 319, 321
+app/engine/ventilation/__init__.py                     40      3    92%   39, 45, 74
+app/main.py                                             9      9     0%   3-31
+app/schemas/__init__.py                                 2      0   100%
+app/schemas/models.py                                 392      3    99%   262, 446, 614
+app/schemas/models/__init__.py                        138     14    90%   61, 63, 66, 68, 73, 78, 107, 156, 159, 172, 176, 181, 185, 187
+---------------------------------------------------------------------------------
+TOTAL                                                4466   1190    73%
+=========================== short test summary info ============================
+FAILED tests/test_audit_repairs.py::test_repaired_hourly_year_reaches_steady_4380_kwh - assert 3528.1933256616826 == 4380.0 ± 4.4e-04
+  
+  comparison failed
+  Obtained: 3528.1933256616826
+  Expected: 4380.0 ± 4.4e-04
+FAILED tests/test_audit_repairs.py::test_repaired_1000w_constant_loss_aggregates_to_8760kwh - assert 7056.386651323361 == 8760.0 ± 8.8e-04
+  
+  comparison failed
+  Obtained: 7056.386651323361
+  Expected: 8760.0 ± 8.8e-04
+FAILED tests/test_audit_repairs.py::test_hourly_and_polish_monthly_match_steady_reference - assert 3528.1933256616826 == 4380.0 ± 4.4e-04
+  
+  comparison failed
+  Obtained: 3528.1933256616826
+  Expected: 4380.0 ± 4.4e-04
+FAILED tests/test_audit_repairs.py::test_detailed_hourly_solver_has_five_nodes_per_construction_and_closes_steady_year - assert np.float64(3528.193325661678) == 4380.0 ± 0.438
+  
+  comparison failed
+  Obtained: 3528.193325661678
+  Expected: 4380.0 ± 0.438
+FAILED tests/test_audit_repairs.py::test_detailed_hourly_certificate_mode_rejects_inferred_construction - AssertionError: Regex pattern did not match.
+  Expected regex: 'explicit five-node'
+  Actual message: 'Explicit five-node construction data are required: provide thermal_node_capacities_kj_m2k and thermal_node_resistances_m2k_w for every opaque element in the zone.'
+FAILED tests/test_post_repair_audit.py::test_edge_negative_ventilation_is_rejected - Failed: DID NOT RAISE ValueError
+FAILED tests/test_post_repair_audit.py::test_three_day_new_solver_energy_balance_closes_hour_by_hour - AssertionError: assert 125.0568867790007 < 1e-07
+ +  where 125.0568867790007 = max(dict_values([5.172751116333529e-12, 5.5706550483591855e-12, 125.0568867790007]))
+ +    where dict_values([5.172751116333529e-12, 5.5706550483591855e-12, 125.0568867790007]) = <built-in method values of dict object at 0x7fa355424ec0>()
+ +      where <built-in method values of dict object at 0x7fa355424ec0> = {'winter': 5.172751116333529e-12, 'transition': 5.5706550483591855e-12, 'summer': 125.0568867790007}.values
+FAILED tests/test_post_repair_audit.py::test_hourly_and_monthly_match_constant_reference_and_units - assert 3528.193325661678 == 4380.0 ± 0.438
+  
+  comparison failed
+  Obtained: 3528.193325661678
+  Expected: 4380.0 ± 0.438
+FAILED tests/test_post_repair_audit.py::test_unit_conversion_constant_1000w_for_year_is_8760kwh - assert 7056.386651323356 == 8760.0 ± 0.876
+  
+  comparison failed
+  Obtained: 7056.386651323356
+  Expected: 8760.0 ± 0.876
+9 failed, 356 passed, 2 skipped in 75.10s (0:01:15)

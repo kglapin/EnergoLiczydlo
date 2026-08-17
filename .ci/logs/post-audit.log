@@ -1,0 +1,188 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /opt/hostedtoolcache/Python/3.11.15/x64/bin/python
+cachedir: .pytest_cache
+hypothesis profile 'ci' -> database=None, deadline=None, print_blob=True, derandomize=True, suppress_health_check=(HealthCheck.too_slow,)
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /home/runner/work/EnergoLiczydlo/EnergoLiczydlo/backend
+configfile: pyproject.toml
+plugins: hypothesis-6.165.10, anyio-4.14.2, benchmark-5.2.3, asyncio-1.4.0, cov-6.3.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 25 items
+
+tests/test_post_repair_audit.py::test_manual_01_opaque_transmission_25m2_u1_dt20_is_500w PASSED
+tests/test_post_repair_audit.py::test_manual_02_transparent_transmission_5m2_u2_dt20_is_200w PASSED
+tests/test_post_repair_audit.py::test_manual_03_thermal_bridges_are_60w PASSED
+tests/test_post_repair_audit.py::test_manual_04_ventilation_360m3h_has_hve_120w_per_k PASSED
+tests/test_post_repair_audit.py::test_manual_05_ventilation_loss_360m3h_dt20_is_2400w PASSED
+tests/test_post_repair_audit.py::test_manual_06_horizontal_transparent_solar_gain_is_1200w PASSED
+tests/test_post_repair_audit.py::test_manual_07_full_shading_makes_solar_gain_zero PASSED
+tests/test_post_repair_audit.py::test_manual_08_residential_normative_internal_gain_is_6_8wm2 PASSED
+tests/test_post_repair_audit.py::test_manual_09_constant_schedule_quarter_is_quarter PASSED
+tests/test_post_repair_audit.py::test_manual_10_occupancy_internal_gain_is_80w PASSED
+tests/test_post_repair_audit.py::test_manual_11_area_internal_gain_is_100w PASSED
+tests/test_post_repair_audit.py::test_manual_12_total_internal_gain_is_330w PASSED
+tests/test_post_repair_audit.py::test_manual_13_ground_characteristic_dimension_is_2_5m PASSED
+tests/test_post_repair_audit.py::test_manual_14_ground_equivalent_thickness_includes_both_surface_terms PASSED
+tests/test_post_repair_audit.py::test_manual_15_ground_u_value_matches_correct_formula_branch PASSED
+tests/test_post_repair_audit.py::test_manual_16_room_design_load_one_wall_is_1000w PASSED
+tests/test_post_repair_audit.py::test_manual_17_monthly_january_transmission_is_372kwh PASSED
+tests/test_post_repair_audit.py::test_edge_zero_ventilation_and_zero_gains_are_finite PASSED
+tests/test_post_repair_audit.py::test_edge_negative_ventilation_is_rejected FAILED
+tests/test_post_repair_audit.py::test_three_day_new_solver_energy_balance_closes_hour_by_hour POST_REPAIR_3DAY_BALANCE_W= {'winter': 5.172751116333529e-12, 'transition': 5.5706550483591855e-12, 'summer': 125.0568867790007}
+FAILED
+tests/test_post_repair_audit.py::test_hourly_and_monthly_match_constant_reference_and_units POST_REPAIR_ENGINE_CROSSCHECK= {'hourly_kwh': 3528.193325661678, 'monthly_kwh': 4380.0, 'manual_kwh': 4380.0, 'relative_difference': 0.19447640966628355}
+FAILED
+tests/test_post_repair_audit.py::test_unit_conversion_constant_1000w_for_year_is_8760kwh FAILED
+tests/test_post_repair_audit.py::test_each_opaque_construction_has_its_own_five_nodes PASSED
+tests/test_post_repair_audit.py::test_heat_recovery_is_not_double_counted_and_uses_correct_sign PASSED
+tests/test_post_repair_audit.py::test_cooling_energy_need_is_nonnegative PASSED
+
+=================================== FAILURES ===================================
+__________________ test_edge_negative_ventilation_is_rejected __________________
+
+    def test_edge_negative_ventilation_is_rejected() -> None:
+>       with pytest.raises(ValueError, match="non-negative"):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_post_repair_audit.py:409: Failed
+_________ test_three_day_new_solver_energy_balance_closes_hour_by_hour _________
+
+    def test_three_day_new_solver_energy_balance_closes_hour_by_hour() -> None:
+        wall = _explicit_wall()
+        outdoor = np.concatenate(
+            [np.full(24, -10.0), np.full(24, 10.0), np.full(24, 32.0)]
+        )
+        h_ve = np.full(72, 60.0)
+        phi_int = np.full(72, 200.0)
+        solution = solve_zone_iso52016(
+            opaque_elements=[wall],
+            transparent_elements=[],
+            bridges=ThermalBridgeConfig(),
+            zone_id="z1",
+            h_ve=h_ve,
+            t_e=outdoor,
+            t_supply=outdoor,
+            phi_int=phi_int,
+            phi_sol_transparent=np.zeros(72),
+            opaque_solar_absorbed_w_by_element={"wall": np.zeros(72)},
+            t_set_heating=20.0,
+            t_set_cooling=26.0,
+            require_explicit_construction_nodes=True,
+        )
+        capacities = np.asarray([40.0] * 5) * 25.0 * 1000.0
+        nodes = solution.construction_node_temperatures["wall"]
+        previous = np.vstack([np.full((1, 5), 20.0), nodes[:-1]])
+        storage_w = np.sum(capacities * (nodes - previous), axis=1) / 3600.0
+        ventilation_loss = h_ve * (solution.t_air - outdoor)
+        hvac = solution.q_heating - solution.q_cooling
+        residual = storage_w - (
+            phi_int + hvac - solution.q_transmission - ventilation_loss
+        )
+        day_max = {
+            "winter": float(np.max(np.abs(residual[:24]))),
+            "transition": float(np.max(np.abs(residual[24:48]))),
+            "summer": float(np.max(np.abs(residual[48:]))),
+        }
+        print("POST_REPAIR_3DAY_BALANCE_W=", day_max)
+>       assert max(day_max.values()) < 1e-7
+E       AssertionError: assert 125.0568867790007 < 1e-07
+E        +  where 125.0568867790007 = max(dict_values([5.172751116333529e-12, 5.5706550483591855e-12, 125.0568867790007]))
+E        +    where dict_values([5.172751116333529e-12, 5.5706550483591855e-12, 125.0568867790007]) = <built-in method values of dict object at 0x7f14bdb666c0>()
+E        +      where <built-in method values of dict object at 0x7f14bdb666c0> = {'winter': 5.172751116333529e-12, 'transition': 5.5706550483591855e-12, 'summer': 125.0568867790007}.values
+
+tests/test_post_repair_audit.py:468: AssertionError
+__________ test_hourly_and_monthly_match_constant_reference_and_units __________
+
+    def test_hourly_and_monthly_match_constant_reference_and_units() -> None:
+        wall = _explicit_wall()
+        hourly = solve_zone_iso52016(
+            opaque_elements=[wall],
+            transparent_elements=[],
+            bridges=ThermalBridgeConfig(),
+            zone_id="z1",
+            h_ve=0.0,
+            t_e=np.zeros(8760),
+            phi_int=np.zeros(8760),
+            phi_sol_transparent=np.zeros(8760),
+            opaque_solar_absorbed_w_by_element={"wall": np.zeros(8760)},
+            t_set_heating=20.0,
+            t_set_cooling=None,
+            require_explicit_construction_nodes=True,
+            warmup_tolerance_k=0.001,
+        )
+        project = _monthly_reference_project()
+        monthly = calculate_polish_monthly_certificate(
+            project,
+            PolishCertificateMonthlySettings(
+                enabled=True,
+                official_bip_climate_data=True,
+                monthly_outdoor_temperature_c=[0.0] * 12,
+                heating_internal_temperature_c_by_zone={"z1": [20.0] * 12},
+                heating_gain_utilization_by_zone={"z1": [1.0] * 12},
+                internal_gain_density_w_m2_by_zone={"z1": 0.0},
+            ),
+        )
+        hourly_kwh = float(hourly.q_heating.sum()) / 1000.0
+        expected_kwh = 25.0 * 1.0 * 20.0 * 8760.0 / 1000.0
+        relative = abs(hourly_kwh - monthly.heating_useful_kwh) / expected_kwh
+        print(
+            "POST_REPAIR_ENGINE_CROSSCHECK=",
+            {
+                "hourly_kwh": hourly_kwh,
+                "monthly_kwh": monthly.heating_useful_kwh,
+                "manual_kwh": expected_kwh,
+                "relative_difference": relative,
+            },
+        )
+>       assert hourly_kwh == pytest.approx(expected_kwh, rel=1e-4)
+E       assert 3528.193325661678 == 4380.0 ± 0.438
+E         
+E         comparison failed
+E         Obtained: 3528.193325661678
+E         Expected: 4380.0 ± 0.438
+
+tests/test_post_repair_audit.py:517: AssertionError
+___________ test_unit_conversion_constant_1000w_for_year_is_8760kwh ____________
+
+    def test_unit_conversion_constant_1000w_for_year_is_8760kwh() -> None:
+        wall = _explicit_wall(area=50.0)
+        hourly = solve_zone_iso52016(
+            opaque_elements=[wall],
+            transparent_elements=[],
+            bridges=ThermalBridgeConfig(),
+            zone_id="z1",
+            h_ve=0.0,
+            t_e=np.zeros(8760),
+            phi_int=np.zeros(8760),
+            phi_sol_transparent=np.zeros(8760),
+            opaque_solar_absorbed_w_by_element={"wall": np.zeros(8760)},
+            t_set_heating=20.0,
+            t_set_cooling=None,
+            require_explicit_construction_nodes=True,
+            warmup_tolerance_k=0.001,
+        )
+>       assert float(hourly.q_heating.sum()) / 1000.0 == pytest.approx(8760.0, rel=1e-4)
+E       assert 7056.386651323356 == 8760.0 ± 0.876
+E         
+E         comparison failed
+E         Obtained: 7056.386651323356
+E         Expected: 8760.0 ± 0.876
+
+tests/test_post_repair_audit.py:539: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_post_repair_audit.py::test_edge_negative_ventilation_is_rejected - Failed: DID NOT RAISE ValueError
+FAILED tests/test_post_repair_audit.py::test_three_day_new_solver_energy_balance_closes_hour_by_hour - AssertionError: assert 125.0568867790007 < 1e-07
+ +  where 125.0568867790007 = max(dict_values([5.172751116333529e-12, 5.5706550483591855e-12, 125.0568867790007]))
+ +    where dict_values([5.172751116333529e-12, 5.5706550483591855e-12, 125.0568867790007]) = <built-in method values of dict object at 0x7f14bdb666c0>()
+ +      where <built-in method values of dict object at 0x7f14bdb666c0> = {'winter': 5.172751116333529e-12, 'transition': 5.5706550483591855e-12, 'summer': 125.0568867790007}.values
+FAILED tests/test_post_repair_audit.py::test_hourly_and_monthly_match_constant_reference_and_units - assert 3528.193325661678 == 4380.0 ± 0.438
+  
+  comparison failed
+  Obtained: 3528.193325661678
+  Expected: 4380.0 ± 0.438
+FAILED tests/test_post_repair_audit.py::test_unit_conversion_constant_1000w_for_year_is_8760kwh - assert 7056.386651323356 == 8760.0 ± 0.876
+  
+  comparison failed
+  Obtained: 7056.386651323356
+  Expected: 8760.0 ± 0.876
+========================= 4 failed, 21 passed in 2.32s =========================

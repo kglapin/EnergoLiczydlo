@@ -1,0 +1,31 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /opt/hostedtoolcache/Python/3.11.15/x64/bin/python
+cachedir: .pytest_cache
+hypothesis profile 'ci' -> database=None, deadline=None, print_blob=True, derandomize=True, suppress_health_check=(HealthCheck.too_slow,)
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /home/runner/work/EnergoLiczydlo/EnergoLiczydlo/backend
+configfile: pyproject.toml
+plugins: hypothesis-6.165.10, anyio-4.14.2, benchmark-5.2.3, asyncio-1.4.0, cov-6.3.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 18 items
+
+tests/test_iso52016_conformance.py::test_opaque_nodes_are_five_and_ordered_exterior_to_interior PASSED [  5%]
+tests/test_iso52016_conformance.py::test_transparent_element_has_two_zero_capacity_surface_nodes PASSED [ 11%]
+tests/test_iso52016_conformance.py::test_hvac_controls_operative_temperature_not_air_temperature PASSED [ 16%]
+tests/test_iso52016_conformance.py::test_air_furniture_capacity_is_part_of_dynamic_state PASSED [ 22%]
+tests/test_iso52016_conformance.py::test_strict_mode_rejects_missing_delegated_surface_coefficients PASSED [ 27%]
+tests/test_iso52016_conformance.py::test_opaque_longwave_sky_exchange_increases_heating_load PASSED [ 33%]
+tests/test_iso52016_conformance.py::test_window_longwave_sky_exchange_increases_heating_load PASSED [ 38%]
+tests/test_iso52016_conformance.py::test_humidity_ratio_round_trip PASSED [ 44%]
+tests/test_iso52016_conformance.py::test_moisture_solver_clamps_to_humidity_band_and_reports_latent_load PASSED [ 50%]
+tests/test_iso52016_monthly.py::test_zone_time_constant_uses_internal_capacity_and_total_h PASSED [ 55%]
+tests/test_iso52016_monthly.py::test_heating_utilization_gamma_one_uses_analytical_limit PASSED [ 61%]
+tests/test_iso52016_monthly.py::test_numerical_parameter_increases_with_time_constant PASSED [ 66%]
+tests/test_iso52016_monthly.py::test_monthly_no_gains_returns_full_heating_losses_and_zero_cooling PASSED [ 72%]
+tests/test_iso52016_monthly.py::test_monthly_gains_reduce_heating_need PASSED [ 77%]
+tests/test_iso52016_monthly.py::test_heating_and_cooling_use_independent_monthly_inputs PASSED [ 83%]
+tests/test_iso52016_design_load.py::test_strict_design_load_requires_weather_provenance PASSED [ 88%]
+tests/test_iso52016_design_load.py::test_heating_design_weather_mean_must_match_design_temperature PASSED [ 94%]
+tests/test_iso52016_design_load.py::test_design_load_initializes_for_at_least_fourteen_days PASSED [100%]
+
+============================== 18 passed in 1.66s ==============================
