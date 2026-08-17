@@ -26,6 +26,9 @@ jobs:
         working-directory: backend
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -36,26 +39,32 @@ jobs:
         run: pip install -r requirements.txt
       - id: lint
         name: Lint with ruff
-        run: >-
-          ruff check app tests --output-format=github
-          --extend-per-file-ignores "app/engine/calculator/__init__.py:E402"
-          --extend-per-file-ignores "app/engine/calculator/__init__.py:F821"
-          --extend-per-file-ignores "app/engine/climate/__init__.py:F821"
-          --extend-per-file-ignores "app/engine/design_load/__init__.py:E501"
-          --extend-per-file-ignores "app/engine/ground_iso13370/__init__.py:F821"
-          --extend-per-file-ignores "app/engine/heat_recovery/__init__.py:F821"
-          --extend-per-file-ignores "app/engine/thermal_balance/__init__.py:F821"
-          --extend-per-file-ignores "app/engine/ventilation/__init__.py:F821"
-          --extend-per-file-ignores "tests/test_audit_repairs.py:I001"
-          --extend-per-file-ignores "tests/test_post_repair_audit.py:I001"
-          --extend-per-file-ignores "tests/test_post_repair_audit.py:E501"
-          --extend-per-file-ignores "tests/test_post_repair_audit.py:F401"
-          --extend-per-file-ignores "tests/test_external_bestest_repaired.py:I001"
-          --extend-per-file-ignores "tests/test_external_bestest_repaired.py:E501"
-      - id: mypy
-        name: Type check ISO 52016 numerical modules with mypy
+        continue-on-error: true
         shell: bash
         run: |
+          set -o pipefail
+          ruff check app tests --output-format=concise \
+            --extend-per-file-ignores "app/engine/calculator/__init__.py:E402" \
+            --extend-per-file-ignores "app/engine/calculator/__init__.py:F821" \
+            --extend-per-file-ignores "app/engine/climate/__init__.py:F821" \
+            --extend-per-file-ignores "app/engine/design_load/__init__.py:E501" \
+            --extend-per-file-ignores "app/engine/ground_iso13370/__init__.py:F821" \
+            --extend-per-file-ignores "app/engine/heat_recovery/__init__.py:F821" \
+            --extend-per-file-ignores "app/engine/thermal_balance/__init__.py:F821" \
+            --extend-per-file-ignores "app/engine/ventilation/__init__.py:F821" \
+            --extend-per-file-ignores "tests/test_audit_repairs.py:I001" \
+            --extend-per-file-ignores "tests/test_post_repair_audit.py:I001" \
+            --extend-per-file-ignores "tests/test_post_repair_audit.py:E501" \
+            --extend-per-file-ignores "tests/test_post_repair_audit.py:F401" \
+            --extend-per-file-ignores "tests/test_external_bestest_repaired.py:I001" \
+            --extend-per-file-ignores "tests/test_external_bestest_repaired.py:E501" \
+            2>&1 | tee /tmp/ci-lint.log
+      - id: mypy
+        name: Type check ISO 52016 numerical modules with mypy
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
           mypy \
             app/engine/iso52016_hourly.py \
             app/engine/iso52016_monthly.py \
@@ -63,32 +72,50 @@ jobs:
             app/engine/iso52016_design_load.py \
             --follow-imports=skip \
             --disable-error-code=no-untyped-def \
-            --show-error-codes --no-pretty
+            --show-error-codes --no-pretty 2>&1 | tee /tmp/ci-mypy.log
       - id: conformance
         name: Run ISO 52016 conformance regressions
-        run: >-
-          pytest
-          tests/test_iso52016_conformance.py
-          tests/test_iso52016_monthly.py
-          tests/test_iso52016_design_load.py
-          -q -vv
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          pytest \
+            tests/test_iso52016_conformance.py \
+            tests/test_iso52016_monthly.py \
+            tests/test_iso52016_design_load.py \
+            -q -vv 2>&1 | tee /tmp/ci-conformance.log
       - id: audit
         name: Run audit repair regressions
-        run: pytest tests/test_audit_repairs.py -q -vv
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          pytest tests/test_audit_repairs.py -q -vv 2>&1 | tee /tmp/ci-audit.log
       - id: post_audit
         name: Run independent post-repair audit
-        run: pytest tests/test_post_repair_audit.py -q -vv -s
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          pytest tests/test_post_repair_audit.py -q -vv -s 2>&1 | tee /tmp/ci-post-audit.log
       - id: bestest
         name: Run repaired BESTEST Case 600
+        continue-on-error: true
         env:
           RUN_EXTERNAL_BENCHMARKS: "1"
-        run: >-
-          pytest
-          tests/test_external_bestest_repaired.py::test_repaired_solver_bestest_case_600_is_inside_published_reference_band
-          -q -vv -s
+        shell: bash
+        run: |
+          set -o pipefail
+          pytest \
+            tests/test_external_bestest_repaired.py::test_repaired_solver_bestest_case_600_is_inside_published_reference_band \
+            -q -vv -s 2>&1 | tee /tmp/ci-bestest.log
       - id: full_regression
         name: Run full backend regression suite
-        run: pytest tests -q --cov=app --cov-report=term-missing
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          pytest tests -q --cov=app --cov-report=term-missing 2>&1 | tee /tmp/ci-full.log
       - id: collect
         name: Collect backend step outcomes
         if: always()
@@ -102,6 +129,51 @@ jobs:
           echo "post_audit=${{ steps.post_audit.outcome }}" >> "$GITHUB_OUTPUT"
           echo "bestest=${{ steps.bestest.outcome }}" >> "$GITHUB_OUTPUT"
           echo "full_regression=${{ steps.full_regression.outcome }}" >> "$GITHUB_OUTPUT"
+      - name: Persist backend diagnostic logs
+        if: always() && github.event_name == 'pull_request'
+        working-directory: .
+        env:
+          TESTED_SHA: ${{ github.event.pull_request.head.sha }}
+          HEAD_BRANCH: ${{ github.head_ref }}
+        run: |
+          mkdir -p /tmp/ci-diagnostics
+          for name in lint mypy conformance audit post-audit bestest full; do
+            source="/tmp/ci-${name}.log"
+            if [ -f "$source" ]; then
+              tail -n 240 "$source" > "/tmp/ci-diagnostics/${name}.log"
+            fi
+          done
+          git fetch origin "$HEAD_BRANCH"
+          git checkout -B ci-report "origin/$HEAD_BRANCH"
+          mkdir -p .ci/logs
+          cp /tmp/ci-diagnostics/*.log .ci/logs/ 2>/dev/null || true
+          printf '%s\n' "$TESTED_SHA" > .ci/logs/tested-sha.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .ci/logs
+          if ! git diff --cached --quiet; then
+            git commit -m "[skip ci] record backend diagnostics for ${TESTED_SHA}"
+            git push origin "HEAD:${HEAD_BRANCH}"
+          fi
+      - name: Fail backend when any validation gate failed
+        if: always()
+        working-directory: .
+        run: |
+          outcomes=(
+            "${{ steps.install.outcome }}"
+            "${{ steps.lint.outcome }}"
+            "${{ steps.mypy.outcome }}"
+            "${{ steps.conformance.outcome }}"
+            "${{ steps.audit.outcome }}"
+            "${{ steps.post_audit.outcome }}"
+            "${{ steps.bestest.outcome }}"
+            "${{ steps.full_regression.outcome }}"
+          )
+          for outcome in "${outcomes[@]}"; do
+            if [ "$outcome" != "success" ]; then
+              exit 1
+            fi
+          done
 
   frontend:
     runs-on: ubuntu-latest
@@ -115,6 +187,8 @@ jobs:
         working-directory: frontend
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -211,6 +285,7 @@ jobs:
         env:
           TESTED_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
+          git pull --rebase origin "${{ github.head_ref }}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .ci/last-run.json
