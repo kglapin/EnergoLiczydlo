@@ -50,13 +50,14 @@ def resolve_hourly_ventilation(
                 )
             }
         )
-        # Preserve calculation-only advanced settings attached by the wrapper.
         advanced = getattr(project.ventilation, "_heat_recovery_settings", None)
         if advanced is not None:
             object.__setattr__(ventilation, "_heat_recovery_settings", advanced)
 
     building_floor_area = sum(
-        zone.floor_area for zone in project.thermal_zones if zone.zone_type in CONDITIONED_TYPES
+        zone.floor_area
+        for zone in project.thermal_zones
+        if zone.zone_type in CONDITIONED_TYPES
     )
     profile_value = _enum_value(project.general.dhw_usage_profile)
     residential = profile_value.startswith("residential")
@@ -68,9 +69,7 @@ def resolve_hourly_ventilation(
 
     if ventilation.airflow_rate == 0.0:
         normative_beta = (
-            1.0
-            if _enum_value(ventilation.operation_mode) == "periodic"
-            else beta
+            1.0 if _enum_value(ventilation.operation_mode) == "periodic" else beta
         )
         airflow = normative_airflow_rate_m3h(
             profile_value,
@@ -113,12 +112,14 @@ def annual_heat_recovery_stats(
         flow = np.asarray(mechanical, dtype=float)
         if flow.ndim == 0:
             flow = np.full(len(outdoor), float(flow), dtype=float)
+        capacity_fraction = zone.floor_area / building_area if building_area > 0.0 else 0.0
         state = heat_recovery_state(
             ventilation,
             zone,
             outdoor,
             flow,
             operation_profile=None,
+            capacity_fraction=capacity_fraction,
         )
         total_preheater += state.preheater_power_w
         bypass_any |= state.bypass_active
