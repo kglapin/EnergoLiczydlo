@@ -44,6 +44,13 @@ export interface NormativeSettings {
     heat_up_power_by_zone_w: Record<string, number>
     unheated_adjacent_temperature_by_element_c: Record<string, number>
   }
+  legal: {
+    certificate_mode: boolean
+    calculation_date?: string
+    methodology_source?: string
+    climate_data_source?: string
+    primary_energy_factor_sources: Record<string, string>
+  }
 }
 
 export const defaultNormativeSettings: NormativeSettings = {
@@ -68,6 +75,10 @@ export const defaultNormativeSettings: NormativeSettings = {
     heat_up_power_by_zone_w: {},
     unheated_adjacent_temperature_by_element_c: {},
   },
+  legal: {
+    certificate_mode: false,
+    primary_energy_factor_sources: {},
+  },
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -79,6 +90,7 @@ function mergeSettings(value: unknown): NormativeSettings {
   const ground = isRecord(value.ground) ? value.ground : {}
   const heatRecovery = isRecord(value.heat_recovery) ? value.heat_recovery : {}
   const design = isRecord(value.design_conditions) ? value.design_conditions : {}
+  const legal = isRecord(value.legal) ? value.legal : {}
   return {
     ground: {
       ...defaultNormativeSettings.ground,
@@ -104,6 +116,13 @@ function mergeSettings(value: unknown): NormativeSettings {
         design.unheated_adjacent_temperature_by_element_c,
       )
         ? design.unheated_adjacent_temperature_by_element_c as Record<string, number>
+        : {},
+    },
+    legal: {
+      ...defaultNormativeSettings.legal,
+      ...legal,
+      primary_energy_factor_sources: isRecord(legal.primary_energy_factor_sources)
+        ? legal.primary_energy_factor_sources as Record<string, string>
         : {},
     },
   } as NormativeSettings
