@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+  statuses: write
+
 jobs:
   backend:
     runs-on: ubuntu-latest
@@ -39,22 +43,33 @@ jobs:
           --extend-per-file-ignores "tests/test_post_repair_audit.py:F401"
           --extend-per-file-ignores "tests/test_external_bestest_repaired.py:I001"
           --extend-per-file-ignores "tests/test_external_bestest_repaired.py:E501"
-      - name: Type check numerical core with mypy
+      - name: Type check ISO 52016 numerical modules with mypy
         shell: bash
         run: |
           set +e
-          mypy app/engine/iso52016_hourly.py \
+          mypy \
+            app/engine/iso52016_hourly.py \
+            app/engine/iso52016_monthly.py \
+            app/engine/iso52016_moisture.py \
+            app/engine/iso52016_design_load.py \
             --follow-imports=skip \
             --disable-error-code=no-untyped-def \
             --show-error-codes --no-pretty | tee /tmp/mypy.txt
           status=${PIPESTATUS[0]}
           {
-            echo "### mypy — ISO 52016 numerical core"
+            echo "### mypy — ISO 52016 numerical modules"
             echo '```text'
             cat /tmp/mypy.txt
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
           exit "$status"
+      - name: Run ISO 52016 conformance regressions
+        run: >-
+          pytest
+          tests/test_iso52016_conformance.py
+          tests/test_iso52016_monthly.py
+          tests/test_iso52016_design_load.py
+          -q -vv
       - name: Run audit repair regressions
         run: pytest tests/test_audit_repairs.py -q -vv
       - name: Run independent post-repair audit
@@ -86,6 +101,34 @@ jobs:
           PY
           fi
           exit "$status"
+      - name: Publish backend result as commit status
+        if: always()
+        working-directory: .
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          if [ "$JOB_STATUS" = "success" ]; then
+            state="success"
+            description="Backend, ISO conformance and BESTEST passed"
+          else
+            state="failure"
+            description="Backend validation failed"
+          fi
+          jq -n \
+            --arg state "$state" \
+            --arg context "energoliczydlo/backend" \
+            --arg description "$description" \
+            '{state:$state, context:$context, description:$description}' \
+            > /tmp/status.json
+          curl --fail-with-body -L \
+            -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${COMMIT_SHA}" \
+            -d @/tmp/status.json
 
   frontend:
     runs-on: ubuntu-latest
@@ -107,3 +150,31 @@ jobs:
         run: pnpm typecheck
       - name: Build
         run: pnpm build
+      - name: Publish frontend result as commit status
+        if: always()
+        working-directory: .
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          if [ "$JOB_STATUS" = "success" ]; then
+            state="success"
+            description="Frontend lint, typecheck and build passed"
+          else
+            state="failure"
+            description="Frontend validation failed"
+          fi
+          jq -n \
+            --arg state "$state" \
+            --arg context "energoliczydlo/frontend" \
+            --arg description "$description" \
+            '{state:$state, context:$context, description:$description}' \
+            > /tmp/status.json
+          curl --fail-with-body -L \
+            -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${COMMIT_SHA}" \
+            -d @/tmp/status.json
