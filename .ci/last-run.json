@@ -1,9 +1,9 @@
 {
-  "tested_sha": "e9d0cd32b55d349a6ad09a904bb758afb96e9e31",
+  "tested_sha": "0c7481a67d0cb051742c2979706d653f35bf2f74",
   "backend": {
     "result": "cancelled",
     "repair": "skipped",
-    "install": "skipped",
+    "install": "cancelled",
     "lint": "skipped",
     "mypy": "skipped",
     "conformance": "skipped",
@@ -14,8 +14,8 @@
   },
   "frontend": {
     "result": "cancelled",
-    "install": "skipped",
-    "lint": "skipped",
+    "install": "success",
+    "lint": "cancelled",
     "typecheck": "skipped",
     "build": "skipped"
   }
