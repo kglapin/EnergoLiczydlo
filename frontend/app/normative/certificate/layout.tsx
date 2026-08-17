@@ -7,7 +7,9 @@ export default function CertificateSettingsLayout({ children }: { children: Reac
     <>
       <div className="container mx-auto flex justify-end px-4 pt-2">
         <Button variant="outline" size="sm" asChild>
-          <Link href="/normative/certificate/primary-energy">Edytuj wi i emisję</Link>
+          <Link href="/normative/certificate/primary-energy">
+            Współczynniki energii pierwotnej i emisji
+          </Link>
         </Button>
       </div>
       {children}
