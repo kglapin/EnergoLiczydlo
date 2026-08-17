@@ -56,9 +56,71 @@ def _adjacent_temperature(element, t_e, unheated_zone_temperature=None, T_int=No
     )
 
 
+def _preserve_legacy_six_resistance_path(prepared, *, strict: bool):
+    """Keep the complete R-path represented by historical six-value inputs.
+
+    The legacy representation stores six resistances from room air to the
+    exterior boundary: the first and last values contain the surface film plus
+    half of the adjacent finite-volume interval, while the four middle values
+    connect the five construction-node centres.
+
+    The rebuilt core already uses the four middle values between its five
+    nodes. In compatibility mode it also adds separate inferred surface films.
+    Without this correction, simply slicing ``r[1:5]`` drops both half-node
+    resistances and shortens the total thermal path by one complete interval.
+    That raises the effective U-value and was visible in BESTEST Case 600 as
+    systematically excessive heating/cooling demand and peak loads.
+    """
+    if strict:
+        return prepared
+
+    matrix = prepared.matrix.copy()
+    patched_opaque = []
+    changed = False
+
+    for path in prepared.opaque:
+        resistances = getattr(path.element, "thermal_node_resistances_m2k_w", None)
+        if resistances is None or len(resistances) != 6:
+            patched_opaque.append(path)
+            continue
+
+        film = _core._film(path.element, False)
+        # Six-value data are a compatibility representation. If explicit
+        # convective/radiative films were also supplied, keep the core path
+        # unchanged rather than collapsing a radiative network into one film.
+        if not film.inferred:
+            patched_opaque.append(path)
+            continue
+
+        values = np.asarray(resistances, dtype=float)
+        area = float(path.element.area)
+        ext, interior = path.indices[0], path.indices[4]
+
+        desired_boundary_h = area / float(values[-1])
+        boundary_delta = desired_boundary_h - float(path.h_boundary)
+        matrix[ext, ext] += boundary_delta
+
+        old_room_h = area * float(film.h_ci)
+        desired_room_h = area / float(values[0])
+        room_delta = desired_room_h - old_room_h
+        matrix[0, 0] += room_delta
+        matrix[0, interior] -= room_delta
+        matrix[interior, interior] += room_delta
+        matrix[interior, 0] -= room_delta
+
+        patched_opaque.append(replace(path, h_boundary=desired_boundary_h))
+        changed = True
+
+    if not changed:
+        return prepared
+    return replace(prepared, matrix=matrix, opaque=tuple(patched_opaque))
+
+
 def _prepare(*args, **kwargs):
     prepared = _core_prepare(*args, **kwargs)
     strict = bool(kwargs.get("strict", False))
+    prepared = _preserve_legacy_six_resistance_path(prepared, strict=strict)
+
     t_e = np.asarray(kwargs["t_e"], dtype=float)
     sky_delta = np.asarray(kwargs["sky_delta"], dtype=float)
     if sky_delta.ndim == 0:
