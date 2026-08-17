@@ -1,11 +1,11 @@
-484 | ) -> tuple[ISO52016ZoneSolution, FloatArray]:
-485 |     n = len(t_supply)
-486 |     size = prepared.matrix.shape[0]
-    |     ^^^^
-487 |     outputs = [_arr(np.zeros(n)) for _ in range(10)]
-488 |     t_air, t_mrt, t_op, t_mass, t_mass_mean, q_h, q_c, q_tr, unmet_h, unmet_c = outputs
     |
-help: Remove assignment to unused variable `size`
+323 |             solar = _arr(np.zeros(len(t_e)))
+324 |             sky = _arr(np.zeros(len(t_e)))
+325 |             # Ground virtual layer is the exterior path; core inference must not subtract an exterior film.
+    |                                                                                                     ^^^^^^^
+326 |             if getattr(element, "thermal_node_resistances_m2k_w", None) is None and not strict:
+327 |                 total_core = (
+    |
 
 E501 Line too long (104 > 100)
   --> app/engine/preflight_systems.py:41:101
@@ -316,5 +316,5 @@ C408 Unnecessary `dict()` call (rewrite as a literal)
    |
 help: Rewrite as a literal
 
-Found 25 errors.
-No fixes available (6 hidden fixes can be enabled with the `--unsafe-fixes` option).
+Found 24 errors.
+No fixes available (5 hidden fixes can be enabled with the `--unsafe-fixes` option).

@@ -1,7 +1,6 @@
 app/engine/calculator/__init__.py:139:101: E501 Line too long (106 > 100)
 app/engine/calculator/__init__.py:146:101: E501 Line too long (102 > 100)
 app/engine/iso52016_hourly.py:325:101: E501 Line too long (107 > 100)
-app/engine/iso52016_hourly.py:486:5: F841 Local variable `size` is assigned to but never used
 app/engine/preflight_systems.py:41:101: E501 Line too long (104 > 100)
 app/engine/preflight_systems.py:42:101: E501 Line too long (117 > 100)
 app/engine/preflight_systems.py:54:101: E501 Line too long (123 > 100)
@@ -23,5 +22,5 @@ tests/test_iso52016_conformance.py:38:12: C408 Unnecessary `dict()` call (rewrit
 tests/test_iso52016_conformance.py:161:14: C408 Unnecessary `dict()` call (rewrite as a literal)
 tests/test_iso52016_conformance.py:184:14: C408 Unnecessary `dict()` call (rewrite as a literal)
 tests/test_iso52016_monthly.py:32:14: C408 Unnecessary `dict()` call (rewrite as a literal)
-Found 25 errors.
-No fixes available (6 hidden fixes can be enabled with the `--unsafe-fixes` option).
+Found 24 errors.
+No fixes available (5 hidden fixes can be enabled with the `--unsafe-fixes` option).

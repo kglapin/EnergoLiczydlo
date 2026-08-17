@@ -26,4 +26,4 @@ tests/test_audit_repairs.py::test_design_load_certificate_mode_rejects_missing_r
 tests/test_audit_repairs.py::test_detailed_hourly_solver_has_five_nodes_per_construction_and_closes_steady_year PASSED [ 93%]
 tests/test_audit_repairs.py::test_detailed_hourly_certificate_mode_rejects_inferred_construction PASSED [100%]
 
-============================== 16 passed in 2.70s ==============================
+============================== 16 passed in 3.46s ==============================

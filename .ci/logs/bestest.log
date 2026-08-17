@@ -9,7 +9,7 @@ plugins: hypothesis-6.165.10, anyio-4.14.2, benchmark-5.2.3, asyncio-1.4.0, cov-
 asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
 collecting ... collected 1 item
 
-tests/test_external_bestest_repaired.py::test_repaired_solver_bestest_case_600_is_inside_published_reference_band POST_REPAIR_BESTEST_CASE_600= {'annual_heating_kwh': 6453.018464537265, 'annual_cooling_kwh': 8533.539610807105, 'peak_heating_w': 4650.811808460704, 'peak_cooling_w': 7124.190957393732}
+tests/test_external_bestest_repaired.py::test_repaired_solver_bestest_case_600_is_inside_published_reference_band POST_REPAIR_BESTEST_CASE_600= {'annual_heating_kwh': 5031.2803510595595, 'annual_cooling_kwh': 14815.842969928019, 'peak_heating_w': 4160.81689754426, 'peak_cooling_w': 8859.054656482987}
 POST_REPAIR_BESTEST_REFERENCE= {'annual_heating_kwh': (4296.0, 5709.0), 'annual_cooling_kwh': (6137.0, 7964.0), 'peak_heating_w': (3437.0, 4354.0), 'peak_cooling_w': (5965.0, 6827.0)}
 POST_REPAIR_BESTEST_PERIODIC_RESIDUAL_K= 0.0
 FAILED
@@ -183,11 +183,11 @@ tmp_path = PosixPath('/tmp/pytest-of-runner/pytest-0/test_repaired_solver_bestes
         for key, value in actual.items():
             lower, upper = CASE_600_REFERENCE[key]
 >           assert lower <= value <= upper, (key, value, lower, upper)
-E           AssertionError: ('annual_heating_kwh', 6453.018464537265, 4296.0, 5709.0)
-E           assert 6453.018464537265 <= 5709.0
+E           AssertionError: ('annual_cooling_kwh', 14815.842969928019, 6137.0, 7964.0)
+E           assert 14815.842969928019 <= 7964.0
 
 tests/test_external_bestest_repaired.py:250: AssertionError
 =========================== short test summary info ============================
-FAILED tests/test_external_bestest_repaired.py::test_repaired_solver_bestest_case_600_is_inside_published_reference_band - AssertionError: ('annual_heating_kwh', 6453.018464537265, 4296.0, 5709.0)
-assert 6453.018464537265 <= 5709.0
-============================== 1 failed in 2.24s ===============================
+FAILED tests/test_external_bestest_repaired.py::test_repaired_solver_bestest_case_600_is_inside_published_reference_band - AssertionError: ('annual_cooling_kwh', 14815.842969928019, 6137.0, 7964.0)
+assert 14815.842969928019 <= 7964.0
+============================== 1 failed in 2.59s ===============================
