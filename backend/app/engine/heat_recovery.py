@@ -82,9 +82,6 @@ def _bypass_mask(
         raise ValueError("Summer bypass temperature limits are required")
     indoor_reference = zone.setpoint_cooling
     if indoor_reference is None:
-        # Without a cooling/free-cooling target, opening a bypass would be an
-        # arbitrary control assumption. Keep recovery active and report the
-        # missing target during preflight instead.
         return np.zeros_like(t_outdoor, dtype=bool)
     return (
         (t_outdoor >= settings.bypass_min_outdoor_c)
@@ -117,8 +114,17 @@ def heat_recovery_state(
     t_outdoor_c: np.ndarray,
     mechanical_flow_m3h: float | np.ndarray,
     operation_profile: np.ndarray | None = None,
+    *,
+    capacity_fraction: float = 1.0,
 ) -> HeatRecoveryState:
-    """Evaluate sensible recovery, bypass and frost protection hour by hour."""
+    """Evaluate sensible recovery, bypass and frost protection hour by hour.
+
+    ``capacity_fraction`` allocates central-unit preheater power to the current
+    zone. The annual sum therefore never multiplies one physical preheater by
+    the number of thermal zones.
+    """
+    if not 0.0 <= capacity_fraction <= 1.0:
+        raise ValueError("capacity_fraction must be between 0 and 1")
     outdoor = np.asarray(t_outdoor_c, dtype=float)
     if outdoor.ndim != 1:
         raise ValueError("t_outdoor_c must be one-dimensional")
@@ -176,7 +182,7 @@ def heat_recovery_state(
         )
         eta = np.where(frost_risk, np.minimum(eta, safe_eta), eta)
     elif settings.frost_strategy == "preheater":
-        max_input_power = float(settings.preheater_max_power_w or 0.0)
+        max_input_power = float(settings.preheater_max_power_w or 0.0) * capacity_fraction
         active = frost_risk & (eta > 1e-9) & (flow > 1e-9)
         target_preheat = np.where(
             active,
@@ -196,8 +202,6 @@ def heat_recovery_state(
             where=flow > 1e-9,
         )
         preheated = outdoor + rise
-        # If the installed preheater is too small, reduce recovery to the
-        # maximum frost-safe efficiency instead of allowing impossible states.
         denominator = np.maximum(t_extract - preheated, 1e-9)
         safe_eta = np.clip(
             (t_extract - settings.frost_exhaust_limit_c) / denominator,
