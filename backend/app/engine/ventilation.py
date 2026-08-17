@@ -160,15 +160,15 @@ def ventilation_airflow_components(
             VentilationType.MECHANICAL_WITH_RECOVERY,
         ):
             if detailed and vtype == VentilationType.MECHANICAL_WITH_RECOVERY:
-                mechanical = qv_nominal
+                mechanical_scalar = qv_nominal
             else:
                 eta_rec = (
                     _recovery_efficiency(ventilation)
                     if vtype == VentilationType.MECHANICAL_WITH_RECOVERY
                     else 0.0
                 )
-                mechanical = qv_nominal * (1.0 - eta_rec)
-            return mechanical, qv_inf + qv_fan_inf
+                mechanical_scalar = qv_nominal * (1.0 - eta_rec)
+            return mechanical_scalar, qv_inf + qv_fan_inf
         return 0.0, qv_nominal + qv_inf + qv_fan_inf
 
     if vtype in (
@@ -176,16 +176,16 @@ def ventilation_airflow_components(
         VentilationType.MECHANICAL_WITH_RECOVERY,
     ):
         if detailed and vtype == VentilationType.MECHANICAL_WITH_RECOVERY:
-            mechanical = profile * qv_nominal
+            mechanical_hourly = profile * qv_nominal
         else:
             eta_rec = (
                 _recovery_efficiency(ventilation)
                 if vtype == VentilationType.MECHANICAL_WITH_RECOVERY
                 else 0.0
             )
-            mechanical = profile * qv_nominal * (1.0 - eta_rec)
+            mechanical_hourly = profile * qv_nominal * (1.0 - eta_rec)
         return (
-            mechanical,
+            mechanical_hourly,
             profile * qv_fan_inf + (1.0 - profile) * qv_inf,
         )
     if vtype in (VentilationType.EXHAUST, VentilationType.HYBRID):
@@ -271,7 +271,9 @@ def ventilation_effective_supply_temperature(
         if ventilation.supply_temperature is None:
             raise RuntimeError("Explicit supply temperature disappeared during evaluation")
         mechanical_supply = np.full(
-            len(outdoor), float(ventilation.supply_temperature), dtype=float
+            len(outdoor),
+            float(ventilation.supply_temperature),
+            dtype=float,
         )
 
     total = mechanical + external
