@@ -1,9 +1,9 @@
-"""Configuration models for certificate-grade hourly extensions.
+"""Configuration models for normative hourly and Polish certificate calculations.
 
-The public API schema stays backward compatible: advanced parameters live in
-``BuildingProject.metadata["normative"]``. This lets older project files keep
-working while the audited calculator can require additional normative inputs
-when formal calculation modes are enabled.
+Advanced parameters live in ``BuildingProject.metadata["normative"]`` so old
+project JSON remains valid. The hourly ISO 52016 analysis and the legally
+prescribed Polish certificate calculation are deliberately represented as
+separate calculation layers.
 """
 
 from __future__ import annotations
@@ -15,10 +15,20 @@ from pydantic import BaseModel, Field, model_validator
 
 from app.schemas.models import BuildingProject
 
+MONTHS = 12
+
+
+def _validate_monthly_series(name: str, values: list[float]) -> None:
+    if len(values) != MONTHS:
+        raise ValueError(f"{name} must contain exactly 12 monthly values")
+
+
+def _validate_monthly_map(name: str, values: dict[str, list[float]]) -> None:
+    for key, series in values.items():
+        _validate_monthly_series(f"{name}[{key}]", series)
+
 
 class GroundElementSettings(BaseModel):
-    """ISO 13370 inputs that can vary between ground-coupled elements."""
-
     exposed_perimeter_m: float | None = Field(None, gt=0.0)
     floor_thermal_resistance_m2k_w: float | None = Field(None, gt=0.0)
     basement_depth_m: float | None = Field(None, ge=0.0)
@@ -36,16 +46,6 @@ class GroundElementSettings(BaseModel):
 
 
 class GroundISO13370Settings(BaseModel):
-    """Ground heat-transfer settings.
-
-    ``certificate_mode`` deliberately requires periodic response coefficients
-    for every slab element. ISO 13370 limits its normal seasonal calculation
-    to monthly periods; sub-monthly dynamic use belongs to Annex D. The
-    application therefore does not invent Annex-D coefficients in certificate
-    mode. A diagnostic 1-D harmonic soil response is available only when
-    ``certificate_mode`` is false.
-    """
-
     enabled: bool = False
     certificate_mode: bool = False
     soil_conductivity_w_mk: float | None = Field(None, gt=0.0)
@@ -82,8 +82,6 @@ FrostStrategy = Literal["none", "preheater", "reduce_recovery", "disable_recover
 
 
 class HeatRecoverySettings(BaseModel):
-    """Dynamic heat-recovery controller used by the hourly solver."""
-
     enabled: bool = False
     certificate_mode: bool = False
     performance_source: str | None = None
@@ -129,8 +127,6 @@ class HeatRecoverySettings(BaseModel):
 
 
 class DesignConditionsSettings(BaseModel):
-    """Explicit project conditions for PN-EN 12831-1 load calculations."""
-
     enabled: bool = False
     certificate_mode: bool = False
     outdoor_design_temperature_c: float | None = None
@@ -161,19 +157,106 @@ class DesignConditionsSettings(BaseModel):
         return self
 
 
-class LegalProvenanceSettings(BaseModel):
-    """Evidence trail required before a result is presented as formal-ready.
+class PolishCertificateMonthlySettings(BaseModel):
+    """Inputs for the legally prescribed monthly certificate calculation.
 
-    This model does not decide whether a certificate is legally valid. It
-    records the calculation date, methodology/climate sources and provenance
-    of each primary-energy factor so the calculation is auditable against the
-    Polish rules applicable on that date.
+    Coefficients that the regulation delegates to a Polish Standard are not
+    reverse-engineered here. In formal mode the verified monthly coefficients
+    are explicit inputs with an evidence trail in ``legal``.
     """
 
+    enabled: bool = False
+    official_bip_climate_data: bool = False
+    monthly_outdoor_temperature_c: list[float] = Field(default_factory=list)
+    solar_irradiation_kwh_m2_by_element: dict[str, list[float]] = Field(
+        default_factory=dict
+    )
+    heating_internal_temperature_c_by_zone: dict[str, list[float]] = Field(
+        default_factory=dict
+    )
+    cooling_internal_temperature_c_by_zone: dict[str, list[float]] = Field(
+        default_factory=dict
+    )
+    heating_gain_utilization_by_zone: dict[str, list[float]] = Field(
+        default_factory=dict
+    )
+    cooling_loss_utilization_by_zone: dict[str, list[float]] = Field(
+        default_factory=dict
+    )
+    beta_by_zone: dict[str, list[float]] = Field(default_factory=dict)
+    recovery_effectiveness_by_zone: dict[str, list[float]] = Field(
+        default_factory=dict
+    )
+    supply_extract_reduction_by_zone: dict[str, list[float]] = Field(
+        default_factory=dict
+    )
+    unheated_adjacent_temperature_c_by_element: dict[str, list[float]] = Field(
+        default_factory=dict
+    )
+    ground_adjacent_temperature_c_by_element: dict[str, list[float]] = Field(
+        default_factory=dict
+    )
+    internal_gain_density_w_m2_by_zone: dict[str, float] = Field(default_factory=dict)
+    preheater_electricity_kwh_by_month: list[float] = Field(default_factory=list)
+    heating_useful_override_kwh_by_zone: dict[str, list[float]] = Field(
+        default_factory=dict
+    )
+    cooling_useful_override_kwh_by_zone: dict[str, list[float]] = Field(
+        default_factory=dict
+    )
+
+    @model_validator(mode="after")
+    def validate_monthly_data(self) -> PolishCertificateMonthlySettings:
+        if not self.enabled:
+            return self
+        _validate_monthly_series(
+            "monthly_outdoor_temperature_c", self.monthly_outdoor_temperature_c
+        )
+        if self.preheater_electricity_kwh_by_month:
+            _validate_monthly_series(
+                "preheater_electricity_kwh_by_month",
+                self.preheater_electricity_kwh_by_month,
+            )
+        monthly_maps = {
+            "solar_irradiation_kwh_m2_by_element": self.solar_irradiation_kwh_m2_by_element,
+            "heating_internal_temperature_c_by_zone": self.heating_internal_temperature_c_by_zone,
+            "cooling_internal_temperature_c_by_zone": self.cooling_internal_temperature_c_by_zone,
+            "heating_gain_utilization_by_zone": self.heating_gain_utilization_by_zone,
+            "cooling_loss_utilization_by_zone": self.cooling_loss_utilization_by_zone,
+            "beta_by_zone": self.beta_by_zone,
+            "recovery_effectiveness_by_zone": self.recovery_effectiveness_by_zone,
+            "supply_extract_reduction_by_zone": self.supply_extract_reduction_by_zone,
+            "unheated_adjacent_temperature_c_by_element": self.unheated_adjacent_temperature_c_by_element,
+            "ground_adjacent_temperature_c_by_element": self.ground_adjacent_temperature_c_by_element,
+            "heating_useful_override_kwh_by_zone": self.heating_useful_override_kwh_by_zone,
+            "cooling_useful_override_kwh_by_zone": self.cooling_useful_override_kwh_by_zone,
+        }
+        for name, values in monthly_maps.items():
+            _validate_monthly_map(name, values)
+        bounded_maps = (
+            self.heating_gain_utilization_by_zone,
+            self.cooling_loss_utilization_by_zone,
+            self.beta_by_zone,
+            self.recovery_effectiveness_by_zone,
+            self.supply_extract_reduction_by_zone,
+        )
+        if any(
+            value < 0.0 or value > 1.0
+            for mapping in bounded_maps
+            for series in mapping.values()
+            for value in series
+        ):
+            raise ValueError("Monthly utilization, beta, recovery and reduction factors must be 0..1")
+        return self
+
+
+class LegalProvenanceSettings(BaseModel):
     certificate_mode: bool = False
     calculation_date: date | None = None
     methodology_source: str | None = None
     climate_data_source: str | None = None
+    utilization_factor_source: str | None = None
+    ventilation_factor_source: str | None = None
     primary_energy_factor_sources: dict[str, str] = Field(default_factory=dict)
 
     @model_validator(mode="after")
@@ -187,6 +270,10 @@ class LegalProvenanceSettings(BaseModel):
             missing.append("methodology_source")
         if not (self.climate_data_source or "").strip():
             missing.append("climate_data_source")
+        if not (self.utilization_factor_source or "").strip():
+            missing.append("utilization_factor_source")
+        if not (self.ventilation_factor_source or "").strip():
+            missing.append("ventilation_factor_source")
         if missing:
             raise ValueError(
                 "Formal calculation mode requires provenance fields: "
@@ -196,16 +283,16 @@ class LegalProvenanceSettings(BaseModel):
 
 
 class NormativeSettings(BaseModel):
-    """Advanced calculation settings read from ``metadata.normative``."""
-
     ground: GroundISO13370Settings = GroundISO13370Settings.model_construct()
     heat_recovery: HeatRecoverySettings = HeatRecoverySettings.model_construct()
     design_conditions: DesignConditionsSettings = DesignConditionsSettings.model_construct()
+    polish_certificate: PolishCertificateMonthlySettings = (
+        PolishCertificateMonthlySettings.model_construct()
+    )
     legal: LegalProvenanceSettings = LegalProvenanceSettings.model_construct()
 
 
 def load_normative_settings(project: BuildingProject) -> NormativeSettings:
-    """Parse advanced normative configuration from project metadata."""
     raw = project.metadata.get("normative", {})
     if raw is None:
         raw = {}
