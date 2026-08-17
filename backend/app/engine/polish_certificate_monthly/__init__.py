@@ -19,6 +19,10 @@ for _name in dir(_legacy):
     if not _name.startswith("__"):
         globals()[_name] = getattr(_legacy, _name)
 
+_legacy_calculate_polish_monthly_certificate = (
+    _legacy.calculate_polish_monthly_certificate
+)
+
 
 def _unverified_override_zones(settings) -> list[str]:
     override_zones = set(settings.heating_useful_override_kwh_by_zone) | set(
@@ -38,7 +42,4 @@ def calculate_polish_monthly_certificate(project, settings):
             "Monthly useful-energy override requires verified external-calculation "
             "evidence for: " + ", ".join(missing)
         )
-    return _legacy.calculate_polish_monthly_certificate(project, settings)
-
-
-_legacy.calculate_polish_monthly_certificate = calculate_polish_monthly_certificate
+    return _legacy_calculate_polish_monthly_certificate(project, settings)
