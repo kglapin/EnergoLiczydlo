@@ -52,7 +52,7 @@ app/engine/ventilation/__init__.py                     40      3    92%   39, 45
 app/main.py                                             9      9     0%   3-31
 app/schemas/__init__.py                                 2      0   100%
 app/schemas/models.py                                 392      3    99%   260, 440, 598
-app/schemas/models/__init__.py                        141     14    90%   71, 73, 76, 80, 85, 90, 123, 172, 175, 190, 196, 203, 207, 211
+app/schemas/models/__init__.py                        142     14    90%   73, 75, 78, 82, 87, 92, 125, 174, 177, 192, 198, 205, 209, 213
 ---------------------------------------------------------------------------------
-TOTAL                                                4550   1199    74%
-367 passed, 2 skipped in 85.84s (0:01:25)
+TOTAL                                                4551   1199    74%
+367 passed, 2 skipped in 79.81s (0:01:19)
