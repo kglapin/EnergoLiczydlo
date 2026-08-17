@@ -8,7 +8,7 @@ suppress relevant system losses.
 
 from __future__ import annotations
 
-from app.engine import calculator as core_calculator
+import app.engine.calculator as core_calculator
 from app.engine.preflight_geometry import apply_net_opaque_areas, geometry_checks
 from app.engine.preflight_systems import (
     model_limit_checks,
