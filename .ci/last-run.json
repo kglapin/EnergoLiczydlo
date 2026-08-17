@@ -1,0 +1,21 @@
+{
+  "tested_sha": "774de34972ac55c1342cd748d0c713d660b42fd0",
+  "backend": {
+    "result": "failure",
+    "install": "success",
+    "lint": "failure",
+    "mypy": "skipped",
+    "conformance": "skipped",
+    "audit_repairs": "skipped",
+    "post_repair_audit": "skipped",
+    "bestest": "skipped",
+    "full_regression": "skipped"
+  },
+  "frontend": {
+    "result": "success",
+    "install": "success",
+    "lint": "success",
+    "typecheck": "success",
+    "build": "success"
+  }
+}
