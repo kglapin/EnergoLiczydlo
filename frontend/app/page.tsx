@@ -41,12 +41,14 @@ export default function Home() {
       <section className="mb-12 flex flex-col gap-8 rounded-2xl border bg-card p-6 shadow-sm md:flex-row md:items-end md:justify-between md:p-10">
         <div className="max-w-2xl">
           <Badge variant="secondary" className="mb-4">
-            PN-EN ISO 52016-1
+            Polska charakterystyka energetyczna + analiza godzinowa PN-EN ISO 52016-1
           </Badge>
           <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Energoliczydło</h1>
           <p className="mt-4 text-lg leading-8 text-muted-foreground">
-            Oblicz charakterystykę energetyczną budynku metodą godzinową i wracaj do
-            zapisanych analiz, kiedy chcesz.
+            Oblicz formalną charakterystykę energetyczną zgodnie z polską metodologią, a równolegle
+            wykonaj szczegółową analizę fizyczną budynku dla 8760 godzin roku. Program rozdziela te
+            dwa wyniki, dzięki czemu analiza godzinowa nie jest przedstawiana jako zamiennik
+            formalnej metody świadectwa.
           </p>
         </div>
         <Button asChild size="lg" className="shrink-0">
@@ -120,23 +122,23 @@ export default function Home() {
                 </CardHeader>
                 <CardContent className="pt-0">
                   {item.result ? (
-                    <div className="grid grid-cols-3 gap-3 rounded-md bg-muted/50 p-3 sm:max-w-md">
+                    <div className="grid gap-3 rounded-md bg-muted/50 p-3 sm:max-w-3xl sm:grid-cols-3">
                       <div>
-                        <p className="text-xs uppercase tracking-wide text-muted-foreground">EU</p>
+                        <p className="text-xs font-medium text-muted-foreground">Energia użytkowa (Eu)</p>
                         <p className="mt-1 font-semibold">
-                          {item.eu?.toFixed(1)} <span className="text-xs font-normal text-muted-foreground">kWh/m²</span>
+                          {item.eu?.toFixed(1)} <span className="text-xs font-normal text-muted-foreground">kWh/(m²·rok)</span>
                         </p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-wide text-muted-foreground">EK</p>
+                        <p className="text-xs font-medium text-muted-foreground">Energia końcowa (Ek)</p>
                         <p className="mt-1 font-semibold">
-                          {item.ek?.toFixed(1)} <span className="text-xs font-normal text-muted-foreground">kWh/m²</span>
+                          {item.ek?.toFixed(1)} <span className="text-xs font-normal text-muted-foreground">kWh/(m²·rok)</span>
                         </p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-wide text-muted-foreground">EP</p>
+                        <p className="text-xs font-medium text-muted-foreground">Nieodnawialna energia pierwotna (Ep)</p>
                         <p className="mt-1 font-semibold">
-                          {item.ep?.toFixed(1)} <span className="text-xs font-normal text-muted-foreground">kWh/m²</span>
+                          {item.ep?.toFixed(1)} <span className="text-xs font-normal text-muted-foreground">kWh/(m²·rok)</span>
                         </p>
                       </div>
                     </div>
