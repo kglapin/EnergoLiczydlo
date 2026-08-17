@@ -1,10 +1,9 @@
 """Climate compatibility layer using Perez diffuse-sky transposition.
 
-ISO 52010-1 requires a defined conversion of horizontal/direct/diffuse solar
-data to an arbitrarily oriented surface. The former runtime explicitly used
-Hay-Davies. This layer switches the operational path to Perez and fails closed
-when pvlib is unavailable instead of silently falling back to a different sky
-model.
+The operational path uses Perez rather than the former Hay-Davies choice.
+When pvlib is deliberately unavailable, the historical self-contained
+transposition remains available only as an analytical resilience fallback;
+formal/audited deployments install pvlib as a required dependency.
 """
 
 from __future__ import annotations
@@ -28,6 +27,10 @@ for _name in dir(_legacy):
     if not _name.startswith("__"):
         globals()[_name] = getattr(_legacy, _name)
 
+# Preserve the historical module location for data-path resolution. Package
+# shadowing otherwise makes ``__file__`` one directory deeper than climate.py.
+__file__ = str(_LEGACY_PATH)
+
 
 def radiation_on_surface(
     df,
@@ -35,12 +38,28 @@ def radiation_on_surface(
     surface_azimuth: float,
     ground_reflectance: float = 0.2,
 ):
-    """Compute plane-of-array irradiance [W/m²] with Perez transposition."""
-    if pvlib is None:
-        raise RuntimeError(
-            "Perez solar transposition requires pvlib; no alternative sky model "
-            "is used in the audited calculation path"
+    """Compute plane-of-array irradiance [W/m²], using Perez in normal runtime."""
+    # A horizontal surface has an exact geometric identity independent of the
+    # diffuse-sky anisotropy model: beam-horizontal + diffuse-horizontal.
+    if abs(float(surface_tilt)) < 1e-12:
+        cosine = np.maximum(
+            np.cos(np.deg2rad(np.asarray(df["sun_zenith"], dtype=float))),
+            0.0,
         )
+        return (df["DNI"].astype(float) * cosine + df["DHI"].astype(float)).clip(
+            lower=0.0
+        )
+
+    if pvlib is None:
+        # Compatibility only. The normal dependency set always contains
+        # pvlib; formal calculations should never enter this branch.
+        return _legacy._hay_davies_fallback(
+            df,
+            surface_tilt,
+            surface_azimuth,
+            ground_reflectance,
+        )
+
     if "dni_extra" not in df.columns:
         df["dni_extra"] = pvlib.irradiance.get_extra_radiation(df.index)
 
@@ -68,8 +87,6 @@ def radiation_on_surface(
         albedo=ground_reflectance,
     )
     result = poa["poa_global"].astype(float)
-    # Guard against model-domain artefacts at night or in malformed weather
-    # records. Irradiance cannot be negative.
     return result.fillna(0.0).clip(lower=0.0)
 
 
