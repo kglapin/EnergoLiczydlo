@@ -53,6 +53,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         inclination: float = 90.0,
         element_type: str = "external_wall",
         adjacent: AdjacentSpaceType = AdjacentSpaceType.OUTDOOR,
+        adjacent_temperature: float | None = None,
     ) -> OpaqueElement:
         return OpaqueElement(
             id=element_id,
@@ -65,6 +66,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             u_value=u_value,
             solar_absorptance=0.6,
             adjacent_space_type=adjacent,
+            adjacent_temperature=adjacent_temperature,
             areal_heat_capacity=areal_capacity_kj_m2k,
             mass_distribution_class="distributed",
         )
@@ -89,7 +91,8 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             floor_u,
             inclination=180.0,
             element_type="ground_floor",
-            adjacent=AdjacentSpaceType.GROUND,
+            adjacent=AdjacentSpaceType.CONSTANT_TEMPERATURE,
+            adjacent_temperature=10.0,
         ),
     ]
     transparent = [
@@ -147,6 +150,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         opaque_solar_absorbed_w_by_element=opaque_solar,
         t_set_heating=20.0,
         t_set_cooling=27.0,
+        internal_convective_fraction=0.4,
         max_warmup_cycles=30,
         warmup_tolerance_k=0.01,
     )
