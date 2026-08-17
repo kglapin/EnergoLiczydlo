@@ -11,6 +11,26 @@ export interface GroundElementSettings {
   diagnostic_effective_depth_m?: number
 }
 
+export interface PolishCertificateMonthlySettings {
+  enabled: boolean
+  official_bip_climate_data: boolean
+  monthly_outdoor_temperature_c: number[]
+  solar_irradiation_kwh_m2_by_element: Record<string, number[]>
+  heating_internal_temperature_c_by_zone: Record<string, number[]>
+  cooling_internal_temperature_c_by_zone: Record<string, number[]>
+  heating_gain_utilization_by_zone: Record<string, number[]>
+  cooling_loss_utilization_by_zone: Record<string, number[]>
+  beta_by_zone: Record<string, number[]>
+  recovery_effectiveness_by_zone: Record<string, number[]>
+  supply_extract_reduction_by_zone: Record<string, number[]>
+  unheated_adjacent_temperature_c_by_element: Record<string, number[]>
+  ground_adjacent_temperature_c_by_element: Record<string, number[]>
+  internal_gain_density_w_m2_by_zone: Record<string, number>
+  preheater_electricity_kwh_by_month: number[]
+  heating_useful_override_kwh_by_zone: Record<string, number[]>
+  cooling_useful_override_kwh_by_zone: Record<string, number[]>
+}
+
 export interface NormativeSettings {
   ground: {
     enabled: boolean
@@ -45,13 +65,36 @@ export interface NormativeSettings {
     unheated_adjacent_temperature_by_element_c: Record<string, number>
     ground_adjacent_temperature_by_element_c: Record<string, number>
   }
+  polish_certificate: PolishCertificateMonthlySettings
   legal: {
     certificate_mode: boolean
     calculation_date?: string
     methodology_source?: string
     climate_data_source?: string
+    utilization_factor_source?: string
+    ventilation_factor_source?: string
     primary_energy_factor_sources: Record<string, string>
   }
+}
+
+const defaultPolishCertificateSettings: PolishCertificateMonthlySettings = {
+  enabled: false,
+  official_bip_climate_data: false,
+  monthly_outdoor_temperature_c: [],
+  solar_irradiation_kwh_m2_by_element: {},
+  heating_internal_temperature_c_by_zone: {},
+  cooling_internal_temperature_c_by_zone: {},
+  heating_gain_utilization_by_zone: {},
+  cooling_loss_utilization_by_zone: {},
+  beta_by_zone: {},
+  recovery_effectiveness_by_zone: {},
+  supply_extract_reduction_by_zone: {},
+  unheated_adjacent_temperature_c_by_element: {},
+  ground_adjacent_temperature_c_by_element: {},
+  internal_gain_density_w_m2_by_zone: {},
+  preheater_electricity_kwh_by_month: [],
+  heating_useful_override_kwh_by_zone: {},
+  cooling_useful_override_kwh_by_zone: {},
 }
 
 export const defaultNormativeSettings: NormativeSettings = {
@@ -77,6 +120,7 @@ export const defaultNormativeSettings: NormativeSettings = {
     unheated_adjacent_temperature_by_element_c: {},
     ground_adjacent_temperature_by_element_c: {},
   },
+  polish_certificate: defaultPolishCertificateSettings,
   legal: {
     certificate_mode: false,
     primary_energy_factor_sources: {},
@@ -85,6 +129,75 @@ export const defaultNormativeSettings: NormativeSettings = {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value)
+}
+
+function numberArray(value: unknown): number[] {
+  return Array.isArray(value) && value.every((item) => typeof item === "number")
+    ? value
+    : []
+}
+
+function numberArrayMap(value: unknown): Record<string, number[]> {
+  if (!isRecord(value)) return {}
+  return Object.fromEntries(
+    Object.entries(value)
+      .filter(([, item]) => Array.isArray(item) && item.every((entry) => typeof entry === "number"))
+      .map(([key, item]) => [key, item as number[]]),
+  )
+}
+
+function numberMap(value: unknown): Record<string, number> {
+  if (!isRecord(value)) return {}
+  return Object.fromEntries(
+    Object.entries(value).filter(([, item]) => typeof item === "number"),
+  ) as Record<string, number>
+}
+
+function mergeCertificate(value: unknown): PolishCertificateMonthlySettings {
+  const certificate = isRecord(value) ? value : {}
+  return {
+    ...defaultPolishCertificateSettings,
+    ...certificate,
+    monthly_outdoor_temperature_c: numberArray(certificate.monthly_outdoor_temperature_c),
+    solar_irradiation_kwh_m2_by_element: numberArrayMap(
+      certificate.solar_irradiation_kwh_m2_by_element,
+    ),
+    heating_internal_temperature_c_by_zone: numberArrayMap(
+      certificate.heating_internal_temperature_c_by_zone,
+    ),
+    cooling_internal_temperature_c_by_zone: numberArrayMap(
+      certificate.cooling_internal_temperature_c_by_zone,
+    ),
+    heating_gain_utilization_by_zone: numberArrayMap(
+      certificate.heating_gain_utilization_by_zone,
+    ),
+    cooling_loss_utilization_by_zone: numberArrayMap(
+      certificate.cooling_loss_utilization_by_zone,
+    ),
+    beta_by_zone: numberArrayMap(certificate.beta_by_zone),
+    recovery_effectiveness_by_zone: numberArrayMap(certificate.recovery_effectiveness_by_zone),
+    supply_extract_reduction_by_zone: numberArrayMap(
+      certificate.supply_extract_reduction_by_zone,
+    ),
+    unheated_adjacent_temperature_c_by_element: numberArrayMap(
+      certificate.unheated_adjacent_temperature_c_by_element,
+    ),
+    ground_adjacent_temperature_c_by_element: numberArrayMap(
+      certificate.ground_adjacent_temperature_c_by_element,
+    ),
+    internal_gain_density_w_m2_by_zone: numberMap(
+      certificate.internal_gain_density_w_m2_by_zone,
+    ),
+    preheater_electricity_kwh_by_month: numberArray(
+      certificate.preheater_electricity_kwh_by_month,
+    ),
+    heating_useful_override_kwh_by_zone: numberArrayMap(
+      certificate.heating_useful_override_kwh_by_zone,
+    ),
+    cooling_useful_override_kwh_by_zone: numberArrayMap(
+      certificate.cooling_useful_override_kwh_by_zone,
+    ),
+  } as PolishCertificateMonthlySettings
 }
 
 function mergeSettings(value: unknown): NormativeSettings {
@@ -125,6 +238,7 @@ function mergeSettings(value: unknown): NormativeSettings {
         ? design.ground_adjacent_temperature_by_element_c as Record<string, number>
         : {},
     },
+    polish_certificate: mergeCertificate(value.polish_certificate),
     legal: {
       ...defaultNormativeSettings.legal,
       ...legal,
