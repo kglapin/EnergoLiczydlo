@@ -24,25 +24,40 @@ interface ResultsTableProps {
   data: MonthlyData[]
 }
 
+const MONTH_NAMES = [
+  "Styczeń",
+  "Luty",
+  "Marzec",
+  "Kwiecień",
+  "Maj",
+  "Czerwiec",
+  "Lipiec",
+  "Sierpień",
+  "Wrzesień",
+  "Październik",
+  "Listopad",
+  "Grudzień",
+]
+
 export function ResultsTable({ data }: ResultsTableProps) {
   return (
     <Table>
       <TableHeader>
         <TableRow>
           <TableHead>Miesiąc</TableHead>
-          <TableHead className="text-right">Ogrzewanie (kWh)</TableHead>
-          <TableHead className="text-right">Chłodzenie (kWh)</TableHead>
-          <TableHead className="text-right">C.W.U. (kWh)</TableHead>
-          <TableHead className="text-right">Zyski wewn. (kWh)</TableHead>
-          <TableHead className="text-right">Zyski słoneczne (kWh)</TableHead>
-          <TableHead className="text-right">Straty przenikanie (kWh)</TableHead>
-          <TableHead className="text-right">Straty wentylacja (kWh)</TableHead>
+          <TableHead className="text-right">Ogrzewanie [kWh]</TableHead>
+          <TableHead className="text-right">Chłodzenie [kWh]</TableHead>
+          <TableHead className="text-right">Przygotowanie ciepłej wody użytkowej [kWh]</TableHead>
+          <TableHead className="text-right">Zyski wewnętrzne [kWh]</TableHead>
+          <TableHead className="text-right">Zyski słoneczne [kWh]</TableHead>
+          <TableHead className="text-right">Straty przez przenikanie [kWh]</TableHead>
+          <TableHead className="text-right">Straty przez wentylację [kWh]</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {data.map((row) => (
           <TableRow key={row.month}>
-            <TableCell>{row.month}</TableCell>
+            <TableCell>{MONTH_NAMES[row.month - 1] ?? row.month}</TableCell>
             <TableCell className="text-right">{row.heating_kwh.toFixed(1)}</TableCell>
             <TableCell className="text-right">{row.cooling_kwh.toFixed(1)}</TableCell>
             <TableCell className="text-right">{row.dhw_kwh.toFixed(1)}</TableCell>
