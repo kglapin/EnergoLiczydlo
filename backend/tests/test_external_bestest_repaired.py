@@ -18,6 +18,8 @@ from app.schemas.models import (
 )
 from tests.test_external_bestest import CASE_600_REFERENCE, _download_bestest_weather
 
+BESTEST_600_DIRECT_IAM = (1.0, -0.189, 0.644, -0.596)
+
 
 @pytest.mark.skipif(
     os.environ.get("RUN_EXTERNAL_BENCHMARKS") != "1",
@@ -39,7 +41,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
     # Distribute the same total capacity across the opaque test envelope. This
     # preserves the published building heat capacity while the repaired solver
     # assigns it to individual constructions instead of one zone-wide lump.
-    opaque_area = 16.2 + 16.2 + 4.2 + 16.2 + 48.0 + 48.0
+    opaque_area = 16.2 + 16.2 + 9.6 + 16.2 + 48.0 + 48.0
     total_capacity_j_k = 51289.8 * 48.0
     areal_capacity_kj_m2k = total_capacity_j_k / opaque_area / 1000.0
 
@@ -74,7 +76,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
     opaque_elements = [
         opaque("east", "East", 16.2, wall_u, azimuth=90.0),
         opaque("north", "North", 16.2, wall_u, azimuth=0.0),
-        opaque("south", "South", 4.2, wall_u, azimuth=180.0),
+        opaque("south", "South", 9.6, wall_u, azimuth=180.0),
         opaque("west", "West", 16.2, wall_u, azimuth=270.0),
         opaque(
             "roof",
@@ -103,7 +105,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             orientation_azimuth=180.0,
             area=6.0,
             u_value=window_u,
-            g_value=0.68,
+            g_value=0.769,
             frame_factor=0.0,
         ),
         TransparentElement(
@@ -113,13 +115,20 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             orientation_azimuth=180.0,
             area=6.0,
             u_value=window_u,
-            g_value=0.68,
+            g_value=0.769,
             frame_factor=0.0,
         ),
     ]
 
     transparent_solar = sum(
-        (solar_gains_transparent(element, climate) for element in transparent),
+        (
+            solar_gains_transparent(
+                element,
+                climate,
+                direct_incidence_coefficients=BESTEST_600_DIRECT_IAM,
+            )
+            for element in transparent
+        ),
         np.zeros(8760, dtype=float),
     )
     opaque_solar: dict[str, np.ndarray] = {}
