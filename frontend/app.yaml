@@ -4,6 +4,9 @@ owner: kamilglapinskipoczta
 package: .
 env:
   BACKEND_API_URL: https://energoliczydlo-backend-test.wasmer.app
+  HOST: 0.0.0.0
+  PORT: '8080'
+kind: wasmer.io/App.v0
 annotations:
   anybuild.run/config:
     commands:
@@ -22,4 +25,3 @@ annotations:
   anybuild.run/provider: node
   anybuild.run/version: 0.27.2
   wasmer.io/version: 7.2.1
-kind: wasmer.io/App.v0
