@@ -109,11 +109,14 @@ class HeatRecoverySettings(BaseModel):
                 raise ValueError("bypass_min_outdoor_c must be below bypass_max_outdoor_c")
         if self.frost_strategy == "preheater" and self.preheater_max_power_w is None:
             raise ValueError("Preheater frost strategy requires preheater_max_power_w")
-        if self.certificate_mode and self.frost_strategy != "none":
-            if self.indoor_relative_humidity is None:
-                raise ValueError(
-                    "Certificate-grade frost control requires indoor_relative_humidity"
-                )
+        if (
+            self.certificate_mode
+            and self.frost_strategy != "none"
+            and self.indoor_relative_humidity is None
+        ):
+            raise ValueError(
+                "Certificate-grade frost control requires indoor_relative_humidity"
+            )
         return self
 
 
