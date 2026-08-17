@@ -47,6 +47,97 @@ def _filtered_limit_checks(
     return filtered
 
 
+def _used_energy_carriers(project: BuildingProject) -> set[str]:
+    carriers: set[str] = set()
+    heating = project.systems.heating
+    if enum_value(heating.system_type) != "none":
+        carriers.add(enum_value(heating.fuel_or_carrier))
+    cooling = project.systems.cooling
+    if cooling is not None and enum_value(cooling.system_type) != "none":
+        carriers.add(enum_value(cooling.fuel_or_carrier))
+    dhw = project.systems.dhw
+    if enum_value(dhw.system_type) != "none":
+        carriers.add(enum_value(dhw.fuel_or_carrier))
+
+    ventilation_type = enum_value(project.ventilation.ventilation_type)
+    has_electric_auxiliary = (
+        ventilation_type in {"mechanical", "mechanical_with_recovery", "exhaust", "hybrid"}
+        or project.general.lighting_indicator_leni is not None
+        or enum_value(heating.system_type) != "none"
+        or (cooling is not None and enum_value(cooling.system_type) != "none")
+        or enum_value(dhw.system_type) != "none"
+    )
+    if has_electric_auxiliary:
+        carriers.add("electricity")
+    return carriers
+
+
+def _legal_readiness_checks(
+    project: BuildingProject,
+    settings: NormativeSettings,
+) -> list[ComplianceCheck]:
+    """Validate evidence trail needed for a formal Polish calculation run."""
+    if not settings.legal.certificate_mode:
+        return []
+
+    has_ground = any(
+        enum_value(element.adjacent_space_type) == "ground"
+        for element in project.opaque_building_elements
+    )
+    if has_ground and not (settings.ground.enabled and settings.ground.certificate_mode):
+        raise ValueError(
+            "Formal calculation mode contains ground-coupled elements. Enable the "
+            "ISO 13370 ground model in certificate_mode and provide verified periodic inputs."
+        )
+
+    ventilation_type = enum_value(project.ventilation.ventilation_type)
+    if (
+        ventilation_type == "mechanical_with_recovery"
+        and project.ventilation.heat_recovery_efficiency > 0.0
+        and not (
+            settings.heat_recovery.enabled
+            and settings.heat_recovery.certificate_mode
+        )
+    ):
+        raise ValueError(
+            "Formal calculation mode with heat recovery requires the detailed "
+            "heat-recovery model in certificate_mode and documented device performance."
+        )
+
+    if settings.design_conditions.enabled and not settings.design_conditions.certificate_mode:
+        raise ValueError(
+            "Design load is enabled during a formal calculation but its certificate_mode "
+            "is disabled. Either verify its design-condition source or disable design load."
+        )
+
+    used_carriers = _used_energy_carriers(project)
+    sources = settings.legal.primary_energy_factor_sources
+    missing_sources = sorted(
+        carrier
+        for carrier in used_carriers
+        if not str(sources.get(carrier, "")).strip()
+    )
+    if missing_sources:
+        raise ValueError(
+            "Formal calculation requires provenance for every used primary-energy "
+            "factor wi. Missing source for: " + ", ".join(missing_sources) + ". "
+            "Record supplier data when available or explicitly document use of the "
+            "regulatory fallback table when supplier data are unavailable."
+        )
+
+    return [
+        audit_check(
+            "POLISH_LEGAL_PROVENANCE",
+            "Formal calculation evidence recorded for date "
+            f"{settings.legal.calculation_date}; methodology source: "
+            f"{settings.legal.methodology_source}; climate source: "
+            f"{settings.legal.climate_data_source}; wi provenance available for "
+            f"{', '.join(sorted(used_carriers)) or 'no carriers'}.",
+            passed=True,
+        )
+    ]
+
+
 def _prepare_normative_extensions(
     project: BuildingProject,
     checks: list[ComplianceCheck],
@@ -118,6 +209,7 @@ def _prepare_normative_extensions(
             "enable metadata.normative.ground and provide ISO 13370 inputs first"
         )
 
+    checks.extend(_legal_readiness_checks(project, settings))
     object.__setattr__(project, "_normative_settings", settings)
     if climate is not None:
         object.__setattr__(project, "_normative_climate", climate)
@@ -200,6 +292,9 @@ def _apply_design_load(
     climate = getattr(project, "_normative_climate", None)
     if climate is None:
         raise RuntimeError("Design-load calculation requires climate data")
+    outdoor_design = settings.design_conditions.outdoor_design_temperature_c
+    if outdoor_design is None:
+        raise RuntimeError("Validated design outdoor temperature is missing")
     tmy_diagnostic = float(result.design_heating_power_kw)
     annual_mean_outdoor = float(np.mean(climate["T_e"].to_numpy(dtype=float)))
     design = calculate_design_heat_load(
@@ -222,7 +317,7 @@ def _apply_design_load(
         audit_check(
             "DESIGN_LOAD_EXPLICIT_CONDITIONS",
             "Project design heat load uses explicit outdoor design temperature "
-            f"{settings.design_conditions.outdoor_design_temperature_c:.1f} °C "
+            f"{outdoor_design:.1f} °C "
             f"(source: {settings.design_conditions.source or 'not supplied'}), "
             f"not the coldest TMY hour. Building useful design load = "
             f"{design.total_w / 1000.0:.3f} kW. The previous TMY peak remains "
@@ -240,7 +335,12 @@ def _apply_design_load(
 def calculate_building_energy(project: BuildingProject) -> CalculationResult:
     """Run audited hourly energy calculation with optional normative extensions."""
     corrected, checks = prepare_project_for_audited_calculation(project)
-    settings = getattr(corrected, "_normative_settings", load_normative_settings(corrected))
+    settings_value = getattr(corrected, "_normative_settings", None)
+    settings = (
+        settings_value
+        if isinstance(settings_value, NormativeSettings)
+        else load_normative_settings(corrected)
+    )
     result = core_calculator.calculate_building_energy(corrected)
 
     recovery_diag = _apply_preheater_energy(result, corrected, settings, checks)
@@ -251,6 +351,7 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
         "ground_certificate_mode": settings.ground.certificate_mode,
         "heat_recovery": recovery_diag,
         "design_load": design_diag,
+        "formal_legal_mode": settings.legal.certificate_mode,
     }
     result.hourly = hourly
     result.compliance = checks + list(result.compliance)
