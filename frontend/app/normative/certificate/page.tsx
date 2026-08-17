@@ -18,7 +18,8 @@ import {
 import { useAppStore } from "@/lib/store"
 
 const MONTH_NAMES = [
-  "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII",
+  "styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec",
+  "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień",
 ]
 
 function parseMonthlySeries(text: string): number[] | null {
@@ -70,8 +71,8 @@ function MonthlySeriesField({
       />
       <p className={`text-xs leading-5 ${valid ? "text-muted-foreground" : "font-medium text-destructive"}`}>
         {valid
-          ? description ?? "12 wartości od stycznia do grudnia, rozdzielonych średnikiem, przecinkiem lub spacją."
-          : "Wymagane jest dokładnie 12 poprawnych wartości liczbowych."}
+          ? description ?? "Wpisz dokładnie 12 wartości: od stycznia do grudnia. Rozdziel je średnikami, przecinkami albo spacjami."
+          : "Wymagane jest dokładnie 12 poprawnych wartości liczbowych — po jednej dla każdego miesiąca od stycznia do grudnia."}
       </p>
     </div>
   )
@@ -157,24 +158,26 @@ export default function PolishCertificateEditorPage() {
     <main className="mx-auto w-full max-w-5xl space-y-8 px-4 py-8 md:px-8 md:py-12">
       <div className="space-y-3">
         <Button variant="ghost" size="sm" asChild className="-ml-3">
-          <Link href="/normative/legal"><ArrowLeft className="mr-2 h-4 w-4" />Tryb formalny</Link>
+          <Link href="/normative/legal"><ArrowLeft className="mr-2 h-4 w-4" />Dane źródłowe formalnego obliczenia</Link>
         </Button>
-        <h1 className="text-3xl font-semibold tracking-tight">Dane miesięczne polskiego świadectwa</h1>
+        <h1 className="text-3xl font-semibold tracking-tight">Miesięczne dane do formalnej charakterystyki energetycznej</h1>
         <p className="text-sm leading-6 text-muted-foreground">
-          Ten formularz przygotowuje dane dla formalnego silnika miesięcznego. Nie zmienia ani nie
-          zastępuje równoległej analizy 8760 h ISO 52016.
+          Ten formularz zawiera dane używane przez miesięczny silnik formalnej charakterystyki
+          energetycznej. Godzinowa analiza 8760 godzin według modelu opartego na PN-EN ISO 52016-1
+          jest wykonywana i przechowywana osobno. Dane w tej sekcji nie są automatycznie pobierane
+          z wyniku godzinowego.
         </p>
       </div>
 
       {!project ? (
         <Alert variant="destructive">
-          <AlertTitle>Brak projektu</AlertTitle>
+          <AlertTitle>Brak projektu budynku</AlertTitle>
           <AlertDescription>Najpierw utwórz lub wczytaj projekt budynku.</AlertDescription>
         </Alert>
       ) : null}
 
       <Card>
-        <CardHeader><CardTitle>Klimat i aktywacja metody</CardTitle></CardHeader>
+        <CardHeader><CardTitle>Dane klimatyczne i włączenie obliczenia formalnego</CardTitle></CardHeader>
         <CardContent className="space-y-5">
           <label className="flex items-center gap-3 text-sm font-medium">
             <input
@@ -182,7 +185,7 @@ export default function PolishCertificateEditorPage() {
               checked={certificate.enabled}
               onChange={(event) => updateCertificate({ enabled: event.target.checked })}
             />
-            Włącz miesięczny silnik świadectwa
+            Włącz miesięczny silnik formalnej charakterystyki energetycznej
           </label>
           <label className="flex items-center gap-3 text-sm font-medium">
             <input
@@ -190,11 +193,11 @@ export default function PolishCertificateEditorPage() {
               checked={certificate.official_bip_climate_data}
               onChange={(event) => updateCertificate({ official_bip_climate_data: event.target.checked })}
             />
-            Dane pochodzą z właściwego ministerialnego BIP dla wybranej stacji
+            Potwierdzam, że dane klimatyczne pochodzą z właściwego oficjalnego źródła w Biuletynie Informacji Publicznej dla wybranej stacji
           </label>
           <MonthlySeriesField
             id="monthly-outdoor"
-            label="Średnia miesięczna temperatura zewnętrzna [°C]"
+            label="Średnia temperatura zewnętrzna w każdym miesiącu [°C]"
             value={certificate.monthly_outdoor_temperature_c}
             onChange={(value) => updateCertificate({ monthly_outdoor_temperature_c: value })}
           />
@@ -209,7 +212,7 @@ export default function PolishCertificateEditorPage() {
             <CardHeader><CardTitle>Strefa: {zone.name}</CardTitle></CardHeader>
             <CardContent className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor={`qint-${zone.id}`}>Zyski wewnętrzne qint [W/m²]</Label>
+                <Label htmlFor={`qint-${zone.id}`}>Średnia gęstość wewnętrznych zysków ciepła [W/m²]</Label>
                 <Input
                   id={`qint-${zone.id}`}
                   type="number"
@@ -224,13 +227,16 @@ export default function PolishCertificateEditorPage() {
                     }
                   }}
                 />
+                <p className="text-xs text-muted-foreground">
+                  Wartość opisuje średnie zyski ciepła od ludzi, oświetlenia i urządzeń przypadające na 1 m² powierzchni strefy.
+                </p>
               </div>
 
               {heated ? (
                 <>
                   <MonthlySeriesField
                     id={`tint-h-${zone.id}`}
-                    label="Temperatura wewnętrzna do ogrzewania [°C]"
+                    label="Temperatura wewnętrzna przy obliczaniu ogrzewania [°C]"
                     value={certificate.heating_internal_temperature_c_by_zone[zone.id]}
                     onChange={(value) => setSettings((current) => current
                       ? updateMap(current, "heating_internal_temperature_c_by_zone", zone.id, value)
@@ -238,12 +244,12 @@ export default function PolishCertificateEditorPage() {
                   />
                   <MonthlySeriesField
                     id={`eta-h-${zone.id}`}
-                    label="ηH,gn — współczynnik wykorzystania zysków [-]"
+                    label="Miesięczny współczynnik wykorzystania zysków ciepła przy ogrzewaniu (ηH,gn) [-]"
                     value={certificate.heating_gain_utilization_by_zone[zone.id]}
                     onChange={(value) => setSettings((current) => current
                       ? updateMap(current, "heating_gain_utilization_by_zone", zone.id, value)
                       : current)}
-                    description="12 zweryfikowanych wartości 0–1 wyznaczonych zgodnie z właściwą Polską Normą."
+                    description="Wpisz 12 zweryfikowanych wartości od 0 do 1, wyznaczonych zgodnie z właściwą procedurą normową. Współczynnik określa, jaka część zysków ciepła może ograniczyć zapotrzebowanie na ogrzewanie."
                   />
                 </>
               ) : null}
@@ -252,7 +258,7 @@ export default function PolishCertificateEditorPage() {
                 <>
                   <MonthlySeriesField
                     id={`tint-c-${zone.id}`}
-                    label="Temperatura wewnętrzna do chłodzenia [°C]"
+                    label="Temperatura wewnętrzna przy obliczaniu chłodzenia [°C]"
                     value={certificate.cooling_internal_temperature_c_by_zone[zone.id]}
                     onChange={(value) => setSettings((current) => current
                       ? updateMap(current, "cooling_internal_temperature_c_by_zone", zone.id, value)
@@ -260,43 +266,45 @@ export default function PolishCertificateEditorPage() {
                   />
                   <MonthlySeriesField
                     id={`eta-c-${zone.id}`}
-                    label="ηC,ls — współczynnik wykorzystania strat [-]"
+                    label="Miesięczny współczynnik wykorzystania strat ciepła przy chłodzeniu (ηC,ls) [-]"
                     value={certificate.cooling_loss_utilization_by_zone[zone.id]}
                     onChange={(value) => setSettings((current) => current
                       ? updateMap(current, "cooling_loss_utilization_by_zone", zone.id, value)
                       : current)}
-                    description="12 zweryfikowanych wartości 0–1 wyznaczonych zgodnie z właściwą Polską Normą."
+                    description="Wpisz 12 zweryfikowanych wartości od 0 do 1, wyznaczonych zgodnie z właściwą procedurą normową. Współczynnik określa, jaka część strat ciepła może ograniczyć zapotrzebowanie na chłodzenie."
                   />
                 </>
               ) : null}
 
               <MonthlySeriesField
                 id={`beta-${zone.id}`}
-                label="β — udział czasu użytkowania [-]"
+                label="Miesięczny udział czasu użytkowania strefy (β) [-]"
                 value={certificate.beta_by_zone[zone.id]}
                 onChange={(value) => setSettings((current) => current
                   ? updateMap(current, "beta_by_zone", zone.id, value)
                   : current)}
+                description="Wartość od 0 do 1 określająca udział czasu, w którym strefa jest użytkowana zgodnie z przyjętym profilem."
               />
               {usesRecovery ? (
                 <MonthlySeriesField
                   id={`recovery-${zone.id}`}
-                  label="ηoc — miesięczna skuteczność odzysku ciepła [-]"
+                  label="Miesięczna skuteczność odzysku ciepła z wentylacji (ηoc) [-]"
                   value={certificate.recovery_effectiveness_by_zone[zone.id]}
                   onChange={(value) => setSettings((current) => current
                     ? updateMap(current, "recovery_effectiveness_by_zone", zone.id, value)
                     : current)}
+                  description="Wpisz 12 wartości od 0 do 1 właściwych dla formalnego obliczenia. Nie są one automatycznie kopiowane z godzinowej symulacji rekuperatora."
                 />
               ) : null}
               {usesSupplyExtract ? (
                 <MonthlySeriesField
                   id={`rn-${zone.id}`}
-                  label="rn — redukcja strumienia nawiewno-wywiewnego [-]"
+                  label="Miesięczny współczynnik redukcji strumienia w instalacji nawiewno-wywiewnej (rn) [-]"
                   value={certificate.supply_extract_reduction_by_zone[zone.id]}
                   onChange={(value) => setSettings((current) => current
                     ? updateMap(current, "supply_extract_reduction_by_zone", zone.id, value)
                     : current)}
-                  description="Jeżeli seria pozostanie pusta i używany jest strumień normatywny, backend raportuje fallback rn=0,75."
+                  description="Wpisz 12 wartości od 0 do 1. Jeżeli seria nie zostanie podana w sytuacji, w której program dopuszcza wartość metodologiczną, zastosowanie wartości zastępczej zostanie jawnie wskazane w wyniku."
                 />
               ) : null}
             </CardContent>
@@ -306,13 +314,17 @@ export default function PolishCertificateEditorPage() {
 
       {transparent.length > 0 ? (
         <Card>
-          <CardHeader><CardTitle>Promieniowanie przez przegrody przezroczyste</CardTitle></CardHeader>
+          <CardHeader><CardTitle>Miesięczne promieniowanie słoneczne dla okien i innych przegród przezroczystych</CardTitle></CardHeader>
           <CardContent className="space-y-5">
+            <p className="text-sm text-muted-foreground">
+              Dla każdego okna, drzwi przeszklonych lub świetlika podaj energię promieniowania
+              słonecznego padającą na jego płaszczyznę w kolejnych miesiącach.
+            </p>
             {transparent.map((element) => (
               <MonthlySeriesField
                 key={element.id}
                 id={`solar-${element.id}`}
-                label={`${element.name} — promieniowanie miesięczne na płaszczyznę [kWh/m²]`}
+                label={`${element.name} — miesięczne promieniowanie na płaszczyznę [kWh/m²]`}
                 value={certificate.solar_irradiation_kwh_m2_by_element[element.id]}
                 onChange={(value) => setSettings((current) => current
                   ? updateMap(current, "solar_irradiation_kwh_m2_by_element", element.id, value)
@@ -325,8 +337,12 @@ export default function PolishCertificateEditorPage() {
 
       {groundElements.length > 0 ? (
         <Card>
-          <CardHeader><CardTitle>Miesięczne warunki dla gruntu</CardTitle></CardHeader>
+          <CardHeader><CardTitle>Miesięczne temperatury po stronie gruntu</CardTitle></CardHeader>
           <CardContent className="space-y-5">
+            <p className="text-sm text-muted-foreground">
+              Podaj 12 temperatur reprezentujących warunki po stronie gruntu dla każdej przegrody
+              uwzględnianej w formalnym obliczeniu.
+            </p>
             {groundElements.map((element) => (
               <MonthlySeriesField
                 key={element.id}
@@ -344,8 +360,12 @@ export default function PolishCertificateEditorPage() {
 
       {unheatedElements.length > 0 ? (
         <Card>
-          <CardHeader><CardTitle>Przestrzenie nieogrzewane</CardTitle></CardHeader>
+          <CardHeader><CardTitle>Miesięczne temperatury przestrzeni nieogrzewanych</CardTitle></CardHeader>
           <CardContent className="space-y-5">
+            <p className="text-sm text-muted-foreground">
+              Dla każdej przegrody graniczącej z przestrzenią nieogrzewaną podaj temperaturę tej
+              przestrzeni w kolejnych miesiącach.
+            </p>
             {unheatedElements.map((element) => (
               <MonthlySeriesField
                 key={element.id}
@@ -363,23 +383,32 @@ export default function PolishCertificateEditorPage() {
 
       {settings.heat_recovery.frost_strategy === "preheater" ? (
         <Card>
-          <CardHeader><CardTitle>Nagrzewnica przeciwzamrożeniowa</CardTitle></CardHeader>
+          <CardHeader><CardTitle>Nagrzewnica wstępna chroniąca wymiennik przed zamarzaniem</CardTitle></CardHeader>
           <CardContent>
             <MonthlySeriesField
               id="preheater-monthly"
-              label="Energia elektryczna nagrzewnicy [kWh/mies.]"
+              label="Zużycie energii elektrycznej przez nagrzewnicę wstępną [kWh/miesiąc]"
               value={certificate.preheater_electricity_kwh_by_month}
               onChange={(value) => updateCertificate({ preheater_electricity_kwh_by_month: value })}
-              description="Formalny wynik nie kopiuje tej energii z TMY — podaj 12 wartości właściwych dla danych świadectwa."
+              description="Podaj 12 miesięcznych wartości właściwych dla formalnych danych świadectwa. Program nie kopiuje automatycznie zużycia obliczonego w godzinowej analizie typowego roku meteorologicznego."
             />
           </CardContent>
         </Card>
       ) : null}
 
+      <Alert>
+        <AlertTitle>Ważne: dane formalne i analiza godzinowa są rozdzielone</AlertTitle>
+        <AlertDescription>
+          Główne wskaźniki formalnego świadectwa są liczone z danych tej sekcji i pozostałych danych
+          wymaganych przez metodologię. Godzinowa analiza 8760 godzin pozostaje osobnym wynikiem
+          technicznym i może służyć do kontroli oraz porównania zachowania budynku.
+        </AlertDescription>
+      </Alert>
+
       <div className="flex justify-end">
         <Button onClick={save}><Save className="mr-2 h-4 w-4" />Zapisz dane miesięczne</Button>
       </div>
-      {saved ? <p className="text-right text-sm font-medium text-emerald-700">Zapisano.</p> : null}
+      {saved ? <p className="text-right text-sm font-medium text-emerald-700">Zapisano dane miesięczne.</p> : null}
     </main>
   )
 }
