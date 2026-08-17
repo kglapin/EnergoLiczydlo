@@ -95,6 +95,7 @@ export default function LegalProvenancePage() {
   }
 
   function save() {
+    if (!settings) return
     saveNormativeSettings(settings)
     setSaved(true)
     window.setTimeout(() => setSaved(false), 2500)
