@@ -8,11 +8,11 @@ import pytest
 from app.engine.audited_calculator import prepare_project_for_audited_calculation
 from app.engine.envelope import zone_transmission_network
 from app.engine.primary_energy import share_of_renewable_energy
-from app.schemas.models import OpaqueElement, TransparentElement
+from app.schemas.models import BuildingProject, ComplianceCheck, OpaqueElement, TransparentElement
 from scripts.test_building import make_test_project
 
 
-def _check_codes(checks) -> set[str]:
+def _check_codes(checks: list[ComplianceCheck]) -> set[str]:
     return {check.name.split(": ", 1)[-1] for check in checks}
 
 
@@ -20,8 +20,16 @@ def test_window_is_subtracted_from_gross_host_wall() -> None:
     project = make_test_project()
     corrected, checks = prepare_project_for_audited_calculation(project)
 
-    original_wall = next(element for element in project.opaque_building_elements if element.id == "wall_s")
-    corrected_wall = next(element for element in corrected.opaque_building_elements if element.id == "wall_s")
+    original_wall = next(
+        element
+        for element in project.opaque_building_elements
+        if element.id == "wall_s"
+    )
+    corrected_wall = next(
+        element
+        for element in corrected.opaque_building_elements
+        if element.id == "wall_s"
+    )
 
     assert original_wall.area == pytest.approx(40.0)  # caller input is not mutated
     assert corrected_wall.area == pytest.approx(30.0)
@@ -37,7 +45,7 @@ def test_adding_one_square_metre_of_window_changes_htr_by_uw_minus_uwall() -> No
     larger_corrected, _ = prepare_project_for_audited_calculation(larger)
     climate = np.zeros(8760)
 
-    def h_total(project) -> float:
+    def h_total(project: BuildingProject) -> float:
         zone_id = project.thermal_zones[0].id
         network = zone_transmission_network(
             project.opaque_building_elements,
@@ -49,7 +57,8 @@ def test_adding_one_square_metre_of_window_changes_htr_by_uw_minus_uwall() -> No
         return network.h_total
 
     # +1 m² opening replaces 1 m² of U=0.25 wall with U=1.00 glazing.
-    assert h_total(larger_corrected) - h_total(base_corrected) == pytest.approx(0.75)
+    delta_h = h_total(larger_corrected) - h_total(base_corrected)
+    assert delta_h == pytest.approx(0.75)
 
 
 def test_openings_cannot_exceed_gross_host_area() -> None:
@@ -75,6 +84,37 @@ def test_ambiguous_opening_host_is_rejected() -> None:
     )
     with pytest.raises(ValueError, match="matches multiple host surfaces"):
         prepare_project_for_audited_calculation(project)
+
+
+def test_explicit_opening_host_mapping_resolves_ambiguous_geometry() -> None:
+    project = make_test_project()
+    project.opaque_building_elements.append(
+        OpaqueElement(
+            id="wall_s_2",
+            name="Druga ściana południowa",
+            zone_id="zone_1",
+            element_type="external_wall",
+            orientation_azimuth=180.0,
+            inclination=90.0,
+            area=20.0,
+            u_value=0.35,
+        )
+    )
+    project.metadata["opening_hosts"] = {"win_s": "wall_s"}
+
+    corrected, _ = prepare_project_for_audited_calculation(project)
+    host = next(
+        element
+        for element in corrected.opaque_building_elements
+        if element.id == "wall_s"
+    )
+    other = next(
+        element
+        for element in corrected.opaque_building_elements
+        if element.id == "wall_s_2"
+    )
+    assert host.area == pytest.approx(30.0)
+    assert other.area == pytest.approx(20.0)
 
 
 def test_incomplete_reference_geometry_produces_warnings() -> None:
