@@ -65,16 +65,14 @@ def _preserve_legacy_six_resistance_path(prepared, *, strict: bool):
     connect the five construction-node centres.
 
     The rebuilt core already uses the four middle values between its five
-    nodes. In compatibility mode it also adds separate inferred surface films.
-    Without this correction, simply slicing ``r[1:5]`` drops both half-node
-    resistances and shortens the total thermal path by one complete interval.
+    nodes. Without this correction, simply slicing ``r[1:5]`` drops both
+    half-node resistances and shortens the total thermal path.
 
-    Exterior short-wave absorption is physically applied at the outside
-    surface, not at the centre of the first construction node. Eliminating that
-    zero-capacity surface produces a Norton-equivalent source at the first node
-    equal to ``q_solar * Rse / (Rse + Rhalf)``. Applying the full solar source
-    at the node would bypass the exterior half-layer and strongly over-predict
-    inward solar gains once the complete resistance path is restored.
+    Explicit surface coefficients can also be used when they represent a
+    *combined*, non-radiative film (``h_ri=h_re=0``). This is needed by
+    benchmarks such as ASHRAE 140, which prescribe combined inside/outside
+    surface coefficients. A split convective/radiative surface network is not
+    collapsed here because that would destroy the separate radiant exchange.
     """
     if strict:
         return prepared
@@ -90,10 +88,8 @@ def _preserve_legacy_six_resistance_path(prepared, *, strict: bool):
             continue
 
         film = _core._film(path.element, False)
-        # Six-value data are a compatibility representation. If explicit
-        # convective/radiative films were also supplied, keep the core path
-        # unchanged rather than collapsing a radiative network into one film.
-        if not film.inferred:
+        has_split_radiation = not film.inferred and (film.h_ri > 0.0 or film.h_re > 0.0)
+        if has_split_radiation:
             patched_opaque.append(path)
             continue
 
@@ -153,8 +149,6 @@ def _prepare(*args, **kwargs):
         if total_external <= 0.0:
             boundary = path.boundary
         else:
-            # Linearized window exterior balance represented by an exactly
-            # equivalent boundary temperature including long-wave sky loss.
             boundary = (
                 np.asarray(path.boundary, dtype=float)
                 - (film.h_re / total_external) * view * sky_delta
@@ -199,15 +193,10 @@ def solve_zone_iso52016(*args, **kwargs):
                     "heuristic is not permitted."
                 )
 
-    # Construction explicitness is checked by this façade. The core receives
-    # only the actual strict-conformance intent.
     kwargs["require_explicit_construction_nodes"] = False
     kwargs["strict_conformance"] = strict
 
     if not strict:
-        # Compatibility mode intentionally reproduces the historical air-
-        # temperature thermostat and omits a guessed Annex-B sky delta. It is
-        # explicitly reported as non-conformant by preflight_systems.py.
         kwargs["operative_air_weight"] = 1.0
         kwargs["sky_temperature_difference_k"] = 0.0
 
