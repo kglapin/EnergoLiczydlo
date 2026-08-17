@@ -110,14 +110,8 @@ def test_explicit_heating_auxiliary_energy_is_added_to_final_electricity():
     assert explicit.annual_indicators.eu_kwh_m2_year == pytest.approx(
         baseline.annual_indicators.eu_kwh_m2_year
     )
-    ek_delta = (
-        explicit.annual_indicators.ek_kwh_m2_year
-        - baseline.annual_indicators.ek_kwh_m2_year
-    )
-    ep_delta = (
-        explicit.annual_indicators.ep_kwh_m2_year
-        - baseline.annual_indicators.ep_kwh_m2_year
-    )
+    ek_delta = explicit.annual_indicators.ek_kwh_m2_year - baseline.annual_indicators.ek_kwh_m2_year
+    ep_delta = explicit.annual_indicators.ep_kwh_m2_year - baseline.annual_indicators.ep_kwh_m2_year
     assert ek_delta == pytest.approx(1200.0 / 150.0)
     assert ep_delta == pytest.approx(2.5 * 1200.0 / 150.0)
 
@@ -142,14 +136,8 @@ def test_explicit_cooling_auxiliary_energy_is_added_when_cooling_is_active():
     assert explicit.annual_indicators.eu_kwh_m2_year == pytest.approx(
         baseline.annual_indicators.eu_kwh_m2_year
     )
-    ek_delta = (
-        explicit.annual_indicators.ek_kwh_m2_year
-        - baseline.annual_indicators.ek_kwh_m2_year
-    )
-    ep_delta = (
-        explicit.annual_indicators.ep_kwh_m2_year
-        - baseline.annual_indicators.ep_kwh_m2_year
-    )
+    ek_delta = explicit.annual_indicators.ek_kwh_m2_year - baseline.annual_indicators.ek_kwh_m2_year
+    ep_delta = explicit.annual_indicators.ep_kwh_m2_year - baseline.annual_indicators.ep_kwh_m2_year
     assert ek_delta == pytest.approx(600.0 / 150.0)
     assert ep_delta == pytest.approx(2.5 * 600.0 / 150.0)
 

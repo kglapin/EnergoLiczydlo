@@ -100,10 +100,7 @@ def _legal_readiness_checks(
     if (
         ventilation_type == "mechanical_with_recovery"
         and project.ventilation.heat_recovery_efficiency > 0.0
-        and not (
-            settings.heat_recovery.enabled
-            and settings.heat_recovery.certificate_mode
-        )
+        and not (settings.heat_recovery.enabled and settings.heat_recovery.certificate_mode)
     ):
         raise ValueError(
             "Formal calculation with heat recovery requires the detailed hourly "
@@ -155,9 +152,7 @@ def _legal_readiness_checks(
     used_carriers = _used_energy_carriers(project)
     sources = legal.primary_energy_factor_sources
     missing_sources = sorted(
-        carrier
-        for carrier in used_carriers
-        if not str(sources.get(carrier, "")).strip()
+        carrier for carrier in used_carriers if not str(sources.get(carrier, "")).strip()
     )
     if missing_sources:
         raise ValueError(
@@ -297,9 +292,7 @@ def _apply_preheater_energy(
         electricity = project.primary_energy.electricity
         result.annual_indicators.ek_kwh_m2_year = new_ek_kwh / area
         result.annual_indicators.ep_kwh_m2_year += preheater_kwh * electricity.fp / area
-        result.annual_indicators.ec_tco2_m2_year += (
-            preheater_kwh * electricity.we / 1000.0 / area
-        )
+        result.annual_indicators.ec_tco2_m2_year += preheater_kwh * electricity.we / 1000.0 / area
         result.annual_indicators.u_oze_percent = (
             0.0 if new_ek_kwh <= 0.0 else 100.0 * renewable_kwh / new_ek_kwh
         )
@@ -431,8 +424,7 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
         core_checks = [
             check
             for check in core_checks
-            if not check.name.startswith("Kontrola informacyjna: EP")
-            and check.name != "Eu >= 0"
+            if not check.name.startswith("Kontrola informacyjna: EP") and check.name != "Eu >= 0"
         ]
         checks.append(
             ComplianceCheck(

@@ -64,9 +64,7 @@ def _room_transmission_load_w(project, room, settings, annual_mean_outdoor_c: fl
         else zone.setpoint_heating
     )
     opaque_by_id = {element.id: element for element in project.opaque_building_elements}
-    transparent_by_id = {
-        element.id: element for element in project.transparent_building_elements
-    }
+    transparent_by_id = {element.id: element for element in project.transparent_building_elements}
     linear_by_id = {bridge.id: bridge for bridge in project.thermal_bridges.linear_bridges}
     point_by_id = {bridge.id: bridge for bridge in project.thermal_bridges.point_bridges}
 
@@ -80,15 +78,23 @@ def _room_transmission_load_w(project, room, settings, annual_mean_outdoor_c: fl
             annual_mean_outdoor_c,
         )
         if adjacent is not None:
-            load += float(element.area) * float(element.u_value) * max(
-                indoor - adjacent,
-                0.0,
+            load += (
+                float(element.area)
+                * float(element.u_value)
+                * max(
+                    indoor - adjacent,
+                    0.0,
+                )
             )
     for element_id in room.transparent_element_ids:
         element = transparent_by_id[element_id]
-        load += float(element.area) * float(element.u_value) * max(
-            indoor - outdoor,
-            0.0,
+        load += (
+            float(element.area)
+            * float(element.u_value)
+            * max(
+                indoor - outdoor,
+                0.0,
+            )
         )
     delta_outdoor = max(indoor - outdoor, 0.0)
     for bridge_id in room.linear_bridge_ids:
@@ -130,9 +136,7 @@ def _room_ventilation_load_w(
         building_equivalent = float(room.ventilation_airflow_m3h) * (
             building_floor_area / room.floor_area
         )
-        room_ventilation = room_ventilation.model_copy(
-            update={"airflow_rate": building_equivalent}
-        )
+        room_ventilation = room_ventilation.model_copy(update={"airflow_rate": building_equivalent})
     if room.infiltration_rate_1h is not None:
         room_ventilation = room_ventilation.model_copy(
             update={"infiltration_rate": float(room.infiltration_rate_1h)}
@@ -162,9 +166,7 @@ def _validate_room_assignment_for_certificate(project) -> None:
         element_id for room in project.design_rooms for element_id in room.opaque_element_ids
     }
     assigned_transparent = {
-        element_id
-        for room in project.design_rooms
-        for element_id in room.transparent_element_ids
+        element_id for room in project.design_rooms for element_id in room.transparent_element_ids
     }
     assigned_linear = {
         bridge_id for room in project.design_rooms for bridge_id in room.linear_bridge_ids
@@ -193,7 +195,9 @@ def _validate_room_assignment_for_certificate(project) -> None:
         )
 
 
-def calculate_design_heat_load(project, settings, annual_mean_outdoor_c: float) -> BuildingDesignLoad:
+def calculate_design_heat_load(
+    project, settings, annual_mean_outdoor_c: float
+) -> BuildingDesignLoad:
     if not settings.enabled:
         return BuildingDesignLoad(zones=(), total_w=0.0, rooms=())
     _legacy._design_outdoor_temperature(settings)
@@ -209,8 +213,7 @@ def calculate_design_heat_load(project, settings, annual_mean_outdoor_c: float) 
         )
         if settings.certificate_mode:
             raise ValueError(
-                "Certificate-grade PN-EN 12831-1 design load requires "
-                "BuildingProject.design_rooms"
+                "Certificate-grade PN-EN 12831-1 design load requires BuildingProject.design_rooms"
             )
         return BuildingDesignLoad(
             zones=legacy_result.zones,
@@ -224,9 +227,7 @@ def calculate_design_heat_load(project, settings, annual_mean_outdoor_c: float) 
     ventilation = _legacy._resolved_design_ventilation(project)
     building_floor_area = sum(room.floor_area for room in project.design_rooms)
     zone_area = {
-        zone.id: sum(
-            room.floor_area for room in project.design_rooms if room.zone_id == zone.id
-        )
+        zone.id: sum(room.floor_area for room in project.design_rooms if room.zone_id == zone.id)
         for zone in project.thermal_zones
     }
     room_results: list[RoomDesignLoad] = []

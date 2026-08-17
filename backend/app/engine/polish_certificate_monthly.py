@@ -112,9 +112,7 @@ def _zone_internal_gain_density(
         return float(explicit)
     normative = project.internal_gains.normative_power_density_w_m2
     if normative is None:
-        raise ValueError(
-            f"Formal monthly calculation requires q_int for zone '{zone.id}'"
-        )
+        raise ValueError(f"Formal monthly calculation requires q_int for zone '{zone.id}'")
     return float(normative)
 
 
@@ -165,9 +163,7 @@ def _monthly_adjacent_temperature(
         )
     if adjacent_type == AdjacentSpaceType.HEATED_ZONE:
         return None
-    element = next(
-        item for item in project.opaque_building_elements if item.id == element_id
-    )
+    element = next(item for item in project.opaque_building_elements if item.id == element_id)
     if element.adjacent_temperature is None:
         raise ValueError(
             f"Element '{element_id}' requires adjacent_temperature in formal calculation"
@@ -221,12 +217,7 @@ def _monthly_transmission_kwh(
     for bridge in project.thermal_bridges.point_bridges:
         if bridge.zone_id == zone.id:
             bridge_h_w_k += float(bridge.chi_value) * int(bridge.count)
-    transfer += (
-        bridge_h_w_k
-        * (indoor_temperature_c - outdoor)
-        * HOURS_PER_MONTH
-        / 1000.0
-    )
+    transfer += bridge_h_w_k * (indoor_temperature_c - outdoor) * HOURS_PER_MONTH / 1000.0
     return transfer
 
 
@@ -243,9 +234,7 @@ def _zone_beta(
         return np.ones(12, dtype=float)
     if project.ventilation.usage_share_beta is not None:
         return np.full(12, float(project.ventilation.usage_share_beta), dtype=float)
-    raise ValueError(
-        f"Formal monthly calculation requires monthly beta for zone '{zone.id}'"
-    )
+    raise ValueError(f"Formal monthly calculation requires monthly beta for zone '{zone.id}'")
 
 
 def _zone_base_airflow_m3h(
@@ -260,9 +249,7 @@ def _zone_base_airflow_m3h(
     profile = _enum_value(project.general.dhw_usage_profile)
     density = NORMATIVE_AIRFLOW_M3_S_M2.get(profile)
     if density is None:
-        raise ValueError(
-            f"No regulatory basic airflow is available for usage profile '{profile}'"
-        )
+        raise ValueError(f"No regulatory basic airflow is available for usage profile '{profile}'")
     return float(density * zone.floor_area * 3600.0), False
 
 
@@ -298,8 +285,7 @@ def _monthly_effective_ventilation_flow_m3h(
         if continuous:
             return np.full(12, base + fan_infiltration), False
         return (
-            beta * (base + fan_infiltration)
-            + (1.0 - beta) * (0.1 * base + infiltration)
+            beta * (base + fan_infiltration) + (1.0 - beta) * (0.1 * base + infiltration)
         ), False
 
     if vtype in {
@@ -455,9 +441,7 @@ def _dhw_final_energy_wh(project: BuildingProject, dhw_useful_wh: float) -> floa
             tank_kind=tank_kind,
             insulation_mm=system.storage_insulation_mm,
         )
-        delta_d_kwh = dhw_useful_wh / 1000.0 * (
-            1.0 / system.distribution_efficiency - 1.0
-        )
+        delta_d_kwh = dhw_useful_wh / 1000.0 * (1.0 / system.distribution_efficiency - 1.0)
         return float((dhw_useful_wh / 1000.0 + delta_d_kwh + standby) * 1000.0 / generation)
     total_efficiency = (
         generation
@@ -544,10 +528,13 @@ def _final_energy_by_carrier(
                     raise ValueError(f"No fan airflow fallback for profile '{profile}'")
                 airflow = density * area * 3600.0
             ach = airflow / project.general.heated_volume
-            fan_power = ventilation_fan_power_w_m2(
-                _enum_value(ventilation.ventilation_type),
-                ach,
-            ) * area
+            fan_power = (
+                ventilation_fan_power_w_m2(
+                    _enum_value(ventilation.ventilation_type),
+                    ach,
+                )
+                * area
+            )
         electric_aux_wh += fan_power * fan_hours
 
     if settings.preheater_electricity_kwh_by_month:
@@ -626,10 +613,14 @@ def calculate_polish_monthly_certificate(
         total_ve += qve
         default_rn_used |= fallback_rn
 
-    dhw_useful_wh = annual_dhw_useful_energy(
-        area,
-        project.general.dhw_usage_profile,
-    ) if _enum_value(project.systems.dhw.system_type) != "none" else 0.0
+    dhw_useful_wh = (
+        annual_dhw_useful_energy(
+            area,
+            project.general.dhw_usage_profile,
+        )
+        if _enum_value(project.systems.dhw.system_type) != "none"
+        else 0.0
+    )
     monthly_dhw_kwh = dhw_useful_wh / 1000.0 * DAYS_PER_MONTH / 365.0
     heating_useful_wh = float(np.sum(total_h)) * 1000.0
     cooling_useful_wh = float(np.sum(total_c)) * 1000.0

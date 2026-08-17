@@ -6,28 +6,37 @@ with their own transfer/gain inputs and time constants, as required by 6.6.3.
 Reference parameters a0 and tau0 are Annex-A/national choices and are therefore
 explicit inputs rather than guessed constants in strict mode.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import TypeAlias, cast
 
 import numpy as np
+from numpy.typing import NDArray
+
+FloatArray: TypeAlias = NDArray[np.float64]
+
+
+def _arr(value: object) -> FloatArray:
+    return cast(FloatArray, np.asarray(value, dtype=np.float64))
 
 
 @dataclass(frozen=True)
 class MonthlyZoneEnergy:
-    heating_kwh: np.ndarray
-    cooling_kwh: np.ndarray
-    heating_gain_utilization: np.ndarray
-    cooling_loss_utilization: np.ndarray
-    heating_time_constant_h: np.ndarray
-    cooling_time_constant_h: np.ndarray
+    heating_kwh: FloatArray
+    cooling_kwh: FloatArray
+    heating_gain_utilization: FloatArray
+    cooling_loss_utilization: FloatArray
+    heating_time_constant_h: FloatArray
+    cooling_time_constant_h: FloatArray
 
 
 def zone_time_constant_h(
     effective_internal_capacity_j_k: float,
-    transmission_h_w_k: np.ndarray | float,
-    ventilation_h_w_k: np.ndarray | float,
-) -> np.ndarray:
+    transmission_h_w_k: FloatArray | float,
+    ventilation_h_w_k: FloatArray | float,
+) -> FloatArray:
     """Clause 6.6.10.4 zone time constant [h]."""
     if effective_internal_capacity_j_k <= 0.0:
         raise ValueError("effective_internal_capacity_j_k must be positive")
@@ -36,16 +45,16 @@ def zone_time_constant_h(
     )
     if np.any(h_total <= 0.0):
         raise ValueError("monthly heat-transfer coefficient must be positive")
-    return np.asarray(effective_internal_capacity_j_k / (3600.0 * h_total), dtype=float)
+    return _arr(effective_internal_capacity_j_k / (3600.0 * h_total))
 
 
-def numerical_parameter(a0: float, tau_h: np.ndarray, tau0_h: float) -> np.ndarray:
+def numerical_parameter(a0: float, tau_h: FloatArray, tau0_h: float) -> FloatArray:
     if a0 <= 0.0 or tau0_h <= 0.0:
         raise ValueError("a0 and tau0_h must be positive")
-    return np.asarray(a0 + np.asarray(tau_h, dtype=float) / tau0_h, dtype=float)
+    return _arr(a0 + _arr(tau_h) / tau0_h)
 
 
-def heating_gain_utilization(gamma: np.ndarray, a: np.ndarray) -> np.ndarray:
+def heating_gain_utilization(gamma: FloatArray, a: FloatArray) -> FloatArray:
     """Heating gain-utilization factor from clause 6.6.10.2."""
     g, aa = np.broadcast_arrays(np.asarray(gamma, dtype=float), np.asarray(a, dtype=float))
     result = np.ones(g.shape, dtype=float)
@@ -57,10 +66,10 @@ def heating_gain_utilization(gamma: np.ndarray, a: np.ndarray) -> np.ndarray:
     result[equal] = aa[equal] / (aa[equal] + 1.0)
     result[np.isposinf(g)] = 0.0
     result[g <= 0.0] = 1.0
-    return np.asarray(np.clip(result, 0.0, 1.0), dtype=float)
+    return _arr(np.clip(result, 0.0, 1.0))
 
 
-def cooling_loss_utilization(gamma: np.ndarray, a: np.ndarray) -> np.ndarray:
+def cooling_loss_utilization(gamma: FloatArray, a: FloatArray) -> FloatArray:
     """Cooling loss-utilization factor from clause 6.6.10.3."""
     g, aa = np.broadcast_arrays(np.asarray(gamma, dtype=float), np.asarray(a, dtype=float))
     result = np.zeros(g.shape, dtype=float)
@@ -72,11 +81,11 @@ def cooling_loss_utilization(gamma: np.ndarray, a: np.ndarray) -> np.ndarray:
     result[equal] = aa[equal] / (aa[equal] + 1.0)
     result[np.isposinf(g)] = 1.0
     result[g <= 0.0] = 0.0
-    return np.asarray(np.clip(result, 0.0, 1.0), dtype=float)
+    return _arr(np.clip(result, 0.0, 1.0))
 
 
-def _monthly(values: np.ndarray, name: str) -> np.ndarray:
-    result = np.asarray(values, dtype=float)
+def _monthly(values: FloatArray, name: str) -> FloatArray:
+    result = _arr(values)
     if result.shape != (12,):
         raise ValueError(f"{name} must contain 12 monthly values")
     if np.any(result < 0.0) or not np.isfinite(result).all():
@@ -86,15 +95,15 @@ def _monthly(values: np.ndarray, name: str) -> np.ndarray:
 
 def calculate_monthly_zone_energy(
     *,
-    heating_heat_transfer_kwh: np.ndarray,
-    heating_heat_gains_kwh: np.ndarray,
-    cooling_heat_transfer_kwh: np.ndarray,
-    cooling_heat_gains_kwh: np.ndarray,
+    heating_heat_transfer_kwh: FloatArray,
+    heating_heat_gains_kwh: FloatArray,
+    cooling_heat_transfer_kwh: FloatArray,
+    cooling_heat_gains_kwh: FloatArray,
     effective_internal_capacity_j_k: float,
-    heating_transmission_h_w_k: np.ndarray | float,
-    heating_ventilation_h_w_k: np.ndarray | float,
-    cooling_transmission_h_w_k: np.ndarray | float,
-    cooling_ventilation_h_w_k: np.ndarray | float,
+    heating_transmission_h_w_k: FloatArray | float,
+    heating_ventilation_h_w_k: FloatArray | float,
+    cooling_transmission_h_w_k: FloatArray | float,
+    cooling_ventilation_h_w_k: FloatArray | float,
     heating_reference_a0: float,
     heating_reference_tau0_h: float,
     cooling_reference_a0: float,
@@ -132,7 +141,7 @@ def calculate_monthly_zone_energy(
         where=h_transfer > 0.0,
     )
     eta_h = heating_gain_utilization(gamma_h, a_h)
-    heating = np.maximum(h_transfer - eta_h * h_gains, 0.0)
+    heating = _arr(np.maximum(h_transfer - eta_h * h_gains, 0.0))
 
     gamma_c = np.divide(
         c_gains,
@@ -141,5 +150,5 @@ def calculate_monthly_zone_energy(
         where=c_transfer > 0.0,
     )
     eta_c = cooling_loss_utilization(gamma_c, a_c)
-    cooling = np.maximum(c_gains - eta_c * c_transfer, 0.0)
+    cooling = _arr(np.maximum(c_gains - eta_c * c_transfer, 0.0))
     return MonthlyZoneEnergy(heating, cooling, eta_h, eta_c, tau_h, tau_c)

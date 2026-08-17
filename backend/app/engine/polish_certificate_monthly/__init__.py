@@ -19,9 +19,7 @@ for _name in dir(_legacy):
     if not _name.startswith("__"):
         globals()[_name] = getattr(_legacy, _name)
 
-_legacy_calculate_polish_monthly_certificate = (
-    _legacy.calculate_polish_monthly_certificate
-)
+_legacy_calculate_polish_monthly_certificate = _legacy.calculate_polish_monthly_certificate
 
 
 def _unverified_override_zones(settings) -> list[str]:
@@ -29,9 +27,7 @@ def _unverified_override_zones(settings) -> list[str]:
         settings.cooling_useful_override_kwh_by_zone
     )
     evidence = getattr(settings, "useful_energy_override_evidence_by_zone", {}) or {}
-    return sorted(
-        zone for zone in override_zones if not str(evidence.get(zone, "")).strip()
-    )
+    return sorted(zone for zone in override_zones if not str(evidence.get(zone, "")).strip())
 
 
 def calculate_polish_monthly_certificate(project, settings):

@@ -199,17 +199,25 @@ def test_external_bestest_case_600_is_inside_published_reference_band(
     annual_cooling = float(solution.q_cooling.sum())
     peak_heating = float(solution.q_heating.max())
     peak_cooling = float(solution.q_cooling.max())
-    assert CASE_600_REFERENCE["annual_heating_kwh"][0] * 1000 <= annual_heating <= (
-        CASE_600_REFERENCE["annual_heating_kwh"][1] * 1000
+    assert (
+        CASE_600_REFERENCE["annual_heating_kwh"][0] * 1000
+        <= annual_heating
+        <= (CASE_600_REFERENCE["annual_heating_kwh"][1] * 1000)
     )
-    assert CASE_600_REFERENCE["annual_cooling_kwh"][0] * 1000 <= annual_cooling <= (
-        CASE_600_REFERENCE["annual_cooling_kwh"][1] * 1000
+    assert (
+        CASE_600_REFERENCE["annual_cooling_kwh"][0] * 1000
+        <= annual_cooling
+        <= (CASE_600_REFERENCE["annual_cooling_kwh"][1] * 1000)
     )
-    assert CASE_600_REFERENCE["peak_heating_w"][0] <= peak_heating <= (
-        CASE_600_REFERENCE["peak_heating_w"][1]
+    assert (
+        CASE_600_REFERENCE["peak_heating_w"][0]
+        <= peak_heating
+        <= (CASE_600_REFERENCE["peak_heating_w"][1])
     )
-    assert CASE_600_REFERENCE["peak_cooling_w"][0] <= peak_cooling <= (
-        CASE_600_REFERENCE["peak_cooling_w"][1]
+    assert (
+        CASE_600_REFERENCE["peak_cooling_w"][0]
+        <= peak_cooling
+        <= (CASE_600_REFERENCE["peak_cooling_w"][1])
     )
 
     # The simplified mapping should remain close to the concrete EnergyPlus

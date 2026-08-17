@@ -149,9 +149,7 @@ def test_detailed_recovery_keeps_physical_airflow_and_uses_supply_temperature() 
         operation_profile=operation,
     )
 
-    assert float(np.asarray(h_ve).reshape(-1)[0]) == pytest.approx(
-        200.0 / 3600.0 * 1200.0
-    )
+    assert float(np.asarray(h_ve).reshape(-1)[0]) == pytest.approx(200.0 / 3600.0 * 1200.0)
     assert supply[0] == pytest.approx(16.0)
 
 

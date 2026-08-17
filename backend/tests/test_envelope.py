@@ -57,14 +57,10 @@ def test_adjacent_temperature_ground():
 
 
 def test_thermal_bridge_loss():
-    zone = ThermalZone(
-        id="z1", name="z1", zone_type="heated", floor_area=50.0, volume=125.0
-    )
+    zone = ThermalZone(id="z1", name="z1", zone_type="heated", floor_area=50.0, volume=125.0)
     bridges = ThermalBridgeConfig(
         linear_bridges=[
-            LinearThermalBridge(
-                id="lb1", name="lb1", psi_value=0.05, length=20.0, zone_id="z1"
-            )
+            LinearThermalBridge(id="lb1", name="lb1", psi_value=0.05, length=20.0, zone_id="z1")
         ],
         point_bridges=[
             PointThermalBridge(id="pb1", name="pb1", chi_value=0.5, count=4, zone_id="z1")
@@ -92,9 +88,7 @@ def test_total_transmission_coefficient():
     ]
     bridges = ThermalBridgeConfig(
         linear_bridges=[
-            LinearThermalBridge(
-                id="lb1", name="lb1", psi_value=0.05, length=10.0, zone_id="z1"
-            )
+            LinearThermalBridge(id="lb1", name="lb1", psi_value=0.05, length=10.0, zone_id="z1")
         ]
     )
     H = total_transmission_coefficient(opaque, [], bridges)

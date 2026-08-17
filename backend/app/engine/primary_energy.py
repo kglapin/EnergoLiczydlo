@@ -59,7 +59,6 @@ def share_of_renewable_energy(
     if total == 0:
         return 0.0
     renewable = sum(
-        final_energy_by_carrier.get(carrier, 0.0)
-        for carrier in RENEWABLE_FINAL_ENERGY_CARRIERS
+        final_energy_by_carrier.get(carrier, 0.0) for carrier in RENEWABLE_FINAL_ENERGY_CARRIERS
     )
     return 100.0 * renewable / total

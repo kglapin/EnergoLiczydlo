@@ -1,4 +1,5 @@
 """Analytical checks for PN-EN ISO 52016-1 clause 6.6 helpers."""
+
 from __future__ import annotations
 
 import numpy as np

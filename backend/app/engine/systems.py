@@ -136,9 +136,8 @@ def heat_pump_cop_map(
     rated_sink_k = rated_T_sink + 273.15
 
     # Carnot-relative scaling (very simplified)
-    theoretical_ratio = (
-        (T_source_k / (T_sink_k - T_source_k))
-        / (rated_source_k / (rated_sink_k - rated_source_k))
+    theoretical_ratio = (T_source_k / (T_sink_k - T_source_k)) / (
+        rated_source_k / (rated_sink_k - rated_source_k)
     )
     cop = rated_cop * theoretical_ratio
     return np.clip(cop, 1.0, 6.0)
@@ -204,9 +203,7 @@ def storage_unit_loss_w_dm3(
     if tank_kind == "gas":
         return row["gas"]
     if insulation_mm is None:
-        raise ValueError(
-            "insulation_mm is required for an indirect storage tank"
-        )
+        raise ValueError("insulation_mm is required for an indirect storage tank")
     insulation_key = next(
         (key for key in ("100", "50", "20") if np.isclose(float(key), insulation_mm)),
         None,
@@ -232,6 +229,7 @@ def dhw_storage_standby_loss_kwh(
     if q_s is None:
         return None
     return volume_dm3 * q_s * DHW_STORAGE_HOURS_PER_YEAR / 1000.0
+
 
 # Rozporządzenie, załącznik nr 1, § 5.3, tabela 27: (VWi [dm³/(m²·d)], kR).
 # Profiles with a value range or a value defined only from documentation are
@@ -263,8 +261,7 @@ def annual_dhw_useful_energy(floor_area_m2: float, usage_profile: str) -> float:
     except KeyError as exc:
         available_profiles = ", ".join(sorted(DHW_PROFILE_PARAMETERS))
         raise ValueError(
-            f"Unsupported DHW usage profile: {profile_key}. "
-            f"Choose one of: {available_profiles}"
+            f"Unsupported DHW usage profile: {profile_key}. Choose one of: {available_profiles}"
         ) from exc
 
     energy_kwh = (
@@ -372,9 +369,7 @@ def dhw_auxiliary_demand_wh(
     return sum(q * t * floor_area_m2 for q, t in rows)
 
 
-def ventilation_fan_power_w_m2(
-    ventilation_type: str, air_change_rate: float
-) -> float:
+def ventilation_fan_power_w_m2(ventilation_type: str, air_change_rate: float) -> float:
     """q_el wentylatorów [W/m2] wg tabeli 20, wiersze 12/13."""
     supply_extract = ventilation_type in ("mechanical", "mechanical_with_recovery")
     if supply_extract:  # 12: centrala nawiewno-wywiewna

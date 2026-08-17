@@ -126,8 +126,7 @@ def heat_recovery_state(
         active = frost_risk & (eta > 1e-9) & (flow > 1e-9)
         target_preheat = np.where(
             active,
-            t_extract
-            - (t_extract - settings.frost_exhaust_limit_c) / np.maximum(eta, 1e-9),
+            t_extract - (t_extract - settings.frost_exhaust_limit_c) / np.maximum(eta, 1e-9),
             outdoor,
         )
         required_delta = np.maximum(target_preheat - outdoor, 0.0)

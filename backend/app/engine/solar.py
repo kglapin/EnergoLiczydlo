@@ -26,9 +26,8 @@ def _direct_surface_irradiance_and_incidence_rad(
     solar_azimuth = np.deg2rad(np.asarray(df["sun_azimuth"], dtype=float))
     tilt = np.deg2rad(float(surface_tilt))
     azimuth = np.deg2rad(float(surface_azimuth))
-    cos_incidence = (
-        np.cos(zenith) * np.cos(tilt)
-        + np.sin(zenith) * np.sin(tilt) * np.cos(solar_azimuth - azimuth)
+    cos_incidence = np.cos(zenith) * np.cos(tilt) + np.sin(zenith) * np.sin(tilt) * np.cos(
+        solar_azimuth - azimuth
     )
     front_cosine = np.clip(cos_incidence, 0.0, 1.0)
     direct = np.maximum(np.asarray(df["DNI"], dtype=float), 0.0) * front_cosine
@@ -144,11 +143,7 @@ def solar_absorption_opaque(
         ground_reflectance=ground_reflectance,
     )
     return (
-        element.area
-        * element.solar_absorptance
-        * element.u_value
-        * R_SE_M2K_W
-        * np.asarray(I_surf)
+        element.area * element.solar_absorptance * element.u_value * R_SE_M2K_W * np.asarray(I_surf)
     )
 
 

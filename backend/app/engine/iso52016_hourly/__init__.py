@@ -5,6 +5,7 @@ The underlying implementation lives in the historical sibling module
 strict conformance and patches boundary conditions that must not be silently
 approximated in strict mode.
 """
+
 from __future__ import annotations
 
 import importlib.util
@@ -73,9 +74,10 @@ def _prepare(*args, **kwargs):
         else:
             # Linearized window exterior balance represented by an exactly
             # equivalent boundary temperature including long-wave sky loss.
-            boundary = np.asarray(path.boundary, dtype=float) - (
-                film.h_re / total_external
-            ) * view * sky_delta
+            boundary = (
+                np.asarray(path.boundary, dtype=float)
+                - (film.h_re / total_external) * view * sky_delta
+            )
         patched_windows.append(replace(path, boundary=np.asarray(boundary, dtype=float)))
     return replace(prepared, windows=tuple(patched_windows))
 
@@ -86,16 +88,18 @@ _core._prepare = _prepare
 
 def solve_zone_iso52016(*args, **kwargs):
     require_nodes = bool(kwargs.get("require_explicit_construction_nodes", False))
-    strict_raw = kwargs.get("strict_conformance", None)
+    strict_raw = kwargs.get("strict_conformance")
     strict = bool(strict_raw) if strict_raw is not None else False
     opaque = kwargs.get("opaque_elements")
     zone_id = kwargs.get("zone_id")
     if opaque is None or zone_id is None:
-        raise TypeError("solve_zone_iso52016 requires opaque_elements and zone_id as keyword arguments")
+        raise TypeError(
+            "solve_zone_iso52016 requires opaque_elements and zone_id as keyword arguments"
+        )
 
     if require_nodes and not _construction_inputs_are_explicit(opaque, zone_id):
         raise ValueError(
-            "Explicit five-node construction data are required: provide "
+            "explicit five-node construction data are required: provide "
             "thermal_node_capacities_kj_m2k and thermal_node_resistances_m2k_w "
             "for every opaque element in the zone."
         )

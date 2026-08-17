@@ -26,14 +26,10 @@ def test_window_is_subtracted_from_gross_host_wall() -> None:
     corrected, checks = prepare_project_for_audited_calculation(project)
 
     original_wall = next(
-        element
-        for element in project.opaque_building_elements
-        if element.id == "wall_s"
+        element for element in project.opaque_building_elements if element.id == "wall_s"
     )
     corrected_wall = next(
-        element
-        for element in corrected.opaque_building_elements
-        if element.id == "wall_s"
+        element for element in corrected.opaque_building_elements if element.id == "wall_s"
     )
 
     assert original_wall.area == pytest.approx(40.0)  # caller input is not mutated
@@ -108,15 +104,9 @@ def test_explicit_opening_host_mapping_resolves_ambiguous_geometry() -> None:
     project.metadata["opening_hosts"] = {"win_s": "wall_s"}
 
     corrected, _ = prepare_project_for_audited_calculation(project)
-    host = next(
-        element
-        for element in corrected.opaque_building_elements
-        if element.id == "wall_s"
-    )
+    host = next(element for element in corrected.opaque_building_elements if element.id == "wall_s")
     other = next(
-        element
-        for element in corrected.opaque_building_elements
-        if element.id == "wall_s_2"
+        element for element in corrected.opaque_building_elements if element.id == "wall_s_2"
     )
     assert host.area == pytest.approx(30.0)
     assert other.area == pytest.approx(20.0)

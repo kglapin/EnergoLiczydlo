@@ -5,6 +5,7 @@ legacy calls may still opt into the historical reduced model.  Detailed heat
 recovery is iterated with solved extract-air temperature.  When requested,
 clause 6.5.14 moisture/latent loads are solved after the sensible state.
 """
+
 from __future__ import annotations
 
 import importlib.util
@@ -62,7 +63,11 @@ def _raw_opaque_solar_absorption(opaque, df) -> dict[str, np.ndarray]:
 
 def _setpoints(zone):
     heating = zone.setpoint_heating if zone.zone_type in HEATED_ZONE_TYPES else None
-    cooling = zone.setpoint_cooling if zone.zone_type in COOLED_ZONE_TYPES and zone.setpoint_cooling is not None else None
+    cooling = (
+        zone.setpoint_cooling
+        if zone.zone_type in COOLED_ZONE_TYPES and zone.setpoint_cooling is not None
+        else None
+    )
     return heating, cooling
 
 
@@ -80,7 +85,9 @@ def _hourly_value(value, n: int) -> np.ndarray:
     return np.full(n, float(array), dtype=float) if array.ndim == 0 else array
 
 
-def _physical_incoming_airflow_m3h(ventilation, zone, building_floor_area, operation_profile, n: int) -> np.ndarray:
+def _physical_incoming_airflow_m3h(
+    ventilation, zone, building_floor_area, operation_profile, n: int
+) -> np.ndarray:
     """Return physical incoming outdoor-air flow for the moisture balance.
 
     Detailed recovery mode already preserves the physical mechanical flow.  In
@@ -104,7 +111,9 @@ def _physical_incoming_airflow_m3h(ventilation, zone, building_floor_area, opera
     return np.maximum(mechanical + external, 0.0)
 
 
-def _moisture_result(zone, df, project, ventilation, operation_profile, building_floor_area, solution, settings):
+def _moisture_result(
+    zone, df, project, ventilation, operation_profile, building_floor_area, solution, settings
+):
     moisture = settings.moisture_iso52016
     if not moisture.enabled:
         return None
@@ -153,11 +162,17 @@ def _moisture_result(zone, df, project, ventilation, operation_profile, building
     )
 
 
-def _aggregate_zone_results(zone, df, project, building_floor_area: float, ventilation, operation_profile: np.ndarray):
+def _aggregate_zone_results(
+    zone, df, project, building_floor_area: float, ventilation, operation_profile: np.ndarray
+):
     opaque = [element for element in project.opaque_building_elements if element.zone_id == zone.id]
-    transparent = [element for element in project.transparent_building_elements if element.zone_id == zone.id]
+    transparent = [
+        element for element in project.transparent_building_elements if element.zone_id == zone.id
+    ]
     t_e = df["T_e"].to_numpy(dtype=float)
-    network = zone_transmission_network(opaque, transparent, project.thermal_bridges, t_e, zone_id=zone.id)
+    network = zone_transmission_network(
+        opaque, transparent, project.thermal_bridges, t_e, zone_id=zone.id
+    )
     h_ve = ventilation_heat_transfer_coefficient(
         ventilation, zone, building_floor_area, operation_profile=operation_profile
     )
@@ -177,7 +192,9 @@ def _aggregate_zone_results(zone, df, project, building_floor_area: float, venti
 
     for _ in range(8):
         t_supply = ventilation_effective_supply_temperature(
-            ventilation, zone, t_e,
+            ventilation,
+            zone,
+            t_e,
             building_floor_area=building_floor_area,
             operation_profile=operation_profile,
             extract_temperature_c=extract_temperature,
@@ -187,7 +204,8 @@ def _aggregate_zone_results(zone, df, project, building_floor_area: float, venti
                 zone.id, zone.air_furniture_heat_capacity_kj_m2k
             )
             capacity_j_k = (
-                None if capacity_kj_m2k is None
+                None
+                if capacity_kj_m2k is None
                 else float(capacity_kj_m2k) * float(zone.floor_area) * 1000.0
             )
             solution = solve_zone_iso52016(
@@ -215,7 +233,8 @@ def _aggregate_zone_results(zone, df, project, building_floor_area: float, venti
                 floor_area_m2=zone.floor_area,
                 sky_temperature_difference_k=(
                     hourly.sky_temperature_difference_k
-                    if hourly.sky_temperature_difference_k is not None else 11.0
+                    if hourly.sky_temperature_difference_k is not None
+                    else 11.0
                 ),
                 solar_radiant_distribution=hourly.solar_radiant_distribution_by_zone.get(zone.id),
                 max_heating_power_w=hourly.max_heating_power_w_by_zone.get(zone.id),
@@ -228,9 +247,14 @@ def _aggregate_zone_results(zone, df, project, building_floor_area: float, venti
         else:
             properties = zone_thermal_properties(zone.floor_area)
             solution = solve_zone_5r1c(
-                network=network, h_ve=h_ve, t_e=t_e, phi_int=q_int,
-                phi_sol=q_solar_report, properties=properties,
-                t_set_heating=t_set_heating, t_set_cooling=t_set_cooling,
+                network=network,
+                h_ve=h_ve,
+                t_e=t_e,
+                phi_int=q_int,
+                phi_sol=q_solar_report,
+                properties=properties,
+                t_set_heating=t_set_heating,
+                t_set_cooling=t_set_cooling,
                 t_supply=t_supply,
             )
         if not recovery_is_detailed:
@@ -249,7 +273,9 @@ def _aggregate_zone_results(zone, df, project, building_floor_area: float, venti
 
     if recovery_is_detailed and extract_temperature is not None:
         t_supply = ventilation_effective_supply_temperature(
-            ventilation, zone, t_e,
+            ventilation,
+            zone,
+            t_e,
             building_floor_area=building_floor_area,
             operation_profile=operation_profile,
             extract_temperature_c=extract_temperature,
@@ -262,14 +288,29 @@ def _aggregate_zone_results(zone, df, project, building_floor_area: float, venti
         )
     )
     q_ventilation = ventilation_heat_loss(
-        ventilation, zone, solution.t_air, t_e, T_supply=t_supply,
-        building_floor_area=building_floor_area, operation_profile=operation_profile,
+        ventilation,
+        zone,
+        solution.t_air,
+        t_e,
+        T_supply=t_supply,
+        building_floor_area=building_floor_area,
+        operation_profile=operation_profile,
     )
     design_losses = _legacy._design_loss_series_w(network, h_ve, t_set_heating, t_supply)
-    moisture_result = _moisture_result(
-        zone, df, project, ventilation, operation_profile, building_floor_area,
-        solution, settings
-    ) if detailed_hourly else None
+    moisture_result = (
+        _moisture_result(
+            zone,
+            df,
+            project,
+            ventilation,
+            operation_profile,
+            building_floor_area,
+            solution,
+            settings,
+        )
+        if detailed_hourly
+        else None
+    )
     result = {
         "T_int": solution.t_air,
         "T_op": solution.t_operative,
@@ -291,12 +332,14 @@ def _aggregate_zone_results(zone, df, project, building_floor_area: float, venti
         result["unmet_heating_k"] = solution.unmet_heating_k
         result["unmet_cooling_k"] = solution.unmet_cooling_k
     if moisture_result is not None:
-        result.update({
-            "humidity_ratio": moisture_result.humidity_ratio,
-            "relative_humidity": moisture_result.relative_humidity,
-            "Q_H_latent": moisture_result.latent_heating_w,
-            "Q_C_latent": moisture_result.latent_cooling_w,
-        })
+        result.update(
+            {
+                "humidity_ratio": moisture_result.humidity_ratio,
+                "relative_humidity": moisture_result.relative_humidity,
+                "Q_H_latent": moisture_result.latent_heating_w,
+                "Q_C_latent": moisture_result.latent_cooling_w,
+            }
+        )
     return result
 
 

@@ -16,9 +16,7 @@ from app.engine.climate import ClimateStation, load_epw, nearest_climate_station
 router = APIRouter()
 
 DATA_DIR = resolve_tmy_data_dir(__file__)
-GEOCODING_API_URL = os.getenv(
-    "GEOCODING_API_URL", "https://geocoding-api.open-meteo.com/v1/search"
-)
+GEOCODING_API_URL = os.getenv("GEOCODING_API_URL", "https://geocoding-api.open-meteo.com/v1/search")
 
 
 def _station_from_epw(path: Path) -> ClimateStation:
@@ -82,9 +80,7 @@ def _geocode_location(query: str) -> tuple[str, float, float]:
         latitude = float(match["latitude"])
         longitude = float(match["longitude"])
         matched_location = ", ".join(
-            part
-            for part in (match.get("name"), match.get("admin1"), match.get("country"))
-            if part
+            part for part in (match.get("name"), match.get("admin1"), match.get("country")) if part
         )
     except (KeyError, TypeError, ValueError) as exc:
         raise HTTPException(status_code=502, detail="Geokoder zwrócił nieprawidłowe dane") from exc

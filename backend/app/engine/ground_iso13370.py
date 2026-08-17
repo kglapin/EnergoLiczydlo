@@ -80,12 +80,7 @@ def slab_on_ground_u_value_w_m2k(
     )
     conductivity = soil_conductivity_w_mk
     if d_t < b_prime:
-        return float(
-            2.0
-            * conductivity
-            / (pi * b_prime + d_t)
-            * log(pi * b_prime / d_t + 1.0)
-        )
+        return float(2.0 * conductivity / (pi * b_prime + d_t) * log(pi * b_prime / d_t + 1.0))
     return float(conductivity / (0.457 * b_prime + d_t))
 
 
@@ -111,9 +106,7 @@ def soil_penetration_depth_m(
     soil_specific_heat_j_kgk: float,
 ) -> float:
     """Annual thermal-wave penetration depth sqrt(2 alpha / omega) [m]."""
-    alpha = soil_conductivity_w_mk / (
-        soil_density_kg_m3 * soil_specific_heat_j_kgk
-    )
+    alpha = soil_conductivity_w_mk / (soil_density_kg_m3 * soil_specific_heat_j_kgk)
     omega = 2.0 * pi / SECONDS_PER_YEAR
     return float(sqrt(2.0 * alpha / omega))
 
@@ -155,10 +148,7 @@ def periodic_ground_temperature(
     omega = 2.0 * pi / HOURS_PER_YEAR
     lag_phase = 2.0 * pi * phase_shift_days / 365.0
     return np.asarray(
-        mean
-        + amplitude
-        * amplitude_ratio
-        * np.cos(omega * hours - outdoor_phase - lag_phase),
+        mean + amplitude * amplitude_ratio * np.cos(omega * hours - outdoor_phase - lag_phase),
         dtype=float,
     )
 
@@ -188,12 +178,7 @@ def _required_material_values(
     if any(value is None for value in values):
         raise ValueError("Enabled ISO 13370 ground model is missing material properties")
     conductivity, density, specific_heat, wall_thickness = values
-    if (
-        conductivity is None
-        or density is None
-        or specific_heat is None
-        or wall_thickness is None
-    ):
+    if conductivity is None or density is None or specific_heat is None or wall_thickness is None:
         raise RuntimeError("Ground material input narrowing failed")
     return (
         float(conductivity),
@@ -237,9 +222,7 @@ def prepare_ground_boundaries(
     if not settings.enabled:
         return []
 
-    conductivity, _density, _specific_heat, wall_thickness = _required_material_values(
-        settings
-    )
+    conductivity, _density, _specific_heat, wall_thickness = _required_material_values(settings)
     checks: list[ComplianceCheck] = []
     found = 0
 
@@ -290,11 +273,7 @@ def prepare_ground_boundaries(
                 b_prime / 2.0,
             )
         else:
-            fallback_depth = (
-                config.basement_depth_m
-                or config.diagnostic_effective_depth_m
-                or 1.0
-            )
+            fallback_depth = config.basement_depth_m or config.diagnostic_effective_depth_m or 1.0
             if settings.certificate_mode and config.basement_depth_m is None:
                 raise ValueError(
                     f"Ground-contact element '{element.name}' requires basement_depth_m "

@@ -44,8 +44,8 @@ from app.engine.ventilation import (
 )
 from app.schemas.models import (
     DesignRoom,
-    InternalGainSource,
     InternalGains,
+    InternalGainSource,
     LinearThermalBridge,
     OpaqueElement,
     PointThermalBridge,
@@ -375,9 +375,7 @@ def test_manual_17_monthly_january_transmission_is_372kwh() -> None:
         internal_gain_density_w_m2_by_zone={"z1": 0.0},
     )
     result = calculate_polish_monthly_certificate(project, settings)
-    assert result.monthly[0].heating_kwh == pytest.approx(
-        25.0 * 1.0 * 20.0 * 31.0 * 24.0 / 1000.0
-    )
+    assert result.monthly[0].heating_kwh == pytest.approx(25.0 * 1.0 * 20.0 * 31.0 * 24.0 / 1000.0)
 
 
 # ---------------------------------------------------------------------------
@@ -430,9 +428,7 @@ def test_edge_negative_ventilation_is_rejected() -> None:
 
 def test_three_day_new_solver_energy_balance_closes_hour_by_hour() -> None:
     wall = _explicit_wall()
-    outdoor = np.concatenate(
-        [np.full(24, -10.0), np.full(24, 10.0), np.full(24, 32.0)]
-    )
+    outdoor = np.concatenate([np.full(24, -10.0), np.full(24, 10.0), np.full(24, 32.0)])
     h_ve = np.full(72, 60.0)
     phi_int = np.full(72, 200.0)
     solution = solve_zone_iso52016(
@@ -449,16 +445,18 @@ def test_three_day_new_solver_energy_balance_closes_hour_by_hour() -> None:
         t_set_heating=20.0,
         t_set_cooling=26.0,
         require_explicit_construction_nodes=True,
+        air_furniture_heat_capacity_j_k=100_000.0,
     )
     capacities = np.asarray([40.0] * 5) * 25.0 * 1000.0
     nodes = solution.construction_node_temperatures["wall"]
     previous = np.vstack([np.full((1, 5), 20.0), nodes[:-1]])
-    storage_w = np.sum(capacities * (nodes - previous), axis=1) / 3600.0
+    construction_storage_w = np.sum(capacities * (nodes - previous), axis=1) / 3600.0
+    previous_air = np.concatenate(([20.0], solution.t_air[:-1]))
+    air_storage_w = 100_000.0 * (solution.t_air - previous_air) / 3600.0
+    storage_w = construction_storage_w + air_storage_w
     ventilation_loss = h_ve * (solution.t_air - outdoor)
     hvac = solution.q_heating - solution.q_cooling
-    residual = storage_w - (
-        phi_int + hvac - solution.q_transmission - ventilation_loss
-    )
+    residual = storage_w - (phi_int + hvac - solution.q_transmission - ventilation_loss)
     day_max = {
         "winter": float(np.max(np.abs(residual[:24]))),
         "transition": float(np.max(np.abs(residual[24:48]))),

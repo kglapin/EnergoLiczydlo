@@ -94,9 +94,7 @@ def test_steady_state_heating_matches_analytic():
     )
     effective = _effective_gains(gains, 0.0, h_w, 450.0)
     # After the initial mass transient: heating + effective gains = losses.
-    np.testing.assert_allclose(
-        solution.q_heating[500:] + effective, losses[500:], rtol=1e-8
-    )
+    np.testing.assert_allclose(solution.q_heating[500:] + effective, losses[500:], rtol=1e-8)
     assert np.all(solution.q_cooling == 0.0)
     np.testing.assert_allclose(solution.t_air[500:], t_set, atol=1e-9)
 
@@ -138,9 +136,7 @@ def test_gain_splitting_conserves_energy():
     t_s = solution.t_surface
     hem = opaque_external_conductance(50.0, 9.1 * 250.0)
     losses = (
-        hem * (solution.t_mass_mean - 10.0)
-        + 30.0 * (t_s - 10.0)
-        + 30.0 * (solution.t_air - 10.0)
+        hem * (solution.t_mass_mean - 10.0) + 30.0 * (t_s - 10.0) + 30.0 * (solution.t_air - 10.0)
     )
     effective = _effective_gains(1000.0, 2000.0, 30.0, 450.0)
     # tau ~ C_m/H ~ 104 h; by hour 3000 the mass transient has fully decayed.

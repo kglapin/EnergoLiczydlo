@@ -49,18 +49,12 @@ def _solve_zone_cycle(
     h_op = network.h_opaque
     h_em = opaque_external_conductance(h_op, h_ms)
     h_surface_total = sum(network.h_surface)
-    t_opaque = (
-        network.t_opaque
-        if network.t_opaque is not None
-        else np.zeros(n, dtype=float)
-    )
+    t_opaque = network.t_opaque if network.t_opaque is not None else np.zeros(n, dtype=float)
 
     frac_mass = properties.area_mass / properties.area_total_internal
     frac_surface = max(
         0.0,
-        1.0
-        - frac_mass
-        - h_surface_total / (H_MS_W_M2K * properties.area_total_internal),
+        1.0 - frac_mass - h_surface_total / (H_MS_W_M2K * properties.area_total_internal),
     )
     phi_ia = 0.5 * phi_int
     phi_rest = 0.5 * phi_int + phi_sol
@@ -98,8 +92,7 @@ def _solve_zone_cycle(
             raise ValueError("5R1C network is singular: air node insensitive to heating")
 
         surface_drive = sum(
-            h * ts[t]
-            for h, ts in zip(network.h_surface, network.t_surface, strict=True)
+            h * ts[t] for h, ts in zip(network.h_surface, network.t_surface, strict=True)
         )
         rhs = np.array(
             [

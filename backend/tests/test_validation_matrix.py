@@ -92,9 +92,7 @@ def _zero_gains() -> InternalGains:
 def _make_matrix_project(variant: MatrixVariant) -> BuildingProject:
     area = 120.0
     volume = 360.0
-    zone_type = (
-        ZoneType.HEATED if variant.service == "heating" else ZoneType.COOLED
-    )
+    zone_type = ZoneType.HEATED if variant.service == "heating" else ZoneType.COOLED
     zone = ThermalZone(
         id="zone",
         name="Validation zone",
@@ -223,9 +221,7 @@ def _make_matrix_project(variant: MatrixVariant) -> BuildingProject:
     ventilation = Ventilation(
         ventilation_type=VentilationType(ventilation_type),
         operation_mode=(
-            VentilationOperationMode.PERIODIC
-            if periodic
-            else VentilationOperationMode.CONTINUOUS
+            VentilationOperationMode.PERIODIC if periodic else VentilationOperationMode.CONTINUOUS
         ),
         airflow_rate=airflow,
         heat_recovery_efficiency=0.73 if "recovery" in ventilation_type else 0.0,
@@ -334,9 +330,7 @@ def test_recovery_reduces_heating_demand_without_changing_the_external_climate(
         "app.engine.calculator._load_climate",
         lambda project: climate.copy(deep=True),
     )
-    base = _make_matrix_project(
-        MatrixVariant("mechanical", "none", False, "heating")
-    )
+    base = _make_matrix_project(MatrixVariant("mechanical", "none", False, "heating"))
     recovered = base.model_copy(deep=True)
     recovered.ventilation = recovered.ventilation.model_copy(
         update={
@@ -370,9 +364,7 @@ def test_periodic_ventilation_schedule_changes_hourly_demand(
         "app.engine.calculator._load_climate",
         lambda project: climate.copy(deep=True),
     )
-    operating = _make_matrix_project(
-        MatrixVariant("mechanical_periodic", "none", False, "heating")
-    )
+    operating = _make_matrix_project(MatrixVariant("mechanical_periodic", "none", False, "heating"))
     off = operating.model_copy(deep=True)
     off.ventilation.schedule = Schedule(
         type="hourly_profile",

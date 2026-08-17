@@ -366,9 +366,7 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
     if "infiltration_rate" not in ventilation.model_fields_set:
         ventilation = ventilation.model_copy(
             update={
-                "infiltration_rate": normative_infiltration_rate(
-                    project.general.construction_year
-                )
+                "infiltration_rate": normative_infiltration_rate(project.general.construction_year)
             }
         )
     profile_value = str(
@@ -490,9 +488,7 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
         standby_loss_kwh = None
         if dhw_system.storage_volume_dm3 is not None:
             if dhw_system.storage_location is None:
-                raise ValueError(
-                    "storage_location is required when storage_volume_dm3 is provided"
-                )
+                raise ValueError("storage_location is required when storage_volume_dm3 is provided")
             if tank_kind == "indirect" and dhw_system.storage_insulation_mm is None:
                 raise ValueError(
                     "storage_insulation_mm is required for an indirect DHW storage tank"
@@ -575,27 +571,22 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
         final_energy_by_carrier[heating_carrier] = float(np.sum(E_k_H))
     if cooling_sys is not None and str(cooling_sys.system_type) != "none":
         cooling_carrier = _system_carrier(cooling_sys)
-        final_energy_by_carrier[cooling_carrier] = (
-            final_energy_by_carrier.get(cooling_carrier, 0.0) + float(np.sum(E_k_C))
-        )
+        final_energy_by_carrier[cooling_carrier] = final_energy_by_carrier.get(
+            cooling_carrier, 0.0
+        ) + float(np.sum(E_k_C))
     if str(dhw_system.system_type) != "none":
         dhw_carrier = _system_carrier(dhw_system)
-        final_energy_by_carrier[dhw_carrier] = (
-            final_energy_by_carrier.get(dhw_carrier, 0.0) + float(np.sum(E_k_DHW))
-        )
+        final_energy_by_carrier[dhw_carrier] = final_energy_by_carrier.get(
+            dhw_carrier, 0.0
+        ) + float(np.sum(E_k_DHW))
     final_energy_by_carrier["electricity"] = (
-        final_energy_by_carrier.get("electricity", 0.0)
-        + E_k_vent_wh
-        + E_k_L_wh
-        + E_aux_wh
+        final_energy_by_carrier.get("electricity", 0.0) + E_k_vent_wh + E_k_L_wh + E_aux_wh
     )
 
     # Useful energy Eu = Q_H + Q_C + DHW useful energy [Wh/year].  Embedded
     # lighting belongs to Qk,L/Qp,L in the methodology and is intentionally
     # excluded from Qu; auxiliary electricity is final, not useful energy.
-    E_u_total_wh = (
-        float(np.sum(total_Q_H)) + float(np.sum(total_Q_C)) + float(np.sum(Q_dhw_hourly))
-    )
+    E_u_total_wh = float(np.sum(total_Q_H)) + float(np.sum(total_Q_C)) + float(np.sum(Q_dhw_hourly))
 
     # Final energy Ek [Wh/year]
     E_k_total_wh = sum(final_energy_by_carrier.values())
@@ -685,9 +676,7 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
             "Q_H": total_Q_H.tolist(),
             "Q_C": total_Q_C.tolist(),
             "T_supply": (
-                total_T_supply / total_zone_area
-                if total_zone_area > 0
-                else df["T_e"].to_numpy()
+                total_T_supply / total_zone_area if total_zone_area > 0 else df["T_e"].to_numpy()
             ).tolist(),
             "T_int": (
                 total_T_int / total_zone_area if total_zone_area > 0 else df["T_e"].to_numpy()

@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from datetime import date
 import inspect
+from datetime import date
 
 import numpy as np
 import pandas as pd
@@ -32,8 +32,8 @@ from app.schemas.models import (
     BuildingSystems,
     DesignRoom,
     GeneralInfo,
-    InternalGainSource,
     InternalGains,
+    InternalGainSource,
     OpaqueElement,
     SystemDHW,
     SystemHeatingCooling,
@@ -62,9 +62,7 @@ def _project(
 ) -> BuildingProject:
     element_kwargs = dict(wall_kwargs or {})
     resolved_metadata = (
-        metadata
-        if metadata is not None
-        else {"normative": {"hourly_iso52016": {"enabled": True}}}
+        metadata if metadata is not None else {"normative": {"hourly_iso52016": {"enabled": True}}}
     )
     return BuildingProject(
         project_name="Naprawy audytu",
@@ -172,10 +170,7 @@ def test_iso13370_slab_formula_uses_correct_branch_after_rse_fix() -> None:
     d_t = equivalent_thickness_m(conductivity, resistance, thickness)
     if d_t < b_prime:
         expected = (
-            2.0
-            * conductivity
-            / (np.pi * b_prime + d_t)
-            * np.log(np.pi * b_prime / d_t + 1.0)
+            2.0 * conductivity / (np.pi * b_prime + d_t) * np.log(np.pi * b_prime / d_t + 1.0)
         )
     else:
         expected = conductivity / (0.457 * b_prime + d_t)

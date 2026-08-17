@@ -4,6 +4,7 @@ ISO 52016 analysis and the legally prescribed Polish certificate calculation
 remain separate layers. Strict ISO mode fails closed when inputs delegated to
 other EPB modules have not been supplied with the project.
 """
+
 from __future__ import annotations
 
 import importlib.util
@@ -29,12 +30,13 @@ for _name in dir(_legacy):
 
 class GroundElementSettings(_legacy.GroundElementSettings):
     """ISO 13370/13789 outputs consumed by ISO 52016 clause 6.5.8.2."""
+
     virtual_ground_resistance_m2k_w: float | None = Field(None, gt=0.0)
     virtual_ground_temperature_c_by_month: list[float] | None = None
     fixed_soil_layer_capacity_kj_m2k: float | None = Field(None, ge=0.0)
 
     @model_validator(mode="after")
-    def validate_virtual_ground_boundary(self) -> "GroundElementSettings":
+    def validate_virtual_ground_boundary(self) -> GroundElementSettings:
         if (
             self.virtual_ground_temperature_c_by_month is not None
             and len(self.virtual_ground_temperature_c_by_month) != 12
@@ -47,7 +49,7 @@ class GroundISO13370Settings(_legacy.GroundISO13370Settings):
     elements: dict[str, GroundElementSettings] = Field(default_factory=dict)
 
     @model_validator(mode="after")
-    def require_iso52016_ground_outputs(self) -> "GroundISO13370Settings":
+    def require_iso52016_ground_outputs(self) -> GroundISO13370Settings:
         if self.enabled and self.certificate_mode:
             incomplete = [
                 element_id
@@ -81,9 +83,12 @@ class HourlyISO52016Settings(BaseModel):
     warmup_tolerance_k: float = Field(0.01, gt=0.0, le=1.0)
 
     @model_validator(mode="after")
-    def validate_detailed_inputs(self) -> "HourlyISO52016Settings":
+    def validate_detailed_inputs(self) -> HourlyISO52016Settings:
         for mapping_name, mapping in (
-            ("air_furniture_heat_capacity_kj_m2k_by_zone", self.air_furniture_heat_capacity_kj_m2k_by_zone),
+            (
+                "air_furniture_heat_capacity_kj_m2k_by_zone",
+                self.air_furniture_heat_capacity_kj_m2k_by_zone,
+            ),
             ("max_heating_power_w_by_zone", self.max_heating_power_w_by_zone),
             ("max_cooling_power_w_by_zone", self.max_cooling_power_w_by_zone),
         ):
@@ -106,6 +111,7 @@ class HourlyISO52016Settings(BaseModel):
 
 class MoistureISO52016Settings(BaseModel):
     """Clause 6.5.14 moisture-balance inputs."""
+
     enabled: bool = False
     strict_conformance: bool = False
     latent_heat_vaporization_j_kg: float = Field(2_500_000.0, gt=0.0)
@@ -113,7 +119,7 @@ class MoistureISO52016Settings(BaseModel):
     moisture_buffer_kg_s_by_zone: dict[str, float] = Field(default_factory=dict)
 
     @model_validator(mode="after")
-    def validate_moisture_sources(self) -> "MoistureISO52016Settings":
+    def validate_moisture_sources(self) -> MoistureISO52016Settings:
         if any(value < 0.0 for value in self.moisture_generation_kg_s_by_zone.values()):
             raise ValueError("moisture generation values must be non-negative")
         return self
@@ -121,6 +127,7 @@ class MoistureISO52016Settings(BaseModel):
 
 class MonthlyISO52016Settings(BaseModel):
     """Clause 6.6 calculation choices; kept separate from the Polish certificate."""
+
     enabled: bool = False
     strict_conformance: bool = False
     heating_reference_parameter_a0: float | None = Field(None, gt=0.0)
@@ -129,7 +136,7 @@ class MonthlyISO52016Settings(BaseModel):
     cooling_reference_time_constant_h: float | None = Field(None, gt=0.0)
 
     @model_validator(mode="after")
-    def require_reference_parameters(self) -> "MonthlyISO52016Settings":
+    def require_reference_parameters(self) -> MonthlyISO52016Settings:
         if self.enabled and self.strict_conformance:
             required = (
                 self.heating_reference_parameter_a0,
@@ -149,18 +156,27 @@ class PolishCertificateMonthlySettings(_legacy.PolishCertificateMonthlySettings)
     useful_energy_override_evidence_by_zone: dict[str, str] = Field(default_factory=dict)
 
     def unverified_override_zones(self) -> list[str]:
-        override_zones = set(self.heating_useful_override_kwh_by_zone) | set(self.cooling_useful_override_kwh_by_zone)
+        override_zones = set(self.heating_useful_override_kwh_by_zone) | set(
+            self.cooling_useful_override_kwh_by_zone
+        )
         return sorted(
-            zone for zone in override_zones
+            zone
+            for zone in override_zones
             if not str(self.useful_energy_override_evidence_by_zone.get(zone, "")).strip()
         )
 
 
 class NormativeSettings(_legacy.NormativeSettings):
     ground: GroundISO13370Settings = Field(default_factory=GroundISO13370Settings)
-    heat_recovery: _legacy.HeatRecoverySettings = Field(default_factory=_legacy.HeatRecoverySettings)
-    design_conditions: _legacy.DesignConditionsSettings = Field(default_factory=_legacy.DesignConditionsSettings)
-    polish_certificate: PolishCertificateMonthlySettings = Field(default_factory=PolishCertificateMonthlySettings)
+    heat_recovery: _legacy.HeatRecoverySettings = Field(
+        default_factory=_legacy.HeatRecoverySettings
+    )
+    design_conditions: _legacy.DesignConditionsSettings = Field(
+        default_factory=_legacy.DesignConditionsSettings
+    )
+    polish_certificate: PolishCertificateMonthlySettings = Field(
+        default_factory=PolishCertificateMonthlySettings
+    )
     legal: _legacy.LegalProvenanceSettings = Field(default_factory=_legacy.LegalProvenanceSettings)
     hourly_iso52016: HourlyISO52016Settings = Field(default_factory=HourlyISO52016Settings)
     moisture_iso52016: MoistureISO52016Settings = Field(default_factory=MoistureISO52016Settings)

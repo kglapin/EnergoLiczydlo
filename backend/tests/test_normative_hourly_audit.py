@@ -46,12 +46,12 @@ from scripts.test_building import make_test_project
 
 def test_source_catalogue_fallback_is_not_masked_by_legacy_cop_default():
     """A new gas/cooling system must not inherit the legacy value 3.0."""
-    assert _generation_efficiency(
-        SystemHeatingCooling(system_type="gas_boiler")
-    ) == pytest.approx(0.87)
-    assert _generation_efficiency(
-        SystemHeatingCooling(system_type="split_ac")
-    ) == pytest.approx(3.9)
+    assert _generation_efficiency(SystemHeatingCooling(system_type="gas_boiler")) == pytest.approx(
+        0.87
+    )
+    assert _generation_efficiency(SystemHeatingCooling(system_type="split_ac")) == pytest.approx(
+        3.9
+    )
 
     legacy = SystemHeatingCooling(
         system_type="gas_boiler",
@@ -64,9 +64,7 @@ def test_current_primary_energy_default_is_2023_electricity_factor():
     assert PrimaryEnergyFactors().electricity.fp == pytest.approx(2.5)
 
 
-@pytest.mark.parametrize(
-    ("construction_year", "expected"), [(1995, 0.3), (1996, 0.2), (2020, 0.2)]
-)
+@pytest.mark.parametrize(("construction_year", "expected"), [(1995, 0.3), (1996, 0.2), (2020, 0.2)])
 def test_default_infiltration_matches_methodology_year_rule(construction_year, expected):
     assert normative_infiltration_rate(construction_year) == pytest.approx(expected)
 
@@ -81,9 +79,7 @@ def test_calculator_applies_year_rule_only_when_infiltration_was_omitted(monkeyp
         ventilation_type="natural", airflow_rate=120.0, fan_infiltration_rate=0.0
     )
     explicit = omitted.model_copy(deep=True)
-    explicit.ventilation = omitted.ventilation.model_copy(
-        update={"infiltration_rate": 0.3}
-    )
+    explicit.ventilation = omitted.ventilation.model_copy(update={"infiltration_rate": 0.3})
 
     omitted_result = calculate_building_energy(omitted)
     explicit_result = calculate_building_energy(explicit)
@@ -118,9 +114,7 @@ def test_hourly_thermal_need_is_converted_with_seasonal_heat_pump_cop(monkeypatc
 
 
 def test_explicit_energy_carrier_is_not_overwritten_by_source_default():
-    system = SystemHeatingCooling(
-        system_type="gas_boiler", fuel_or_carrier="biomass"
-    )
+    system = SystemHeatingCooling(system_type="gas_boiler", fuel_or_carrier="biomass")
     assert system.fuel_or_carrier == "biomass"
 
 
@@ -155,9 +149,7 @@ def test_normative_internal_gain_marker_yields_to_explicit_hourly_schedule():
     )
     index = make_synthetic_year().index
     result = total_internal_gains(0.03, 100.0, gains, index)
-    expected = (
-        gains.lighting.power_density + gains.equipment.power_density
-    ) * 100.0
+    expected = (gains.lighting.power_density + gains.equipment.power_density) * 100.0
     np.testing.assert_allclose(result, expected)
 
 
@@ -228,20 +220,14 @@ def test_hourly_solver_accepts_variable_ventilation_coefficient_and_preserves_se
 
 def test_transmission_network_includes_linear_and_point_bridges_once():
     zone = ThermalZone(id="z1", name="z1", floor_area=100.0, volume=250.0)
-    wall = OpaqueElement(
-        id="wall", name="wall", zone_id="z1", area=20.0, u_value=0.2
-    )
+    wall = OpaqueElement(id="wall", name="wall", zone_id="z1", area=20.0, u_value=0.2)
     bridges = ThermalBridgeConfig(
         linear_bridges=[
-            LinearThermalBridge(
-                id="lb", name="lb", zone_id="z1", psi_value=0.05, length=10.0
-            )
+            LinearThermalBridge(id="lb", name="lb", zone_id="z1", psi_value=0.05, length=10.0)
         ],
         point_bridges=[],
     )
-    network = zone_transmission_network(
-        [wall], [], bridges, np.zeros(8760), zone_id=zone.id
-    )
+    network = zone_transmission_network([wall], [], bridges, np.zeros(8760), zone_id=zone.id)
     assert network.h_opaque == pytest.approx(20.0 * 0.2 + 0.05 * 10.0)
 
 
@@ -294,8 +280,11 @@ def test_monthly_hourly_closure_for_cooling_and_useful_energy(monkeypatch):
     project.systems.heating = SystemHeatingCooling(system_type="none")
     project.systems.dhw = SystemDHW(system_type="none")
     project.systems.cooling = SystemHeatingCooling(
-        system_type="split_ac", generation_efficiency=4.0,
-        distribution_efficiency=1.0, storage_efficiency=1.0, control_efficiency=1.0,
+        system_type="split_ac",
+        generation_efficiency=4.0,
+        distribution_efficiency=1.0,
+        storage_efficiency=1.0,
+        control_efficiency=1.0,
     )
     project.internal_gains = project.internal_gains.model_copy(
         update={

@@ -72,11 +72,7 @@ def opening_host_candidates(project: BuildingProject, opening: Any) -> list[Any]
     explicit_id = mapping.get(opening.id) if isinstance(mapping, dict) else None
     if explicit_id:
         host = next(
-            (
-                element
-                for element in project.opaque_building_elements
-                if element.id == explicit_id
-            ),
+            (element for element in project.opaque_building_elements if element.id == explicit_id),
             None,
         )
         if host is None:
@@ -92,9 +88,7 @@ def opening_host_candidates(project: BuildingProject, opening: Any) -> list[Any]
         return [host]
 
     return [
-        opaque
-        for opaque in project.opaque_building_elements
-        if _compatible_host(opening, opaque)
+        opaque for opaque in project.opaque_building_elements if _compatible_host(opening, opaque)
     ]
 
 
@@ -167,8 +161,7 @@ def geometry_checks(project: BuildingProject) -> list[ComplianceCheck]:
     bottom_area = sum(
         float(element.area)
         for element in project.opaque_building_elements
-        if enum_value(element.element_type)
-        in {"ground_floor", "floor_over_unheated"}
+        if enum_value(element.element_type) in {"ground_floor", "floor_over_unheated"}
     )
 
     def rel_diff(value: float, reference: float) -> float:
@@ -184,8 +177,7 @@ def geometry_checks(project: BuildingProject) -> list[ComplianceCheck]:
         )
     elif (
         rel_diff(roof_area, expected_footprint) > ENVELOPE_AREA_WARNING_REL
-        or rel_diff(bottom_area, expected_footprint)
-        > ENVELOPE_AREA_WARNING_REL
+        or rel_diff(bottom_area, expected_footprint) > ENVELOPE_AREA_WARNING_REL
     ):
         checks.append(
             audit_check(
@@ -200,18 +192,14 @@ def geometry_checks(project: BuildingProject) -> list[ComplianceCheck]:
     vertical_external = [
         element
         for element in project.opaque_building_elements
-        if enum_value(element.element_type)
-        in {"external_wall", "basement_wall"}
+        if enum_value(element.element_type) in {"external_wall", "basement_wall"}
         and enum_value(element.adjacent_space_type) == "outdoor"
         and abs(float(element.inclination) - 90.0) <= 5.0
     ]
     directions: list[float] = []
     for element in vertical_external:
         azimuth = float(element.orientation_azimuth) % 360.0
-        if not any(
-            angle_distance(azimuth, existing) <= 5.0
-            for existing in directions
-        ):
+        if not any(angle_distance(azimuth, existing) <= 5.0 for existing in directions):
             directions.append(azimuth)
     if vertical_external and len(directions) < 3:
         checks.append(
@@ -225,9 +213,7 @@ def geometry_checks(project: BuildingProject) -> list[ComplianceCheck]:
     if storeys == 1 and conditioned_area > 0.0 and vertical_external:
         mean_zone_height = float(project.general.heated_volume) / conditioned_area
         wall_heights = [
-            float(element.height)
-            for element in vertical_external
-            if element.height is not None
+            float(element.height) for element in vertical_external if element.height is not None
         ]
         if wall_heights:
             mean_wall_height = sum(wall_heights) / len(wall_heights)

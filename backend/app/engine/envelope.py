@@ -92,9 +92,7 @@ def compute_opaque_heat_loss(
     unheated_zone_temperature: pd.Series | np.ndarray | None = None,
 ) -> np.ndarray:
     """Hourly transmission heat loss [W] through one opaque element."""
-    T_adj = adjacent_temperature(
-        element, T_e, unheated_zone_temperature, T_int=np.asarray(T_int)
-    )
+    T_adj = adjacent_temperature(element, T_e, unheated_zone_temperature, T_int=np.asarray(T_int))
     delta_T = np.asarray(T_int) - T_adj
     return np.asarray(element.area * element.u_value * delta_T, dtype=float)
 
@@ -183,9 +181,7 @@ def zone_transmission_network(
     def _driving(element: OpaqueElement) -> np.ndarray:
         if T_e is None:
             return placeholder
-        return adjacent_temperature(
-            element, T_e, unheated_zone_temperature, T_int=None
-        )
+        return adjacent_temperature(element, T_e, unheated_zone_temperature, T_int=None)
 
     for el in opaque_elements:
         if zone_id is not None and el.zone_id != zone_id:

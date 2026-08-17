@@ -191,8 +191,7 @@ def total_internal_gains(
             return np.full(len(datetimes), normative_target * floor_area, dtype=float)
 
     return np.asarray(
-        internal_gains(occupancy_density, floor_area, gains.occupancy, datetimes,
-                       per_person=True)
+        internal_gains(occupancy_density, floor_area, gains.occupancy, datetimes, per_person=True)
         + internal_gains(occupancy_density, floor_area, gains.lighting, datetimes)
         + internal_gains(occupancy_density, floor_area, gains.equipment, datetimes),
         dtype=float,

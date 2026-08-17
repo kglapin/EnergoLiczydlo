@@ -190,8 +190,7 @@ def ventilation_airflow_components(
         )
     if vtype in (VentilationType.EXHAUST, VentilationType.HYBRID):
         return np.zeros_like(profile), (
-            profile * (qv_nominal + qv_fan_inf)
-            + (1.0 - profile) * (0.1 * qv_nominal + qv_inf)
+            profile * (qv_nominal + qv_fan_inf) + (1.0 - profile) * (0.1 * qv_nominal + qv_inf)
         )
     return np.zeros_like(profile), np.full_like(profile, qv_nominal + qv_inf)
 
@@ -209,9 +208,7 @@ def ventilation_heat_transfer_coefficient(
         building_floor_area,
         operation_profile,
     )
-    total_flow = np.asarray(mechanical_flow, dtype=float) + np.asarray(
-        external_flow, dtype=float
-    )
+    total_flow = np.asarray(mechanical_flow, dtype=float) + np.asarray(external_flow, dtype=float)
     result = total_flow / 3600.0 * CP_AIR_VOLUMETRIC
     return float(result) if result.ndim == 0 else result
 

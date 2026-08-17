@@ -6,6 +6,7 @@ are explicit, and humidification/dehumidification is solved as the load needed
 to maintain the requested humidity-ratio band.  Moisture buffering by materials
 is an optional signed source supplied by the applicable input method.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -143,11 +144,7 @@ def solve_zone_moisture(
     for hour in range(n):
         source = generation[hour] - buffer_sink[hour]
         denominator = storage_kg_dry_air_s + mdot_air[hour]
-        numerator = (
-            storage_kg_dry_air_s * previous
-            + mdot_air[hour] * x_supply[hour]
-            + source
-        )
+        numerator = storage_kg_dry_air_s * previous + mdot_air[hour] * x_supply[hour] + source
         free = numerator / max(denominator, 1e-12)
         target = free
         if x_min is not None and free < x_min[hour]:

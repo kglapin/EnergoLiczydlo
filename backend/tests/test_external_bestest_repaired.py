@@ -51,7 +51,9 @@ def _five_node_construction(
     five node centres and the external/boundary film, preserving total R and C.
     """
     layers_inside_to_outside = list(reversed(layers_outside_to_inside))
-    layer_r = [thickness / conductivity for thickness, conductivity, _, _ in layers_inside_to_outside]
+    layer_r = [
+        thickness / conductivity for thickness, conductivity, _, _ in layers_inside_to_outside
+    ]
     layer_c = [
         thickness * specific_heat * density / 1000.0
         for thickness, _, specific_heat, density in layers_inside_to_outside

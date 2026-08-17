@@ -7,13 +7,16 @@ initialization, then the normal ISO 52016 hourly solver is used with continuous
 operation, unlimited capacity and fully convective delivery for the basic
 heating/cooling design load.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
 from math import ceil
+from typing import TypeAlias, cast
 
 import numpy as np
 import pandas as pd
+from numpy.typing import NDArray
 
 from app.engine.climate import radiation_on_surface
 from app.engine.internal_gains import total_internal_gains
@@ -24,14 +27,20 @@ from app.engine.ventilation import (
     ventilation_heat_transfer_coefficient,
     ventilation_operation_profile,
 )
-from app.schemas.models import AdjacentSpaceType, BuildingProject
+from app.schemas.models import BuildingProject
+
+FloatArray: TypeAlias = NDArray[np.float64]
+
+
+def _arr(value: object) -> FloatArray:
+    return cast(FloatArray, np.asarray(value, dtype=np.float64))
 
 
 @dataclass(frozen=True)
 class ZoneDesignProfile:
     zone_id: str
-    heating_w: np.ndarray
-    cooling_w: np.ndarray
+    heating_w: FloatArray
+    cooling_w: FloatArray
     heating_design_w: float
     cooling_design_w: float
 
@@ -41,17 +50,17 @@ class ISO52016DesignLoadResult:
     zones: tuple[ZoneDesignProfile, ...]
     heating_design_w: float
     cooling_design_w: float
-    heating_profile_w: np.ndarray
-    cooling_profile_w: np.ndarray
+    heating_profile_w: FloatArray
+    cooling_profile_w: FloatArray
     initialization_days: int
 
 
-def _tile(values: np.ndarray, repetitions: int) -> np.ndarray:
-    return np.tile(np.asarray(values, dtype=float), repetitions)
+def _tile(values: FloatArray, repetitions: int) -> FloatArray:
+    return _arr(np.tile(_arr(values), repetitions))
 
 
-def _raw_opaque_solar(opaque, climate: pd.DataFrame) -> dict[str, np.ndarray]:
-    result: dict[str, np.ndarray] = {}
+def _raw_opaque_solar(opaque, climate: pd.DataFrame) -> dict[str, FloatArray]:
+    result: dict[str, FloatArray] = {}
     for element in opaque:
         adjacent = str(getattr(element.adjacent_space_type, "value", element.adjacent_space_type))
         if adjacent != "outdoor":
@@ -63,9 +72,7 @@ def _raw_opaque_solar(opaque, climate: pd.DataFrame) -> dict[str, np.ndarray]:
             surface_azimuth=float(element.orientation_azimuth),
         )
         result[element.id] = (
-            float(element.area)
-            * float(element.solar_absorptance)
-            * np.asarray(poa, dtype=float)
+            float(element.area) * float(element.solar_absorptance) * np.asarray(poa, dtype=float)
         )
     return result
 
@@ -121,7 +128,9 @@ def calculate_iso52016_design_load(
 
     for zone in project.thermal_zones:
         opaque = [item for item in project.opaque_building_elements if item.zone_id == zone.id]
-        windows = [item for item in project.transparent_building_elements if item.zone_id == zone.id]
+        windows = [
+            item for item in project.transparent_building_elements if item.zone_id == zone.id
+        ]
         operation_base = ventilation_operation_profile(project.ventilation, design_climate.index)
         h_ve_base = ventilation_heat_transfer_coefficient(
             project.ventilation,
@@ -130,7 +139,7 @@ def calculate_iso52016_design_load(
             operation_profile=operation_base,
         )
         h_ve = _tile(np.broadcast_to(np.asarray(h_ve_base, dtype=float), (n,)), repetitions)
-        extract_base = np.full(n, float(zone.setpoint_heating), dtype=float)
+        extract_base: FloatArray = _arr(np.full(n, float(zone.setpoint_heating)))
         t_supply_base = ventilation_effective_supply_temperature(
             project.ventilation,
             zone,
@@ -140,12 +149,15 @@ def calculate_iso52016_design_load(
             extract_temperature_c=extract_base,
         )
         t_supply = _tile(t_supply_base, repetitions)
-        q_int_base = total_internal_gains(
-            zone.occupancy_density,
-            zone.floor_area,
-            project.internal_gains,
-            design_climate.index,
-        ) * internal_gain_factor
+        q_int_base = (
+            total_internal_gains(
+                zone.occupancy_density,
+                zone.floor_area,
+                project.internal_gains,
+                design_climate.index,
+            )
+            * internal_gain_factor
+        )
         q_sol_base, _ = total_solar_gains(windows, opaque, design_climate)
         raw_base = _raw_opaque_solar(opaque, design_climate)
         raw = {key: _tile(value, repetitions) for key, value in raw_base.items()}
@@ -166,10 +178,11 @@ def calculate_iso52016_design_load(
             internal_convective_fraction=0.40,
             solar_convective_fraction=0.10,
             hvac_convective_fraction=1.00,
-            operative_air_weight=(0.50 if zone.operative_air_weight is None else float(zone.operative_air_weight)),
+            operative_air_weight=(
+                0.50 if zone.operative_air_weight is None else float(zone.operative_air_weight)
+            ),
             air_furniture_heat_capacity_j_k=(
-                None if capacity is None
-                else float(capacity) * float(zone.floor_area) * 1000.0
+                None if capacity is None else float(capacity) * float(zone.floor_area) * 1000.0
             ),
             floor_area_m2=float(zone.floor_area),
             sky_temperature_difference_k=sky_temperature_difference_k,
@@ -188,10 +201,10 @@ def calculate_iso52016_design_load(
         )
 
     if not zone_results:
-        zeros = np.zeros(n, dtype=float)
+        zeros: FloatArray = _arr(np.zeros(n))
         return ISO52016DesignLoadResult((), 0.0, 0.0, zeros, zeros, initialization_days)
-    heating_sum = np.sum([item.heating_w for item in zone_results], axis=0)
-    cooling_sum = np.sum([item.cooling_w for item in zone_results], axis=0)
+    heating_sum = _arr(np.sum([item.heating_w for item in zone_results], axis=0))
+    cooling_sum = _arr(np.sum([item.cooling_w for item in zone_results], axis=0))
     return ISO52016DesignLoadResult(
         zones=tuple(zone_results),
         heating_design_w=float(np.max(heating_sum)),

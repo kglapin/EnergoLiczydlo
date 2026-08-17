@@ -87,8 +87,10 @@ class TestVentilation:
     def test_h_ve_natural_with_infiltration_analytic(self):
         """H_ve = (q_mech*(1-eta) + 0.5*V)/3600 * rho*cp [W/K]."""
         vent = Ventilation(
-            ventilation_type="natural", airflow_rate=120.0,
-            heat_recovery_efficiency=0.0, infiltration_rate=0.5,
+            ventilation_type="natural",
+            airflow_rate=120.0,
+            heat_recovery_efficiency=0.0,
+            infiltration_rate=0.5,
         )
         zone = _zone(volume=375.0)
         H_ve = ventilation_heat_transfer_coefficient(vent, zone)
@@ -98,8 +100,10 @@ class TestVentilation:
     def test_h_ve_heat_recovery_reduces_mechanical_part(self):
         """Odzysk ciepła zmniejsza tylko strumień mechaniczny."""
         vent = Ventilation(
-            ventilation_type="mechanical_with_recovery", airflow_rate=100.0,
-            heat_recovery_efficiency=0.75, infiltration_rate=0.0,
+            ventilation_type="mechanical_with_recovery",
+            airflow_rate=100.0,
+            heat_recovery_efficiency=0.75,
+            infiltration_rate=0.0,
         )
         H_ve = ventilation_heat_transfer_coefficient(vent, _zone())
         expected = (100.0 * (1 - 0.75) / 3600.0) * CP_VOLUMETRIC
@@ -107,15 +111,15 @@ class TestVentilation:
 
     def test_h_ve_full_recovery_zero_infiltration_is_zero(self):
         vent = Ventilation(
-            ventilation_type="mechanical_with_recovery", airflow_rate=200.0,
-            heat_recovery_efficiency=1.0, infiltration_rate=0.0,
+            ventilation_type="mechanical_with_recovery",
+            airflow_rate=200.0,
+            heat_recovery_efficiency=1.0,
+            infiltration_rate=0.0,
         )
         assert ventilation_heat_transfer_coefficient(vent, _zone()) == 0.0
 
     def test_disabled_ventilation_keeps_only_background_infiltration(self):
-        vent = Ventilation(
-            ventilation_type="none", airflow_rate=120.0, infiltration_rate=0.5
-        )
+        vent = Ventilation(ventilation_type="none", airflow_rate=120.0, infiltration_rate=0.5)
         expected = (0.5 * 375.0 / 3600.0) * CP_VOLUMETRIC
         assert ventilation_heat_transfer_coefficient(vent, _zone()) == pytest.approx(expected)
 
@@ -200,9 +204,10 @@ class TestVentilation:
             operation_profile=profile,
         )
 
-        expected = 1200.0 / 3600.0 * (
-            0.30 * (19715.0 * (1.0 - 0.73) + 0.04 * 8682.26)
-            + 0.70 * (0.20 * 8682.26)
+        expected = (
+            1200.0
+            / 3600.0
+            * (0.30 * (19715.0 * (1.0 - 0.73) + 0.04 * 8682.26) + 0.70 * (0.20 * 8682.26))
         )
         np.testing.assert_allclose(profile, 0.30)
         np.testing.assert_allclose(h_ve, expected, rtol=1e-12)
@@ -264,10 +269,14 @@ class TestVentilation:
 
 def _opaque(**kwargs) -> OpaqueElement:
     defaults = {
-        "id": "el", "name": "el", "zone_id": "z1",
+        "id": "el",
+        "name": "el",
+        "zone_id": "z1",
         "element_type": ElementType.EXTERNAL_WALL,
-        "orientation_azimuth": 0.0, "inclination": 90.0,
-        "area": 10.0, "u_value": 0.2,
+        "orientation_azimuth": 0.0,
+        "inclination": 90.0,
+        "area": 10.0,
+        "u_value": 0.2,
     }
     defaults.update(kwargs)
     return OpaqueElement(**defaults)
@@ -282,7 +291,12 @@ class TestEnvelope:
 
     def test_transparent_heat_loss_analytic(self):
         win = TransparentElement(
-            id="w", name="w", zone_id="z1", area=5.0, u_value=1.4, g_value=0.6,
+            id="w",
+            name="w",
+            zone_id="z1",
+            area=5.0,
+            u_value=1.4,
+            g_value=0.6,
         )
         loss = compute_transparent_heat_loss(win, np.full(8760, 20.0), np.full(8760, -5.0))
         np.testing.assert_allclose(loss, 5.0 * 1.4 * 25.0)  # 175 W
@@ -293,15 +307,16 @@ class TestEnvelope:
         from app.engine.envelope import GROUND_TEMP_LAG_HOURS
 
         floor = _opaque(
-            element_type=ElementType.GROUND_FLOOR, inclination=180.0,
+            element_type=ElementType.GROUND_FLOOR,
+            inclination=180.0,
             adjacent_space_type=AdjacentSpaceType.GROUND,
         )
         T_e = np.full(8760, 8.0)
         T_adj = adjacent_temperature(floor, T_e)
         lag = int(GROUND_TEMP_LAG_HOURS)
-        assert T_adj[lag] == pytest.approx(8.0 - 5.0)              # minimum
-        assert T_adj[lag + 2190] == pytest.approx(8.0, abs=1e-9)   # cos(pi/2)=0
-        assert T_adj[lag + 4380] == pytest.approx(8.0 + 5.0)       # maksimum
+        assert T_adj[lag] == pytest.approx(8.0 - 5.0)  # minimum
+        assert T_adj[lag + 2190] == pytest.approx(8.0, abs=1e-9)  # cos(pi/2)=0
+        assert T_adj[lag + 4380] == pytest.approx(8.0 + 5.0)  # maksimum
         # Minimum w lutym/marcu (a nie w styczniu jak temperatura zewnętrzna)
         assert np.argmin(T_adj[: 3 * 8760 // 12]) >= 31 * 24
 
@@ -356,9 +371,7 @@ class TestEnvelope:
     def test_total_transmission_coefficient_analytic(self):
         opaque = [_opaque(area=10.0, u_value=0.2)]
         transparent = [
-            TransparentElement(
-                id="w", name="w", zone_id="z1", area=5.0, u_value=0.9, g_value=0.6
-            )
+            TransparentElement(id="w", name="w", zone_id="z1", area=5.0, u_value=0.9, g_value=0.6)
         ]
         bridges = ThermalBridgeConfig(
             linear_bridges=[
@@ -397,22 +410,20 @@ class TestInternalGains:
         sched = Schedule(type="weekday_weekend", weekday=weekday, sunday=sunday)
         profile = evaluate_schedule(sched, annual_hourly_index(2023))
         # 2023-01-04 to środa, 2023-01-07 sobota, 2023-01-08 niedziela
-        assert profile[3 * 24 + 9] == 1.0    # śro 09:00
-        assert profile[3 * 24 + 3] == 0.0    # śro 03:00
-        assert profile[6 * 24 + 9] == 0.0    # sob 09:00 (sunday)
-        assert profile[7 * 24 + 9] == 0.0    # niedz 09:00
+        assert profile[3 * 24 + 9] == 1.0  # śro 09:00
+        assert profile[3 * 24 + 3] == 0.0  # śro 03:00
+        assert profile[6 * 24 + 9] == 0.0  # sob 09:00 (sunday)
+        assert profile[7 * 24 + 9] == 0.0  # niedz 09:00
 
     def test_hourly_profile_with_separate_weekend_arrays(self):
         weekday = [0.5] * 24
         saturday = [0.7] * 24
         sunday = [0.3] * 24
-        sched = Schedule(
-            type="hourly_profile", weekday=weekday, saturday=saturday, sunday=sunday
-        )
+        sched = Schedule(type="hourly_profile", weekday=weekday, saturday=saturday, sunday=sunday)
         profile = evaluate_schedule(sched, annual_hourly_index(2023))
-        assert profile[3 * 24 + 12] == 0.5   # środa
-        assert profile[6 * 24 + 12] == 0.7   # sobota
-        assert profile[7 * 24 + 12] == 0.3   # niedziela
+        assert profile[3 * 24 + 12] == 0.5  # środa
+        assert profile[6 * 24 + 12] == 0.7  # sobota
+        assert profile[7 * 24 + 12] == 0.3  # niedziela
 
     def test_hourly_profile_saturday_falls_back_to_weekday(self):
         sched = Schedule(type="hourly_profile", weekday=[0.5] * 24)  # brak soboty
@@ -646,9 +657,7 @@ class TestSystems:
             constant_efficiency_final_energy(np.array([100.0]), efficiency=0.0)
 
     def test_cop_at_rated_point(self):
-        cop = heat_pump_cop_map(
-            np.array([7.0]), T_sink=35.0, source_type="air", rated_cop=3.5
-        )
+        cop = heat_pump_cop_map(np.array([7.0]), T_sink=35.0, source_type="air", rated_cop=3.5)
         assert cop[0] == pytest.approx(3.5, rel=1e-9)
 
     def test_cop_at_zero_degrees_analytic(self):
@@ -661,12 +670,12 @@ class TestSystems:
     def test_cop_monotonic_in_source_temperature_and_clipped(self):
         T_e = np.linspace(-40.0, 30.0, 71)
         cop = heat_pump_cop_map(T_e, T_sink=35.0, rated_cop=3.5)
-        assert np.all(np.diff(cop) >= 0)          # nierosnąco... rosnąco ze źródłem
-        mid = (T_e >= -20.0) & (T_e <= 10.0)      # poza plateau clipów
+        assert np.all(np.diff(cop) >= 0)  # nierosnąco... rosnąco ze źródłem
+        mid = (T_e >= -20.0) & (T_e <= 10.0)  # poza plateau clipów
         assert np.all(np.diff(cop[mid]) > 0)
         assert np.all(cop >= 1.0) and np.all(cop <= 6.0)
         assert cop[0] == pytest.approx(1.0874, abs=1e-3)
-        assert cop[-1] == 6.0                     # clip na górze
+        assert cop[-1] == 6.0  # clip na górze
 
     def test_annual_dhw_useful_energy_single_family_analytic(self):
         """Tabela 27: VWi=1.40 dm³/(m²·d), kR=0.90 dla domu jednorodzinnego."""
@@ -689,8 +698,7 @@ class TestSystems:
             annual_dhw_useful_energy(150.0, "production")
 
     def test_final_energy_dhw_analytic(self):
-        E_k = final_energy_dhw(np.array([1000.0, 2000.0]), efficiency=0.9,
-                               standby_loss_factor=1.05)
+        E_k = final_energy_dhw(np.array([1000.0, 2000.0]), efficiency=0.9, standby_loss_factor=1.05)
         np.testing.assert_allclose(E_k, [1000.0 / 0.9 * 1.05, 2000.0 / 0.9 * 1.05])
 
     def test_final_energy_dhw_rejects_nonpositive(self):
@@ -742,9 +750,9 @@ class TestNormativeGaps:
 
         # biurowy 0,56e-3, grawitacyjna: udział β + 0,2(1-β) przy β=0,3 -> 0,44
         expected = 0.56e-3 * (0.3 + 0.7 * 0.2) * 1000.0 * 3600.0
-        assert normative_airflow_rate_m3h(
-            "office", 1000.0, "natural", beta=0.3
-        ) == pytest.approx(expected)
+        assert normative_airflow_rate_m3h("office", 1000.0, "natural", beta=0.3) == pytest.approx(
+            expected
+        )
 
     def test_normative_airflow_supply_extract_uses_rn(self):
         from app.engine.ventilation import normative_airflow_rate_m3h
@@ -803,9 +811,9 @@ class TestPrimaryEnergy:
         assert ec_t == pytest.approx((1000.0 * 0.6 + 2000.0 * 0.2) / 1e6)
 
     def test_share_of_renewable_energy_analytic(self):
-        assert share_of_renewable_energy(
-            {"biomass": 30.0, "natural_gas": 70.0}
-        ) == pytest.approx(30.0)
+        assert share_of_renewable_energy({"biomass": 30.0, "natural_gas": 70.0}) == pytest.approx(
+            30.0
+        )
         assert share_of_renewable_energy({"biomass": 50.0, "renewable": 50.0}) == 100.0
         assert share_of_renewable_energy({}) == 0.0
         assert share_of_renewable_energy({"electricity": 100.0}) == 0.0
@@ -842,11 +850,19 @@ class TestSolar:
 
         def annual(tilt: float, azimuth: float) -> float:
             win = TransparentElement(
-                id="w", name="w", zone_id="z1", orientation_azimuth=azimuth,
-                inclination=tilt, area=1.0, u_value=1.0, g_value=1.0,
-                frame_factor=0.0, shading_factor=1.0,
+                id="w",
+                name="w",
+                zone_id="z1",
+                orientation_azimuth=azimuth,
+                inclination=tilt,
+                area=1.0,
+                u_value=1.0,
+                g_value=1.0,
+                frame_factor=0.0,
+                shading_factor=1.0,
             )
             from app.engine.solar import solar_gains_transparent
+
             return solar_gains_transparent(win, df).sum()
 
         south, north = annual(90.0, 180.0), annual(90.0, 0.0)
@@ -856,11 +872,19 @@ class TestSolar:
     def test_window_gain_formula_exact_with_frame_and_shading(self):
         df = _climate_df(GHI=400.0, DNI=250.0, DHI=150.0)
         win = TransparentElement(
-            id="w", name="w", zone_id="z1", orientation_azimuth=180.0,
-            inclination=90.0, area=10.0, u_value=1.0, g_value=0.6,
-            frame_factor=0.2, shading_factor=0.7,
+            id="w",
+            name="w",
+            zone_id="z1",
+            orientation_azimuth=180.0,
+            inclination=90.0,
+            area=10.0,
+            u_value=1.0,
+            g_value=0.6,
+            frame_factor=0.2,
+            shading_factor=0.7,
         )
         from app.engine.solar import solar_gains_transparent
+
         gains = solar_gains_transparent(win, df)
         i_surf = radiation_on_surface(df, 90.0, 180.0).to_numpy()
         np.testing.assert_allclose(gains, 10.0 * 0.8 * 0.6 * 0.7 * i_surf)
@@ -871,8 +895,14 @@ class TestSolar:
 
         def total(shading: float) -> float:
             win = TransparentElement(
-                id="w", name="w", zone_id="z1", area=5.0, u_value=1.0,
-                g_value=0.6, frame_factor=0.2, shading_factor=shading,
+                id="w",
+                name="w",
+                zone_id="z1",
+                area=5.0,
+                u_value=1.0,
+                g_value=0.6,
+                frame_factor=0.2,
+                shading_factor=shading,
             )
             return solar_gains_transparent(win, df).sum()
 
@@ -883,13 +913,19 @@ class TestSolar:
         podłoga na gruncie nie otrzymuje promieniowania."""
         from app.engine.envelope import R_SE_M2K_W
         from app.engine.solar import total_solar_gains
+
         df = _climate_df(GHI=400.0, DNI=250.0, DHI=150.0)
         roof = _opaque(
-            element_type=ElementType.ROOF, inclination=0.0, area=90.0,
-            u_value=0.2, solar_absorptance=0.6,
+            element_type=ElementType.ROOF,
+            inclination=0.0,
+            area=90.0,
+            u_value=0.2,
+            solar_absorptance=0.6,
         )
         ground_floor = _opaque(
-            element_type=ElementType.GROUND_FLOOR, inclination=180.0, area=90.0,
+            element_type=ElementType.GROUND_FLOOR,
+            inclination=180.0,
+            area=90.0,
             adjacent_space_type=AdjacentSpaceType.GROUND,
             solar_absorptance=0.9,
         )
@@ -901,6 +937,7 @@ class TestSolar:
 
     def test_zero_radiation_zero_gains(self):
         from app.engine.solar import total_solar_gains
+
         df = _climate_df(GHI=0.0, DNI=0.0, DHI=0.0)
         win = TransparentElement(
             id="w", name="w", zone_id="z1", area=10.0, u_value=1.0, g_value=0.6
@@ -945,8 +982,12 @@ class TestClimate:
 
     def test_load_epw_real_warsaw_file(self, project_root):
         from app.engine.climate import load_epw
-        path = project_root / "data" / "tmy" / (
-            "POL_MZ_Okecie-Warszawa-Chopina.Intl.AP.123750_TMYx.2009-2023.epw"
+
+        path = (
+            project_root
+            / "data"
+            / "tmy"
+            / ("POL_MZ_Okecie-Warszawa-Chopina.Intl.AP.123750_TMYx.2009-2023.epw")
         )
         df = load_epw(path)
         assert len(df) == 8760

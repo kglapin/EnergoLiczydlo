@@ -5,6 +5,7 @@ ISO 52016 integration, the ground preparation additionally consumes the
 virtual-ground resistance and 12 monthly virtual temperatures required by
 clause 6.5.8.2 instead of substituting a synthetic sinusoidal boundary.
 """
+
 from __future__ import annotations
 
 import importlib.util
@@ -59,10 +60,7 @@ def slab_on_ground_u_value_w_m2k(
     )
     conductivity = soil_conductivity_w_mk
     if d_t < b_prime:
-        return float(
-            2.0 * conductivity / (pi * b_prime + d_t)
-            * log(pi * b_prime / d_t + 1.0)
-        )
+        return float(2.0 * conductivity / (pi * b_prime + d_t) * log(pi * b_prime / d_t + 1.0))
     return float(conductivity / (0.457 * b_prime + d_t))
 
 
@@ -75,7 +73,10 @@ def _monthly_virtual_profile(values: list[float]) -> np.ndarray:
     if len(values) != 12:
         raise ValueError("virtual ground temperature profile must contain 12 monthly values")
     profile = np.concatenate(
-        [np.full(int(hours), float(value), dtype=float) for hours, value in zip(_MONTH_HOURS, values, strict=True)]
+        [
+            np.full(int(hours), float(value), dtype=float)
+            for hours, value in zip(_MONTH_HOURS, values, strict=True)
+        ]
     )
     if profile.shape != (8760,):  # pragma: no cover
         raise RuntimeError("monthly virtual-ground expansion did not create 8760 hours")
@@ -94,8 +95,14 @@ def prepare_ground_boundaries(project, t_e, settings):
         if adjacent != "ground":
             continue
         config = configured.get(element.id)
-        virtual_r = None if config is None else getattr(config, "virtual_ground_resistance_m2k_w", None)
-        monthly_t = None if config is None else getattr(config, "virtual_ground_temperature_c_by_month", None)
+        virtual_r = (
+            None if config is None else getattr(config, "virtual_ground_resistance_m2k_w", None)
+        )
+        monthly_t = (
+            None
+            if config is None
+            else getattr(config, "virtual_ground_temperature_c_by_month", None)
+        )
         if settings.certificate_mode and (virtual_r is None or monthly_t is None):
             raise ValueError(
                 f"Ground element '{element.name}' requires virtual_ground_resistance_m2k_w "
@@ -104,7 +111,9 @@ def prepare_ground_boundaries(project, t_e, settings):
         if virtual_r is not None:
             object.__setattr__(element, "ground_virtual_resistance_m2k_w", float(virtual_r))
         if monthly_t is not None:
-            object.__setattr__(element, "_ground_temperature_profile", _monthly_virtual_profile(monthly_t))
+            object.__setattr__(
+                element, "_ground_temperature_profile", _monthly_virtual_profile(monthly_t)
+            )
             checks.append(
                 _legacy._check(
                     "ISO52016_VIRTUAL_GROUND_BOUNDARY",

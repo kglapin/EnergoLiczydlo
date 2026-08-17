@@ -83,7 +83,10 @@ def test_formal_monthly_result_replaces_primary_indicators_but_preserves_hourly_
     )
 
     assert result.annual_indicators.eu_kwh_m2_year != 999.0
-    assert result.annual_indicators.heating_kwh_m2_year == 120.0 / project.general.conditioned_floor_area
+    assert (
+        result.annual_indicators.heating_kwh_m2_year
+        == 120.0 / project.general.conditioned_floor_area
+    )
     assert [month.heating_kwh for month in result.monthly] == [10.0] * 12
     hourly = diagnostics["iso52016_hourly_analysis"]
     assert isinstance(hourly, dict)

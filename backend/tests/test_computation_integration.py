@@ -121,45 +121,87 @@ def _base_project() -> BuildingProject:
     return BuildingProject(
         project_name="Scenariusz B",
         general=GeneralInfo(
-            building_name="Dom referencyjny", building_type="residential",
+            building_name="Dom referencyjny",
+            building_type="residential",
             dhw_usage_profile="residential_single_family",
-            construction_year=2020, conditioned_floor_area=150.0,
-            usable_floor_area=150.0, heated_volume=375.0, number_of_storeys=1,
+            construction_year=2020,
+            conditioned_floor_area=150.0,
+            usable_floor_area=150.0,
+            heated_volume=375.0,
+            number_of_storeys=1,
         ),
         climate_station_id=WARSZAWA_STATION,
         thermal_zones=[
             ThermalZone(
-                id="zone_1", name="Strefa 1", zone_type="heated",
-                floor_area=150.0, volume=375.0,
-                setpoint_heating=20.0, setpoint_cooling=None, occupancy_density=0.03,
+                id="zone_1",
+                name="Strefa 1",
+                zone_type="heated",
+                floor_area=150.0,
+                volume=375.0,
+                setpoint_heating=20.0,
+                setpoint_cooling=None,
+                occupancy_density=0.03,
             )
         ],
         opaque_building_elements=[
-            OpaqueElement(id="wall_n", name="Ściana N", zone_id="zone_1",
-                          orientation_azimuth=0.0, inclination=90.0,
-                          area=40.0, u_value=0.25),
-            OpaqueElement(id="wall_s", name="Ściana S", zone_id="zone_1",
-                          orientation_azimuth=180.0, inclination=90.0,
-                          area=40.0, u_value=0.25),
-            OpaqueElement(id="roof", name="Dach", zone_id="zone_1",
-                          orientation_azimuth=0.0, inclination=0.0,
-                          area=90.0, u_value=0.18),
+            OpaqueElement(
+                id="wall_n",
+                name="Ściana N",
+                zone_id="zone_1",
+                orientation_azimuth=0.0,
+                inclination=90.0,
+                area=40.0,
+                u_value=0.25,
+            ),
+            OpaqueElement(
+                id="wall_s",
+                name="Ściana S",
+                zone_id="zone_1",
+                orientation_azimuth=180.0,
+                inclination=90.0,
+                area=40.0,
+                u_value=0.25,
+            ),
+            OpaqueElement(
+                id="roof",
+                name="Dach",
+                zone_id="zone_1",
+                orientation_azimuth=0.0,
+                inclination=0.0,
+                area=90.0,
+                u_value=0.18,
+            ),
             # Podłoga przy stałej 0°C: jednorodny napęd całej sieci, żeby stan
             # ustalony miał zamkniętą postać analityczną. Oddzielny test
             # sprawdza fizykę podłogi gruntowej (sinusoida z opóźnieniem).
-            OpaqueElement(id="floor", name="Podłoga", zone_id="zone_1",
-                          orientation_azimuth=0.0, inclination=180.0,
-                          area=90.0, u_value=0.25,
-                          adjacent_space_type="constant_temperature",
-                          adjacent_temperature=0.0),
+            OpaqueElement(
+                id="floor",
+                name="Podłoga",
+                zone_id="zone_1",
+                orientation_azimuth=0.0,
+                inclination=180.0,
+                area=90.0,
+                u_value=0.25,
+                adjacent_space_type="constant_temperature",
+                adjacent_temperature=0.0,
+            ),
         ],
         transparent_building_elements=[
-            TransparentElement(id="win_s", name="Okno S", zone_id="zone_1",
-                               orientation_azimuth=180.0, inclination=90.0,
-                               area=10.0, u_value=1.0, g_value=0.6),
+            TransparentElement(
+                id="win_s",
+                name="Okno S",
+                zone_id="zone_1",
+                orientation_azimuth=180.0,
+                inclination=90.0,
+                area=10.0,
+                u_value=1.0,
+                g_value=0.6,
+            ),
         ],
         ventilation=Ventilation(
-            ventilation_type="natural", airflow_rate=120.0, infiltration_rate=0.5,
+            ventilation_type="natural",
+            airflow_rate=120.0,
+            infiltration_rate=0.5,
         ),
         internal_gains=InternalGains(
             occupancy=InternalGainSource(power_density=0.0),
@@ -168,9 +210,12 @@ def _base_project() -> BuildingProject:
         ),
         systems=BuildingSystems(
             heating=SystemHeatingCooling(
-                system_type="gas_boiler", fuel_or_carrier="natural_gas",
-                generation_efficiency=0.9, distribution_efficiency=0.95,
-                storage_efficiency=1.0, control_efficiency=1.0,
+                system_type="gas_boiler",
+                fuel_or_carrier="natural_gas",
+                generation_efficiency=0.9,
+                distribution_efficiency=0.95,
+                storage_efficiency=1.0,
+                control_efficiency=1.0,
             ),
             cooling=None,
             dhw=SystemDHW(system_type="none"),
@@ -189,9 +234,11 @@ def _scenario_a_project() -> BuildingProject:
     p.opaque_building_elements[3].adjacent_temperature = 20.0
     p.systems.heating = SystemHeatingCooling(system_type="none")
     p.systems.dhw = SystemDHW(
-        system_type="electric_storage", fuel_or_carrier="electricity",
+        system_type="electric_storage",
+        fuel_or_carrier="electricity",
         generation_efficiency=0.9,
-        storage_efficiency=1.0, distribution_efficiency=0.6,
+        storage_efficiency=1.0,
+        distribution_efficiency=0.6,
         utilization_efficiency=1.0,
     )
     return p
@@ -215,9 +262,7 @@ class TestScenarioADhwOnly:
         assert ann.cooling_kwh_m2_year == pytest.approx(0.0, abs=1e-9)
         assert ann.eu_kwh_m2_year == pytest.approx(Q_DHW_YEAR_WH / 1000 / 150, rel=1e-6)
         assert ann.dhw_kwh_m2_year == pytest.approx(Q_DHW_YEAR_WH / 1000 / 150, rel=1e-6)
-        assert ann.ek_kwh_m2_year == pytest.approx(
-            Q_DHW_YEAR_WH / dhw_eff / 1000 / 150, rel=1e-6
-        )
+        assert ann.ek_kwh_m2_year == pytest.approx(Q_DHW_YEAR_WH / dhw_eff / 1000 / 150, rel=1e-6)
         assert ann.ep_kwh_m2_year == pytest.approx(
             Q_DHW_YEAR_WH / dhw_eff * FP_ELECTRICITY / 1000 / 150, rel=1e-6
         )
@@ -237,9 +282,7 @@ class TestScenarioADhwOnly:
             Q_DHW_YEAR_WH * DAYS[month - 1] * 24 / 8760 / 1000, rel=1e-6
         )
         # Zyski wewnętrzne: 360 W * godziny miesiąca
-        assert m.internal_gains_kwh == pytest.approx(
-            360.0 * DAYS[month - 1] * 24 / 1000, rel=1e-6
-        )
+        assert m.internal_gains_kwh == pytest.approx(360.0 * DAYS[month - 1] * 24 / 1000, rel=1e-6)
 
     def test_monthly_sums_to_annual(self):
         result = calculate_building_energy(_scenario_a_project())
@@ -359,8 +402,12 @@ class TestScenarioBHeatingOnly:
         p = _base_project()
         p.thermal_zones.append(
             ThermalZone(
-                id="garage", name="Garaż", zone_type="unheated",
-                floor_area=50.0, volume=125.0, occupancy_density=0.0,
+                id="garage",
+                name="Garaż",
+                zone_type="unheated",
+                floor_area=50.0,
+                volume=125.0,
+                occupancy_density=0.0,
             )
         )
         single = calculate_building_energy(_base_project())
@@ -389,9 +436,13 @@ class TestScenarioCHeatPump:
     def test_heat_pump_final_energy_uses_seasonal_cop(self):
         p = _base_project()
         p.systems.heating = SystemHeatingCooling(
-            system_type="heat_pump_air", fuel_or_carrier="electricity",
-            generation_efficiency=3.5, distribution_efficiency=0.95,
-            storage_efficiency=1.0, control_efficiency=1.0, sink_temperature=35.0,
+            system_type="heat_pump_air",
+            fuel_or_carrier="electricity",
+            generation_efficiency=3.5,
+            distribution_efficiency=0.95,
+            storage_efficiency=1.0,
+            control_efficiency=1.0,
+            sink_temperature=35.0,
         )
         result = calculate_building_energy(p)
         Q_wh = _reference_heating_wh()
@@ -417,12 +468,26 @@ class TestMultiZoneAggregation:
         p = _base_project()
         p.ventilation.airflow_rate = 0.0  # infiltracja sumuje się 1:1 z objętością
         p.thermal_zones = [
-            ThermalZone(id="zone_1", name="Z1", zone_type="heated",
-                        floor_area=75.0, volume=187.5, setpoint_heating=20.0,
-                        setpoint_cooling=None, occupancy_density=0.03),
-            ThermalZone(id="zone_2", name="Z2", zone_type="heated",
-                        floor_area=75.0, volume=187.5, setpoint_heating=20.0,
-                        setpoint_cooling=None, occupancy_density=0.03),
+            ThermalZone(
+                id="zone_1",
+                name="Z1",
+                zone_type="heated",
+                floor_area=75.0,
+                volume=187.5,
+                setpoint_heating=20.0,
+                setpoint_cooling=None,
+                occupancy_density=0.03,
+            ),
+            ThermalZone(
+                id="zone_2",
+                name="Z2",
+                zone_type="heated",
+                floor_area=75.0,
+                volume=187.5,
+                setpoint_heating=20.0,
+                setpoint_cooling=None,
+                occupancy_density=0.03,
+            ),
         ]
         for el in p.opaque_building_elements:
             if el.id in {"wall_n", "floor"}:
@@ -432,8 +497,9 @@ class TestMultiZoneAggregation:
         p.transparent_building_elements[0].zone_id = "zone_1"
         p.thermal_bridges = ThermalBridgeConfig(
             linear_bridges=[
-                LinearThermalBridge(id="lb", name="lb", psi_value=0.1,
-                                    length=50.0, zone_id="zone_2")
+                LinearThermalBridge(
+                    id="lb", name="lb", psi_value=0.1, length=50.0, zone_id="zone_2"
+                )
             ]
         )
         return p
@@ -463,8 +529,9 @@ class TestMultiZoneAggregation:
         single.ventilation.airflow_rate = 0.0
         single.thermal_bridges = ThermalBridgeConfig(
             linear_bridges=[
-                LinearThermalBridge(id="lb", name="lb", psi_value=0.1,
-                                    length=50.0, zone_id="zone_1")
+                LinearThermalBridge(
+                    id="lb", name="lb", psi_value=0.1, length=50.0, zone_id="zone_1"
+                )
             ]
         )
         one = calculate_building_energy(single)
@@ -540,9 +607,12 @@ class TestGroundAndVentilationPhysics:
         (a nie mapowany z T_e, co zawalało COP zimą)."""
         p = _base_project()
         p.systems.heating = SystemHeatingCooling(
-            system_type="heat_pump_ground", fuel_or_carrier="electricity",
-            generation_efficiency=4.0, distribution_efficiency=0.95,
-            storage_efficiency=1.0, control_efficiency=1.0,
+            system_type="heat_pump_ground",
+            fuel_or_carrier="electricity",
+            generation_efficiency=4.0,
+            distribution_efficiency=0.95,
+            storage_efficiency=1.0,
+            control_efficiency=1.0,
         )
         result = calculate_building_energy(p)
         Q_wh = _reference_heating_wh()
@@ -557,12 +627,26 @@ def _two_zone_split_project() -> BuildingProject:
     p = _base_project()
     p.ventilation.infiltration_rate = 0.0
     p.thermal_zones = [
-        ThermalZone(id="zone_1", name="Z1", zone_type="heated",
-                    floor_area=75.0, volume=187.5, setpoint_heating=20.0,
-                    setpoint_cooling=None, occupancy_density=0.03),
-        ThermalZone(id="zone_2", name="Z2", zone_type="heated",
-                    floor_area=75.0, volume=187.5, setpoint_heating=20.0,
-                    setpoint_cooling=None, occupancy_density=0.03),
+        ThermalZone(
+            id="zone_1",
+            name="Z1",
+            zone_type="heated",
+            floor_area=75.0,
+            volume=187.5,
+            setpoint_heating=20.0,
+            setpoint_cooling=None,
+            occupancy_density=0.03,
+        ),
+        ThermalZone(
+            id="zone_2",
+            name="Z2",
+            zone_type="heated",
+            floor_area=75.0,
+            volume=187.5,
+            setpoint_heating=20.0,
+            setpoint_cooling=None,
+            occupancy_density=0.03,
+        ),
     ]
     for el in p.opaque_building_elements:
         if el.id in {"wall_n", "floor"}:

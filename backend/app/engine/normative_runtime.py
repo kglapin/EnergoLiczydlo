@@ -45,9 +45,7 @@ def resolve_hourly_ventilation(
     if "infiltration_rate" not in ventilation.model_fields_set:
         ventilation = ventilation.model_copy(
             update={
-                "infiltration_rate": normative_infiltration_rate(
-                    project.general.construction_year
-                )
+                "infiltration_rate": normative_infiltration_rate(project.general.construction_year)
             }
         )
         advanced = getattr(project.ventilation, "_heat_recovery_settings", None)
@@ -55,9 +53,7 @@ def resolve_hourly_ventilation(
             object.__setattr__(ventilation, "_heat_recovery_settings", advanced)
 
     building_floor_area = sum(
-        zone.floor_area
-        for zone in project.thermal_zones
-        if zone.zone_type in CONDITIONED_TYPES
+        zone.floor_area for zone in project.thermal_zones if zone.zone_type in CONDITIONED_TYPES
     )
     profile_value = _enum_value(project.general.dhw_usage_profile)
     residential = profile_value.startswith("residential")
@@ -68,9 +64,7 @@ def resolve_hourly_ventilation(
     )
 
     if ventilation.airflow_rate == 0.0:
-        normative_beta = (
-            1.0 if _enum_value(ventilation.operation_mode) == "periodic" else beta
-        )
+        normative_beta = 1.0 if _enum_value(ventilation.operation_mode) == "periodic" else beta
         airflow = normative_airflow_rate_m3h(
             profile_value,
             building_floor_area,
@@ -91,9 +85,7 @@ def annual_heat_recovery_stats(
     climate: pd.DataFrame,
 ) -> HeatRecoveryAnnualStats:
     """Return preheater electricity and controller operating-hour diagnostics."""
-    ventilation, operation, building_area = resolve_hourly_ventilation(
-        project, climate.index
-    )
+    ventilation, operation, building_area = resolve_hourly_ventilation(project, climate.index)
     outdoor = climate["T_e"].to_numpy(dtype=float)
     total_preheater = np.zeros(len(outdoor), dtype=float)
     bypass_any = np.zeros(len(outdoor), dtype=bool)

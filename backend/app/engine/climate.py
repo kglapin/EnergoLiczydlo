@@ -84,8 +84,18 @@ def _load_epw_legacy_width(
             "EPW fallback accepts a consistently 32- or 35-column file; "
             f"got row widths {sorted(row_widths)}"
         )
-    header = ["loc", "city", "state-prov", "country", "data_type", "WMO_code",
-              "latitude", "longitude", "TZ", "altitude"]
+    header = [
+        "loc",
+        "city",
+        "state-prov",
+        "country",
+        "data_type",
+        "WMO_code",
+        "latitude",
+        "longitude",
+        "TZ",
+        "altitude",
+    ]
     meta: dict[str, Any] = dict(zip(header, lines[0].split(","), strict=False))
     meta["altitude"] = float(meta["altitude"])
     meta["latitude"] = float(meta["latitude"])
@@ -146,26 +156,25 @@ def _solar_position_approximation(
         offset = index[0].utcoffset()
         timezone_hours = 0.0 if offset is None else offset.total_seconds() / 3600.0
     true_solar_minutes = (
-        local_hour * 60.0
-        + equation_of_time
-        + 4.0 * longitude
-        - 60.0 * timezone_hours
+        local_hour * 60.0 + equation_of_time + 4.0 * longitude - 60.0 * timezone_hours
     )
     hour_angle = np.radians(true_solar_minutes / 4.0 - 180.0)
     latitude_rad = np.radians(latitude)
-    cos_zenith = (
-        np.sin(latitude_rad) * np.sin(declination)
-        + np.cos(latitude_rad) * np.cos(declination) * np.cos(hour_angle)
-    )
+    cos_zenith = np.sin(latitude_rad) * np.sin(declination) + np.cos(latitude_rad) * np.cos(
+        declination
+    ) * np.cos(hour_angle)
     cos_zenith = np.clip(cos_zenith, -1.0, 1.0)
     zenith = np.degrees(np.arccos(cos_zenith))
-    azimuth = np.degrees(
-        np.arctan2(
-            np.sin(hour_angle),
-            np.cos(hour_angle) * np.sin(latitude_rad)
-            - np.tan(declination) * np.cos(latitude_rad),
+    azimuth = (
+        np.degrees(
+            np.arctan2(
+                np.sin(hour_angle),
+                np.cos(hour_angle) * np.sin(latitude_rad)
+                - np.tan(declination) * np.cos(latitude_rad),
+            )
         )
-    ) + 180.0
+        + 180.0
+    )
     return pd.DataFrame(
         {"apparent_zenith": zenith, "azimuth": np.mod(azimuth, 360.0)},
         index=index,
@@ -190,9 +199,8 @@ def _hay_davies_fallback(
     tilt = radians(surface_tilt)
     azimuth = radians(surface_azimuth)
     cos_zenith = np.cos(zenith)
-    cos_incidence = (
-        cos_zenith * cos(tilt)
-        + np.sin(zenith) * sin(tilt) * np.cos(sun_azimuth - azimuth)
+    cos_incidence = cos_zenith * cos(tilt) + np.sin(zenith) * sin(tilt) * np.cos(
+        sun_azimuth - azimuth
     )
     beam = np.asarray(df["DNI"], dtype=float) * np.maximum(cos_incidence, 0.0)
     dhi = np.maximum(np.asarray(df["DHI"], dtype=float), 0.0)
@@ -206,9 +214,7 @@ def _hay_davies_fallback(
         out=np.zeros_like(cos_incidence),
         where=cos_zenith > 0.0,
     )
-    diffuse = dhi * (
-        anisotropy * rb + (1.0 - anisotropy) * (1.0 + cos(tilt)) / 2.0
-    )
+    diffuse = dhi * (anisotropy * rb + (1.0 - anisotropy) * (1.0 + cos(tilt)) / 2.0)
     reflected = ghi * ground_reflectance * (1.0 - cos(tilt)) / 2.0
     return pd.Series(np.maximum(beam + diffuse + reflected, 0.0), index=df.index)
 
@@ -283,9 +289,7 @@ def load_epw(path: str | Path) -> pd.DataFrame:
             f"EPW climate data must contain exactly 8760 hourly records; got {len(df)}"
         )
     # Ensure a clean hourly index (pvlib returns a DatetimeIndex)
-    df.index = pd.date_range(
-        start="2023-01-01 00:00:00", periods=len(df), freq="h", tz=df.index.tz
-    )
+    df.index = pd.date_range(start="2023-01-01 00:00:00", periods=len(df), freq="h", tz=df.index.tz)
 
     # Standard EPW column names used by pvlib:
     # temp_air, temp_dew, relative_humidity, atmospheric_pressure,
@@ -355,9 +359,7 @@ def radiation_on_surface(
         Total irradiance on the surface [W/m2].
     """
     if pvlib is None:
-        return _hay_davies_fallback(
-            df, surface_tilt, surface_azimuth, ground_reflectance
-        )
+        return _hay_davies_fallback(df, surface_tilt, surface_azimuth, ground_reflectance)
 
     # Ensure extraterrestrial irradiance is available
     if "dni_extra" not in df.columns:

@@ -67,17 +67,13 @@ def _resolved_design_ventilation(project: BuildingProject) -> Ventilation:
     if "infiltration_rate" not in ventilation.model_fields_set:
         ventilation = ventilation.model_copy(
             update={
-                "infiltration_rate": normative_infiltration_rate(
-                    project.general.construction_year
-                )
+                "infiltration_rate": normative_infiltration_rate(project.general.construction_year)
             }
         )
     if ventilation.airflow_rate != 0.0:
         return ventilation
     floor_area = sum(
-        zone.floor_area
-        for zone in project.thermal_zones
-        if zone.zone_type in CONDITIONED_TYPES
+        zone.floor_area for zone in project.thermal_zones if zone.zone_type in CONDITIONED_TYPES
     )
     profile = _enum_value(project.general.dhw_usage_profile)
     airflow = normative_airflow_rate_m3h(
@@ -114,9 +110,7 @@ def _opaque_adjacent_temperature(
     if adjacent == AdjacentSpaceType.OUTDOOR:
         return outdoor_design_c
     if adjacent == AdjacentSpaceType.GROUND:
-        explicit_ground = settings.ground_adjacent_temperature_by_element_c.get(
-            element.id
-        )
+        explicit_ground = settings.ground_adjacent_temperature_by_element_c.get(element.id)
         if explicit_ground is not None:
             return float(explicit_ground)
         if settings.certificate_mode:
@@ -167,9 +161,13 @@ def _zone_transmission_load_w(
         )
         if adjacent is None:
             continue
-        load += float(opaque_element.area) * float(opaque_element.u_value) * max(
-            indoor - adjacent,
-            0.0,
+        load += (
+            float(opaque_element.area)
+            * float(opaque_element.u_value)
+            * max(
+                indoor - adjacent,
+                0.0,
+            )
         )
 
     for transparent_element in project.transparent_building_elements:
@@ -184,18 +182,10 @@ def _zone_transmission_load_w(
     delta_outdoor = max(indoor - outdoor, 0.0)
     for linear_bridge in project.thermal_bridges.linear_bridges:
         if linear_bridge.zone_id == zone.id:
-            load += (
-                float(linear_bridge.psi_value)
-                * float(linear_bridge.length)
-                * delta_outdoor
-            )
+            load += float(linear_bridge.psi_value) * float(linear_bridge.length) * delta_outdoor
     for point_bridge in project.thermal_bridges.point_bridges:
         if point_bridge.zone_id == zone.id:
-            load += (
-                float(point_bridge.chi_value)
-                * int(point_bridge.count)
-                * delta_outdoor
-            )
+            load += float(point_bridge.chi_value) * int(point_bridge.count) * delta_outdoor
 
     return float(max(load, 0.0))
 
@@ -239,9 +229,7 @@ def calculate_design_heat_load(
     _design_outdoor_temperature(settings)
     ventilation = _resolved_design_ventilation(project)
     building_floor_area = sum(
-        zone.floor_area
-        for zone in project.thermal_zones
-        if zone.zone_type in CONDITIONED_TYPES
+        zone.floor_area for zone in project.thermal_zones if zone.zone_type in CONDITIONED_TYPES
     )
     zone_results: list[ZoneDesignLoad] = []
 

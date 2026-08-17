@@ -46,9 +46,7 @@ def radiation_on_surface(
             np.cos(np.deg2rad(np.asarray(df["sun_zenith"], dtype=float))),
             0.0,
         )
-        return (df["DNI"].astype(float) * cosine + df["DHI"].astype(float)).clip(
-            lower=0.0
-        )
+        return (df["DNI"].astype(float) * cosine + df["DHI"].astype(float)).clip(lower=0.0)
 
     if pvlib is None:
         # Compatibility only. The normal dependency set always contains

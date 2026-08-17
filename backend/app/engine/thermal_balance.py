@@ -256,17 +256,14 @@ def solve_zone_5r1c(
     h_op = network.h_opaque
     h_em = opaque_external_conductance(h_op, h_ms)
     h_surface_total = sum(network.h_surface)
-    t_opaque = (
-        network.t_opaque
-        if network.t_opaque is not None
-        else np.zeros(n, dtype=float)
-    )
+    t_opaque = network.t_opaque if network.t_opaque is not None else np.zeros(n, dtype=float)
 
     # Gain splitting (ISO 13790 C.2).  The transparent (surface-coupled)
     # conductance plays the role of H_tr,w in the splitting factor.
     frac_mass = properties.area_mass / properties.area_total_internal
     frac_surface = max(
-        0.0, 1.0 - frac_mass - h_surface_total / (H_MS_W_M2K * properties.area_total_internal),
+        0.0,
+        1.0 - frac_mass - h_surface_total / (H_MS_W_M2K * properties.area_total_internal),
     )
     phi_ia = 0.5 * phi_int
     phi_rest = 0.5 * phi_int + phi_sol

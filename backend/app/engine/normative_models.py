@@ -67,8 +67,7 @@ class GroundISO13370Settings(BaseModel):
         missing = [name for name, value in required.items() if value is None]
         if missing:
             raise ValueError(
-                "Ground ISO 13370 mode requires explicit material inputs: "
-                + ", ".join(missing)
+                "Ground ISO 13370 mode requires explicit material inputs: " + ", ".join(missing)
             )
         return self
 
@@ -108,8 +107,7 @@ class HeatRecoverySettings(BaseModel):
         if self.summer_bypass_enabled:
             if self.bypass_min_outdoor_c is None or self.bypass_max_outdoor_c is None:
                 raise ValueError(
-                    "Dynamic summer bypass requires bypass_min_outdoor_c and "
-                    "bypass_max_outdoor_c"
+                    "Dynamic summer bypass requires bypass_min_outdoor_c and bypass_max_outdoor_c"
                 )
             if self.bypass_min_outdoor_c >= self.bypass_max_outdoor_c:
                 raise ValueError("bypass_min_outdoor_c must be below bypass_max_outdoor_c")
@@ -120,9 +118,7 @@ class HeatRecoverySettings(BaseModel):
             and self.frost_strategy != "none"
             and self.indoor_relative_humidity is None
         ):
-            raise ValueError(
-                "Certificate-grade frost control requires indoor_relative_humidity"
-            )
+            raise ValueError("Certificate-grade frost control requires indoor_relative_humidity")
         return self
 
 
@@ -132,21 +128,15 @@ class DesignConditionsSettings(BaseModel):
     outdoor_design_temperature_c: float | None = None
     source: str | None = None
     heat_up_power_by_zone_w: dict[str, float] = Field(default_factory=dict)
-    unheated_adjacent_temperature_by_element_c: dict[str, float] = Field(
-        default_factory=dict
-    )
-    ground_adjacent_temperature_by_element_c: dict[str, float] = Field(
-        default_factory=dict
-    )
+    unheated_adjacent_temperature_by_element_c: dict[str, float] = Field(default_factory=dict)
+    ground_adjacent_temperature_by_element_c: dict[str, float] = Field(default_factory=dict)
 
     @model_validator(mode="after")
     def require_design_condition_source(self) -> DesignConditionsSettings:
         if not self.enabled:
             return self
         if self.outdoor_design_temperature_c is None:
-            raise ValueError(
-                "Design-load calculation requires outdoor_design_temperature_c"
-            )
+            raise ValueError("Design-load calculation requires outdoor_design_temperature_c")
         if self.certificate_mode and not (self.source or "").strip():
             raise ValueError(
                 "Certificate-grade design load requires the source of the design "
@@ -168,42 +158,20 @@ class PolishCertificateMonthlySettings(BaseModel):
     enabled: bool = False
     official_bip_climate_data: bool = False
     monthly_outdoor_temperature_c: list[float] = Field(default_factory=list)
-    solar_irradiation_kwh_m2_by_element: dict[str, list[float]] = Field(
-        default_factory=dict
-    )
-    heating_internal_temperature_c_by_zone: dict[str, list[float]] = Field(
-        default_factory=dict
-    )
-    cooling_internal_temperature_c_by_zone: dict[str, list[float]] = Field(
-        default_factory=dict
-    )
-    heating_gain_utilization_by_zone: dict[str, list[float]] = Field(
-        default_factory=dict
-    )
-    cooling_loss_utilization_by_zone: dict[str, list[float]] = Field(
-        default_factory=dict
-    )
+    solar_irradiation_kwh_m2_by_element: dict[str, list[float]] = Field(default_factory=dict)
+    heating_internal_temperature_c_by_zone: dict[str, list[float]] = Field(default_factory=dict)
+    cooling_internal_temperature_c_by_zone: dict[str, list[float]] = Field(default_factory=dict)
+    heating_gain_utilization_by_zone: dict[str, list[float]] = Field(default_factory=dict)
+    cooling_loss_utilization_by_zone: dict[str, list[float]] = Field(default_factory=dict)
     beta_by_zone: dict[str, list[float]] = Field(default_factory=dict)
-    recovery_effectiveness_by_zone: dict[str, list[float]] = Field(
-        default_factory=dict
-    )
-    supply_extract_reduction_by_zone: dict[str, list[float]] = Field(
-        default_factory=dict
-    )
-    unheated_adjacent_temperature_c_by_element: dict[str, list[float]] = Field(
-        default_factory=dict
-    )
-    ground_adjacent_temperature_c_by_element: dict[str, list[float]] = Field(
-        default_factory=dict
-    )
+    recovery_effectiveness_by_zone: dict[str, list[float]] = Field(default_factory=dict)
+    supply_extract_reduction_by_zone: dict[str, list[float]] = Field(default_factory=dict)
+    unheated_adjacent_temperature_c_by_element: dict[str, list[float]] = Field(default_factory=dict)
+    ground_adjacent_temperature_c_by_element: dict[str, list[float]] = Field(default_factory=dict)
     internal_gain_density_w_m2_by_zone: dict[str, float] = Field(default_factory=dict)
     preheater_electricity_kwh_by_month: list[float] = Field(default_factory=list)
-    heating_useful_override_kwh_by_zone: dict[str, list[float]] = Field(
-        default_factory=dict
-    )
-    cooling_useful_override_kwh_by_zone: dict[str, list[float]] = Field(
-        default_factory=dict
-    )
+    heating_useful_override_kwh_by_zone: dict[str, list[float]] = Field(default_factory=dict)
+    cooling_useful_override_kwh_by_zone: dict[str, list[float]] = Field(default_factory=dict)
 
     @model_validator(mode="after")
     def validate_monthly_data(self) -> PolishCertificateMonthlySettings:
@@ -218,15 +186,9 @@ class PolishCertificateMonthlySettings(BaseModel):
                 self.preheater_electricity_kwh_by_month,
             )
         monthly_maps = {
-            "solar_irradiation_kwh_m2_by_element": (
-                self.solar_irradiation_kwh_m2_by_element
-            ),
-            "heating_internal_temperature_c_by_zone": (
-                self.heating_internal_temperature_c_by_zone
-            ),
-            "cooling_internal_temperature_c_by_zone": (
-                self.cooling_internal_temperature_c_by_zone
-            ),
+            "solar_irradiation_kwh_m2_by_element": (self.solar_irradiation_kwh_m2_by_element),
+            "heating_internal_temperature_c_by_zone": (self.heating_internal_temperature_c_by_zone),
+            "cooling_internal_temperature_c_by_zone": (self.cooling_internal_temperature_c_by_zone),
             "heating_gain_utilization_by_zone": self.heating_gain_utilization_by_zone,
             "cooling_loss_utilization_by_zone": self.cooling_loss_utilization_by_zone,
             "beta_by_zone": self.beta_by_zone,
@@ -288,8 +250,7 @@ class LegalProvenanceSettings(BaseModel):
             missing.append("ventilation_factor_source")
         if missing:
             raise ValueError(
-                "Formal calculation mode requires provenance fields: "
-                + ", ".join(missing)
+                "Formal calculation mode requires provenance fields: " + ", ".join(missing)
             )
         return self
 

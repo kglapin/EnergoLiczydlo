@@ -26,9 +26,7 @@ class DHWUsageProfile(StrEnum):
 
     RESIDENTIAL_SINGLE_FAMILY = "residential_single_family"
     RESIDENTIAL_MULTI_FAMILY_LUMP_SUM = "residential_multi_family_lump_sum"
-    RESIDENTIAL_MULTI_FAMILY_INDIVIDUAL_METERING = (
-        "residential_multi_family_individual_metering"
-    )
+    RESIDENTIAL_MULTI_FAMILY_INDIVIDUAL_METERING = "residential_multi_family_individual_metering"
     OFFICE = "office"
     EDUCATION = "education"
     HEALTHCARE = "healthcare"
@@ -430,9 +428,7 @@ class SystemDHW(BaseModel):
         if self.storage_volume_dm3 is None or self.system_type == DHWSourceType.NONE:
             return self
         if self.storage_location is None:
-            raise ValueError(
-                "storage_location is required when storage_volume_dm3 is provided"
-            )
+            raise ValueError("storage_location is required when storage_volume_dm3 is provided")
         requires_insulation = self.system_type in {
             DHWSourceType.HEAT_PUMP_AIR,
             DHWSourceType.HEAT_PUMP_GROUND,
@@ -440,9 +436,7 @@ class SystemDHW(BaseModel):
             DHWSourceType.DISTRICT_HEATING,
         }
         if requires_insulation and self.storage_insulation_mm is None:
-            raise ValueError(
-                "storage_insulation_mm is required for an indirect DHW storage tank"
-            )
+            raise ValueError("storage_insulation_mm is required for an indirect DHW storage tank")
         return self
 
     @model_validator(mode="after")
@@ -501,13 +495,9 @@ class BuildingSystems(BaseModel):
     @model_validator(mode="after")
     def validate_service_sources(self) -> BuildingSystems:
         if self.heating.system_type not in HEATING_SOURCE_TYPES:
-            raise ValueError(
-                f"Invalid heating system source: {self.heating.system_type}"
-            )
+            raise ValueError(f"Invalid heating system source: {self.heating.system_type}")
         if self.cooling is not None and self.cooling.system_type not in COOLING_SOURCE_TYPES:
-            raise ValueError(
-                f"Invalid cooling system source: {self.cooling.system_type}"
-            )
+            raise ValueError(f"Invalid cooling system source: {self.cooling.system_type}")
         return self
 
 
@@ -585,17 +575,11 @@ class BuildingProject(BaseModel):
         if len(zone_ids) != len(set(zone_ids)):
             raise ValueError("Thermal zone IDs must be unique")
 
-        referenced_zone_ids = [
-            element.zone_id for element in self.opaque_building_elements
-        ] + [
+        referenced_zone_ids = [element.zone_id for element in self.opaque_building_elements] + [
             element.zone_id for element in self.transparent_building_elements
         ]
-        referenced_zone_ids.extend(
-            bridge.zone_id for bridge in self.thermal_bridges.linear_bridges
-        )
-        referenced_zone_ids.extend(
-            bridge.zone_id for bridge in self.thermal_bridges.point_bridges
-        )
+        referenced_zone_ids.extend(bridge.zone_id for bridge in self.thermal_bridges.linear_bridges)
+        referenced_zone_ids.extend(bridge.zone_id for bridge in self.thermal_bridges.point_bridges)
         missing_zone_ids = sorted(set(referenced_zone_ids) - set(zone_ids))
         if missing_zone_ids:
             missing = ", ".join(missing_zone_ids)
