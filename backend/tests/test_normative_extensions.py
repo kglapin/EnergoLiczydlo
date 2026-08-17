@@ -321,13 +321,20 @@ def test_formal_legal_mode_requires_source_metadata() -> None:
 def test_formal_project_refuses_legacy_ground_fallback() -> None:
     project = make_test_project()
     project.metadata["normative"] = {
+        "polish_certificate": {
+            "enabled": True,
+            "official_bip_climate_data": True,
+            "monthly_outdoor_temperature_c": [0.0] * 12,
+        },
         "legal": {
             "certificate_mode": True,
             "calculation_date": "2026-08-17",
             "methodology_source": "Dz.U. 2015 poz. 376 z późn. zm.",
             "climate_data_source": "verified test climate source",
+            "utilization_factor_source": "verified Polish Standard inputs",
+            "ventilation_factor_source": "verified regulatory ventilation inputs",
             "primary_energy_factor_sources": {"electricity": "supplier/test source"},
-        }
+        },
     }
     with pytest.raises(ValueError, match="ISO 13370 ground model"):
         prepare_project_for_audited_calculation(project)
