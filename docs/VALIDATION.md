@@ -1,101 +1,269 @@
 # Strategia testowania i walidacji
 
-## Cele
+## 1. Cel
 
-1. Upewnić się, że obliczenia są **zgodne z PN-EN ISO 52016-1** i polską metodologią.
-2. Wykryć błędy na najwcześniejszym etapie (testy jednostkowe, integracyjne, regresyjne).
-3. Porównać wyniki z niezależnymi benchmarkami i przykładami użytkownika.
-4. Zapewnić stabilność obliczeń przy zmianach kodu.
+Celem testów jest wykrywanie błędów obliczeniowych, błędów implementacji i nieprawidłowych danych wejściowych możliwie wcześnie.
 
-## Warstwy testów
+Testy nie są samodzielnym dowodem pełnej zgodności z każdą klauzulą normy lub aktu prawnego. Formalna zgodność wymaga również właściwych danych wejściowych, aktualnej podstawy prawnej, właściwych wersji norm i niezależnej kontroli przypadków referencyjnych.
 
-### 1. Testy jednostkowe (pytest)
+## 2. Co jest testowane osobno
 
-Każdy moduł silnika ma testy jednostkowe:
+Aplikacja ma trzy różne warstwy obliczeń, dlatego każda z nich wymaga osobnej walidacji.
 
-- `climate` – wczytywanie EPW, położenie słońca, promieniowanie na powierzchnie pochylone.
-- `envelope` – obliczenia `U` w tym mostków, powierzchnie, orientacje.
-- `solar` – zyski słoneczne, kąty padania, ekranowanie.
-- `ventilation` – straty ciepła, odzysk ciepła, infiltracja.
-- `internal_gains` – harmonogramy, gęstości obciążeń.
-- `thermal_balance` – bilans godzinowy, stabilność numeryczna.
-- `systems` – sprawności, COP pompy ciepła, C.W.U.
-- `primary_energy` – przeliczenia `Ep`, `EC`.
+### 2.1. Formalna charakterystyka energetyczna
 
-Każdy test:
-- podaje konkretne dane wejściowe,
-- porównuje wynik z wartością analityczną lub referencyjną,
-- określa dopuszczalną tolerancję.
+Testy sprawdzają między innymi:
 
-### 2. Testy integracyjne
+- miesięczny bilans ogrzewania,
+- miesięczny bilans chłodzenia,
+- wpływ miesięcznych współczynników wykorzystania zysków i strat,
+- przeliczenie energii użytkowej na energię końcową,
+- przeliczenie energii końcowej na nieodnawialną energię pierwotną,
+- poprawność źródeł współczynników nakładu energii pierwotnej,
+- blokowanie obliczenia przy braku wymaganych danych formalnych.
 
-- Pełny przepływ: dane wejściowe `BuildingProject` → silnik → `CalculationResult`.
-- Testy na „sztucznych latach”:
-  - stała temperatura zewnętrzna przez cały rok,
-  - brak nasłonecznienia,
-  - stałe zyski wewnętrzne,
-  - bardzo zimny rok / bardzo ciepły rok.
-- Sprawdzenie niezmienników fizycznych:
-  - `Ek >= Eu` (przy sprawnościach ≤ 1),
-  - `Ep >= Ek` (przy współczynnikach fp ≥ 1),
-  - roczne zapotrzebowanie nieujemne,
-  - temperatury wewnętrzne w sensownym zakresie.
+### 2.2. Godzinowa analiza fizyczna
 
-### 3. Testy regresyjne / benchmarki
+Testy sprawdzają między innymi:
 
-- **Przypadki użytkownika** – jeśli dostarczone, każdy przypadek to osobny test z tolerancją ±2% dla wskaźników rocznych.
-- **pyBuildingEnergy** – dla uproszczonego budynku referencyjnego porównujemy zapotrzebowanie na ogrzewanie/chłodzenie.
-- **BESTEST** – standardowe przypadki testowe ISO 14955 / ANSI/ASHRAE Standard 140.
-- **Publikacje** – porównanie z przykładami numerycznymi z literatury (np. Narowski, „Dane klimatyczne do obliczeń energetycznych w budownictwie”).
+- kompletność 8760 godzin danych klimatycznych,
+- godzinowy bilans cieplny,
+- temperatury wewnętrzne,
+- zyski słoneczne,
+- zyski wewnętrzne,
+- wentylację i infiltrację,
+- odzysk ciepła,
+- wymianę ciepła z gruntem,
+- zgodność sum godzinowych z agregacją miesięczną i roczną.
 
-### 4. Testy property-based (hypothesis)
+### 2.3. Projektowe obciążenie cieplne
 
-- Generowanie losowych, ale sensownych danych wejściowych.
-- Sprawdzenie niezmienników (np. `Ep >= Ek >= Eu >= 0`).
-- Wykrywanie ekstremalnych przypadków prowadzących do błędów numerycznych.
+Testy sprawdzają między innymi:
 
-### 5. Testy API
+- wpływ projektowej temperatury zewnętrznej,
+- wpływ przegród do gruntu i przestrzeni nieogrzewanych,
+- wpływ wentylacji,
+- niezależność strat budynku od współczynnika COP pompy ciepła i sprawności źródła,
+- poprawność sumowania wyników strefowych do wyniku całego budynku.
 
-- `pytest` z `TestClient` FastAPI:
-  - walidacja błędnych danych wejściowych (HTTP 422),
-  - poprawność odpowiedzi dla przykładowego budynku,
-  - import / eksport JSON.
+## 3. Testy jednostkowe
 
-### 6. Testy frontend (Playwright)
+Każda funkcja fizyczna powinna mieć test z wartością analityczną albo dobrze zdefiniowanym przypadkiem referencyjnym.
 
-- Przepływ użytkownika: utworzenie nowej analizy, wypełnienie kreatora, uruchomienie obliczeń, wyświetlenie wyników.
-- Testy importu / eksportu JSON.
-- Testy responsywności.
+Przykładowe obszary:
 
-## Tolerancje
+- `climate` – odczyt danych klimatycznych i promieniowanie słoneczne,
+- `envelope` – przenikanie ciepła, powierzchnie netto i mostki cieplne,
+- `solar` – zyski słoneczne,
+- `ventilation` – wentylacja, infiltracja i odzysk ciepła,
+- `ground_iso13370` – parametry wymiany ciepła z gruntem,
+- `internal_gains` – zyski wewnętrzne,
+- `thermal_balance` – godzinowy bilans cieplny,
+- `systems` – sprawności systemów i ciepła woda użytkowa,
+- `primary_energy` – przeliczenie na nieodnawialną energię pierwotną,
+- `polish_certificate_monthly` – miesięczny silnik formalnej charakterystyki energetycznej,
+- `design_load` – projektowe obciążenie cieplne.
 
-| Wielkość | Tolerancja względem benchmarku |
-|----------|---------------------------------|
-| Wskaźniki roczne `Eu`, `Ek`, `Ep` | ±2% |
-| Miesięczne wartości energii | ±5% |
-| Szczytowe obciążenie ogrzewania / chłodzenia | ±5% |
-| Temperatura wewnętrzna (godzinowa) | ±0.5 K |
+## 4. Testy analityczne
 
-## Proces testowania
+Tam, gdzie to możliwe, wynik jest porównywany z prostym obliczeniem, które można wykonać ręcznie.
 
-1. Każda nowa funkcja silnika musi mieć test jednostkowy przed merge.
-2. Przy każdym push uruchamiane są wszystkie testy (GitHub Actions).
-3. Zmiana w silniku obliczeniowym wymaga ponownego uruchomienia benchmarków i aktualizacji `VALIDATION.md`.
-4. Każdy benchmark opisany jest w dokumencie: dane wejściowe, źródło, oczekiwany wynik, uzyskany wynik, różnica.
+Przykłady:
 
-## Lista benchmarków do zaimplementowania
+### 4.1. Przenikanie przez przegrodę
 
-- [ ] Budynek referencyjny 1: prostopadłościan, jedna strefa, Warszawa TMYx, ogrzewanie gazowe.
-- [ ] Budynek referencyjny 2: ten sam budynek, pompa ciepła powietrze-woda.
-- [ ] Budynek z dużą ilością okien południowych – test zysków słonecznych.
-- [ ] Budynek bardzo dobrze zaizolowany – test minimalnych strat.
-- [ ] Przypadek użytkownika #1 (do uzupełnienia).
-- [ ] Przypadek użytkownika #2 (do uzupełnienia).
-- [ ] Porównanie z `pyBuildingEnergy` dla budynku referencyjnego.
-- [ ] Porównanie z BESTEST (jeśli dostępne dane).
+```text
+H = U × A
+```
 
-## Raportowanie
+Jeżeli ściana ma powierzchnię 40 m² i współczynnik przenikania ciepła `U = 0,25 W/(m²·K)`, jej przewodność cieplna wynosi:
 
-Wyniki walidacji zapisywane są w:
-- `backend/tests/benchmarks/RESULTS.md`
-- CI generuje raport pokrycia testów.
+```text
+H = 40 × 0,25 = 10 W/K
+```
+
+### 4.2. Okno zastępujące fragment ściany
+
+Jeżeli 1 m² ściany o `U = 0,25 W/(m²·K)` zostanie zastąpiony 1 m² okna o `U = 1,00 W/(m²·K)`, przewodność cieplna powinna wzrosnąć o:
+
+```text
+1,00 - 0,25 = 0,75 W/K
+```
+
+### 4.3. Odzysk ciepła
+
+Przy temperaturze zewnętrznej 0°C, temperaturze powietrza usuwanego 20°C i sprawności odzysku 80% temperatura nawiewu powinna wynieść:
+
+```text
+0 + 0,80 × (20 - 0) = 16°C
+```
+
+Takie testy są szczególnie ważne, ponieważ pozwalają wykryć błędy, które mogą nie być widoczne w dużym rocznym wyniku.
+
+## 5. Testy integracyjne
+
+Test integracyjny sprawdza pełną ścieżkę:
+
+```text
+dane projektu
+→ walidacja
+→ obliczenia
+→ wynik
+```
+
+Sprawdzane są między innymi:
+
+- kompletność odpowiedzi API,
+- zgodność sum miesięcznych i rocznych,
+- brak wartości `NaN` i nieskończonych,
+- brak jednoczesnego dodatniego ogrzewania i chłodzenia w tej samej godzinie,
+- zachowanie wyniku godzinowego po włączeniu formalnego silnika świadectwa,
+- prawidłowe przełączenie głównych wskaźników `Eu`, `Ek`, `Ep` na wynik formalny w trybie świadectwa.
+
+## 6. Niezmienniki fizyczne
+
+Należy stosować tylko takie niezmienniki, które są prawdziwe dla danego modelu.
+
+Nie należy przyjmować uniwersalnie:
+
+```text
+Ep ≥ Ek ≥ Eu
+```
+
+Taka relacja nie jest ogólnie prawdziwa.
+
+Przykładowo:
+
+- pompa ciepła może mieć energię końcową niższą od energii użytkowej, ponieważ pobiera część energii ze środowiska,
+- współczynnik nakładu nieodnawialnej energii pierwotnej może być mniejszy od 1 dla wybranych nośników energii.
+
+Poprawne przykładowe niezmienniki to:
+
+- energie użytkowe nie mogą być ujemne,
+- sprawności opisane jako liczby od 0 do 1 nie mogą wyjść poza ten zakres,
+- powierzchnia netto ściany nie może być ujemna,
+- powierzchnia otworów nie może przekraczać powierzchni ich przegrody nadrzędnej,
+- zwiększenie oporu cieplnego tej samej przegrody nie powinno zwiększać jej przewodności cieplnej,
+- zwiększenie projektowej różnicy temperatur nie powinno zmniejszać projektowego obciążenia cieplnego,
+- obejście letnie wymiennika i aktywny odzysk ciepła nie powinny być jednocześnie traktowane jako dwa pełne tryby pracy tego samego strumienia,
+- energia jednego centralnego urządzenia nie może być mnożona przez liczbę stref.
+
+## 7. Testy regresyjne
+
+Regresja oznacza, że znany przypadek obliczeniowy ma zachować oczekiwany wynik po zmianach w kodzie.
+
+W projekcie utrzymywane są między innymi testy dotyczące:
+
+- powierzchni brutto i netto przegród,
+- przypisywania okien do ścian,
+- mostków cieplnych,
+- promieniowania na różne orientacje,
+- odzysku ciepła,
+- ochrony przed zamarzaniem,
+- modelu gruntu,
+- miesięcznego ogrzewania i chłodzenia,
+- projektowego obciążenia cieplnego,
+- energii pomocniczej,
+- udziału odnawialnych nośników energii.
+
+## 8. Benchmarki i porównania niezależne
+
+Tam, gdzie są dostępne odpowiednie przypadki, wyniki powinny być porównywane z niezależnymi źródłami.
+
+Mogą to być między innymi:
+
+- przypadki BESTEST / ANSI/ASHRAE Standard 140,
+- przykłady numeryczne z literatury,
+- niezależne programy obliczeniowe,
+- sprawdzone arkusze obliczeniowe,
+- przypadki referencyjne przygotowane przez eksperta.
+
+Benchmark nie powinien być traktowany jako dowód zgodności całego programu. Sprawdza tylko określony zakres modelu.
+
+## 9. Testy losowych danych
+
+Dla losowo generowanych, ale fizycznie sensownych projektów należy sprawdzać przede wszystkim:
+
+- brak błędów numerycznych,
+- brak ujemnych powierzchni i energii użytkowych,
+- poprawność zakresów parametrów,
+- stabilność solvera,
+- poprawność walidacji geometrii.
+
+## 10. Testy API
+
+Testy API powinny obejmować między innymi:
+
+- poprawny projekt,
+- projekt z brakującymi danymi,
+- projekt z błędną geometrią,
+- projekt z niekompletnymi danymi trybu świadectwa,
+- import i eksport danych projektu,
+- poprawne komunikaty błędów.
+
+## 11. Testy interfejsu
+
+Testy końcowe interfejsu powinny sprawdzać:
+
+- utworzenie projektu,
+- wprowadzenie podstawowych danych budynku,
+- wprowadzenie danych formalnych,
+- uruchomienie obliczenia,
+- rozróżnienie wyniku formalnego i godzinowego,
+- czytelne wyświetlenie ostrzeżeń i błędów,
+- import i eksport projektu,
+- działanie na różnych szerokościach ekranu.
+
+## 12. Tolerancje
+
+Tolerancja musi wynikać z charakteru testu.
+
+Nie należy stosować jednej wartości procentowej do wszystkich przypadków.
+
+Przykładowo:
+
+- test analityczny prostego wzoru może wymagać zgodności praktycznie dokładnej,
+- porównanie miesięcznego wyniku z niezależnym programem może wymagać tolerancji procentowej,
+- porównanie temperatur godzinowych może wymagać tolerancji w kelwinach.
+
+Każdy benchmark powinien opisywać:
+
+- źródło wartości referencyjnej,
+- dane wejściowe,
+- oczekiwany wynik,
+- dopuszczalną tolerancję,
+- uzyskany wynik,
+- różnicę.
+
+## 13. Proces przed scaleniem zmian
+
+Zmiana w silniku obliczeniowym powinna przejść co najmniej:
+
+```bash
+cd backend
+ruff check app tests
+mypy app
+pytest
+```
+
+Zmiana we frontendzie powinna przejść:
+
+```bash
+cd frontend
+pnpm lint
+pnpm typecheck
+pnpm build
+```
+
+Nowa funkcja fizyczna powinna mieć test analityczny albo benchmark.
+
+## 14. Raportowanie
+
+Wyniki ważniejszych benchmarków należy dokumentować tak, aby można było odtworzyć:
+
+- wersję kodu,
+- dane wejściowe,
+- źródło referencyjne,
+- wynik oczekiwany,
+- wynik programu,
+- różnicę i tolerancję.

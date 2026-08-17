@@ -14,31 +14,51 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 
-const routeMap: Record<string, { label: string; parent?: string }> = {
+type RouteEntry = {
+  label: string
+  parent?: string
+}
+
+const routeMap: Record<string, RouteEntry> = {
   "/": { label: "Strona główna" },
-  "/building": { label: "Nowa analiza", parent: "/" },
-  "/results": { label: "Wyniki", parent: "/building" },
-  "/normative": { label: "Ustawienia normatywne", parent: "/building" },
-  "/normative/legal": { label: "Tryb formalny", parent: "/normative" },
+  "/building": { label: "Dane budynku", parent: "/" },
+  "/results": { label: "Wyniki obliczeń", parent: "/building" },
+  "/normative": { label: "Zaawansowane ustawienia obliczeniowe", parent: "/building" },
+  "/normative/legal": { label: "Dane źródłowe formalnego obliczenia", parent: "/normative" },
+  "/normative/certificate": { label: "Miesięczne dane formalnej charakterystyki", parent: "/normative/legal" },
+  "/normative/certificate/primary-energy": {
+    label: "Współczynniki energii pierwotnej i emisji",
+    parent: "/normative/certificate",
+  },
+}
+
+function buildCrumbs(pathname: string) {
+  const crumbs: { href: string; label: string; current?: boolean }[] = []
+  const visited = new Set<string>()
+  let currentPath: string | undefined = pathname
+
+  while (currentPath && !visited.has(currentPath)) {
+    visited.add(currentPath)
+    const entry: RouteEntry = routeMap[currentPath] ?? { label: currentPath, parent: "/" }
+    crumbs.unshift({ href: currentPath, label: entry.label })
+    currentPath = entry.parent
+  }
+
+  if (crumbs[0]?.href !== "/") {
+    crumbs.unshift({ href: "/", label: "Strona główna" })
+  }
+
+  if (crumbs.length > 0) {
+    crumbs[crumbs.length - 1] = { ...crumbs[crumbs.length - 1], current: true }
+  }
+
+  return crumbs
 }
 
 export function AppBreadcrumb() {
   const pathname = usePathname()
   const router = useRouter()
-
-  const current = routeMap[pathname] ?? { label: pathname, parent: "/" }
-
-  const crumbs: { href: string; label: string; current?: boolean }[] = [
-    { href: "/", label: "Strona główna" },
-  ]
-  if (current.parent === "/building" || current.parent === "/normative") {
-    crumbs.push({ href: "/building", label: "Nowa analiza" })
-  }
-  if (current.parent === "/normative") {
-    crumbs.push({ href: "/normative", label: "Ustawienia normatywne" })
-  }
-  crumbs.push({ href: pathname, label: current.label, current: true })
-
+  const crumbs = buildCrumbs(pathname)
   const canGoBack = pathname !== "/"
 
   return (
@@ -77,7 +97,7 @@ export function AppBreadcrumb() {
             <Button variant="outline" size="sm" asChild className="shrink-0">
               <a href="/normative">
                 <Settings2 className="mr-2 h-4 w-4" />
-                Ustawienia normatywne
+                Zaawansowane ustawienia
               </a>
             </Button>
           ) : null}
@@ -85,7 +105,7 @@ export function AppBreadcrumb() {
             <Button variant="outline" size="sm" asChild className="shrink-0">
               <a href="/normative/legal">
                 <FileCheck2 className="mr-2 h-4 w-4" />
-                Tryb formalny
+                Dane formalnego obliczenia
               </a>
             </Button>
           ) : null}

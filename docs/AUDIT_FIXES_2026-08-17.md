@@ -1,167 +1,214 @@
-# Audyt obliczeń — poprawki 2026-08-17
+# Audyt obliczeń — poprawki z 17 sierpnia 2026 r.
 
-Ten dokument opisuje zmiany wprowadzone po audycie kompletności i spójności obliczeń charakterystyki energetycznej.
+Ten dokument opisuje najważniejsze zmiany wprowadzone po audycie kompletności i spójności obliczeń charakterystyki energetycznej.
 
-## Zaimplementowane zabezpieczenia
+## 1. Powierzchnie ścian i otworów
 
-### Powierzchnie brutto/netto
+Przegrody przezroczyste, takie jak okna, drzwi przeszklone i świetliki, są przed obliczeniem przypisywane do odpowiedniej przegrody nieprzezroczystej.
 
-Przegrody transparentne są przed obliczeniem przypisywane do jednoznacznej przegrody zewnętrznej w tej samej strefie, o tej samej orientacji i nachyleniu. Powierzchnia okien/drzwi/skylightów jest odejmowana od powierzchni brutto przegrody nieprzezroczystej. Dzięki temu dodanie 1 m² okna zmienia Htr o `Uw - Uwall`, a nie o samo `Uw`.
+Powierzchnia nieprzezroczysta ściany jest liczona jako:
+
+```text
+powierzchnia netto ściany
+=
+powierzchnia brutto ściany
+-
+suma powierzchni przypisanych otworów
+```
+
+Dzięki temu okno zastępuje fragment ściany, zamiast być liczone dodatkowo na pełnej powierzchni ściany.
 
 Model jest odrzucany, jeżeli:
 
-- powierzchnia otworów przekracza powierzchnię brutto hosta,
+- łączna powierzchnia otworów przekracza powierzchnię brutto przegrody, do której należą,
 - otwór nie ma odpowiadającej mu przegrody zewnętrznej,
-- otwór pasuje do więcej niż jednej przegrody i przypisanie jest niejednoznaczne.
+- otwór pasuje do kilku przegród i nie można jednoznacznie ustalić właściwej przegrody nadrzędnej.
 
-W modelach z kilkoma segmentami ścian o tej samej orientacji można podać jawne przypisanie w `metadata.opening_hosts`, np. `{ "window_1": "wall_segment_2" }`. Walidacja nadal sprawdza zgodność strefy, typu granicy, orientacji i nachylenia, więc samo wskazanie identyfikatora nie omija kontroli fizycznej spójności.
+Jeżeli kilka segmentów ściany ma tę samą orientację i nachylenie, użytkownik może wskazać właściwą przegrodę w `metadata.opening_hosts`.
 
-### Kontrola kompletności geometrii
+## 2. Kontrola kompletności geometrii
 
-Audyt preflight generuje ostrzeżenia dla:
+Przed obliczeniem wykonywana jest kontrola geometrii projektu.
 
-- braku dachu/górnej granicy lub podłogi/dolnej granicy,
-- dużej rozbieżności między `Af / liczba kondygnacji` a powierzchnią dachu/podłogi,
+Program może zgłosić ostrzeżenie między innymi w przypadku:
+
+- braku dachu albo innej górnej granicy strefy,
+- braku podłogi albo innej dolnej granicy strefy,
+- dużej różnicy między powierzchnią strefy a powierzchnią dachu lub podłogi,
 - podejrzanie małej liczby kierunków ścian zewnętrznych,
-- dużej rozbieżności między wysokością wynikającą z `V/Af` a podanymi wysokościami ścian.
+- dużej różnicy między wysokością wynikającą z kubatury i powierzchni a wysokościami podanych ścian.
 
-Są to ostrzeżenia, nie twarde błędy, ponieważ nieregularna geometria i wielostrefowość mogą być fizycznie poprawne.
+Są to ostrzeżenia, a nie automatyczne błędy, ponieważ nieregularna geometria budynku może być poprawna.
 
-### Założenia instalacyjne
+## 3. Założenia dotyczące instalacji
 
-Raport audytowy wskazuje, gdy:
+Raport wskazuje sytuacje, w których wynik może zależeć od niepełnych danych instalacyjnych.
 
-- nie podano rodzaju instalacji ogrzewania i nie podano jawnej energii pomocniczej — energia pomp obiegowych może być wtedy pominięta,
-- system CWU z zasobnikiem nie ma geometrii zasobnika i `ηW,s = 1`, co oznacza zerowe straty postojowe,
-- nie wprowadzono żadnych mostków cieplnych (`H_bridge = 0 W/K`).
+Dotyczy to między innymi:
 
-### Udział OZE
+- braku rodzaju instalacji ogrzewania potrzebnego do wyznaczenia energii pomp obiegowych,
+- systemu ciepłej wody użytkowej z zasobnikiem bez danych potrzebnych do wyznaczenia strat postojowych,
+- braku wprowadzonych mostków cieplnych.
 
-`Uoze` uwzględnia wszystkie obsługiwane odnawialne nośniki energii końcowej:
+Brak mostków cieplnych oznacza w obliczeniu przewodność mostków równą `0 W/K`. Program nie powinien przedstawiać takiego wyniku jako automatycznie potwierdzonego założenia projektowego.
 
-- biomass,
-- biogas,
-- solar,
-- wind,
-- geothermal,
-- legacy `renewable`.
+## 4. Udział odnawialnych nośników energii
 
-### Raport założeń
+Poprawiono sposób obliczania udziału energii odnawialnej.
 
-Wyniki zawierają osobne informacje/ostrzeżenia audytowe dotyczące m.in.:
+Uwzględniane są obsługiwane odnawialne nośniki, w tym:
 
-- wartości wejściowych wentylacji i infiltracji,
-- współczynnika energii pierwotnej,
-- pochodzenia danych `wi` w trybie formalnym,
-- modelu gruntu,
-- modelu odzysku ciepła,
-- sposobu wyznaczania diagnostycznej i projektowej mocy cieplnej.
+- biomasa,
+- biogaz,
+- energia słoneczna,
+- energia wiatru,
+- energia geotermalna.
 
-Frontend odróżnia `INFO`, `UWAGA`, `OK` i rzeczywiste niezaliczone kontrole.
+Nazwy techniczne używane wewnątrz kodu mogą pozostać angielskie, ale w interfejsie użytkownik powinien widzieć polskie nazwy nośników.
 
-## Elementy uzupełnione w normatywnym modelu godzinowym v2
+## 5. Informacje i ostrzeżenia w wyniku
 
-### Grunt
+Wynik zawiera dodatkowe informacje dotyczące między innymi:
+
+- przyjętego strumienia wentylacyjnego,
+- infiltracji,
+- zastosowanego współczynnika nakładu nieodnawialnej energii pierwotnej,
+- źródła współczynnika energii pierwotnej w trybie świadectwa,
+- zastosowanego modelu gruntu,
+- zastosowanego modelu odzysku ciepła,
+- sposobu wyznaczenia projektowego obciążenia cieplnego.
+
+Komunikaty powinny być opisane po polsku i wprost wskazywać, czy dana informacja jest:
+
+- potwierdzoną kontrolą,
+- ostrzeżeniem,
+- informacją techniczną,
+- błędem blokującym obliczenie.
+
+## 6. Rozszerzony model wymiany ciepła z gruntem
 
 Dodano osobny moduł `ground_iso13370.py`.
 
-Dla podłogi na gruncie wykorzystuje on geometrię `A/P`, parametry cieplne gruntu,
-opór warstw podłogi i grubość ściany zewnętrznej do wyznaczenia stacjonarnego
-współczynnika przenikania. Do solvera 8760 h dołączany jest indywidualny profil
-okresowej granicy gruntowej dla każdej przegrody.
+Dla podłogi stykającej się z gruntem model wykorzystuje między innymi:
 
-Tryb formalny nie generuje arbitralnych współczynników okresowych. Wymaga jawnej
-pary `periodic_amplitude_ratio` i `phase_shift_days` pochodzącej ze zweryfikowanej
-procedury dynamicznej. Dostępny poza trybem formalnym model jednowymiarowej fali
-cieplnej jest oznaczany jako diagnostyczny.
+- powierzchnię podłogi,
+- obwód wystawiony na wymianę z gruntem,
+- właściwości cieplne gruntu,
+- opór cieplny warstw podłogi,
+- grubość ściany zewnętrznej.
 
-### Rekuperacja
+Dla analizy godzinowej można również podać:
 
-Dodano szczegółowy model godzinowy rekuperacji:
+- współczynnik tłumienia rocznej zmiany temperatury,
+- przesunięcie czasowe odpowiedzi gruntu.
 
-- pełny fizyczny strumień wentylacyjny pozostaje w `Hve`,
-- odzysk zmienia godzinową temperaturę nawiewu,
-- można podać krzywą sprawności urządzenia,
-- działa bypass letni,
-- działa detekcja ryzyka szronienia,
-- dostępne są strategie preheater / redukcja odzysku / wyłączenie odzysku,
-- energia elektryczna nagrzewnicy wstępnej zwiększa `Ek`, `Ep` i emisję CO2,
-- jedna centralna nagrzewnica nie jest mnożona przez liczbę stref.
+W trybie wymagającym zweryfikowanych danych program nie tworzy tych parametrów z arbitralnych stałych.
 
-Tryb formalny wymaga źródła charakterystyki urządzenia. Przy aktywnej ochronie
-przeciwzamrożeniowej wymaga również jawnej wilgotności powietrza wywiewanego.
+## 7. Wentylacja z odzyskiem ciepła
 
-### Moc projektowa
+Dodano szczegółowy godzinowy model odzysku ciepła.
 
-Dodano osobny `design_load.py`, który nie korzysta z minimum TMY i nie używa
-COP/sprawności generatora do wyznaczania mocy budynku.
+Najważniejsze zmiany:
 
-Projektowe obciążenie cieplne korzysta z:
+- pełny fizyczny strumień powietrza pozostaje w obliczeniu,
+- odzysk ciepła zmienia temperaturę nawiewu,
+- można podać charakterystykę sprawności urządzenia,
+- można modelować letnie obejście wymiennika,
+- można uwzględniać ryzyko zamarzania wymiennika,
+- można wybrać nagrzewnicę wstępną, ograniczenie odzysku albo czasowe wyłączenie odzysku,
+- energia elektryczna nagrzewnicy wstępnej zwiększa energię końcową i może zwiększać nieodnawialną energię pierwotną,
+- moc jednego centralnego urządzenia nie jest mnożona przez liczbę stref.
 
-- jawnej projektowej temperatury zewnętrznej,
-- własnych temperatur projektowych dla przestrzeni nieogrzewanych,
-- własnych temperatur projektowych dla przegród do gruntu,
-- strat przez mostki,
-- wentylacji i szczegółowej rekuperacji,
-- opcjonalnej jawnej mocy ponownego nagrzania.
+Jeżeli wynik ma być formalnie kontrolowany, należy wskazać źródło charakterystyki zastosowanego urządzenia.
 
-Wynik projektowy jest raportowany osobno od rocznego bilansu. `Eu`, `Ek` i `Ep`
-nadal wynikają z modelu godzinowego 8760 h.
+## 8. Projektowe obciążenie cieplne
 
-### Ślad prawny i źródłowy
+Dodano osobny moduł `design_load.py`.
 
-Dodano `legal.certificate_mode`. Tryb formalny wymaga:
+Projektowe obciążenie cieplne:
 
-- daty obliczenia,
-- źródła metodologii,
-- źródła danych klimatycznych,
-- źródła współczynnika `wi` dla każdego używanego nośnika.
+- nie jest wyznaczane z najniższej temperatury występującej w typowym roku meteorologicznym,
+- nie zależy od współczynnika COP pompy ciepła ani sprawności kotła,
+- korzysta z jawnej projektowej temperatury zewnętrznej,
+- może korzystać z osobnych temperatur projektowych dla gruntu i przestrzeni nieogrzewanych,
+- uwzględnia straty przez przenikanie, mostki cieplne i wentylację,
+- może uwzględniać dodatkową moc potrzebną do ponownego nagrzania pomieszczeń.
 
-Dzięki temu wartości tabelaryczne, dane dostawcy i dane urządzeń nie są
-nierozróżnialnymi liczbami w jednym formularzu.
+Wynik jest raportowany jako osobna moc projektowa i nie jest dodawany do rocznej energii użytkowej.
 
-## Granice, których nadal nie wolno ukrywać
+## 9. Formalna charakterystyka energetyczna i analiza godzinowa
 
-### Pełny tekst norm
+Po rozbudowie aplikacja utrzymuje dwa równoległe wyniki energetyczne:
 
-Repozytorium nie zawiera chronionej pełnej treści norm PKN/ISO. Tam, gdzie
-formalna procedura dynamiczna wymaga współczynników, których nie da się
-bezpiecznie odtworzyć z publicznego zakresu normy, aplikacja wymaga ich jawnego
-podania wraz ze źródłem. Nie należy na tej podstawie twierdzić, że kod sam w
-sobie dowodzi zgodności każdej klauzuli normy.
+1. **formalną charakterystykę energetyczną** liczoną miesięcznie zgodnie z polską metodologią,
+2. **godzinową analizę fizyczną** obejmującą 8760 godzin roku.
+
+Jeżeli włączony jest tryb świadectwa, główne formalne wartości:
+
+- energia użytkowa (`Eu`),
+- energia końcowa (`Ek`),
+- nieodnawialna energia pierwotna (`Ep`)
+
+pochodzą z miesięcznego silnika formalnej charakterystyki energetycznej.
+
+Wynik godzinowy jest zachowywany jako osobna analiza techniczna i kontrolna.
+
+## 10. Ślad źródłowy formalnego obliczenia
+
+Tryb świadectwa zapisuje między innymi:
+
+- datę wykonania obliczenia,
+- zastosowaną metodologię,
+- źródło danych klimatycznych,
+- źródło miesięcznych współczynników wykorzystania zysków i strat,
+- źródło danych i współczynników wentylacyjnych,
+- źródło współczynnika nakładu nieodnawialnej energii pierwotnej dla każdego używanego nośnika.
+
+Dzięki temu liczba użyta w obliczeniu nie jest oderwana od dokumentu lub danych, z których pochodzi.
+
+## 11. Zasada blokowania formalnego wyniku przy brakujących danych
+
+W trybie świadectwa brak wymaganej informacji nie powinien uruchamiać nieudokumentowanej wartości zastępczej.
+
+Jeżeli nie można bezpiecznie wykonać formalnego obliczenia, program powinien wskazać brakujące dane i zatrzymać wynik formalny.
+
+## 12. Granice modelu
+
+### Pełne teksty norm
+
+Repozytorium nie zawiera pełnych, chronionych tekstów norm PKN i ISO.
+
+Jeżeli formalna procedura wymaga wartości, której nie można bezpiecznie wyznaczyć na podstawie dostępnych danych, aplikacja wymaga jej jawnego podania wraz ze źródłem.
 
 ### Wilgotność
 
-Model frost protection korzysta z jawnej wilgotności względnej powietrza
-wywiewanego i punktu rosy. Nie jest to pełny model bilansu masowego wilgoci w
-budynku. Pełny bilans wymagałby dodatkowych danych o emisji wilgoci, sorpcji,
-nawilżaniu i osuszaniu, których silnik nie zgaduje.
+Model ochrony wymiennika przed zamarzaniem może korzystać z jawnie podanej wilgotności względnej i temperatury punktu rosy.
 
-### Klimat
+Nie jest to jednak pełny godzinowy bilans masowy wilgoci całego budynku.
 
-Tryb formalny wymaga zapisania źródła danych klimatycznych. Sam identyfikator
-stacji lub obecność pliku TMY nie oznacza automatycznie, że zestaw jest właściwy
-dla danego celu i daty sporządzenia charakterystyki.
+### Dane klimatyczne
 
-## Testy regresyjne
+Typowy rok meteorologiczny używany w analizie godzinowej i dane klimatyczne używane w formalnym świadectwie są traktowane jako oddzielne źródła danych.
 
-`backend/tests/test_audited_preflight.py` i
-`backend/tests/test_normative_extensions.py` sprawdzają m.in.:
+Nie należy automatycznie zakładać, że jeden zestaw danych jest właściwy dla obu zastosowań.
 
-- odejmowanie okna od ściany brutto,
-- zmianę Htr dokładnie o `Uw - Uwall` przy +1 m² okna,
-- blokadę powierzchni transparentnej większej od hosta,
-- blokadę niejednoznacznego hosta,
-- jawne rozwiązanie niejednoznaczności przez `metadata.opening_hosts`,
-- ostrzeżenia dla modelu `Af=150 m²`, dach/podłoga=90 m² i tylko N/S,
-- pierwszeństwo `height × width` przed ręcznym `area`,
-- udział wszystkich obsługiwanych nośników odnawialnych w `Uoze`,
-- charakterystyczny wymiar gruntu `B'=2A/P`,
-- monotoniczność izolacji podłogi i `U`,
-- parę współczynników okresowych gruntu,
-- analityczne przypadki odzysku, bypassu i preheatera,
-- zachowanie fizycznego strumienia wentylacyjnego,
-- brak mnożenia preheatera przez liczbę stref,
-- niezależność obciążenia projektowego od COP,
-- wymóg jawnej temperatury projektowej gruntu,
-- wymogi śladu źródłowego trybu formalnego.
+## 13. Testy regresyjne
+
+Testy obejmują między innymi:
+
+- odejmowanie powierzchni okna od powierzchni brutto ściany,
+- poprawną zmianę przewodności cieplnej po zastąpieniu części ściany oknem,
+- blokowanie otworu większego od przegrody nadrzędnej,
+- blokowanie niejednoznacznego przypisania otworu,
+- kontrolę kompletności geometrii,
+- udział odnawialnych nośników energii,
+- charakterystyczny wymiar podłogi na gruncie,
+- wpływ oporu cieplnego podłogi,
+- godzinowy odzysk ciepła,
+- letnie obejście wymiennika,
+- ochronę przed zamarzaniem,
+- brak wielokrotnego liczenia jednej nagrzewnicy centralnej,
+- niezależność projektowego obciążenia cieplnego od współczynnika COP źródła,
+- wymaganie jawnej projektowej temperatury gruntu,
+- wymagania formalnego śladu źródłowego,
+- rozdzielenie formalnego wyniku miesięcznego i analizy godzinowej 8760 godzin.

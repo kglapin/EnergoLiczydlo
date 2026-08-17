@@ -16,8 +16,27 @@ import {
 } from "@/lib/normative-settings"
 import { useAppStore } from "@/lib/store"
 
+const CARRIER_LABELS: Record<string, string> = {
+  electricity: "Energia elektryczna",
+  natural_gas: "Gaz ziemny",
+  lpg: "Gaz płynny LPG",
+  heating_oil: "Olej opałowy",
+  hard_coal: "Węgiel kamienny",
+  lignite: "Węgiel brunatny",
+  district_heating: "Ciepło sieciowe",
+  biomass: "Biomasa",
+  biogas: "Biogaz",
+  solar: "Energia słoneczna",
+  wind: "Energia wiatru",
+  geothermal: "Energia geotermalna",
+}
+
 function carrierValue(value: unknown): string | undefined {
   return typeof value === "string" && value !== "" ? value : undefined
+}
+
+function carrierLabel(value: string): string {
+  return CARRIER_LABELS[value] ?? value
 }
 
 function optionalNumber(value: string): number | undefined {
@@ -107,29 +126,31 @@ export default function LegalProvenancePage() {
         <Button variant="ghost" size="sm" asChild className="-ml-3">
           <Link href="/normative">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Ustawienia normatywne
+            Zaawansowane ustawienia obliczeniowe
           </Link>
         </Button>
-        <h1 className="text-3xl font-semibold tracking-tight">Tryb formalny — ślad źródłowy</h1>
+        <h1 className="text-3xl font-semibold tracking-tight">Dane źródłowe do formalnego obliczenia</h1>
         <p className="text-sm leading-6 text-muted-foreground">
-          Ta sekcja nie nadaje wynikowi statusu prawnego. Wymusza natomiast zapis danych potrzebnych
-          do audytu obliczenia: daty, podstawy metodologicznej, źródła danych klimatycznych i
-          pochodzenia współczynników nakładu nieodnawialnej energii pierwotnej wi.
+          W tej sekcji zapisujesz informacje pozwalające odtworzyć podstawę formalnego obliczenia:
+          datę, zastosowaną metodologię, źródło danych klimatycznych oraz źródła współczynników
+          użytych do obliczenia nieodnawialnej energii pierwotnej. Samo uzupełnienie tej sekcji nie
+          nadaje wynikowi statusu prawnego — dokumentuje jednak, skąd pochodzą użyte dane.
         </p>
       </div>
 
       <Alert>
-        <AlertTitle>Współczynniki wi</AlertTitle>
+        <AlertTitle>Współczynnik nakładu nieodnawialnej energii pierwotnej</AlertTitle>
         <AlertDescription>
-          W aktualnej metodologii dane dostawcy nośnika lub energii mają pierwszeństwo. Wartości
-          tabelaryczne należy dokumentować jako fallback stosowany, gdy dostawca nie udostępnia
-          wymaganej wartości. Wpisz rzeczywiste źródło dla każdego nośnika używanego w projekcie.
+          Dla każdego używanego nośnika energii zapisz źródło wartości współczynnika. Jeżeli dla
+          konkretnego przypadku stosujesz wartość udostępnioną przez dostawcę, wskaż dokument lub
+          informację dostawcy. Jeżeli stosujesz wartość z tabeli metodologii, napisz to wprost.
+          Nie wystarczy pozostawić samej liczby bez źródła.
         </AlertDescription>
       </Alert>
 
       <Card>
         <CardHeader>
-          <CardTitle>Gotowość formalna obliczenia</CardTitle>
+          <CardTitle>Kontrola kompletności danych formalnych</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <label className="flex cursor-pointer items-center gap-3 text-sm font-medium">
@@ -139,12 +160,12 @@ export default function LegalProvenancePage() {
               checked={legal.certificate_mode}
               onChange={(event) => updateLegal({ certificate_mode: event.target.checked })}
             />
-            Włącz tryb formalny — blokuj wynik przy braku wymaganych źródeł
+            Włącz tryb świadectwa i blokuj obliczenie, gdy brakuje wymaganych danych lub ich źródeł
           </label>
 
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="calculation-date">Data obliczenia</Label>
+              <Label htmlFor="calculation-date">Data wykonania obliczenia</Label>
               <Input
                 id="calculation-date"
                 type="date"
@@ -155,44 +176,70 @@ export default function LegalProvenancePage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="methodology-source">Podstawa metodologiczna / wersja aktu</Label>
+              <Label htmlFor="methodology-source">Zastosowana metodologia i wersja aktu prawnego</Label>
               <Input
                 id="methodology-source"
                 value={legal.methodology_source ?? ""}
                 onChange={(event) => updateLegal({
                   methodology_source: event.target.value || undefined,
                 })}
-                placeholder="np. Dz.U. 2015 poz. 376 z późn. zm.; stan na dzień obliczenia"
+                placeholder="np. pełne oznaczenie rozporządzenia i stan prawny na dzień obliczenia"
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="climate-source">Źródło danych klimatycznych</Label>
+            <Label htmlFor="climate-source">Źródło danych klimatycznych użytych w świadectwie</Label>
             <Input
               id="climate-source"
               value={legal.climate_data_source ?? ""}
               onChange={(event) => updateLegal({
                 climate_data_source: event.target.value || undefined,
               })}
-              placeholder="Nazwa zbioru, stacja, wersja/okres i źródło pliku"
+              placeholder="nazwa zbioru, stacja meteorologiczna, wersja lub okres oraz źródło pliku"
             />
             <p className="text-xs text-muted-foreground">
-              Sam identyfikator stacji w projekcie nie jest dowodem pochodzenia danych — zapisz tu
-              źródło zestawu klimatycznego użytego w obliczeniu.
+              Sam wybór stacji w projekcie nie dokumentuje pochodzenia danych. Wpisz tutaj dokładne
+              źródło zestawu klimatycznego wykorzystanego w formalnym obliczeniu.
             </p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="utilization-source">Źródło współczynników wykorzystania zysków i strat</Label>
+            <Input
+              id="utilization-source"
+              value={legal.utilization_factor_source ?? ""}
+              onChange={(event) => updateLegal({
+                utilization_factor_source: event.target.value || undefined,
+              })}
+              placeholder="wskazanie normy, arkusza obliczeniowego albo innego zweryfikowanego źródła"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="ventilation-source">Źródło danych i współczynników wentylacyjnych</Label>
+            <Input
+              id="ventilation-source"
+              value={legal.ventilation_factor_source ?? ""}
+              onChange={(event) => updateLegal({
+                ventilation_factor_source: event.target.value || undefined,
+              })}
+              placeholder="np. dokumentacja projektu, dane urządzenia lub właściwa procedura normowa"
+            />
           </div>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader>
-          <CardTitle>Pochodzenie współczynników wi</CardTitle>
+          <CardTitle>Źródła współczynników energii pierwotnej</CardTitle>
         </CardHeader>
         <CardContent className="space-y-5">
           {usedCarriers.map((carrier) => (
             <div className="space-y-2" key={carrier}>
-              <Label htmlFor={`wi-source-${carrier}`}>{carrier}</Label>
+              <Label htmlFor={`wi-source-${carrier}`}>
+                {carrierLabel(carrier)} — źródło współczynnika nakładu nieodnawialnej energii pierwotnej
+              </Label>
               <Input
                 id={`wi-source-${carrier}`}
                 value={legal.primary_energy_factor_sources[carrier] ?? ""}
@@ -202,7 +249,7 @@ export default function LegalProvenancePage() {
                     [carrier]: event.target.value,
                   },
                 })}
-                placeholder="Dostawca + dokument/wartość albo jawna informacja o użyciu tabeli fallback"
+                placeholder="np. dokument dostawcy albo informacja, że zastosowano wartość tabelaryczną z metodologii"
               />
             </div>
           ))}
@@ -212,13 +259,13 @@ export default function LegalProvenancePage() {
       {settings.design_conditions.enabled && groundElements.length > 0 ? (
         <Card>
           <CardHeader>
-            <CardTitle>Warunek projektowy dla przegród do gruntu</CardTitle>
+            <CardTitle>Projektowa temperatura po stronie gruntu</CardTitle>
           </CardHeader>
           <CardContent className="space-y-5">
             <p className="text-sm leading-6 text-muted-foreground">
-              W formalnym obciążeniu cieplnym kalkulator nie używa średniej temperatury gruntu z
-              profilu rocznego. Podaj zweryfikowaną projektową temperaturę sąsiednią dla każdej
-              przegrody do gruntu, zgodną z przyjętą procedurą projektową.
+              Przy obliczaniu projektowego obciążenia cieplnego aplikacja nie powinna zastępować
+              temperatury gruntu średnią z rocznej analizy godzinowej. Dla każdej przegrody do
+              gruntu podaj temperaturę projektową wynikającą z przyjętej procedury projektowej.
             </p>
             {groundElements.map((element) => (
               <div className="space-y-2" key={element.id}>
@@ -247,13 +294,13 @@ export default function LegalProvenancePage() {
 
       {legal.certificate_mode ? (
         <Alert>
-          <AlertTitle>Kontrole uruchamiane przez backend</AlertTitle>
+          <AlertTitle>Co zostanie sprawdzone przed formalnym obliczeniem?</AlertTitle>
           <AlertDescription>
-            Dla budynku z kontaktem z gruntem wymagany będzie formalny model ISO 13370. Dla
-            wentylacji z odzyskiem wymagany będzie szczegółowy model urządzenia ze źródłem danych.
-            Jeżeli obliczasz również projektowe obciążenie cieplne, jego warunki projektowe też muszą
-            być zweryfikowane. Brak któregokolwiek z tych elementów zatrzyma obliczenie zamiast
-            zwrócić pozornie formalny wynik.
+            Aplikacja sprawdzi kompletność danych wymaganych dla zastosowanych elementów projektu.
+            Jeżeli budynek ma przegrody do gruntu, wymagane będą odpowiednie dane modelu gruntu.
+            Jeżeli wentylacja wykorzystuje odzysk ciepła, wymagane będą dane urządzenia i ich źródło.
+            Jeżeli liczysz projektowe obciążenie cieplne, wymagane będą także zweryfikowane warunki
+            projektowe. Brak danych zatrzyma obliczenie zamiast tworzyć pozornie formalny wynik.
           </AlertDescription>
         </Alert>
       ) : null}
@@ -261,7 +308,7 @@ export default function LegalProvenancePage() {
       <div className="flex justify-end">
         <Button onClick={save}>
           <Save className="mr-2 h-4 w-4" />
-          Zapisz ślad źródłowy
+          Zapisz dane źródłowe
         </Button>
       </div>
 

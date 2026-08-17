@@ -79,8 +79,17 @@ function MetricCard({ label, value, icon: Icon, iconClassName, accentClassName }
   )
 }
 
+function usesCertificateMode(project: BuildingProject | null): boolean {
+  const normative = project?.metadata?.normative
+  if (!normative || typeof normative !== "object" || Array.isArray(normative)) return false
+  const legal = (normative as Record<string, unknown>).legal
+  if (!legal || typeof legal !== "object" || Array.isArray(legal)) return false
+  return (legal as Record<string, unknown>).certificate_mode === true
+}
+
 export function CalculationResults({ result, project }: CalculationResultsProps) {
   const indicators = result.annual_indicators
+  const certificateMode = usesCertificateMode(project)
   const hasExplicitDesignLoad = result.compliance.some((check) =>
     check.name.includes("DESIGN_LOAD_EXPLICIT_CONDITIONS"),
   )
@@ -90,7 +99,7 @@ export function CalculationResults({ result, project }: CalculationResultsProps)
       <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm md:p-6">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-600">Analiza zakończona</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-600">Obliczenie zakończone</p>
             <h2 id="calculation-results-heading" className="mt-1 text-3xl font-bold tracking-tight text-slate-950">
               Wyniki obliczeń
             </h2>
@@ -103,12 +112,12 @@ export function CalculationResults({ result, project }: CalculationResultsProps)
               href="/normative"
               className="mt-3 inline-flex text-sm font-medium text-blue-700 underline-offset-4 hover:underline"
             >
-              Ustawienia normatywne i projektowe
+              Zaawansowane ustawienia obliczeniowe
             </Link>
           </div>
           <div className="flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700">
             <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
-            Wynik dostępny
+            Wynik został obliczony
           </div>
         </div>
       </div>
@@ -121,7 +130,7 @@ export function CalculationResults({ result, project }: CalculationResultsProps)
             </div>
             <div>
               <p className="text-sm font-semibold text-amber-950">
-                {hasExplicitDesignLoad ? "Projektowe obciążenie cieplne" : "Diagnostyczna szczytowa strata ciepła"}
+                {hasExplicitDesignLoad ? "Projektowe obciążenie cieplne budynku" : "Największa diagnostyczna strata ciepła w analizowanym roku"}
               </p>
               <div className="mt-1 flex items-baseline gap-2">
                 <span className="text-3xl font-bold tracking-tight text-slate-950">{result.design_heating_power_kw.toFixed(1)}</span>
@@ -129,8 +138,8 @@ export function CalculationResults({ result, project }: CalculationResultsProps)
               </div>
               <p className="mt-1 max-w-3xl text-xs leading-5 text-slate-600">
                 {hasExplicitDesignLoad
-                  ? "Wartość wyznaczona z jawnej projektowej temperatury zewnętrznej i warunków brzegowych. Nie jest dodawana do rocznego Eu. Szczegóły stref i źródło warunków projektowych są raportowane w kontrolach poniżej."
-                  : "Maksimum strat przez przenikanie i wentylację w wybranym roku TMY. Ta wartość nie zastępuje odrębnego obliczenia projektowego obciążenia cieplnego dla temperatury obliczeniowej."}
+                  ? "Wartość została wyznaczona z jawnej projektowej temperatury zewnętrznej oraz projektowych warunków po drugiej stronie przegród. Jest to wynik mocy potrzebnej w warunkach projektowych i nie jest dodawany do rocznej energii użytkowej (Eu)."
+                  : "To największa strata przez przenikanie i wentylację występująca w analizowanym typowym roku meteorologicznym (TMY). Wartość ma charakter diagnostyczny i nie zastępuje projektowego obciążenia cieplnego wyznaczanego dla właściwej temperatury projektowej."}
               </p>
             </div>
           </CardContent>
@@ -140,19 +149,31 @@ export function CalculationResults({ result, project }: CalculationResultsProps)
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm md:p-6">
         <ResultsSectionHeader
           icon={Gauge}
-          eyebrow="Wskaźniki roczne"
-          title="Bilans energetyczny"
-          description="Najważniejsze wartości jednostkowe dla analizowanego budynku."
+          eyebrow={certificateMode ? "Formalna charakterystyka energetyczna" : "Godzinowa analiza techniczna"}
+          title={certificateMode ? "Roczne wskaźniki formalnego obliczenia" : "Roczne wskaźniki analizy 8760 godzin"}
+          description={certificateMode
+            ? "Poniższe główne wskaźniki pochodzą z miesięcznego silnika formalnej charakterystyki energetycznej. Równoległa analiza godzinowa pozostaje wynikiem technicznym i kontrolnym."
+            : "Poniższe wartości pochodzą z godzinowej analizy fizycznej budynku. Jeżeli chcesz przygotować formalne obliczenie świadectwa, włącz tryb świadectwa i uzupełnij wymagane dane miesięczne oraz ich źródła."}
           iconClassName="bg-blue-100 text-blue-700"
         />
         <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          <MetricCard label="Energia użytkowa Eu" value={indicators.eu_kwh_m2_year} icon={Gauge} iconClassName="bg-blue-100 text-blue-700" accentClassName="border-l-blue-500" />
-          <MetricCard label="Energia końcowa Ek" value={indicators.ek_kwh_m2_year} icon={Zap} iconClassName="bg-emerald-100 text-emerald-700" accentClassName="border-l-emerald-500" />
-          <MetricCard label="Energia pierwotna Ep" value={indicators.ep_kwh_m2_year} icon={Leaf} iconClassName="bg-violet-100 text-violet-700" accentClassName="border-l-violet-500" />
-          <MetricCard label="Ogrzewanie" value={indicators.heating_kwh_m2_year} icon={Thermometer} iconClassName="bg-orange-100 text-orange-700" accentClassName="border-l-orange-500" />
-          <MetricCard label="Chłodzenie" value={indicators.cooling_kwh_m2_year} icon={Snowflake} iconClassName="bg-cyan-100 text-cyan-700" accentClassName="border-l-cyan-500" />
-          <MetricCard label="Ciepła woda użytkowa" value={indicators.dhw_kwh_m2_year} icon={Droplets} iconClassName="bg-sky-100 text-sky-700" accentClassName="border-l-sky-500" />
+          <MetricCard label="Energia użytkowa (Eu)" value={indicators.eu_kwh_m2_year} icon={Gauge} iconClassName="bg-blue-100 text-blue-700" accentClassName="border-l-blue-500" />
+          <MetricCard label="Energia końcowa (Ek)" value={indicators.ek_kwh_m2_year} icon={Zap} iconClassName="bg-emerald-100 text-emerald-700" accentClassName="border-l-emerald-500" />
+          <MetricCard label="Nieodnawialna energia pierwotna (Ep)" value={indicators.ep_kwh_m2_year} icon={Leaf} iconClassName="bg-violet-100 text-violet-700" accentClassName="border-l-violet-500" />
+          <MetricCard label="Energia użytkowa do ogrzewania" value={indicators.heating_kwh_m2_year} icon={Thermometer} iconClassName="bg-orange-100 text-orange-700" accentClassName="border-l-orange-500" />
+          <MetricCard label="Energia użytkowa do chłodzenia" value={indicators.cooling_kwh_m2_year} icon={Snowflake} iconClassName="bg-cyan-100 text-cyan-700" accentClassName="border-l-cyan-500" />
+          <MetricCard label="Energia użytkowa do przygotowania ciepłej wody" value={indicators.dhw_kwh_m2_year} icon={Droplets} iconClassName="bg-sky-100 text-sky-700" accentClassName="border-l-sky-500" />
         </div>
+        <Alert className="mt-5">
+          <AlertTitle>Jak czytać trzy główne wskaźniki?</AlertTitle>
+          <AlertDescription>
+            Energia użytkowa (Eu) opisuje potrzeby energetyczne budynku przed uwzględnieniem strat
+            systemów technicznych. Energia końcowa (Ek) opisuje energię, którą trzeba dostarczyć do
+            instalacji po uwzględnieniu ich sprawności i energii pomocniczej. Nieodnawialna energia
+            pierwotna (Ep) powstaje po przeliczeniu energii końcowej za pomocą właściwych
+            współczynników nakładu dla zastosowanych nośników energii.
+          </AlertDescription>
+        </Alert>
       </section>
 
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm md:p-6">
@@ -160,7 +181,7 @@ export function CalculationResults({ result, project }: CalculationResultsProps)
           icon={AlertTriangle}
           eyebrow="Kontrola jakości"
           title="Założenia, ostrzeżenia i kontrole"
-          description="Silnik pokazuje tu zarówno kontrole wyniku, jak i dane przyjęte automatycznie lub ograniczenia modelu."
+          description="Tutaj zobaczysz informacje o przyjętych danych, ograniczeniach modelu oraz problemach, które mogą wymagać poprawienia projektu."
           iconClassName="bg-amber-100 text-amber-700"
         />
         <div className="mt-5 grid grid-cols-1 gap-3">
@@ -181,7 +202,7 @@ export function CalculationResults({ result, project }: CalculationResultsProps)
                     variant={!check.passed && !isWarning ? "destructive" : "default"}
                     className={isWarning ? "bg-amber-600 text-white hover:bg-amber-600" : undefined}
                   >
-                    {isWarning ? "UWAGA" : isInfo ? "INFO" : check.passed ? "OK" : "NIE"}
+                    {isWarning ? "Uwaga" : isInfo ? "Informacja" : check.passed ? "Kontrola zaliczona" : "Błąd"}
                   </Badge>
                 </AlertTitle>
                 <AlertDescription>{check.message}</AlertDescription>
@@ -194,9 +215,9 @@ export function CalculationResults({ result, project }: CalculationResultsProps)
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm md:p-6">
         <ResultsSectionHeader
           icon={BarChart3}
-          eyebrow="Przebieg w roku"
+          eyebrow="Przebieg w ciągu roku"
           title="Miesięczne wyniki"
-          description="Porównaj zapotrzebowanie na ogrzewanie, chłodzenie, CWU i zyski słoneczne."
+          description="Porównaj energię na ogrzewanie, chłodzenie i przygotowanie ciepłej wody użytkowej oraz zyski i straty cieplne w kolejnych miesiącach."
           iconClassName="bg-amber-100 text-amber-700"
         />
         <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50/60 p-3 md:p-4">

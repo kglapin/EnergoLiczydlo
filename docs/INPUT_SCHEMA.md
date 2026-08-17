@@ -1,319 +1,421 @@
-# Schema danych wejściowych (Input Schema)
+# Dane wejściowe projektu
 
-Typy danych wejściowych są modelowane w backendzie za pomocą **Pydantic v2**, a w frontendzie za pomocą **Zod** (generowane ręcznie lub z OpenAPI).
+## 1. Cel dokumentu
 
-## Główny model: `BuildingProject`
+Ten dokument opisuje najważniejsze dane wejściowe aplikacji Energoliczydło.
+
+Nazwy pól w pliku JSON pozostają zgodne z kodem i dlatego część z nich jest po angielsku. Przy każdym polu podano jednak jasne polskie znaczenie.
+
+Projekt składa się z dwóch głównych warstw danych:
+
+1. **podstawowych danych budynku i systemów technicznych**,
+2. **zaawansowanych danych normowych i formalnych** zapisanych w `metadata.normative`.
+
+## 2. Główny obiekt projektu
+
+Uproszczona struktura:
 
 ```json
 {
   "version": "0.1.0",
-  "project_name": "Budynek mieszkalny - Warszawa",
+  "project_name": "Przykładowy budynek",
   "metadata": {
-    "created_at": "2026-08-16T12:00:00Z",
-    "norm_version": "PN-EN ISO 52016-1:2017",
-    "regulation_version": "Dz.U. 2015 poz. 376 z późn. zm."
+    "created_at": "2026-08-17T10:00:00Z",
+    "norm_version": "PN-EN ISO 52016-1",
+    "regulation_version": "aktualna metodologia charakterystyki energetycznej",
+    "normative": {}
   },
-  "general": { /* GeneralInfo */ },
-  "climate_station_id": "warsaw-okecie-123750",
-  "thermal_zones": [ /* ThermalZone[] */ ],
-  "opaque_building_elements": [ /* OpaqueElement[] */ ],
-  "transparent_building_elements": [ /* TransparentElement[] */ ],
-  "thermal_bridges": { /* ThermalBridges */ },
-  "ventilation": { /* Ventilation */ },
-  "internal_gains": { /* InternalGains */ },
-  "systems": { /* BuildingSystems */ },
-  "primary_energy": { /* PrimaryEnergyFactors */ }
+  "general": {},
+  "climate_station_id": "...",
+  "thermal_zones": [],
+  "opaque_building_elements": [],
+  "transparent_building_elements": [],
+  "thermal_bridges": {},
+  "ventilation": {},
+  "internal_gains": {},
+  "systems": {},
+  "primary_energy": {}
 }
 ```
 
-## GeneralInfo
+## 3. Dane ogólne budynku – `general`
 
-| Pole | Typ | Opis |
-|------|-----|------|
-| `building_name` | `str` | Nazwa budynku / analizy |
-| `building_type` | `enum` | `residential`, `office`, `school`, `retail`, `healthcare`, `other` |
-| `dhw_usage_profile` | `enum` | Profil standardowego użytkowania CWU z tabeli 27: `residential_single_family`, `residential_multi_family_lump_sum`, `residential_multi_family_individual_metering`, `office`, `education`, `healthcare`, `retail_services`, `collective_residential`, `warehouse` |
-| `construction_year` | `int` | Rok budowy |
-| `conditioned_floor_area` | `float` | Powierzchnia o regulowanej temperaturze `Af` [m²] |
-| `usable_floor_area` | `float` | Powierzchnia użytkowa `Au` [m²] |
-| `heated_volume` | `float` | Kubatura ogrzewana [m³] |
-| `number_of_storeys` | `int` | Liczba kondygnacji |
-| `location_address` | `str` | Adres (opcjonalnie) |
+Najważniejsze pola:
 
-`conditioned_floor_area` i `heated_volume` muszą być równe odpowiednio sumie
-`floor_area` i `volume` stref typu `heated`, `cooled`, `heated_and_cooled` lub
-`semi_heated`. Projekt musi zawierać co najmniej jedną taką strefę.
+| Pole | Znaczenie |
+|---|---|
+| `building_name` | nazwa budynku lub analizy |
+| `building_type` | rodzaj budynku, np. mieszkalny, biurowy, szkoła |
+| `dhw_usage_profile` | profil użytkowania ciepłej wody użytkowej |
+| `construction_year` | rok budowy |
+| `conditioned_floor_area` | powierzchnia o regulowanej temperaturze w m² |
+| `usable_floor_area` | powierzchnia użytkowa w m² |
+| `heated_volume` | kubatura ogrzewana w m³ |
+| `number_of_storeys` | liczba kondygnacji |
+| `location_address` | adres budynku, jeżeli jest podany |
 
-## ThermalZone
+Suma powierzchni stref kondycjonowanych musi być zgodna z `conditioned_floor_area`.
 
-| Pole | Typ | Opis |
-|------|-----|------|
-| `id` | `str` | Unikalny identyfikator |
-| `name` | `str` | Nazwa strefy, np. "Parter" |
-| `zone_type` | `enum` | `heated`, `cooled`, `heated_and_cooled`, `unheated`, `semi_heated` |
-| `floor_area` | `float` | Powierzchnia podłogi [m²] |
-| `volume` | `float` | Kubatura [m³] |
-| `setpoint_heating` | `float` | Temperatura zadana ogrzewania [°C] |
-| `setpoint_cooling` | `float` | Temperatura zadana chłodzenia [°C] |
-| `occupancy_density` | `float` | Liczba osób / m² |
-| `use_type` | `enum` | Kategoria użytkowania wg normy |
+Suma kubatur stref kondycjonowanych musi być zgodna z `heated_volume`.
 
-## OpaqueElement (przegrody nieprzezroczyste)
+## 4. Strefy termiczne – `thermal_zones`
 
-| Pole | Typ | Opis |
-|------|-----|------|
-| `id` | `str` | Unikalny identyfikator |
-| `name` | `str` | Nazwa |
-| `zone_id` | `str` | ID strefy, do której należy |
-| `element_type` | `enum` | `external_wall`, `roof`, `ground_floor`, `floor_over_unheated`, `internal_wall`, `basement_wall`, `party_wall` |
-| `orientation_azimuth` | `float` | Azymut od strony północy [°]; 0 = N, 90 = E, 180 = S, 270 = W |
-| `inclination` | `float` | Nachylenie od poziomu [°]; 90 = pion, 0 = poziom |
-| `height` | `float` | Wysokość / pierwszy wymiar przegrody [m] |
-| `width` | `float` | Szerokość / drugi wymiar przegrody [m] |
-| `area` | `float` | Powierzchnia [m²], wyliczana jako `height × width` |
-| `u_value` | `float` | Współczynnik przenikania `U` [W/(m²·K)] |
-| `solar_absorptance` | `float` | Współczynnik absorpcji promieniowania `α` [-] (0–1) |
-| `emissivity` | `float` | Emisyjność powierzchni `ε` [-] (0–1) |
-| `adjacent_space_type` | `enum` | `outdoor`, `ground`, `unheated_zone`, `heated_zone`, `constant_temperature` |
-| `adjacent_temperature` | `float?` | Stała temperatura przestrzeni sąsiedniej [°C] |
+Każda strefa ma między innymi:
 
-## TransparentElement (okna, drzwi przeszklone, świetliki)
+| Pole | Znaczenie |
+|---|---|
+| `id` | unikalny identyfikator strefy |
+| `name` | nazwa strefy |
+| `zone_type` | sposób użytkowania cieplnego strefy |
+| `floor_area` | powierzchnia strefy w m² |
+| `volume` | kubatura strefy w m³ |
+| `setpoint_heating` | zadana temperatura ogrzewania w °C |
+| `setpoint_cooling` | zadana temperatura chłodzenia w °C |
+| `occupancy_density` | liczba osób na m² |
+| `use_type` | profil użytkowania strefy |
 
-| Pole | Typ | Opis |
-|------|-----|------|
-| `id` | `str` | Unikalny identyfikator |
-| `name` | `str` | Nazwa |
-| `zone_id` | `str` | ID strefy |
-| `element_type` | `enum` | `window`, `glass_door`, `skylight` |
-| `orientation_azimuth` | `float` | Azymut [°] |
-| `inclination` | `float` | Nachylenie [°] |
-| `height` | `float` | Wysokość elementu [m] |
-| `width` | `float` | Szerokość elementu [m] |
-| `area` | `float` | Powierzchnia [m²], wyliczana jako `height × width` |
-| `u_value` | `float` | Współczynnik `U` [W/(m²·K)] |
-| `g_value` | `float` | Całkowite przepuszczanie energii słonecznej `g` [-] |
-| `frame_factor` | `float` | Udział ramy w powierzchni [-] (0–1) |
-| `shading_factor` | `float` | Współczynnik ekranowania `F_sh` [-] (0–1) |
-| `external_shading` | `object?` | Opis ekranowania zewnętrznego (gzymsy, rolety) |
+Przykładowe typy stref:
 
-## ThermalBridges
+- `heated` – strefa ogrzewana,
+- `cooled` – strefa chłodzona,
+- `heated_and_cooled` – strefa ogrzewana i chłodzona,
+- `unheated` – strefa nieogrzewana,
+- `semi_heated` – strefa częściowo ogrzewana.
+
+## 5. Przegrody nieprzezroczyste – `opaque_building_elements`
+
+Przykłady: ściany zewnętrzne, dach, podłoga na gruncie, strop nad przestrzenią nieogrzewaną.
+
+Najważniejsze pola:
+
+| Pole | Znaczenie |
+|---|---|
+| `id` | unikalny identyfikator przegrody |
+| `name` | nazwa przegrody |
+| `zone_id` | strefa, do której należy przegroda |
+| `element_type` | rodzaj przegrody |
+| `orientation_azimuth` | azymut: 0° północ, 90° wschód, 180° południe, 270° zachód |
+| `inclination` | nachylenie od poziomu: 0° poziomo, 90° pionowo |
+| `height` | pierwszy wymiar przegrody w m |
+| `width` | drugi wymiar przegrody w m |
+| `area` | powierzchnia w m² |
+| `u_value` | współczynnik przenikania ciepła w W/(m²·K) |
+| `solar_absorptance` | współczynnik pochłaniania promieniowania słonecznego |
+| `emissivity` | emisyjność powierzchni |
+| `adjacent_space_type` | rodzaj przestrzeni po drugiej stronie przegrody |
+| `adjacent_temperature` | stała temperatura po drugiej stronie, jeżeli jest wymagana |
+
+Jeżeli podano jednocześnie `height` i `width`, powierzchnia jest wyliczana jako ich iloczyn.
+
+## 6. Przegrody przezroczyste – `transparent_building_elements`
+
+Przykłady: okna, drzwi przeszklone, świetliki.
+
+Najważniejsze pola:
+
+| Pole | Znaczenie |
+|---|---|
+| `id` | unikalny identyfikator otworu |
+| `name` | nazwa otworu |
+| `zone_id` | strefa, do której należy otwór |
+| `element_type` | rodzaj otworu |
+| `orientation_azimuth` | azymut powierzchni |
+| `inclination` | nachylenie powierzchni |
+| `height` | wysokość w m |
+| `width` | szerokość w m |
+| `area` | powierzchnia w m² |
+| `u_value` | współczynnik przenikania ciepła |
+| `g_value` | całkowity współczynnik przepuszczania energii słonecznej |
+| `frame_factor` | udział ramy w powierzchni elementu |
+| `shading_factor` | współczynnik redukcji zysków przez zacienienie |
+
+Otwory są odejmowane od powierzchni brutto odpowiedniej przegrody nieprzezroczystej.
+
+Jeżeli przypisanie otworu do przegrody nie jest jednoznaczne, można wskazać je w `metadata.opening_hosts`.
+
+Przykład:
 
 ```json
 {
-  "auto_calculate": false,
-  "linear_bridges": [
-    {
-      "id": "...",
-      "name": "Mostek okienny",
-      "psi_value": 0.05,
-      "length": 24.0,
-      "zone_id": "...",
-      "element_id": "..."
+  "metadata": {
+    "opening_hosts": {
+      "window_1": "wall_south_1"
     }
+  }
+}
+```
+
+## 7. Mostki cieplne – `thermal_bridges`
+
+Mostki cieplne nie są automatycznie zgadywane z geometrii.
+
+Użytkownik może podać:
+
+- mostki liniowe – współczynnik `psi_value` i długość,
+- mostki punktowe – współczynnik `chi_value` i liczbę wystąpień.
+
+Brak mostków oznacza w obliczeniu wartość 0 W/K i jest sygnalizowany jako założenie wymagające kontroli.
+
+## 8. Wentylacja – `ventilation`
+
+Najważniejsze pola:
+
+| Pole | Znaczenie |
+|---|---|
+| `ventilation_type` | rodzaj wentylacji |
+| `operation_mode` | praca ciągła albo okresowa |
+| `airflow_rate` | nominalny strumień powietrza w m³/h |
+| `heat_recovery_efficiency` | podstawowa sprawność odzysku ciepła |
+| `infiltration_rate` | krotność infiltracji w 1/h |
+| `fan_infiltration_rate` | dodatkowa infiltracja związana z pracą wentylatorów |
+| `supply_temperature` | jawnie podana temperatura nawiewu, jeżeli jest znana |
+| `mechanical_fan_power` | moc elektryczna wentylatorów w W |
+| `schedule` | harmonogram pracy wentylacji |
+
+Szczegółowy model rekuperatora znajduje się w `metadata.normative.heat_recovery`.
+
+## 9. Zyski wewnętrzne – `internal_gains`
+
+Zyski wewnętrzne mogą obejmować:
+
+- ludzi,
+- oświetlenie,
+- urządzenia.
+
+Dla każdego źródła można podać poziom mocy oraz harmonogram godzinowy.
+
+Jeżeli szczegółowe dane nie są podane, silnik może korzystać z jawnie określonego profilu właściwego dla danego trybu obliczeń.
+
+## 10. Systemy techniczne – `systems`
+
+Obiekt zawiera między innymi:
+
+- system ogrzewania,
+- system chłodzenia,
+- system przygotowania ciepłej wody użytkowej,
+- dane systemu wentylacyjnego.
+
+Dla systemów przechowywane są między innymi:
+
+- rodzaj źródła,
+- nośnik energii,
+- sprawność albo współczynnik efektywności,
+- sprawność dystrybucji,
+- sprawność magazynowania,
+- sprawność regulacji,
+- energia pomocnicza, jeżeli jest znana.
+
+## 11. Współczynniki energii pierwotnej – `primary_energy`
+
+Ta sekcja zawiera wartości używane do przeliczenia energii końcowej na nieodnawialną energię pierwotną oraz emisję dwutlenku węgla.
+
+W trybie świadectwa sama liczba nie jest wystarczająca. Źródło wartości jest przechowywane osobno w części formalnej `metadata.normative.legal`.
+
+---
+
+# 12. Zaawansowane dane – `metadata.normative`
+
+Główna struktura:
+
+```json
+{
+  "metadata": {
+    "normative": {
+      "ground": {},
+      "heat_recovery": {},
+      "design_conditions": {},
+      "polish_certificate": {},
+      "legal": {}
+    }
+  }
+}
+```
+
+Każda sekcja ma inne przeznaczenie.
+
+## 13. Grunt – `metadata.normative.ground`
+
+Przykład:
+
+```json
+{
+  "enabled": true,
+  "certificate_mode": false,
+  "soil_conductivity_w_mk": 2.0,
+  "soil_density_kg_m3": 1800,
+  "soil_specific_heat_j_kgk": 900,
+  "external_wall_thickness_m": 0.30,
+  "elements": {
+    "floor_ground_1": {
+      "exposed_perimeter_m": 42.0,
+      "floor_thermal_resistance_m2k_w": 4.5,
+      "periodic_amplitude_ratio": 0.30,
+      "phase_shift_days": 45
+    }
+  }
+}
+```
+
+Znaczenie najważniejszych pól:
+
+| Pole | Znaczenie |
+|---|---|
+| `enabled` | włącza rozszerzony model gruntu |
+| `certificate_mode` | wymaga danych odpowiednich do kontrolowanego wariantu obliczeń |
+| `soil_conductivity_w_mk` | przewodność cieplna gruntu |
+| `soil_density_kg_m3` | gęstość gruntu |
+| `soil_specific_heat_j_kgk` | ciepło właściwe gruntu |
+| `external_wall_thickness_m` | grubość ściany zewnętrznej |
+| `exposed_perimeter_m` | obwód podłogi wystawiony na wymianę z gruntem |
+| `floor_thermal_resistance_m2k_w` | opór cieplny warstw podłogi |
+| `periodic_amplitude_ratio` | współczynnik tłumienia rocznej zmiany temperatury |
+| `phase_shift_days` | przesunięcie czasowe odpowiedzi gruntu w dniach |
+
+## 14. Odzysk ciepła – `metadata.normative.heat_recovery`
+
+Przykład:
+
+```json
+{
+  "enabled": true,
+  "certificate_mode": false,
+  "performance_source": "Karta techniczna centrali",
+  "efficiency_curve": [
+    {"outdoor_temperature_c": -10, "efficiency": 0.78},
+    {"outdoor_temperature_c": 0, "efficiency": 0.82},
+    {"outdoor_temperature_c": 10, "efficiency": 0.84}
   ],
-  "point_bridges": [
-    {
-      "id": "...",
-      "name": "Słup metalowy",
-      "chi_value": 0.5,
-      "count": 4,
-      "zone_id": "..."
-    }
-  ]
+  "summer_bypass_enabled": true,
+  "bypass_min_outdoor_c": 14,
+  "bypass_max_outdoor_c": 24,
+  "frost_strategy": "preheater",
+  "frost_exhaust_limit_c": 0,
+  "indoor_relative_humidity": 0.45,
+  "preheater_max_power_w": 1200,
+  "preheater_efficiency": 1.0
 }
 ```
 
-## Ventilation
+Najważniejsze pola:
 
-| Pole | Typ | Opis |
-|------|-----|------|
-| `ventilation_type` | `enum` | `natural`, `exhaust`, `mechanical`, `mechanical_with_recovery`, `hybrid`, `none` |
-| `operation_mode` | `enum` | `continuous` albo `periodic`; w trybie okresowym strumień nominalny działa według profilu godzinowego / β |
-| `airflow_rate` | `float` | Nominalny strumień podczas pracy wentylatorów [m³/h]; `0` = strumień normatywny |
-| `heat_recovery_efficiency` | `float` | Sprawność odzysku ciepła `η` [-] (0–1) |
-| `infiltration_rate` | `float` | Infiltracja `Vinf/V` [1/h]; przy pominięciu silnik przyjmuje 0,2 po 1995 r. lub 0,3 wcześniej |
-| `fan_infiltration_rate` | `float` | Dodatkowa infiltracja przy pracy wentylatorów `Vx/V` [1/h] |
-| `supply_temperature` | `float?` | Rzeczywista temperatura powietrza po centrali [°C]; po podaniu zastępuje model redukcji `1−η`, aby nie liczyć odzysku podwójnie |
-| `mechanical_fan_power` | `float?` | Moc wentylatorów [W] |
-| `schedule` | `Schedule?` | Harmonogram wentylacji; brak oznacza fallback `β` w trybie okresowym |
+| Pole | Znaczenie |
+|---|---|
+| `performance_source` | źródło charakterystyki urządzenia |
+| `efficiency_curve` | punkty sprawności dla różnych temperatur zewnętrznych |
+| `summer_bypass_enabled` | włącza obejście letnie wymiennika |
+| `bypass_min_outdoor_c` | dolna temperatura pracy obejścia |
+| `bypass_max_outdoor_c` | górna temperatura pracy obejścia |
+| `frost_strategy` | sposób ochrony przed zamarzaniem |
+| `indoor_relative_humidity` | wilgotność względna powietrza usuwanego jako liczba 0–1 |
+| `preheater_max_power_w` | maksymalna moc nagrzewnicy wstępnej |
 
-## InternalGains
+Możliwe strategie ochrony przed zamarzaniem:
 
-Jeżeli pole zostanie pominięte, backend dobiera normowy poziom zysków do
-`building_type`, `dhw_usage_profile` i `usage_share_beta`. Podanie obiektu
-`InternalGains` oznacza świadome nadpisanie tego poziomu; harmonogramy źródeł
-umożliwiają wtedy rzeczywisty przebieg godzinowy.
+- `none` – brak aktywnej ochrony,
+- `preheater` – nagrzewnica wstępna,
+- `reduce_recovery` – ograniczenie odzysku ciepła,
+- `disable_recovery` – czasowe wyłączenie odzysku ciepła.
+
+## 15. Warunki projektowe – `metadata.normative.design_conditions`
+
+Ta sekcja służy do projektowego obciążenia cieplnego.
+
+Najważniejsze pola:
+
+| Pole | Znaczenie |
+|---|---|
+| `enabled` | włącza obliczenie projektowego obciążenia cieplnego |
+| `certificate_mode` | wymaga udokumentowanego źródła warunków projektowych |
+| `outdoor_design_temperature_c` | projektowa temperatura zewnętrzna |
+| `source` | źródło projektowej temperatury zewnętrznej |
+| `heat_up_power_by_zone_w` | dodatkowa moc ponownego nagrzania dla stref |
+| `unheated_adjacent_temperature_by_element_c` | temperatura przestrzeni nieogrzewanej po drugiej stronie konkretnej przegrody |
+| `ground_adjacent_temperature_by_element_c` | projektowa temperatura po stronie gruntu dla konkretnej przegrody |
+
+## 16. Dane formalnego świadectwa – `metadata.normative.polish_certificate`
+
+Ta sekcja przechowuje dane miesięczne dla formalnego silnika charakterystyki energetycznej.
+
+Każda miesięczna seria musi zawierać dokładnie 12 wartości.
+
+Najważniejsze pola:
+
+| Pole | Znaczenie |
+|---|---|
+| `enabled` | włącza miesięczny silnik formalny |
+| `official_bip_climate_data` | potwierdzenie użycia odpowiednich oficjalnych danych klimatycznych |
+| `monthly_outdoor_temperature_c` | 12 miesięcznych temperatur zewnętrznych |
+| `solar_irradiation_kwh_m2_by_element` | miesięczne promieniowanie słoneczne dla konkretnych przegród przezroczystych |
+| `heating_internal_temperature_c_by_zone` | miesięczne temperatury wewnętrzne dla ogrzewania |
+| `cooling_internal_temperature_c_by_zone` | miesięczne temperatury wewnętrzne dla chłodzenia |
+| `heating_gain_utilization_by_zone` | miesięczne współczynniki wykorzystania zysków przy ogrzewaniu |
+| `cooling_loss_utilization_by_zone` | miesięczne współczynniki wykorzystania strat przy chłodzeniu |
+| `beta_by_zone` | miesięczny udział czasu użytkowania |
+| `recovery_effectiveness_by_zone` | miesięczna skuteczność odzysku ciepła |
+| `supply_extract_reduction_by_zone` | miesięczne współczynniki redukcyjne instalacji nawiewno-wywiewnej |
+| `unheated_adjacent_temperature_c_by_element` | miesięczne temperatury przestrzeni nieogrzewanych |
+| `ground_adjacent_temperature_c_by_element` | miesięczne temperatury gruntu |
+| `internal_gain_density_w_m2_by_zone` | gęstość zysków wewnętrznych dla stref |
+| `preheater_electricity_kwh_by_month` | 12 miesięcznych wartości zużycia energii przez nagrzewnicę wstępną |
+| `heating_useful_override_kwh_by_zone` | opcjonalne, zewnętrznie zweryfikowane miesięczne wartości ogrzewania |
+| `cooling_useful_override_kwh_by_zone` | opcjonalne, zewnętrznie zweryfikowane miesięczne wartości chłodzenia |
+
+Wartości współczynników takich jak wykorzystanie zysków, wykorzystanie strat, udział czasu działania i skuteczność odzysku muszą mieścić się w zakresie od 0 do 1.
+
+## 17. Ślad dokumentacyjny – `metadata.normative.legal`
+
+Przykład:
 
 ```json
 {
-  "occupancy": {
-    "density_persons_per_m2": 0.03,
-    "heat_gain_per_person": 80,
-    "schedule": { /* Schedule */ }
-  },
-  "lighting": {
-    "power_density": 10.0,
-    "schedule": { /* Schedule */ }
-  },
-  "equipment": {
-    "power_density": 5.0,
-    "schedule": { /* Schedule */ }
+  "certificate_mode": true,
+  "calculation_date": "2026-08-17",
+  "methodology_source": "wskazanie zastosowanego aktu i wersji metodologii",
+  "climate_data_source": "źródło danych klimatycznych",
+  "utilization_factor_source": "źródło współczynników wykorzystania zysków i strat",
+  "ventilation_factor_source": "źródło danych i współczynników wentylacyjnych",
+  "primary_energy_factor_sources": {
+    "electricity": "źródło współczynnika dla energii elektrycznej"
   }
 }
 ```
 
-Jeżeli harmonogramy zysków nie są podane, źródła działają ze stałym
-współczynnikiem 1,0. Normowe `q_int` pozostaje wtedy wartością średnią, a nie
-rzeczywistym profilem obecności w ciągu doby.
+Znaczenie pól:
 
-## Schedule
+| Pole | Znaczenie |
+|---|---|
+| `certificate_mode` | włącza formalną kontrolę kompletności danych |
+| `calculation_date` | data wykonania obliczenia |
+| `methodology_source` | źródło zastosowanej metodologii |
+| `climate_data_source` | źródło danych klimatycznych |
+| `utilization_factor_source` | źródło współczynników wykorzystania zysków i strat |
+| `ventilation_factor_source` | źródło współczynników i danych wentylacyjnych |
+| `primary_energy_factor_sources` | źródło współczynnika nakładu nieodnawialnej energii pierwotnej dla każdego używanego nośnika |
 
-```json
-{
-  "type": "hourly_profile",
-  "weekday": [0.0, 0.0, 0.0, ..., 1.0, ...],
-  "saturday": [...],
-  "sunday": [...],
-  "holiday": [...]
-}
+## 18. Zasada działania trybu świadectwa
+
+Po ustawieniu:
+
+```text
+metadata.normative.legal.certificate_mode = true
 ```
 
-Lub uproszczony typ `constant` / `weekday_weekend`.
+aplikacja sprawdza kompletność wymaganych danych.
 
-## BuildingSystems
+Jeżeli brakuje wartości potrzebnej do formalnego obliczenia, aplikacja nie powinna zgadywać jej na podstawie nieudokumentowanego ustawienia domyślnego.
 
-```json
-{
-  "heating": {
-    "system_type": "heat_pump_air",
-    "installation_type": "water_surface",
-    "fuel_or_carrier": "electricity",
-    "generation_efficiency": 3.0,
-    "distribution_efficiency": 0.95,
-    "storage_efficiency": 1.0,
-    "control_efficiency": 1.0,
-    "sink_temperature": 35.0,
-    "auxiliary_energy_kwh_year": null
-  },
-  "cooling": {
-    "system_type": "split_ac",
-    "installation_type": "direct_expansion",
-    "fuel_or_carrier": "electricity",
-    "generation_efficiency": 3.9,
-    "distribution_efficiency": 1.0,
-    "storage_efficiency": 1.0,
-    "control_efficiency": 0.94,
-    "auxiliary_energy_kwh_year": null
-  },
-  "dhw": {
-    "system_type": "electric_storage",
-    "fuel_or_carrier": "electricity",
-    "generation_efficiency": 0.96,
-    "storage_efficiency": 1.0,
-    "distribution_efficiency": 0.6,
-    "utilization_efficiency": 1.0,
-    "distribution_type": "central_no_circulation"
-  },
-  "ventilation_system": {
-    "has_heating_coil": false,
-    "has_cooling_coil": false,
-    "fan_specific_power": 2.0
-  }
-}
-```
+W takiej sytuacji użytkownik otrzymuje błąd wskazujący brakujące dane.
 
-Moc nominalna źródła ogrzewania ani chłodzenia nie jest pobierana z formularza.
-Backend dobiera `design_heating_power_kw` na podstawie maksymalnych dodatnich
-strat przez przenikanie i wentylację, z uwzględnieniem sprawności przesyłu,
-akumulacji oraz regulacji. Pole `nominal_power` pozostaje opcjonalne wyłącznie
-dla zgodności ze starszymi plikami JSON i nie wpływa na obliczenia roczne.
+## 19. Ważna zasada dotycząca opisów
 
-`QW,nd` jest obliczane automatycznie według załącznika nr 1, § 5.3 i tabeli 27
-metodologii z pola `general.dhw_usage_profile` oraz powierzchni ogrzewanej `Af`.
-W równaniu stosowane są wartości metodologiczne: `cW = 4,19 kJ/(kg·K)`,
-`ρW = 1 kg/dm³`, `θW = 55°C`, `θ0 = 10°C` i `tR = 365 dni`. Źródło CWU oraz
-sprawności techniczne służą wyłącznie do przeliczenia `QW,nd` na energię
-końcową i pierwotną.
+Nazwy pól kodu, np. `heating_gain_utilization_by_zone`, mogą pozostać angielskie, ponieważ są częścią API.
 
-`QC,nd` jest wyznaczane z godzinowego bilansu zysków i strat stref chłodzonych
-zgodnie z § 5.4 metodologii. Źródło chłodu i SEER przeliczają tę energię
-użytkową na energię końcową; moc nominalna chłodzenia nie jest danymi wejściowymi
-do charakterystyki rocznej.
+W interfejsie i dokumentacji nie należy jednak pokazywać użytkownikowi samej nazwy technicznej bez wyjaśnienia.
 
-`generation_efficiency` oznacza ηH,g / ηW,g albo COP/SEER, zależnie od
-systemu. Pozostałe współczynniki odpowiadają składowym sprawności przesyłu,
-akumulacji oraz regulacji i wykorzystania z pkt 4.1 metodologii. Formularz
-udostępnia kontrolowane listy źródeł i nośników oraz ustawia wartości domyślne
-na podstawie tabel rozporządzenia; dane producenta mogą je zastąpić.
+Poprawny opis:
 
-`auxiliary_energy_kwh_year` oznacza roczne zapotrzebowanie końcowej energii
-elektrycznej `E_el,pom` [kWh/rok] na pompy, napędy i automatykę danego systemu.
-Dla ogrzewania puste pole uruchamia wartość normatywną z tabeli 20, a wpisanie
-`0` oznacza świadomy brak energii pomocniczej. Dla chłodzenia puste pole oznacza
-`0`; jeżeli dokumentacja urządzenia podaje własne zużycie, należy wpisać je
-jawnie. Energia pomocnicza jest doliczana do energii końcowej elektrycznej, ale
-nie zwiększa energii użytkowej `Eu`.
+> Miesięczny współczynnik wykorzystania zysków ciepła dla ogrzewania (`heating_gain_utilization_by_zone`).
 
-Sprawność całkowita jest prezentowana w formularzu jako wartość obliczona:
-`η_tot = η_g/COP/SEER × η_d × η_s × η_e`. Obecny główny bilans nie wyznacza
-rzeczywistego COP osobno dla każdej godziny. `η_tot` jest kontrolnym iloczynem
-sezonowych wartości użytych do przeliczenia `Q_H`/`Q_C` na energię końcową, a
-nie dodatkowym niezależnym wejściem. Godzinowe krzywe COP/SEER wymagają
-osobnego, jawnego modelu danych.
+Niepoprawny opis:
 
-`installation_type` jest opcjonalną klasyfikacją instalacji odbiorczej, np.
-`water_radiators` (ogrzewanie wodne z grzejnikami), `water_surface` (instalacja
-płaszczyznowa) albo `direct_expansion` (chłodzenie DX/split/VRF). Dla ogrzewania
-`water_radiators` i `water_surface` uruchamiają odpowiedni normowy wiersz pomp
-obiegowych tabeli 20, o ile nie podano jawnego `auxiliary_energy_kwh_year`.
-Pole nie ustawia automatycznie ηH,d, ηH,e, ηC,d, ηC,e ani COP/SEER. Wartości
-sprawności należy dobrać na podstawie rzeczywistej instalacji i właściwej
-tabeli metodologii.
-
-Źródła ogrzewania i chłodzenia są walidowane osobno, a `system_type` CWU
-korzysta z odrębnego katalogu. Dzięki temu np. źródło chłodu nie może zostać
-przypadkowo zapisane jako źródło ogrzewania.
-
-## PrimaryEnergyFactors
-
-```json
-{
-  "electricity": { "fp": 2.5, "we": 0.6 },
-  "natural_gas": { "fp": 1.1, "we": 0.2 },
-  "lpg": { "fp": 1.1, "we": 0.2 },
-  "heating_oil": { "fp": 1.1, "we": 0.27 },
-  "hard_coal": { "fp": 1.1, "we": 0.34 },
-  "lignite": { "fp": 1.1, "we": 0.34 },
-  "district_heating": { "fp": 1.2, "we": 0.25 },
-  "biomass": { "fp": 0.2, "we": 0.05 },
-  "biogas": { "fp": 0.5, "we": 0.05 },
-  "solar": { "fp": 0.0, "we": 0.0 },
-  "wind": { "fp": 0.0, "we": 0.0 },
-  "geothermal": { "fp": 0.0, "we": 0.0 },
-  "renewable": { "fp": 0.0, "we": 0.0 }
-}
-```
-
-Wartości domyślne pochodzą z polskich przepisów i mogą być nadpisane.
-
-## Output: `CalculationResult`
-
-```json
-{
-  "project_id": "...",
-  "status": "success",
-  "annual_indicators": {
-    "eu_kwh_m2_year": 45.2,
-    "ek_kwh_m2_year": 52.1,
-    "ep_kwh_m2_year": 89.5,
-    "ec_tco2_m2_year": 0.03,
-    "u_oze_percent": 15.0
-  },
-  "monthly": [ /* 12 rekordów */ ],
-  "hourly": { /* opcjonalnie kluczowe szeregi */ },
-  "compliance": {
-    "pass": false,
-    "checks": [ /* lista testów z statusami */ ]
-  }
-}
-```
+> `etaH,gn` / utilization factor.

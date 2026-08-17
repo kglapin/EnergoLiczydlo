@@ -7,7 +7,7 @@ export default function FormalSettingsLayout({ children }: { children: React.Rea
     <>
       <div className="container mx-auto flex justify-end px-4 pt-2">
         <Button variant="outline" size="sm" asChild>
-          <Link href="/normative/certificate">Edytuj dane miesięczne świadectwa</Link>
+          <Link href="/normative/certificate">Miesięczne dane formalnej charakterystyki</Link>
         </Button>
       </div>
       {children}
