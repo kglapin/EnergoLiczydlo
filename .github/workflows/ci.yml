@@ -23,7 +23,8 @@ jobs:
       - name: Lint with ruff
         run: >-
           ruff check app tests --output-format=github
-          --extend-per-file-ignores "tests/test_full_technical_audit.py:I001,F841"
+          --extend-per-file-ignores "tests/test_full_technical_audit.py:I001"
+          --extend-per-file-ignores "tests/test_full_technical_audit.py:F841"
       - name: Type check with mypy
         shell: bash
         run: |
