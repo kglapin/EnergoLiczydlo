@@ -200,16 +200,17 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             inclination=0.0,
             element_type="roof",
         ),
+        # The published geometry marks the floor as Outdoors + NoSun + NoWind.
+        # It is therefore driven by outdoor air, not by an invented 10°C ground
+        # boundary. Solar is explicitly suppressed below.
         opaque(
             "floor",
-            "Ground floor",
+            "Floor",
             CASE_600_FLOOR_AREA_M2,
             floor_u,
             floor_nodes,
             inclination=180.0,
-            element_type="ground_floor",
-            adjacent=AdjacentSpaceType.CONSTANT_TEMPERATURE,
-            adjacent_temperature=10.0,
+            element_type="floor",
         ),
     ]
     transparent = [
@@ -241,7 +242,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
     )
     opaque_solar: dict[str, np.ndarray] = {}
     for element in opaque_elements:
-        if element.adjacent_space_type != AdjacentSpaceType.OUTDOOR:
+        if element.id == "floor" or element.adjacent_space_type != AdjacentSpaceType.OUTDOOR:
             opaque_solar[element.id] = np.zeros(8760, dtype=float)
             continue
         irradiance = radiation_on_surface(
