@@ -1,0 +1,1905 @@
+
+=== STRONA 01 ===
+
+100% Ima my /212> TREQ.
+
+EN 150 52016-1:2017
+CA B.36 — OS: między nen AiB dia nbvevrntteits ogizewan!s pats 6.6.11.3)
+
+Zastosowanie
+
+Tylko metoda A
+
+ee PRS RE Gs re PE Oy 1 MH
+
+Tylko metoda B
+ur ARG GH eee aera GET) 9 SIS TERT CY CE cae aa aac er cin sae eee
+Oble metody dazwotone Nie
+
+* Możliwe tylko jedno Tak w kolumnie
+
+" W razie potrzeby dodać więcej kolumn, aby rozróżnić zastosowania (np kategorie budynków, nowe lub
+istniejące budynki Rp )
+
+Tylko meloda Ą
+| Tylko metoda B
+Oble metody dozwotone
+
+| Współczynnik korełacji dla metody Adla
+OKTESOWEGO chioazenia
+
+| be; red
+
+"apa
+
+Tablica B. 87 Wybór między metodami M i B wskaźnika przegrzania (patrz 6 8. 12)
+
+/ = Możliwe tylko jedno Tak w kolumnie.
+
+* W razie potrzeby dodac więcej kolurnn, aby rozróżnić zastosowania (np. ke
+istniejące budynki itp ) WA Lg
+
+Jeśli zastosowano Metodę B ! NOOZRZYRZBREZSREERERRECRE
+Podaj Szczegół lub rererencję do szczegółów ŚLĄ! t bo <dewolny tekst
+
+}- =) nor tic w ite poc. 1306 z późn. 290.) Pose Nany 3a otranore 169
+raoanie z AM. 5 wet © ustawy z Ones (2 rzeznia wić FO NMA SIE (LZ v. mn Oe POZ. Si BF PGS, SA.) ie ele NOTY ZĄ
+igo z z |
+mF SR it : Choe recz 7 » Fusloern Komelon Naorwa wy nemu (PCs
+pozwem aińorw m jek utyśory kiarachhe. 5 pitasko= iw mapethawe DO rec arrysuzwą wsk k p ve I WY,
+
+i mia P jA > By — s r A p ea ty © ł CaP al ti |
+który Shomule paieChał tacy pburd Oar ifie Laberpectwha tried fwuciań (6 ka
+
+
+
+
+=== STRONA 02 ===
+
+EN ISO 52016 1:2017
+
+Tablica B.39 — Miesięczny udział zapotrzebowania na energię do nawilżania (patrz 6.6.14)
+
+mreczei newt zapotrzebowania na energię do ritraty:
+Za pomocą wzoru?
+
+| Jeśli Tak podać WZÓR Dia ded mieblsica LM LLL
+Jour = Os nara! Qu. han
+
+OAZIE Qinaman JEST Miesięcznymrocznym zapotrzebowańiem na
+energię do det rd Jak określono w 6.5.4.1 w kV
+
+== umo
+
+wrr
+
+ee SLYSZE
+
+"WT ==
+| WYW BB Br fr SONG TJ TTE DY ASY Ok ges A W TT —a
+
+| Jeśli Nie, podać udział dla
+| „Każdego Jo miesiąca (ogółem = UE
+| Styczeń
+
+Luly
+
+| Urządzenia do transportu wigoci z z powiediża oiówobejo b
+Go powietrza nawiewanego (takie jak obrotowy wymiennik
+ciepła z powierzchnią pochłaniającą wilgoć) h
+
+Inne urządzenia
+
+dyski
+
+Tablica B.41 = Roczna skumilodhyia ilość wilgoci dostarczona I na kg nawiewanego suchego
+_ powietrza (metoda miesięczna patrz 6.6. 14) BBR | (64911
+
+Roczna skumulowana ilość wilgoci
+dostarczona na kg krttypęjęj
+
+i" areas ERAREERIE
+bota)
+
+a =n
+i
+== =
+
+|. |
+
+Kategoria przestrzeni *
+
+SPACECAT_RES_LIV
+
+onmi it)
+
+SPACECAT RES _INDIV_OTHER
+
+0,17
+
+a
+
+SPACECAT _RES_COLL
+
+0,17
+
+—
+
+mad = An
+
+=
+
+SPACECAT_ TH.UNCOND_OTHER 0
+
+c Z PE EW R EE ZE RE AE NE CZ RZY apie EEE PE EE TE ZE O
+
+SPACECAT. TH.UNGOND_SUN 0
+
+RZ O CZ OEB ZOZ | EC hc c CK > tO R Z A I | IA II m | M lh 0 IB W
+— m
+
+0
+
+za"
+a
+
+GE OHEOĄC EK Z REM BCO2
+
+SPACECAT_ TH UNCOND CORR
+
+2 W razie potrzeby dodać więcej wierszy, aby rozróżnić rodzają.
+UWAGA _ Kategorie przestrzeni przyjęta z ISO 52000-1: 2017, Załącznik B. Wartości oparte
+są na NEN 7120 (Holandia)
+
+/ te 7 | Polsioe Nammy 549
+
+x ae 4
+abs piamyd Majatbówa Uo Pech pla yelagula TO bhi rt Won eh owe (sk
+
+170 „odnie z art 3 ust. 5 ustawy z dre 10 wrzesnia 2002 r. gmzertaizaci (Or fd poe 16 2 pean) zm naa
+el m I LE) Pith
+
+pozwem ct ALT! |ak Li sory Macachiw, 4 aut
+
+Mory stłoczje perzanaszze cig pad oat mna rabexpeecten G £260 NEUMAN KDPEMAUEMM
+
+
+
+=== STRONA 03 ===
+
+in wae Marry eq cern
+100% LJ] 4
+
+WIEC) /::> b TA
+
+Tablica B.44 (Ciąg dalszy)
+
+Roczna skumulowana Ilość wilgoci
+dostarczona na kg nawiewanego
+
+suchego powietrza
+
+| * (zup
+
+| SPACECAT " HOTEL
+| SPACECAT. REST
+
+| SPAGECAT. _ SPORT. TH GOND
+
+SPACECAT_SPORT_TH UNCOND
+| SPACECAT_RETAIL
+
+a ENGINE
+| SPACEGAT CAR
+|” W razie ocb dądać więcej wii wierszy, aby rozróżnić rodzi | RR I e | BR |
+
+| UWAGA Kategorie przestrzeni przyjęto z ISO. 52000- ki 2017, , Zac B. „iaoś oparte
+| Sana NEN 7120 (Holandia). ocr ih | BB
+
+Dla każdego okna:
+
+swobodny wybór pomiędzy eni b powierzchni oszkienia lub |
+
+Dla wszystkich okien ten sam PASS
+pole powierzchni oszklenia lub stały udział ramy
+
+Dla wszystkich okien: dozwolone tylko PO powierzchni | TakiNie
+oszkienia
+
+Lam am m
+
+ni Z Z "AE ZZ Z CE OWA a a W <a SS TM
+= SS
+
+| Dia wszystkich Okien tyko stały udział emy iP
+? Możliwe tylko jedno Tak w kalumnie.
+"W przypadku udziału ramy:
+
+Ustalona wartość udziału ramy
+
+\ aa PAKI
+1: f PA 2) De L hm Ile paz VID z póra zm |” ao Nany 84 owy e
+ajawy r dra Z MITENLBCZKF DM 2 SE4 ł
+
+one rant avy ul
+r
+
+J ’ < = yy
+dY wlucy 4 Pole lene Komżałtwd Mer siadiz eet) Marru (PRN
+
+F:ŁLYLISKII
+
+EN 150 52016.1 ‘2017
+
+171
+
+
+
+
+=== STRONA 04 ===
+
+EN ISO 52016-1:2017
+B.43 — ai związane z
+
+Tablica
+
+współczynnik korekcyjny I wagowy
+
+dia wartości g nien
+przezroczystych oszkień i urządzeń zacieniających: Hay it |
+
+ód energii słonecznej (patrz E.2.2.1)
+
+ee
+
+paz OLA LATA
+
+Podwójne oszklenie z > z selektywną f powłoką misyjną
+| Potrójne oszkienie
+
+=p Do
+
+ES = ZOE PZ O RZE EZR RSE CEC zp I OP M
+
+ae = ee wird OŚLA
+
+potrójne OSZKIENIE z dwiema selektywnymi powłokami niskoefnisj (nymi
+
+! Właściwości optyczne.
+THEFT zacieniającego
+
+zacieniającego
+
+Białe żałuzje paziome
+
+Tkaniny pokryte
+aluminum
+
+| * W razie potrzeby dodać więcej wierszy. |
+
+172 gone z art. 5 usł. 5 ustawy £ drum 17 arte" cee r ynwmawascy |
+
+s sym” | 4 |
+Ł y= PSIA KO” | et śwadiy Fierache 2 aul Ppt obi (Bia ajathowee U
+
+ee ees A
+
+br, |
+
+= (we Ges
+
+he "gs
+
+Ą
+Aż
+
+a Fo kldesytu ko
+
+poe. 1166 z pózn zm) Posuc!
+
+Webelonvi Ian |
+
+zd!
+
+_
+
+ay Jai
+
+Ory 24a STOM PIE
+
+Ps
+
+
+
+
+=== STRONA 05 ===
+
+EN 150 52016-1:2017
+
+Tablica B.44a = Współczynnik redukcji ruchomych żaluzji, fawn I współczynnik redukcji ruchomych
+urządzeń zacieniających f<knam (patrz G.2.2.2.2)
+
+Tablica B.44b — Współczynnik redukcji ruchomych żaluzji, | AUD
+
+TEJ Fan. 5
+
+"EL"
+UW „I
+
+tia
+
+| JU jena |
+
+0.09
+
+0,13 |
+
+U ym uk W a Ro „Od A dł me M '|
+
+053
+
+0, 16
+
+0,32
+
+AP = ee ey | BN m
+
+EW
+0,44
+10,47 |
+0.59
+
+—w- R
+
+0.54
+
+044
+
+mama HW Be
+
+0,26
+
+w St eee
+
+OZ
+
+=
+
+0,28
+
+Gaw
+
+IP 0,40
+
+1031
+| 0,20
+
+2 w. razie bokżob dodać więcej kolumn ib. wierszy, aby rozróżnić np. ża-
+stosowania (np. mere ir: nowe lub Pele? tąśtyniki il
+
+i współczynnik redukcji
+ruchomych BE: „Pe zacieniających dasasd wikckóy G. 2. AT REKA
+
+ow nazwie |
+
+0.00 |
+
+-
+
+0.69
+
+2 W razie potrzeby dodać więcaj kolumn lub wierszy, aby rozróżnić np. za- .
+stosowania (np. kategorie budynków, nowe lub istniejące budynki itp.),
+
+orientacje lub klimaty
+
+ustawy Gren | 0 ErTPYTN PÓU
+
+| r oncenalwanp (Dr U
+
+her 1668 por. 1360 c pezn sm) Poise omy są Fromore
+
+173
+
+pra KRAK M jak Ulm jy Macażkke, 6 auty b= pli rere heal) Owa Se fer h grzydlugta Folk ett) KCE6Gz Naiazkzzcy Nari [PCH
+
+
+
+
+=== STRONA 06 ===
+
+EN ISO 52016-1:2017
+
+Tablica B.44c = Współczynnik redukcji ruchomych żaluzji, fomwun. | współczynnik redukcji ruchomych
+urządzeń zacieniających Fonewit (patrz G.2.2.2.2)
+
+Sztokholm dededench
+
+EO A PB REA ALZWUĄ ee ee ee ee
+
+ji
+re Due ue eu? ah pat he m = "Dia tar ETAT zizi cąn szok p x
+
+105. | 110.00 061 0,70.
+UCZE IE | 058
+0.5 | 047
+110,5
+
+"W razie RZKRASAY dodać więcej kolumn lub: wierszy. by
+stosowania (np. oe Tt nowe ub aynaat body tp).
+
+Tablica 5.45 — ~ Wybory miętzy opejami i metodami obliczania zacienienia przez obiekty zewnętrzne
+
+Opis
+
+czy obliczanie wpływu zacienienia gi
+przez odległe obiekty zawarto w wm »
+| dokumencie? |
+
+| elementach budynku: jakie rodzaje | uwzgiędnić. | uwzględnić | paris
+| odległych obiektów zacieniających | BZ
+
+| (nie będących na miejscu) mozna - Krajobraz | 'Roślinność Je |. | 104
+lub należy uwzględnić lub pominąć _ | (taki Jak itakajak | |
+
+|UWAGA Na przykładkrajobraz Mah idei MEGA |
+| (taki jak wzgórza lub waży), roślinność konstrukcje
+
+(taka jak drzewa), inne konstrukcje (takie jak |
+
+(takie jak PODAŁ: | | budynki)
+
+3 Możliwe tylko jedno Tak w kolumnie | RR BRE
+ŁY razie potrzeby dodać więcej kolumn. aby rozróżmie zaglocowania (np. kaleqirie EASA E nowe lub eerie? budynki itp.) |
+
+” 4 a = w m J 4 s z M = re" .
+174 Zgodne zart Sus 5 ustawy z trop 12 przesrea MQ r o narrazacji (Dr. U. be Vie par, MÓW r poen gw) Posie Horn są stronone
+
+fl acer wam |ak Wat liarachie, w es tej atkowag 57 fechi or polużja Sip kerbs Koodelwi Ho tak zacynisńw (PW
+
+
+
+=== STRONA 07 ===
+
+SED) / 212 » —T
+
+EN ISO 52016-1:2017
+Tablica B.45 (ciąg dalszy)
+
+Wszystkie zastosowania
+
+Opis
+Przy obliczaniu zacienienia i na
+
+nieprzezroczystych elementach pozd |
+budynków, takich jak dachy lub | !
+
+fasady: ktdre typy miejscowych 1
+Obiektów zacieniających należy lub
+mozna uwzgłędnić lub pominąć
+
+UWAGA Na przykład wnęki,
+gzymsy lub inne mielscche, elementy
+ZaGeniajace budynku
+
+Należy | |iaźną | | [należy
+| | uwzględnić. | wzylęnie: _| pominąć.
+| Nie dotyczy | Nie dotyczy | | Nie
+
+| dotyczy
+
+COZ
+
+Przy obliczaniu zacienienia na
+a CO mt 5 nie: pominąć
+UWAGA Na przykład wnęki | U hłe iii ALU HI |
+
+okienne, gzymsy i pdastry boczna ||
+
+Szczegółowe ż żasady wyboru 113)
+metody obliczenia zacienienia na
+elementach budynku
+
+Wybór między dwiema metodami
+obliczania zacienienia:
+
+Metoda 1, Zacienienie +
+promieniowania OSC
+
+Metoda 2, Zacienienie |
+promeeniowania eet
+i rozproszonego
+
+W przypadku melody 2: podaić |
+odniesienie do SERRA ozna
+
+. m ę MIES 1 5
+f d Iwy Z 3 1.2 mtzera EGZ r. 0 norwaraci (De. IL. e b poz. 1358 z piz fon) FAZKE Nacry 59 OWY 7
+Zgoenezańn sum dbusiwyzdra 2 eres = y
+
+„(KK
+DZ Rz \ Sey ue) pszenne Korei ho msi scy nem
+
+eras ha PVE ing oops do rech DIT ys h
+
+powy sires m [Se Lifveory Wiera ke. 3 316% ef : r
+
+1 | W. Ras ry i ee bali
+je = ( or 81 1 ad e La [tle Metra rei y
+hiss r bel) P= eu t ac m ZUM as e Debs wud zk 4 v 2 r
+
+
+
+
+=== STRONA 08 ===
+
+100% HABEN 178 FŁYŁTE,
+
+EN ISO 52016-1:2017
+Tablica B.46 — Miesięczne parametry zacienienia przez gzymsy (patrz F.3.5.1.2)
+
+| lato: czerwiec — wrzesień
+
+Półkula
+południowa
+
+EW || O.6t I 0610.
+
+SP + + erro 8 W of Pee eo
+
+| SESW | + Lat ny 0616
+
+== śzryżażai3394 [Bison bs ddd a .
+
+N | SJJ |-0, | 0.616
+
+Tablica B.48a = Miesięczne parametry zacieniepii przez przeszkody, bardziej szczegółowa metoda
+(patrz FA. dobie tr oynYGJA |
+
+” odda
+
+ry
+
+jm Sect ee tire Shien Ste
+
+0.15 | 0 | 242 | 220 |
+
+176 godne z art yw z istaywy Z ÓW sl; MSTEGLH ZĘ | p r. STE są be I Ke 155 poc ie TERN rm IL Woe Morris 4 ctrommoce
+er a l..( st rt) uiwaty lite ache s wu Wehbe fal afta ha ja the me: > Tech gilyw gula Fok or u KS irezlowi fs ez scy Mia u IP A
+
+MÓJ ZESUR PESONAILZZEC Pi raz ińnre SIDA Sisco NIEUGTZNK 1% KOWEMWATKEM
+
+
+
+
+=== STRONA 09 ===
+
+CT < SED «> GBA
+
+EN 150 52016-1:2017
+
+Tablica B.48b — Miesięczne parametry zacienienia przez przeszkody; bardziej szczegółowa metoda
+(patrz F.3.1.2 i F.3.6.2.2)
+
+Wysokość kątowa słońca, | Ułamek
+CTootim MA BBKŁOF bezpośredniego
+| promieńiowania
+slonecznego
+
+Jeouderm
+
+ww djs PAP
+
+0 0.48
+
+aiid, m O O li w pCO ee ee ae ee re Foniat|
+
+| 033 | 053
+
+=
+
+| 0,30 | 0.20 | 0.21
+0,03 | Oi | 052
+
+| 004 | 0,47
+
+zam
+
+0,37 | 0,63
+
+| 4 1
+i i
+( h
+| |
+| , |
+he Ji | R
+i j | p
+k h i j |
+} KERM. | U
+| DARAKEBRYBEŁ
+A ae ea h |
+WA | HA ee i}
+' j LI "IR BU
+| y |
+f | Heme OEB: ELH:
+LUA "BREE. é
+i 4 JEL| M A 4 JE ;
+ee dh jena yee at
+U i | | AB
+| ee HH U K U i H | k 5
+ja JA i ee ee:
+(BYRYRABE R AAAA 45%
+H Moog OM oH oe ki 18 i i :
+H Ą KAKA AA 1 JA t BR -Ę A 4
+oo W 1! RARREREPETE
+| RIRKEKEKEERK bt
+| UE hold BE: k (4-6 nA i
+| h UI. i) aL ae. UE. t |, I
+fee KE 4 © €: 1% 141
+Wea ad LR oreo Big Woh ta
+| ee ee BĘ | Q
+1 | U ' } ALE i
+‘er H B a ole H j
+| Ę t b
+| | i} UO I f
+HH H | x a y h |
+eae ee ee eee :
+» Hf f ł I { |
+LIS 4 | |
+i REI He |
+Wh Go] 4 4 H
+i Ji 4 |
+f | | | |
+| RARE
+| |
+Zgtóne z art, 9 Us w yatawy r dram ly errreyrER WAŻ r o norw arAcz| (Dz. I Ne 189 pcz 1908 i późn zn Pódski Niem LL i
+
+wyw ee sd literackim, 6 ule eb ie pPiawa riualicae UO Mech Sik yetiguja Fo bene Kurńzatowi Ko maz ac f rlefira Pr w
+
+Móry ziczują parzoraizazca pików ofaz inte zZzbOCZPECZENA cided NELUEFIMKONYM kopenanien
+
+
+
+
+=== STRONA 10 ===
+
+EN ISO 52016-1:2017
+
+Załącznik ©
+(normatywny)
+
+z Globalnym Znaczeniem Polityki ISO
+
+Regionalne odniesienia zgodne
+
+@ na inne normy — : :
+— przy zachowaniu ©
+
+G.1
+
+zestawiono sposoby powoływania SI
+
+W niniejszym dokumencie
+niejących przepisów krajowych ilub regionalnych ub prawnych
+Normy, które nalezy glogować, powolane w kolejnych rozdziałach, podano w Tablicy
+onalne odniesienia zgodne z Globalnym Znaczeniem Polit
+
+Tablica C.1 — Regi
+
+Przenikanie ciepła | ISO 10077-1
+|- okna, drzwi lub żaluzje | | ISO 15099.
+| Przenikanie ciepła | ISO 10292 |
+
+a >
+
+rc SN R a Z IN — e
+
+——
+
+Przenikanie promieniowania słonecznego:
+
+3 | — aszkłenie nierozpraszające SE dz
+
+| — okna z rozpraszaniem promientowania 118015098 |»
+
+BE oszkienie Ulub urządzenia zacieniające MAPA OBA 4
+: ISO 52022:3 lub ISO 15099
+
+5 | - dla normalnego kala padania
+n narmalizacyjny jest członkiem CEN. Należy zwrócić uwagę na
+
+w |-
+
+* Obszar CEN: Kraje, których krajowy orga
+
+gania dyrektyw UE wprowadzenych do krajowych wymagań poaymych.
+i p | h i i! | | |
+d | j | | | 4 A | "BL i
+ł H I 4 i t
+Jo | | ¥ (i | ] A ; } t
+| sg 9B A ee 1 ! |
+EEE RORONEREK
+ME. i | j : MEN hohe i
+NKREREKE REKEKSKA:
+| i H 4 14 JET. Ą 4 ee
+ian ee M alo im | r Bi
+Hof ve hoa aR fi Bo e A r 2 4
+J I i i | h 1, eu H i i ff 7 on oe 8 i |
+nt W ULE R pate ea ;
+eo 4 85 4 | j dą € |
+| | i J al | i 1
+v ea a 4 «te [ 4
+RLM | I
+| |
+} | |
+ZONE Z an » usm. 0 uzstówy Z Oree le tress s f oO More „l ka
+020 r. o normazacji (D2. U het Thai gz 1080 z pozn. z"
+BJ Z BON. a.) FOGSKZIE Nom |
+= RSE [40 WwW 23 Soros
+
+ym 6 Birerehee ree a eer ehh
+ase 4
+
+
+
+=== STRONA 11 ===
+
+za : : meee ¢ GR) /22) (MD |
+
+EMISO 52016-1:2017
+
+Załącznik D
+(normatywny)
+
+bliczenia wielostrefowe ze sprzężeniem cieplnym między strefami
+
+D.1 Postanowienia ogólne
+
+cieplnym między strefami (obliczenia ze strefami sprzę
+HlicaA.7 (Szablon) 1 Tablica B./
+
+, ś rad "7 |
+Patrz 6.4.7. Obliczenia wielostrefowe ze 5przęzeniem
+ólnych sytuacji Fatrz la
+
+żonymi) stosuje słę wyłącznie z UWZY ędnieniem szczeg
+
+(informacyjny wybór domyślny)
+ą znacznie Więcej, | często arbitralnych,
+
+Wi WIE kości przepływu powieliza/
+budowianych dotyczacych zasad podziału Na 5 refy
+użytkowania (NP czpiłal
+
+Wal obojawia MAMI definicje podziału na strefy w przypadki ieqcznego
+: y | aj 0 ejmuje również część biurową, część restauracyjne itp.) Kolejnym utru nieniem moze być WY-
+rzystanie różnych systemów ogrzewania, chłodzenia i wentylacji dla różnych stref, co zwiększa złożoność
+
+i arbitralność danych wejściowych oraz modelowania.
+
+kcjami między strefami (a) wymagaj
+h właściwości przenikania oraz kierunku
+niezeniami w przepsach
+
+Obliczenia wielostrefowe z intera
+danych wejściowych (dotyczący
+
+oraz (b) wymagają zgodności £ Ogre
+(swoboda wewnętrznego podziatu,
+
+D.2 Metoda godzinowa
+ą wielostrefowego ZE sprzężeniem cieplnym między strefami (obliczenia ZE strefami
+ności od uwzględnionych zjawisk wymiany ciepła.
+
+W przypadku obliczani
+e się wzory jak poniżej, W zależ
+
+sprzężonym) modyfiku
+
+4) Wymiana powietrza
+
+Przepływ powietrza tylko w jednym koerunku: high
+|: KAPA eplnej 2. Dla danej godziny
+
+W tym przypadku następuje przepływ
+obliczenia wykonuje się najpierw dla strefy 1.
+
+bilansu cieplnego strefy 2.
+
+2) Przepływ ciepła przez przegrody wewnętrzne MAMI i HFEF
+pla przez éciany i podłogi między przyległymi strefami cieplnym Mo-
+| ażny opór cieplny, pole powierzchni l temperaturę
+
+wym dl każdej przyległej strefy
+
+Celem jest uwzględnienie stru rzez SC
+| brzegowe tak, aby obliczyć równow |
+warunkiem przegowym
+
+dyfikuje się warunki zes x
+Ę atrzac od Stron obliczanej Ste cieplnej. ym
+ZO stę ( A dla poprzedniej godziny.
+
+ciepinej jest temperatura węzła na |
+
+mieni Cie
+
+nie, w Cr
+czone Z przyległą strefa, określone
+
+gdzie
+| przyległej strefy W POP
+eynętrzne poli
+
+na strely sprzężone = |
+1 rowadzie
+aływ. »pinych migazy strefami metoda może prowe”
+00 jednich współczynników relaksacyjnych
+ropne 179
+
+
+
+
+=== STRONA 12 ===
+
+ww ru AVE.
+
+'
+
+EN ISO 62016-1:2017
+
+D.3 Metoda miesięczna
+
+W przypadku obliczania wielostrefowego ze sprzężeniem cieplnym między strefami (obliczenia ze strefami
+sprzężonymi) procedura obliczania oparta na otresach yti triydni jest następująca.
+
+Oprócz danych niezbędnych do obliczania dla pojedynczej strefy lub strefy niesprzężonej cieplne zbiera się
+dane między strefami, zgodnie z D.4.
+
+Do przenoszenia ciepła przez przenikanie ' wentylację ze strefą z należy dodać następujące sktadowe:
+
+Qtr zym 7 H ~ trey (0, ZAC 7 Syno) : At | |
+
+| Wilh (D.1)
+Qvez yim + Hvesży * (0, H/C: ne Oy, min: m) “Atay itil | | iL Hae
+przy CZYM Oy nim Przedstawia rzeczywistą średnią (iuberokke pee viedial strefie 17 w rye wszelkie przegrzanie
+(tryb ogrzewania) lub przeciiódzenie (tryb Fhirtiinić jak określono w 6.6. p 4 RANA |
+Należy zauważyć, że dia strefy y, należy zastosować zaużywisią ABK (2a A) W samej strefie z należy
+zastosować temperatury nastawy 6,y dla ogrzewania i 6. dia chłodzenia. Przyjęcie wartości temperatury nasta-
+wy dla strefy y zamiast średniej rzeczywistej temperatury mogłoby spowadówać istotne błędy, w przypadku gdyby
+między strefami występowały silne interakcje. W strefie z rzeczywista średnia temperatura nie jest parametrem
+wejściowym obliczeń bilansu energetycznego, lecz wynikiem obliczeń Ma zysków lub strat ciepła.
+
+UWAGA 1 Opisane dodatkowe składowe OQ, oraz 0, zmieniają również, epic bilansu cieplnego dla trybu ogrze-
+wania ilub cnodzenia.  ///ó | MKA | |
+
+ie
+
+14
+R,
+
+Obliczenia zapotrzebowania na energię do c ogrzewania i chłodzenia należy wykonywać i wrbst wy (zwykle
+wystarczą dwa lub trzy etapy): | | ane p KSTRRERUEKĘ | : | |
+
+UWAGA 2 . Następujące zasady rozpatruje się również wóczypacku gdy sieją mne powody teracji (patrz 6.416. 6)
+
+1) zalozyé poczatkowo, ze rzeczywista średnia temperatura w kazdej strefie est równa nastawom temperatury
+
+qs i
+A |
+
+ogrzewania lub chłodzenia dla tej strefy, określonym zgodnie z © 6. M; HORRECERE Ii:
+
+2) obliczyć zapotrzebowanie na energię do ogrzewania i chłodzenia dla kazdej | strety, biorąc pod uwagę dą.
+datkowe przenoszenie ciepła przez przenikanie vlub wentylację między „strefami, jak opisano powyżej,
+
+AR HR j eee
+
+3) na podstawie tych wyników obliczyć dla każdej strefy rzeczywistą RET temperatur, jak opisano powyżej,
+
+RB
+
+4) jeżeli rzeczywista średnia temperatura którejkolwiek ze stref różni Się = więcej ni niż 0 dopuszczalne kryterium
+
+minimalne es 0,3 °C), powtórzyć obliczenia od kroku 2); w przeciwnym r razie ikinie została zakończona
+UWAGA 3 Metode tę opisano (w ym model komputerowy i iwyniki wala jda type ogrzewania was SOTR 52016-2
+Podział na strefy sprzężone ciepinie ) dane wejściowe nareży opisać w nape 1} a Ją meee
+
+D4 | Wszystkiąptiętocy: dane werent tH i HT
+Współczynniki przenoszenia ciepła między strefami Z i y wynoszą: | BORE BRA
+
+H współczynnik przenoszenia ciepła między strefami Ziy, w WIK:
+
+tr.zy
+Has, współczynnik przenoszenia ciepła przez wentylację ze strefy z do strefy yw Wik.
+
+|, MARRY wspołczynnik przenoszenia ciepła przez wentylację ze strefy y do strefy z, w W/K.
+180 Zgodnie z at. Gust. B ustawy z dra 2 mrze5nia MQ r. amormacagi (Oe LV. W 16a poz JIBS 2 późn. zm.| Foasoz Nawy są drone
+
+przawen ALICIA GT] | BP LAD tp Piece che 5 hirvrehe ma reje ores O fee FIZ pra Font Me Karotejowi “orcad Laces l
+
+l lz WIARY MC PERL A ALAM MJU DL ALL
+
+kióry okiem (<alętutidcz ac TORO Oras hie ‘ 2 = ‘ ,
+
+
+
+=== STRONA 13 ===
+
+MU - € MED: > GBA
+
+EN ISO 52016-1;2017
+gdzie
+
+sad = Pa” Ca * dvr
+
+Has 1 Pa | Cy ; GV pnts
+
+dur»  Strumien powietrza nello ze strefy z do strefy y, w m*/s
+
+q Kyron
+
+UWAGA = Współczynnik przenoszenia ciepła przez wentylację Hy, ,-, fóżni się od H,, mr jeżeli strumień pówietrza nie
+jest taki sam w obu kierunkach
+
+strumień powietrza netto ze strefy y do strefy z, w m/s
+
+W Tablicy A.8 podano szablon normatywny, a w Tablicy B. § informacyjne wartości domyślne dla ilości przeno-
+szonego ciepła.
+
+H l
+| |
+i!
+l.
+| | hi
+| |
+i
+a „M | | U
+i | l4 LĄ
+i Ę
+i 4 A
+| ET
+hae KŻ” | }
+| a
+aeee gy KPRAYREEKEY
+; | |
+1 Ae 6 AR Wy ee j BBE
+AGRO | | | PRO ReEaE
+> g RH | | | vf i ie: | [ |
+(BY KBORERRKA SEDER
+| U KRODRPRRERRROSEREEE
+h LI AIN: OD Be od oie ee
+h KB | REKE k 14
+b NE 1 "MEE' LS
+t 4 | | ae i i, f § i tt
+| |. jj © ia j r
+i RYB Hy +e '
+a iv EA "EU BĘ
+| NYBRARZEK 1444
+| INERRRBRASREŁ
+44 iy SOR DORER |
+i (PRRARE (BBR p
+ee ee ee it W
+j 4 * "LBP EE $
+| WEURERECOUDES
+Ę + ; PetCo ee ee }
+WEUURRORBREREE
+j BE: | U K-S . j
+pI ee ee ee eee U |
+| if i mae. "RE K 4
+[ BRERRERREERRRE
+| bt Wee ee 4 5 3 |
+HE. al F |
+PERORERR RRR GED
+j han 4 | i i Ę
+| I ANĄ H 4 Ht f eT
+U: fi A) WA
+k | h "RAM nk |
+| i tion
+| Ą (i, ul 5 |
+MESA IANA U
+| w
+A | |
+„| ioe Hol
+BRŁABR
+BB |
+fancn@ 7 att us uataycy Z dry | arzwsniw dle [ BI ma Org) PLAT ko 08 f c. JRC peer m] | ow | ry ą PIÓRA 181
+Ways! a 4 of ee TI Stig: iy Lisi ali a awake £ ada M"isqw Powte ED II n pimystzzA a o siara | Hoda li wd Ta Posl Ly Med! u |T
+Flas Ue PROMISES wee PRZ ne zabczosczeną CITED NUNIT Mm KOPOWADEM
+
+
+
+
+=== STRONA 14 ===
+
+EN ISO 52016-1:2017
+
+Załącznik E
+(normatywny)
+
+Przenoszenie ciepła i zyski ciepła od słońca z okien i elementów specjaln
+
+E.1 Postanowienia ogólne
+
+żerukania ciepla | całkowitego współ
+okna, drzwi i Sciany
+budynku na ENETJJĘ.
+
+aczania właściwoŚci pr lef
+zroczysle elementy budynku, takie jan
+otrzebowania budynku lub części
+
+W niniejszym załączmku podano procedury wyzr
+czynnika przenikania energii słonecznej przez prZe
+osłonowe do obliczania bilansu ciepinego oraz obciążeńi Zap
+W niniejszym załączniku podano leż pre y obliczania przerno: 1 ciepła i zyskow ciepła od SOC
+dla specjalnych elementów takich | [| izolacją przez ysta, wentylowane ściany
+głoneczne i wentylowane elementy obudowy. |
+
+E.2 Okna
+
+E21 _ Udział pola powierzchni ram okien
+Pole powierzchni oszklenia można uzyskać bezpośrednia Z danych geometrycznych lub właściwości okna
+(Metoda A), lub na podstawie stałego udziału pola powierzchni ramy (Metoda B).
+
+Metoda A
+Udział pola powierzchni elementu Okna WI, Fews: należy obli czyć zgodnie z następującym WZOrEm:
+
+przy czym, dla elementu okna wi:
+Fi, udzial pola powierzchni ramy,
+
+pole powierzchni oszklenia okna wi, uzyskane z ISO 13789, w mó; if j HAT
+
+A, pole powierzchni elementu okna wi, uzyskane z ISO 13789, w m”, w przypadku komponentów wy-
+stających należy zastosować pole powierzchni rzutu, 9) / OEE RPESEPPREREEA
+
+Agtrus
+
+Metoda B
+
+Pole powierzchni oszklenia Ay. okna wi, należy obliczyć zgodnie Z następującym wzorem:
+
+przy czym, dla elementu okna WI
+
+Fin,  udzial pola powierzchni ramy uzyskany zgodnie z Tablicą A.8 (szablon normatywny) z informacyjną
+wartością domyślną w Tablicy B.8;
+
+pole powierzchni elementu okna wł, uzyskane z ISO 13789, w m, w przypadku komponentów wy-
+
+A,,
+stajacych nalezy zastosowac pole powierzchni rzutu.
+
+M,
+
+Szablon normatywny do wyboru między metodą A a metodą B podano w Tablicy A.21 (metoda godzinowa)
+
+i Tablicy A.42 (metoda miesięczna) W przypadku metody B w tej samej tablicy podano również szablon wartości
+
+dla stałego udziału pola powierzchni ramy. Informacyjny wybór domyślny podano odpowiednio w Tablicy B.21
+| Tablicy B.42. Tego samego wyboru należy dokonać dla wszystkich elementów okien w budynku
+
+82 OCIS Z WI w KŻ Vl, | M6 | TEK ZM [ ONE PIS BAT, ! gs ho?
+
+Fi z” ) » R r | ha , JL | 1 za
+|. evel 2s 2 i La PHM ELA, Ibe b bla w mi lz 1, Ef|ańa Lavele ite w NEJ evel j 4 419 MŁ I. tee | "PA in ij
+i "8 =< — e see oun 4 4 2h ( 17947 yy
+
+k ir tME ki 4 ” Le r 7 Pie Ą 7 "r. he - p= p ice awe dl 6 .
+M j wea arape Te Pe i PULI VY kk p 0 FIDES zwa! ' td LIU | Ie A Pe ski, M i [4 HI i (M m
+ud a Ii wi | LL MA LP M
+
+
+
+
+=== STRONA 15 ===
+
+Przezroczysty element budynku
+
+„laki jak okno, (oszklone) drzwi, &
+Przezroczysta CZESC okna nazywana Jest dalej
+
+dana osłonowa, jest dalej nazywany oknem
+
+bszkleniem lub oszkloną częścią okna
+
+aj przez przeszklenie okna WI, aa tO Stosunek energii
+
+| pochłani o) OdDicha w samym oknie | innych Warstwach są uwzględniona
+w całkowitym współczynniku przenikania tnerga słonecznej | ||| ||| Mt | ig BA Mit
+:pr szającym całkowity współczynnik przeńikania energii słonecznej dla
+: i la, gmin, Należy obliczać zgodnie z ISO 9050 (lub patrz Podmiot 3
+w Tablicy C.1). Ha MMIYTYNĘNĄE MEDANET TY PANNA
+' ynnik przenikania energu słonecznej zależy od kala padania (wysokość i azymut) promie-
+niowania słonecznego. War ni |
+
+ważona względem czasu) potrzebna do obliczeń jest nieco niższa
+
+F,, zgodnie z poniższym wzorem:
+
+Sam = Fre? gqmur | | BRRRERNNII Hy ay | ||
+
+4
+
+Szar Calkowity współczynnik przenikania energii słonecznej (skt rygowany o aż
+F;, I
+
+e 5 a = i | Q 44% i i ' Hf 7 fi *B Ę i.
+Oni całkowity współczynnik przenikania energii słanec lej dla 1
+
+uzyskany z Tablicy A.A3 (szablon normatywny), z informacyjnymi wartościami domyślnymi podanym:
+w Tablicy B 43 | TABRENAE | 111 | + 149453))
+
+Wartości domyślne całkowitego współczynnika przenikania nergii słonecznej przy normalnym padaniu na
+przeszkienie, g, dla typowych rodzajów oszklenia określono w Tablicy A22 (szablon normatywny, metoda go-
+dzinowa) i Tablicy A 43 (szablon normatywny; metoda miesięczna), z informacy nymi wartościami domyślnymi
+podanymi odpowiednio w Tablicy B 22 t Tablicy B.43. | PRPERGED 14413 14303091)1)
+
+rr 6g |
+i Be ae oe A sf 4
+| ; NE a i? A
+
+ś £ {
+
+g całkowity współczynnik przenikania energii słonecznej o oszklenia okna wi;
+
+i i ientacji ł ia) okna, klimatu i pory
+5 ik wagowy reprezentatywny dla położenia (orientacji, pochylenia) akna, (
+ta Rainey z Tablicy AD (metoda godzinowa) i Tablicy A. 43 (metoda miesięczna). Informacyjne
+wartości domyślne podano odpowiednio w Tablicy B.22 i Tablicy B43.
+
+| ikani ii | ‘proieni ia słonecznego dla kata
+ik przenikania energii słonecznej oszklenia dla proieniawani |
+ae w ookości| ale) reprezentatywny dla położenia (orientacji, pochylenia) okna, klimatu pory hire
+wy kan zgodnie z ISO 15099 (lub patrz Pozycja 4 w Tablicy C1) Kat wysokości, alt, o b ;
+si je Tablicy A.22 (metoda godzinowa) i Tablicy A 43 (metoda miesięczna). Informacyjne wartośc
+eine podano odpowiednio w Tablicy B 22 i Tablicy B 43.
+
+srs powiaicacji (Dr. U. Ne ide poz. 133982 późn zm | Fozda Mare Sa CFryniane 183
+6 „ ust,  Ustowy E Ura | 2 karzcSrap 2005 r.  howiaczcji /Dz. U | | me
+BONE Z ar. „ wet. DLS : shave dz rect przysugują Fosieen | Karsetowi Ho KAT wy nerm: |
+ri n sk utwory btecacine  nitaeskie prawa mejpsthoves wad prizysugpaj e
+PURE? SU05E OTF |BK | 2 Fe
+
+ts vt EF Le,
+
+
+
+
+=== STRONA 16 ===
+
+Prey PAMNU LLP EPA a vvLILZHW Ww Yow EC beats LUCHLIE LIUIILLY, PIUSLIILY UUS5WICZYUC Troki zka WCISNIĘCIE przycisku }
+
+7 - E ęrąt | oh (> ects b +” ind. GŁ! «
+godne i art 5 ust, 5 ustawy £ dea 17 secegriw OZ tn noeawac (De VA Ne 183 pom, IR] r późn 183
+
+witty » CJ 4 1e6 / 212 > r"
+
+EN ISO 52016-1:2017
+
+UDT całkowity współczynnik przenikania energii słonecznej dla izotropowego rozproszonego promienio-
+wania słonecznego, określa się zgodnie z I50 15099 (lub patrz Pozycja 4 w Tablicy C.1).
+
+UWAGA 2 — Dnugi składnik wyrażenia po prawej stronie znaku równania we Wzorze (E 4) slanowi uproszczenie, klóre
+łączy promieniowanie rozproszone nieboskionu z promżeniowaniem ra od powierecnn ziemi.
+
+Jeżeli występują urządzenia ochrony przeciwsłonecznej. caikowity współczynnik przenikania energii słoneczne
+oszklenia, w tym urządzenia ochrony Hitt Sqnk, Oblicza się zgodnie z ISO 52022- 3:
+
+Wartości domyślne współczynnika redukcji całkowitega współczynnika przenikania energis słonecznej dla typo-
+wych urządzeń zacieniających uzyskano z Tablicy A.22 (szablon normatywny; metoda godzinowa) i Tablicy A. 43
+(szablon normatywny; metoda miesięczna), zinformacyjnymi wartościami domyślnymi określonymi odpowiednio
+w Tablicy B.22 i Tablicy B.43. Te współczynniki redukcji należy pomnożyć przez całkowity współczynnik przeni-
+kania energn słonecznej oszkienia, aby uzyskać wartość g oszkienka Z lurzetzEAH) zacieniającym
+
+E.2.2.2 Metodagedzinwa | ||| | i
+
+W przypadku melody obliczania godzinowego mogą wystąpić następujące sywacje a
+
+a) urządzenie ochrony przeciwsłonecznej całkowacie zamknięte. Peer ear SEKT.
+
+b) urządzenie ochrony przeciwsłonecznej niecałkowicie finn! ta ; i ARA
+W przypadku a) komponent oszklenia i i urządzenie ochrony: przeciivskonecznej są traktowane Ró Połedyniczy
+komponent obudowy. BARRPONYKAKA ! My |
+
+W przypadku b) należy rozważyć dwa różne elementy: | Ate 4 ti " A I | Cet ; |
+| t ihn fi HERA | ij
+HG 6 i 4
+
+~  CZĘ5Ć powierzchni oszkienia meobjętej urządzeniem ochrony przeciwsłoneczne, zawierającą tylka kom-
+ponent oszkienia, | RER KARO ZEKIAADREPRAPRYEE |
+
+rc teal eae (MIALAM RB
+
+= część pola powierzchni oszklenia objętą urządzeniem ochrony bńinttttiitn raktowaną jak u w przy”
+
+=;
+e =
+
+Odpowiednie harmonogramy godzinowe działania urządzeń Slats przec ciw wsloneczne uzyskuje się zgodnie
+z G.2.2.1 w Załączniku G. idea MI KEREEROE
+
+fe | i | i) i? Be 3 Ao ‘4 "BR.
+[UJ : y | | at li U ) | fi i i fi $ As A
+aaa y 4 :
+
+Jezeli okno wyposazone jest w przestony z ruchomymi listwami, współczynnik przenikania kiwi Mażziądi
+należy obliczać z przesłonami ustawionymi w takiej pozycji kąta, alt_, , która powoduje blokadę bezpośrednie-
+go promieniowania słonecznego, przy jednoczesnym maksymalnym możliwym przenikaniu świalła dziennego
+i widoku przez okno. kę 119) hay MAMI SRŁEŁ
+
+UWAGA3 W przypadku EEERER. żaluzji weneckich z listwami w takiej pozycji (np. lekko PEAS EADE, ze bezpośrednie
+promieniowanie słoneczne jest całkowicie zablokowane, współczynnik przenikania energii słonecznej przez promieniowanie
+
+rozproszone i promieniowanie odbite od powierzchni ziemi maże być Tin NOP niż. Dex
+Oznacza to, ze wartość całkowitego współczynnika przenikania energii słonecznej oszklonej części dowolnego
+okna wi może sie zmieniać jako funkcja przedziału czasu oj Senne RENE. |
+
+E.2.2.3 Metoda miesięczna
+
+W przypadku obliczeń metodą miesięczną średni miesięczny dtektwny daikowóy bape przenikania
+energii słonecznej oszklonej części okna wi, J... dla miesiąca m, określa się TYPA G.2.2.2 w Załączniku G.
+
+184 Zgodnie z ań. 5 umi 5 ustowy « drog 12 mmcehte Ae gnowania (De. U Nr 18S pow. 13902 peed. zm ) Pose Mory są EHOGAGE
+
+Fożiy tlarack= a alina KG piwa ae bose 42 ich Glztwiuzijia HokLEGJ Wogan i Pac
+
+0.42 a lis M |
+
+PO" et BP) ae
+
+haw
+
+
+
+=== STRONA 17 ===
+
+- * * a £ _. PP | ee
+Fat Fir odd 14 aioe se kapie
+
+< MD :» » GB «.
+
+100% WJ
+
+EN ISO 52016-1:2017
+E.3 Strefa niekondyci i i
+
+y ot - ne do stref niekondycjonowanych cieplnie, w których
+Pują wewnętrzne zyski ciepła vlub zyski ciepła od gło!
+
+ofńca, które przylegają do jednej lub większej liczby stref
+niekondycjonowanych cieplnie, takimi jak oranzeria lub przyległa szklarnia lub atriu
+działowymi | | |
+
+od strefy (stref) niekondycjanowanej ciepl
+
+m, oddzielone ścianami
+UWAGA Patrz zasady podziału na strefy
+
+nie.
+
+w 6.4, definicja tej kategorii przestrzeni
+
+chrony przeciwsłonecznej i wentylacji, jeżeli występują
+wartości domyślne współczynnika. dostosow
+
+Alternatywnie można zastosować t | ania, Dom, Na przykład jako
+
+funkcję typu Wlub wielkości przyległej przestrzeni niekondycjonowanej clepinie, ktore domyślnie uwzględniają
+efekt zysków, które są dostępne w Tablicy A.4 (szablon normatywny), przedstawiony juz w 6.4.5.5, wraz z mfor-
+macyjnym wyborem domyślnym
+
+w Tablicy B. 4 W takim przypadku zyski da lub przez strefę niekondycjonowaną
+cieplnie należy ustawić na zero. i ay ee |
+
+E.3.2 Procedury i TET
+E.3,2.1  Procedury obliczania godzinowego LIGI
+
+Wewnętrzne zyski ciepła w strefie niekondycjonowanej cieplnie ztu, O dzęzzzaje, W W, w przedziale czasu t, są
+określone w 6.5.12.2. MUSU Pasji I | MINUNINIJI
+
+W przypadku zysków ciepła od słońca, przyjmuje się w piefwszym przybliżeniu, że wszystkie powierzchnie
+pochłaniające są w takim samym stopniu zacienione przez przeszkody zewnętrzne i zewnętrzną obudowę
+strefy niekondycjonowanej cieplnie. PYDRYGREEONORRKARAY | | BE | | RARERRERS ROSS
+Współczynnik redukcji promieniowania słonecznega przez przegrodę
+
+|
+
+cieplnie ZU, F-yua,zruz, Oblicza się według następującego wzoru: | HE i JĄ PERS
+Ę 3 Ej | Vea | Cha 4-4 Woe 6 | £ E 3
+Prolwewtut = Qeivesraie (1+ Fęrnezu ) | MNI ; 1000321 (E 5)
+przy czym da | HAMMAN NI
+
+‘ure  &fektywny całkowity współczynnik przenikania energii słonecznej oszklenia zewnętrznej przegrody
+ibrręśte strefy niekondycjonowanej cieplnie ztu, w przedziale Czasu £, jak określono w E.2 2.
+ini udział pola powierzchni ramy dla przegrody zewnętrznej, obliczony jako stosunek pól powierzch-
+i ni części całkowicie nieprzezroczystej i całkowicie. nieprzezroczystej plus przezroczystej strefy
+niekondycjonowanej cieplnie ztu. W przypadku elementów wystających należy zastosować pole
+
+powierzchni rzutu elementu.
+
+{
+
+UWAGA | Całkowity współczynnik przenikania enerall słonecznej moze być funkcją czasu, na przykład w przypadku
+ruchomych lub przełączalnych systemów ochrony przecwsłonecznej. pl |
+Zysk ciepła od słońca w strefie niekondycjonowanej cieplnie ztu,
+się przez sumowanie zysków ciepła od słońca dla każd
+niekondycjonowanej cieplnie :
+
+Polisz W W, W przedziale czasu t, ablicza
+Ej nieprzezroczystej powierzchni, J, należącej do strefy
+
+Pzol-ztu;t = Fsolue;ztu;t * 2) (aso, -|soatęj:e + Isokdirzjst ft Shrobst; zt ) (E.6)
+j(opaque)
+
+ksz ARA b IRE > resem, mm i Hdalnu Mare = ofer
+zgeme z at. Dust U ustawy z dee 12 mrzesma POZ r qaernaaagi Iz (A We 145 poc, 1380 z póżn, zm] Paisbe Nomy sq Grononę 185
+Keane 7 , PW" s “a = i K M I = fd PRON
+. ; * s KA toe I zę s wisi wt Ko KLEI [PCH
+fr sera suńa s if) jak utwO(y Merachae, a aupńikik plawa majatkowe cle eh erzycdhcuyj Foskanu Kostńketówi Korc |
+DIGI SIĘGLIE PSranslzaeic PIKOW Oras IMIE ZZDCZYACZENG PODEJ NIELETNI KofEWANGM
+ht Db al ów eee =.
+
+84.14 4
+
+
+
+
+=== STRONA 18 ===
+
+dE © Oo <¢ GD Ga
+
+EN ISO 62016-12017
+
+przy czym, w przedziale czasu t
+
+współczynnik redukcji promieniowania słonecznego przez przegrodę zewnętrzną strefy niekordy.
+cjonowanej cieplnie ztu, jak określono powyżej,
+
+i aliusirrs2
+
+A, pole powierzchni każdej nieprzezroczystey powierzchni | wewnalrz strefy miekońdyc jonówanej
+
+cieplnie ztu jakie określono zgodnie z 6.5.8 dla właściwości przenikania ciepła, w mó, w przypadku
+elementów wystających należy Zes(OGÓWAĆ pole powierzchni rzutu elementu,
+
+ols średni współczynnik pochłania nia promieniowania słonecznego przez nieprzezroczystą powierzch
+
+nię strefy niekondycjonowanej cieplnie ztu, uzyska ny; Z| Tablicy A.15,z informacyjnymi wartościami
+domyślnymi podanymi w Faniicy B.15, gl | weer
+
+Fzwobsygr = Współczynnik redukcji zacienienia od prze szkód zewnętrznych dla nieprzezroczystych powierzch-
+ni, j, strefy niekondycjonowanej GPP, zit, jak obliczono Poorer z Załącznikiem F;
+
+Lobdinunr  NatężŻENIE bezpośredniego promieniowania słonecznego padające na pawierzchnię, jf, uzyskane
+z odpowiedniej nomy EPB moduł M1-13, w Wim”, i [i || 4
+
+Litditwee Natężenie rozproszonego promieniowania słonecznego padające na mitytrekiti j, uzyskane
+z odpowiedniej normy EPB moduł M1-13, w Wim. {| | Peet tae | p
+
+E.3.2.2 Procedury obliczania miesięcznego | Li Mag! |
+
+Wewnętrzne zyski ciepła w strefie niekondycjonowanej cieplnie zku, i Oo aoe w v KWh, w miesiącu m, zostały
+określone w 6.6.7.2. ME | | i || di | : |
+
+tik | if | |
+W przypadku zysków ciepła od słońca przyjmuje się, w sea przybliżeniu, ze wszystkie powierzchnie
+pochłaniające są w takim samym stopniu zacienione Parę MI ORK , ZTynetrzna seeedyy
+strefy niekondycjonowanej cieplnie, |
+
+współczynnik redukcji promieniowania słonecznego przez 2 przegrodę zewnętrzną strefy niekondycjonowanej
+cieplnie ztu, dla ogrzewania/chłodzenia, F, solweiztrch/ ie pplcza się wedlug następującego wzoru:
+F. iastt/ce gS PAREER EA AER (1 «Fpl Pty, y ig | | | i f i | ! | j i | I | | i | | | 4 | | (E.7)
+
+ZE ER
+
+R=TERER
+ŚRO
+MSF
+=
+w
+>
+
+TYCZY | sid paki Ht HISFECUERIERE
+
+Gmach efektywny całkowity współczynnik óćżeńiania ia energii słonecznej oszklenia zewmętrznej prze-
+grody strefy Seri av ay ciepinie z dla ogrzewania/chłodzenia, w v miesiącu m, jak
+określona w E.2.2, | i eye I kk Hua 116494444
+
+| eR udział pala powell ramy dla przegrody zewnętrznej, obliczony jako enie pół powierzchni |
+części całkowicie nieprzezroczystej i całkowicie nieprzezroczystej plus przezroczystej strefy
+niekondycjonowanej cieplnie ztu. W Przyparc elementów Aitiorecthay MARZY zastosować
+
+pole powierzchni rzutu elementu. ane:
+
+UWAGA  \Wartosc całkowitego przenikania energii słonecznej jest wartością średnią miesięczną. łącznie z korektą, na
+przykład w przypadku JĄ AED lub przełączalnego systemu Tihs śbittiniiiininy reir ETE |
+
+Zyski ciepła od słońca w Strefie niekonaycjiwowanie| cieplnie ztu, dla ogr zewaniiakchłacz enia, Que. zalizm ze, W KW,
+
+w miesiącu 71, oblicza się przez sumowanie zysków ciepła od słońca Każdej nieprzezroczystej powierzchni, j,
+w strefie niekondycjonowanej cieplnie: |
+
+Qu/c: ‘soliztuwn 7 *“‘soluegtucH Cin * Fshzobst: etucnt | 2) Ul sol;j A hay n) tf (E.8)
+J{opaque)
+przy czym, dla miesiąca m.
+
+Fi akuwstajcim  wSpółczynnik redukcji promieniowania słonecznego przez przegrodę zewnęlrzną strefy nie-
+kondycjonowanej cieplnie ztu, dla ogrzewania/chłodzenia, jak określono powyżej,
+
+186 ząaańie £ sil UM PUsTóWy x Jee 1 eerre sree AY r ch Kra erg! | JzU tyl pow TOG e pen Twój.) Sa = Worry 44 Lon ow
+pwawń autora jak uteóry bbewachio, a suodikie piańw Miajałkcwe OS Metis przydługną Posłów Kendbetond Nove LEŃ ars (FW
+
+METY ZGK porzanaizDLĘ PROW OFS INTE THe pen Cred NKLETIWNONMYMY KŁODDWAC ICH
+
+OOOO
+
+
+
+
+=== STRONA 19 ===
+
+a w | RES Trini Ad otw ni ee nar rrr mai lantninizana” JL <br RY | ee ve Aes O LT UNE PovPI ZC Z WCISTIĘCIE przycIsku
+
+186 i Aa i
+100% Jima i my /212> PEB
+
+EN 150 52016-1:2017
+
+A; pole powierzchni każdej nieprzezroczystej powierzchni J wewnątrz strefy niekondycjonowaniej
+cieplnie ztu, jak określona zgodnie z 6.5.8 dla właściwości przenikania ciepła, w mów przy-
+padku elementów wystających należy zastosować pole powierzchni rzutu elementu;
+
+Cooly średni współczynnik pochłaniania promieniowania słonecznego przez nieprzezroczystą po-
+
+wierzchnię strefy niekondycjonowanej cieplnie ztu, uzyskany z Tablicy A.29, z informacyjnymni
+wartościami domyślnymi Podany w Tablicy B.29,
+
+Frrobrtwanm wspałczynnik redukcji zacienienia dla przeszkód zewnętrznych dla przegród zewnetrznych, j.
+strefy mesandyciancwaney aęplnie, ztu, jak obliczono zgodnie z Załącznikiem F,
+
+Hedy całkowite miesięczne napromieniowanie słoneczne dla przezroczystego elementu j, o określonej
+orientacji i kącie enter aibirki z PRON? ly EPS: moduł M1-13, w kWh/m”.
+
+E.3.3 Współczynnik rediukej i w celu uniknięcia przeszacowania zysków ciepła, metoda
+miesięczna
+
+w przypadku miesięcznej metody obliczania dla zewnętrznej sirety niękohiycjonowanej cieplnie (patrz 6.4 5)
+stosuje się współczynnik redukcji w celu uniknięcia przeszacowania zysków w isyble ogrzewania, w oparciu
+o stosunek Tiki tn ciepła i zysków ciepła, | hpi hea ela
+
+W przypadku pojedynczej przyłegie eh kondycjonowane Geplie:
+
+J
+
+Ojpscszte BT. Ma):0 x 0, 001 xe
+(Ou Antz, m * see sal: rem) | HH
+
+bt ‘He, zteżztu;m
+
+f, en:maxcH:ztrer 7 (E 9)
+
+a ty | i fj fi 4." j | 4
+w przypadku wielu przyległych stref ef kondycjonowanyc |Bepne: | BEIM
+
+ae (Hote: sehen (2 WINA M (dead an 1.0 + 0, 001: x tn
+fon:max:H:2tu:m Tee Kina Mtv i tie hiaiii HOF HE 1144 i 7 FERRE | (E.10)
+
+RER
+acu intzztuejne T Hy sol: zty; ih
+
+przy czym, dla miesiąca m SERS IP: ZDOENAAERESNO MANANA
+fęnzausum Współczynnik redukcji w celu uniknięcia przeszdoówania zysków ze strefy niekondycjonowanej
+cieplnie zte, dla trybu ogrzewania, wW/K, u | |) 8 1111)
+
+| 6 A
+
+| BRRR tepsy? dostosowania dla przyległej strefy mekondycjonowane cienie ztu, jak określono
+PISKA współczynnik przenoszenia ciepła RY sires iekorydjówwacą cieplnie ztu a przyległa
+
+strefą kondycjonowaną cieplnie ate, jak określono, w 6.4.5 A. w WiK,
+
+A mrrzerkiiztzm temperatura nastawy przyległej strefy niekondycjonowanej debiie zte dla ogrzewania, okreslo-
+na zgodme z 6.6.11, w °C; w przypadku wielu przyległych stref niekondycjonowanych cieplnie
+temperatury są ważone zgodnie ze współczynnikiem podziału Festa. JIA przenoszenia ciepła
+między strefą kondycjonowaną cieplnie zte l strefą niekondycjonowaną ceplnie ztu, jak okreś-
+lono w 6.4.5.4:
+
+Heszm średnia temperatura powietrza zewnętrznego, uzyskana z odpowiedniej normy EPB moduł M1-13,
+Ww OC:
+
+Ch >> sea Oe wewnętrzne zyski ciepła dla trybu ogrzewania w zewnętrznej strefie niekondycjonowanej ciepl-
+ft nie ztu (patrz 6.4.5), jak określono w 6.6.7.2, w kWh;
+
+Ger ao cui zyski ciepła od słońca dla trybu ogrzewania w zewnętrznej strefie niekondycjonowanej ciepl-
+nie ztu (patrz 6.4.5), jak określono w 6.6.8.2, w kWh;
+
+t liczba godzin miesiąca m, uzyskana z odpowiedniej normy EPB moduł M1-13, wh
+
+égerne z art > u) © Ustawy £ gdreę 17 mtrerarta CO r ona FKsVhą We UL No Nag fot 1505 z ozn. zm ) Foaga Mom iy szą chromooe 187
+
+
+
+
+=== STRONA 20 ===
+
+190 /212 b
+
+EN ISO 52016-1:2017
+
+UWAGA1 Powyższe wzory zapewniają, że dla obliczeń w trybie ogrzewania zyski ciepła ze strefy niiekondycjonowanej
+cieplnie nie są większe niż przenoszenie ciepła przez strefę niekondycjonowaną cieplnie
+
+W przypadku metody obliczania miesięcznego dla wewnętrznej strefy niekondycjonowanej cieplnie (patrz 6.4 5)
+współczynnik redukcji w celu unknięcia przeszacowama zysków w trybie ogrzewania jest ustawiony na 7
+
+Li He ite ER | FA(EM1)
+
+UWAGA 2 Ze wzgledu na to, że wewnętrzny typ strety nlekondyjonowane cienie stosuje sky tylko w przypadku nie-
+
+znacznych zysków. | || | ląd |
+E.3.4 Przybliżenie zachowawcze, metoda miesięczna EDA HAT, D
+| JE | | | | A j
+W przypadku metody obliczania miesiecznego lt można | zastosować następującą procedure jako przybliżenie
+zachowawcze procedury wE.3.2. 0 | KRAEARKA MENIKA! | |
+| (MIR. | ii bk | | | | H | | JG
+| i
+W trybie ogrzewania atti dodatkowe (pośrednie zyski z przestrzeni la do strefy obliczanej
+Bzolsztum = O | KORBA HA EET fay i l |
+
+Dla trybu chłodzenia analogicznie jak dla trybu ogrzewania: Proticeam = i „ale t oprócz lego. pominąć przestrzeń
+słoneczną w obliczeniach zysków ciepła ad słońca w obliczanej strefie. Oznacza to, że redukcja współczynni-
+ka przenikania energii słonecznej przez obudowę przestrzeni słonecznej jest Porjania, z troje urządzeń
+ochrony przeciwsłonecznej, które są DSOWANE przez try sezon  Ehigdz TAA || tea
+
+UWAGA  Wmetodzie obliczania godzinowego rozróżnienie między Koi i chiodcenia jest niemożliwe
+
+\ |
+i}
+
+E.3.5 Elementy spacjalne || AMAN I an Tull TERRE |
+
+W niniejszym dokumencie nie nadali pnornalizowanyen | PANI obliczania przenoszenia ciepła i zysków
+
+ciepła od słońca w przypadku elementów specjalnych, takich jak elementy | nieprzezroczyste z izolacją przezro-
+
+czystą, wentylowane ściany słoneczne (ściany PASSEH HejintdpE pavers AM |
+UWAGA — Informacyjne procedury obliczania pecan BO I SOA 520162 201 i ES aH hai H} 1471 | | |
+
+H JAREK i Sree
+
+WY 2 ce
+ao"
+ma
+km
+
+188 (goźe z art. Samet p ustawy ¢ dris 12 weresren NO? r a nozna zery [Or U W N69 poe, TIBIE pien zm] Pasta Nap W PA
+
+.
+
+plama MCS pat Uy Miarache. a aLórkków piza Ntajatkowa 03 tel pi tyelesuia Polekiseven Koreóatowd Nu mali z y M asrkz |
+
+NŚ SKCLE POON Oe KÓW ORT inte Lacombe cimed LE NOT LO dobre KO
+
+*
+
+
+
+=== STRONA 21 ===
+
+EN 150 52016-1:2017
+
+Załącznik F
+(normatywny)
+
+Obliczanie współczynników redukcji zacienienia słonecznego
+
+F.1 Wybór metod
+
+Natężenie promieniowania słonecznego doc Meath do zewnętrznej powierzchni elathet Wu obudowy budynku
+oblicza się zqodnie z adpowiednią normą EPB moduł M1-13 Współczynniki redukcji zacienienia w niniejszym
+dokumencie mogą uwzględniać odległe przeszkody (jeśli nie zostały już uwzględńione w odpowiedniej normie
+
+EPB moduł M1-13) oraz PEN na kt w Podłóu) tithe rar gzymsy, RM boczne i wnęki (szcze-
+gólnie dla okien). |
+
+i | |
+| + | | l l n A r
+
+Wybór, które przeszkody, dla których | elementów budynku Się uwzględniaj Valea dla BAY obliczania
+
+godzinowego w Tablicy A.25 (szablon normatywny), rd informacyjnym wybótem domyślnym w Tablicy B.25
+
+oraz w przypadku procedur obliczania Anta w ered A AS (Szablon ROMY, z informacyjnym
+wyborem Gomysiryin w Hit B. 45. | |
+
+W zwiazku z tym, Ze rozne obiekty moga rzucać HEE ee Hike igi wybranego kierunku. możliwe sa
+znaczące błędy w przypadku podwójnego obliczania zacienier ia, jeżeli zacienienie od obiektów jest liczone
+osobno, w pierwszej kolejności należy obliczyć natężenie promieniowania dla POWSTSO zeslawu obiektów
+zacieniających (np. odległych), a następnie użyć danych v jSciowych jako dane wejściowe do obliczenia za-
+cienienia innego zestawu obiektów OBCYCH (np. zna ada się w invent lub miejscowych).
+
+To może się zdarzyć, gdy zacienienie przez odlegle dż bostatd uwzględnione w odpowiedniej norrme EPB
+„ moduł M1-13, Z tego powodu zaleca się, aby oblicze! ia zacienienia były wykonywane w normie podstawowej,
+
+normie zastosowania, odzie znane jest HNDOY | lizacja i i całe itrtiiy peeectonel powierzchni.
+
+M NEMNERINE |
+Prowadzi to do następujących o opcji. did Ne Mi j i BE I i ARRAL | I 5
+Współczynnik redukcji zacienienia przez olei obiekt uż | zakon nm normie EPB moduł M 1-13.
+p ae ‘| ‘4
+W celu unikniecia podwójnego pola zacienienia, w niniej i nadane uwzględniono współczynnik
+redukcji zacienienia przez papa obiekty, | it Hy ie Hl Hi i i 14 . BRRR !
+
+Wybór pomiędzy Opcją 1a Opcia 2 jest wskazany dla procedur spłzania godzinowego w i Tablicy A25 (sza-
+blon normatywny), z informacyjnym wyborem domyślnym przedstawionym w Tablicy B.25 oraz dla procedur
+
+obliczania miesięcznego w Tablicy A.45 szpica invited Ę intormacyjnym wyborem domyślnym przed-
+stawionym w Tablicy BAS. NARERARE
+
+| (
+| | Wd | j H | i } ¥ jt |
+
+UWAGA 2 WSO 52010-1:2017 Tablica B. 6, Opcja 2 jest opcją cosa, więc w odpowedające Tablicy B.25 | Taba
+cy B.45 niniejszego dokumentu dokonano spójnego wyboru | REGI |
+
+Obiekty w otoczeniu budynku mogą blokować część promieniowania DANUDNĘ docierającego do powierzchni
+(np. wzgórza, drzewa, inne budynki, inne części tego wothigy budynku).
+
+Te same lub inne obiekty mogą również odbijać promieniowanie słoneczne iw koasticwadai prowadzić da
+zwiększenia natężenia napromienienia.
+
+UWAGA 3. Ma przykład na półkuli północnej (południowej) pośierzchnia o dużym MENU odbicia (np. przeszklony
+przyległy budynek) znajdujący się przed północną (południową) fasadą stitial budynku.
+
+Zgodne z art. Sum, 5 stawy Z ira Ue erpesren « 02 r p nomacagi (De U ka 186 poe 1300 z pean. rr | Poste Mommy są ctręwore 189
+
+prawem ee we) | ak Leet y lwcadóa a thie pda Majątkoaw Oo tech piLywygują Poked Monkton Wo hal sly dali ||P
+
+piney swGUKk parzarałzzik POW Gat Mie TEDESoe CaN FZEO Ne uo M korona
+
+
+
+
+=== STRONA 22 ===
+
+a 4 R PAT ZY ET Padł PP EN Aaa we eS KAŻE SAL YW Bees Y, MY WACZ Y £ SLI OTIĘ poprzez Wcisniecie przycisku
+
+EN ISO §2016-1:2017
+
+W celu unikmecia sytuacji, w której dla przyległych obiektów należy zebrać dane dotyczące współczynnika
+odbicia swiatla słonecznego, dla uproszczenia można założyć, Że
+
+a) Promieniowanie bezpośrednie (w tym promieniowanie okolostoneczne) jest częściowo zablokowane, jeśli
+obrekt znajduje się na drodze między słońcem a powierzchnią,
+
+b) natężenie promieniowania rozproszonego (w tym promieniowania odbitego od powierzchni gruntu) pozostaje
+bez zmian
+
+UWAGA 4 „est to fizycznie równe syluacji, w której promieniowanie odbijane (iub przenikające) przez obiekly w środo-
+wisku jes! równe promieniowaniu rozproszonemu blokawanemu przez le obiekty
+
+Do obliczenia zacienienia słonecznego przewidziano dwie metody.
+- Metoda 1, Zacienienie promieniowania bezpośredniego, patrz F.3.
+
+— _ Metoda 2, Zacienienie promieniowania bezpośredniego i rozproszonego, patrz F.4.
+
+Wybór między Metodą 1 i Metodą 2 jest wskazany dla procedur obliczania godzinowego w Tablicy A 25 (szablon
+normatywny), z informacyjnym wyborem domyślnym podanym w Tablicy B.25, a dla miesięcznych procedur
+
+obliczania w Tablicy A.45 (szablon normatywny), z informacyjnym wybarem domyślnym podanym podanym
+w Tablicy B.45. KAPARARERNTY |
+
+Te same tablice zawierają również opcję dodania szczegółowych (zasad podziału zacienionego obiektu lub
+obiektów. | Feit ae |
+
+UWAGA 5 Na przykład: podział (dużych) okien lub fasad. LĄ i |
+
+F.2 Zastosowanie do komponentów systemu, takich jak cieplne kolektory
+słoneczne i panele fotowoltaiczne RAPE EPELERICC LEO EERE EG
+
+| f
+|) .
+JE i
+0
+
+Frocedury do obliczenia współczynnika redukcji zacienienia na elementach budowlanych zawarte w niniejszym
+załączniku mają równiez zastosowanie do obliczenia wpływu zacienienia na komponenty systemu wykorzystu-
+jącego energię słoneczną, takie jak kolektory słoneczne | panele WP taiczne. Hi
+UWAGA W przypadku paneli fotowollaicznych; w zależności od rodzaju | rozmieszczenia elementów folowollaicznych,
+wpływ zacienienia na moc elektryczną moze być znacznie większy niż proporcjonalny do zacienionej pomterzchni, ze
+względu na zwiększony opór elektryczny w zacienionych elementach =)
+
+h M i WA FA .B.
+| p 1 | | A 4 i
+
+F.3 Metoda 1: Zacienienie promieniowania bezpośredniego
+
+’ }
+i We |
+i ‘
+
+F3.1 Wespdlezynnik redukcji zacienienia
+
+F.3.1.1 — Procedury obliczania godzinowego |
+
+Współczynnik redukcji zacienienia powierzchni Kdla przeszkód zewnętrznych, F,, „,,..... w przedziale czasu t
+jest równy: EAA
+
+shots = 7 pT (F 1)
+"diritotkit | "dllitokiki! i
+
+przy czym, dla Każdej zacienionej powierzchni Ki w każdym przedziale czasu t
+Fhsobree  . PEZWYMIAKOWY współczynnik redukcji zacienienia dla przeszkód zewnętrznych
+
+Pydiriey  . Współczynnik redukcji zacienienia dla promieniowania bezpośredniego, określony zgodnie z F.3.6 1.
+
+=
+
+
+
+=== STRONA 23 ===
+
+EN 150 52016-1:2017
+
+ere a całkowite bezpośrednie natężenie promieniowania słonecznego, określone w odpowiedniej ńof-
+mie EPB moduł M1-13, w Wim”.
+
+zee całkowite rozproszone natężenie promieniowania słonecznego, określone w odpowiedniej nor
+mie EPB moduł M1-13, w W/m?
+
+F3.1.2  Procedury obliczeń miesięcznych
+
+Współczynnik redukcji zacienienia powierzchni k dla przeszkód zewnętrznych, F.mobstikis, W MiEsIącu m jest
+równy:
+
+Całkowite napromieniowanie słoneczne na powierzchni ae A a łącznie z efektem zacienienia, jest sumą
+obliczonego całkowitego napromieniowania słonecznego, skorygowanego o zacienienie przez obiekty za pomocą
+
+współczynnika redukcji zacienienia dla bezpośredniego promieniowania słonecznego | i części bezpośredniego
+promieniowania słonecznego w całkowitym promieniowaniu: EPIA |
+
+Fiwyatrytym = shedirdem | frobdiaa BRE RAR | Hi | Me (F.2)
+
+przy czym, dla każdej zacienionej powierzchni ki każdego miesiąca r m i;
+
+Foucosniem  bezWwymIiarawy współczynnik redukcji zacienienia dla przeszkód POnidrkiyk
+
+ARP współczynnik redukcji zacienienia dla | napromieniowania, bezpośredniego, określony zgodnie
+z F36.2, | KAMANE Hi nM i
+pe część bezpośredniego promieniowania słoriecznego w dairy promieniowaniu, uzyskana jako
+
+funkcja danych kiimatycznych i orientacji. 4 ablicy ty 48 rrskid! ferent oy) z informacyjnymi
+wartościami domyślnymi w Tabkcy B. 48] | ie fy
+
+te |
+i 8
+
+współczynnik bezpośredniej redukcji zacienienia dla | napromieniowania bezpośredniego Fy aren JEST OKTEŚlA-
+ny przez średni miesięczny kąt wysokości słońca, lub przez uproszczone współczynniki korelacji (dla prostych
+obektow Mitas oraz : geometrię zacienionej TIE k, | obiektów Fa ener
+
+ji tl j | i 1
+YB kk, | RRRRE
+i
++t
+
+F.3.2 Proste i bardziej skomplikowane obiekty zacieniające HI p ! H I.
+
+fi ‘
+ń | 5 4
+MADA
+
+Rozróżnia się dwa typy obiektów zadsniających w odniesieniu do metody, obliczania: 17
+
+Peet j
+
+— Proste elementy zacieniające w elewacji, takie jak (okienne) wnęki gzymsy © nieskończonej długości i pi-
+
+lastry boczne o nieskończonej wysokości, lub inne geometrycznie podobne openly cceTEePa eats takie jak
+inne elementy budynku (np. ściany) lub balkony. = kit ! i IR | i | Hh HE 4 | MEROREE
+
+— Inne przeszkody, albo zacienianie ad powierzchni ziemi (od dołu; zwane normaing „przeszkoda”) lub
+zacienianie od nieboskłonu z góry na dół, wiszące, zwane SzYmeP a i ity
+
+i i
+Ue 5 2 i R e ) h
+rh EE i.
+} A ||
+}
+
+F.3.3 Identyfikacja i geometria obiektów odbywac (i HT]
+
+|
+
+F3.31 _ Proste wnęki, gzymsy i pilastry boczne
+Ta metoda ma zastosowanie do wnęk (okiennych), gzymsów © nieskończonej długości | pilastrów bocznych
+o meskończonej wysokości lub do innych geometrycznie podobnych obvektow zacieniających (takich jak bal-
+kony lub ściany) !
+
+Patrz Rysunek F. 1.
+
+Zgożne z an. 3 ust © ustawy 7 dra 12 września BOs r. o noomalzzcji (Uz U. Me 106 poz. 1983 2 pen zm] Mose Neony Izą OranoreE 131
+
+prmaem UGT] | UTA ry Merachie 9 surge shop Piwa Mejsłkowe Pa rech przywugują "o Saget khomasiowi Am nóg cy regres (PA
+
+hidery whip pezonakzeż w płn GlaF ie zadacpwCzaia łał nmię (acetates ith kupon ai ear
+
+
+
+
+=== STRONA 24 ===
+
+Cl < MED => GBA
+
+EN ISO 52016-1:2017
+
+L
+
+Jcfingr
+
+SALĄ F.1 = Gzowietria prostych gzymsów I lub Ala trów bocznych
+Zacieniony obiekt (elementfasadyj: = .... 4 apparel
+
+Dia elementu elewacji niezbędne są następujące dane > i kul | a i MI
+
+iat
+H, _ wysokość elementu elewacyjnego k, uzyskana > danych
+pochylenia: rzut pronowy wysokości, PANELU SIĄ
+
+WW, szerokość elementu fasady k, uzyskana zawiwnona cement w Mi || |
+I Ę A ń
+
+LAY kl
+
+aly i RIARKE Hy HY 4 re ‘ie
+
+| | HG? RH
+
+Dla każdego obiektu zacieniajacego q, który można uznać zą gzyms, lupin a res dane
+Dene głębokość gzymsu 4, mierzona od płaszczyzny elementu osady i, ia kis kie.
+
+143
+Termin gzymsy obejsnuje elementy stałe okna lub foseey | inne » cze budyniu takie jak pany) sesh gre
+
+zgodnie z lokalną SYJUBCĄ, w mi | MIH ae HR J4
+fy BAB HE
+
+odległość w pionie między krawędzią elementu elewacji k ag i mse qd. uzyskana zgodnie z lokalną
+
+sytuacją, w m łą / iiidudgeae EUSUPEREGRRROEEERE ne
+
+<—~
+
+Lica
+
+Pilastry boczne: ay | | | FOUUMERRRRECCEC ERT ERERERDEEROERERE
+
+ARORABREŁE UB
+
+Ta metoda dotyczy pilastrów EE eiehb nieskończonej wysokości lub payeh geometrycznie OR YCA obiek-
+
+tów zacieniających (takich jak ściany). | A if fete e eRe
+| | Ww Bae
+
+Dla kazdego obiektu zacieniającego r, który można uznać za KBA potrzebne są niezbędne dane:
+
+Dydner głębokość pilastra po prawej stronie r, mierzona od płaszczyzny element fasady k, w kierunku pro-
+stopadłym, uzyskana zgodnie z lokalną sytuacją, wm, | |
+
+Lier (pozioma odległość między krawędzią elementu fasady ke: a pilastrem pa Prawe stronie (skierowanym
+na zewnątrz) r, uzyskana zgodnie z lokalną sytuacją. w m, |
+
+Dyn; głębokość pilastra po lewej stronie I, mierzona od płaszczyzny elementu fasady k, w kierunku pro-
+
+stopadłym, uzyskana zgodnie z lokalną sytuacją, w m,
+
+Lie. pozioma odległość między krawędzią elementu fasady x a pilastrem po prawej stronie (skierowanym
+na zewnątrz) /, uzyskana zgodnie z lokalną sytuacją, w m.
+
+132 Zgodne z srt 5 ust. d ustawy © Grin (2 mzeżnia 20GZ r. o mhomatcacj (Dz. U. fer 169 paz. [402 z paźn. zw | Posies Normy Ją otromoną
+paves Spores m (ey yy hierar bę 8 sprkce pian reset hes 59 MET arzystezoą | GIT K nmigetrówi Narnii w y. NEM Pm hy |
+
+hice ous pee Fea hs it a plon iad | ee talia > AN NTE A Wasi Araba i ji nk dc af mili
+
+
+

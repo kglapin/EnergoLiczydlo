@@ -1,0 +1,2139 @@
+
+=== STRONA 01 ===
+
+EN ISO 52016-1:2017
+z sumą dla każdego przedziału czasu £* w ciągu roku, dla którego stosiije się następujące warunki.
+(Ointropanse sy Ó mqseucat .) >. Totathres. Hatt | (94)
+
+przy czym, dla strefy kondycjonowanej cieplnie ztć i przedziału czasu t
+
+Tonsheeineaa  TOCZNA Skumulowana liczba stopniogodzin powyżej założonej ternperatury dla progowej różnicy
+temperatury if, gdzie £ jest symbolem zastępczym wartości śdwttiti in" w Kh;
+
+O eżnónaa wewnętrzna temperatura roboczą określona w 16 5. 6, w C
+„ASI wewnętrzna wartość nastawy temperatury roboczej dia ogrzewania, określona w 6 5.5.1, w °C;
+AG@oithres: wartości progowe i (i = 1, 2, . _)do zliczania różnicy temperatury, wiK, z Bean wartości:
+
+Adonshresi = 0, 1, 2,4. dla i= 1,2, 3, 4, lubi Iny zakres wartości Kde. jeśli zapewnia lo
+lepsze rozróżnienie dyskryminacji WETLINA Ad M
+
+i"
+
+Dla godzin bez nastawy chłodzenia (godziny bez uzytkowników bez nastawy tempera) nastawe nalezy
+ustawić na +999 °C. : | Ltt W ŁAW,
+
+pe HA
+BA,
+5 5
+
+W przypadku braku systemu chłodzenia (w ogóle nie ma a nastawy chłodzenia) Sterne nalezy WIRoNAĆ dla
+stałej nastawy chłodzenia Ojnuzegnze Z 2670. (AWA |
+UWAGA 4 — Wartość nastawy temperatury ogrzewania hut chłodzenia może się. UIE, w ciągu dnia lub ruddóia Z tego |
+względu niedogrzanie i przegrzanie są wartościami względnymni w porównaniu do nastawy temperatury w danym przedziale
+czasu. Oczywiście, każdy (inny) rozkład eR można WRP z wartości Dedo dia meza lub roku.
+[”
+Ryzyko przegrzania ocenia a się tylko na poziomie strefy cieplnej. W: zależności od wnobzólawy ch zasad podziału
+na strefy, strefa cieplna moze zawierać przestrzenie o różnych i właściwościach cieplnych i różnych obciążeniach
+cieplnych. W takim Przypodu y wskażnik PO OCE, niedoszacowac ryzyko PORYCANA RA
+
+6.6 Procedury obliczania iosięczna co ih GU ANNA NN
+Podstawowe zasady OPÓOKIE W 5.2.2. tii. BĘ MIAU MANANA
+Metoda miesięczna ma zastosowanie do: obliczanie (jawnego i utajonego) zapolrzebowania na a energię.
+
+| IRE q at U R +
+Ze względu na miesięczny przedział: czasy, metoda me obejmuje ani obliczenia temperatury wewnętrznej, ani
+obliczenia projektowego obciążenia grzewczego i chłodniczego. Jednak na potrzeby aceny ryzyka Przegreaoz|
+w strefie cieplnej dodano uproszczy wskaźnik. KAWA JA it M I Hi ih BRŁKEI |
+
+Hoy Hf
+| H H
+
+W przypadku niektórych zastosowań metody, równania mają być BOBRA Kkukrotnie w dayti przedziale
+czasu. Z tego względu dla każdego zastosowania podena jest shen] która daje wymagane WAY |
+
+NA i KEN MIAMI
+6.6.2 Stosowany przedział Czasu i akrus obliczania BARKAN MODA WANNA
+
+Procedury obliczania opisane w 6.6 mają zastosowanie dla miesięcznego przedziału czasu. | |
+Okres obliczania to pełny rok.
+Obliczenie zapotrzebowania na energię dla określonego systemu:
+
+Długości sezonów ogrzewania, chłodzenia i (odwilzania) nawilzania są określone przez czas pracy odpowied-
+nich systemów technicznych. Należy to uwzględnić w obliczeniach określonych dla systemu. Moze on różnić
+się od czasu wynikającego z podstawowego obliczenia zapotrzebowania na energię.
+
+UWAGA 1 Długość sezonu moze być królsza niż w obliczeniu zapotrzebowania, co zmniejsza zapotrzępowanie poza
+sezonem lub dłużej, powodując straty systemu w okresach bez zapotrzebowania
+
+36 Zgodne z art. © ust. 6 ustywy z drza 12 przeżnip 2002 r. p noamalzacji (Os. LL Pen 195 por. 1383 2 póżn, zm.) Pode Normy z4 oargńóne
+
+prawem nerki jek utwory y herackie pa skie rys reaystia ae i Pech przywugiwye | naloeonę bun ended IN
+
+ae es he
+
+
+
+
+=== STRONA 02 ===
+
+CJ < MMD/--> GBA
+
+EN ISO 52016-1:2017
+
+W przypadku ograniczeń dotyczących długości okresu, który należy uwzględnić w obliczeniach, ograniczenia
+te są przekazywane za pośrednictwem wszystkich odpowiednich norm EPB.
+
+Ograniczenia te należy uwzględnić w odpowiednich normach EPB moduły od M3-1 do M7-1 obliczenia wy-
+
+korzystania energii w systemie. Wybór takich ograniczeń znajduje się w Załączniku A (szablon normatywny)
+i Załączniku B (informacyjne wybory domyślne) w tych normach. |
+
+UWAGA 2 — Ograniczenia le mogą np. wynikać Z przepisów krajowych lub regionalnych
+
+6.6.3 Założenia
+
+Zapotrzebowanie na energię do ogrzewania, chłodzenia i (odwitzania) nawilzania oblicza się przy założeniu
+nieskończonej mocy systemów. | HALA | |
+
+ut NH Mł
+A!
+| |
+
+Że względu na miesięczny niżedział czasu obliczenia wszystkie interakcje czasoWwo-wa riantowe z technicznymi
+systemami budynku można modelować tylko w uproszczony sposób, głównie poprzez wprowadzenie współ
+czynników korelacji. Wartości tych współczynników są w większości przypadków treiriwtt: funkcją klimatu,
+zachowania użytkowników oraz, na previa, rodzaju, systemów | | kontroli systemu.
+
+UWAGA — W związku z tym a one otwarte na opcje krajowe lub A ecataanti: vi)
+
+Ogrzewanie i chłodzenie w ym samym miesiącu określa się, "wykonując dwa oddzielne obliczenia, każde
+z własnymi wartościami dla różnych zmiennych i parametrów, 'odzwierciedlającymi reprezentatywne waruriki
+dla ogrzewania lub chłodzenia (np. dla wentylacji, odzysku ciepła, ochrony przed słońcem itp ). Potrzeby w Za-
+kresie ogrzewania i chłodzenia są obliczane dla wszystkich dwunastu miesięcy w roku (przy czym przez kilka
+
+miesięcy zapotrzebowanie na OAI AT lub chłodzenie może okazać zę ZETOWE).
+| | BY i
+AL
+Zapotrzebowania na energię do aktywnego podgtzeliąńia lub schładzania higienicznego powielrza wenty-
+lacyjnego (np. w centrali wentylacyjnej lub w nawiewnikach) nie uwzględniono w lej metodzie (a zatem nie
+uwzględniono w zapotrzebowaniu na energię po tey i Roza ale PRA w odpowiednich nor-
+
+mach EPB moduł M5-6. PLN WTA
+a kl | W a LM M!
+
+6.6.4 Zapotrzebowanie na energię do lima i chłodzenia przestrzeni | | |
+ł 4 ) i W 4 | WL, ‘| ;
+| } | |
+
+6.6.4.1 Ob.liczanie zapotrzebowania podstawowego i ERE dia określonego systemu
+
+PSUURRERERURET CES f
+| MIRI aha hay
+
+Istnieją dwie procedury obliczania: zapotrzebowanie podstawowe na energię i zapotrzebowanie na ENeTĘ
+
+NZS ARAD. MAJA ANAWA 3
+
+Ostrzeżenie = w indeksach doliych nie ma jeszcze rozróżnienia m ędzy obllezaniem „energii podsta-
+
+wowej” a obliczaniem obciążeń i pnóróniwiteiriny I nwiaźelwych dla systemu”.
+
+I ARENA Bt
+EB: HI WAN +
+BRA £.3 i ł
+h
+
+Podstawowe zapotrzebowanie na energię | ł | i NN I iI i | aly | i Hit
+Obliczante miesięcznego zapotrzebowań I na energię do ogrzewania (zgodnie: z 6. 6 4 2), do chłodzenia (zgodnie
+z 6.8.4.3) i (odwilżaniajnawilżania (6.6 14) ir Wn rypen określonych technicznych systemów budynku
+
+"
+
+To, które przepisy są wyłączone, określno w odpowiednich rozdziałach odpowiedniej normy EPB moduł M2-4.
+
+PRZYKŁAD © Wceluuniknięcia poważnych odchyleń od can zastosowah metody obliczania i aby uniknąć sprzeczności
+z założeniami związanymi z wyborem jednostki odzysku ciepła często jednostka odzysku ciepła z  PYSCETNM wentylacji jest
+uwzględniana w obliczeniach podstawowego zapotrzebowania na energię. ae
+
+Obliczenia podstawowego zapotrzebowania na energię wykonuje 512 w yin w kłórej zakłada sie standardo-
+we warunki środowiska wewnętrznego dla danej kategori przestrzeni, która wymaga systemu ogrzewania Ilub
+chłodzenia, podczas gdy w rzeczywistości tego systemu nie ma lub jest niedowymiarowany w takim przypadku
+podstawowe zapotrzebowanie na energię jest i tak obliczane.
+
+UWAGA 2. W zależności od wyborów dokonanych w normach zapewniających dane wejściowe do obliczania, może dye
+wymagana iteracja. Patrz także kroki obliczania określone w ISO $2000-1.
+
+Zgon E Z an. $ Ust © uztawy Z Grea |< arzesria 2002 r. 0 bormacaci (Dz. U. Me 160 pect 1330 aj pażn zm] Polskie Normy £4 Owom wie 97
+powa ayiorkim „sk ule ry kteracbe. a sirorzbe ptmwp mejątkone to neon PHAR a | OST Namyjełwa Korma Tcy. he Ja a!
+
+kłóry kose pose Be alżiacau g ków Gia iwa Ladi pi eCDatiia he ee eee ee oe Lijun 474201
+
+
+
+
+=== STRONA 03 ===
+
+Zk 2 100% Z < MED /-2> GBA
+
+EN ISO 62016-1:2017
+
+Zapotrzebowanie na energię dla określonego systemu
+
+Możliwe jest powtórzenie miesięcznego obliczania 2 powodu interakcji obliczania zapotrzebowania z określo-
+nymi charakterystykami i określoną kontrolą technicznych systemów budynku.
+
+UWAGA 3 Ponownie, w załeźności od wyborów dokonanych w normach zapewniających dane wejściowe do obliczeń,
+może być wymagana dalsza (teracja. Patrz także kroki obliczania określone w ISO 52000-1.
+
+Możliwe są następujące wpływy system na ablizena,
+
+= ograniczona moc ogrzewania lub chłodzenia nie ma zastosowania (obliczenia tylko metodą dodzinowa);
+— odzyskiwalne straty ciepła; dane WEEE wymagane w 6. 6. 7. adh | i
+
+— dostosowanie nastawy temperatury (wartość i i harmonogram) dane wejściowe wymagane w 6.6.11;
+
+— ograniczenie sezonu ogrzewania lub chłodzenia da obliczania; dane wejściowe wymagane w 6.6.4.216.6.4.3,
+
+— brak systemu ogrzewania lub chłodzenia: knik obliczania dla określonego systemu lub obliczania z fikcy}-
+nym systemem ogrzewania lub chłodzenia, zgodnie z zasadą wybraną w. ISO 52000-1:2017, Tablica A.9
+(szablon normatywny) i Tablica B.9 (informacyjny wybór domyślny): w przypadku fikcyjnego ogrzewania
+lub chłodzenia: wymagane dane wejściowe we wspomnianych wyżej podrozdziałach, w przypadku braku
+ogrzewania lub chłodzenia: wymagane dane Weecne w 6.6.4.2i 6, 64 3. |
+
+|
+p
+
+Wpływ systemu na obliczenia (odwizania) nawilzania, patrz 6.6. 14. "a
+
+et
+
+KPM
+|: |
+If
+
+be
+LĄ ||
+
+)
+
+W obliczeniach dla określonego systemu należy zanotować. w jakim stopniu, w okresach komfortu temperatura
+nie osiągnęła nastawy ogrzewania lub chłodzenia. Wymagane to jest potrzebne do zaciera rowny szans.
+Nie jest to jednak mozliwe w przypadku metody obliczania miesięcznego. | gi
+
+UWAGA4 W przypadku niedowymiarowanego systemu ogrzekania lub Lineker lub jego braku nie ma równych |
+szans porównania energetycznych właściwości użytkowych Zz innymi men mażna temu zaradzi POPE wyTażne
+ostrzeżenie lub karę. Patrz wyjaśnienia i przykłady w żę bija RAZ pa | | |
+
+6.6.4.2 Zapotrzebowanie na energię do ogrzewania AMAN AA ANI the
+Roczne zapotrzebowanie na onar thy ogrzewania, AAAA wk, da strefy kordycjonowanej celni zt. A
+jest obliczane za pomocą wzoru: | Wks | ki MJU MAU MANI + wah
+ee a WNN
+Oktan miesięczne Jetta bawanie na energię dać ogrzewania strefy kondycjonowanej cieplnie ate +
+w miesiące 5), określone Pod weve WAN HH Hat i HI KUMA ,
+
+Do obliczenia miesięcznego anozebowania na energię do ogrzewania |azróżnia się miesiące . z królowi
+i długimi przerwami w użytkowaniu. Dla każdej strefy kondycjonowanej cieplnie zte i każdego miesiąca m,
+miesięczne zapotrzebowanie na energię do ogrzewania, Qu: mdszeani: w kWh, oblicza się zgudnie z Pory tis z na
+stępujących dwóch przypadków. | | | i I BR
+
+a) Dla miesięcy bez długich przerw w użytkowaniu. Chin md: ‘hata oblicza się za pomocą poniższych dwóch WzOrÓw;
+
+jeZEli Viacom UI Oppa.rezyne > O: Qumdireom 7 0 | AIN | DALI | PASA | (96)
+
+jEŻEJI Yynem > 2,0: Quindiercom 7 © | HUMANA NN (97)
+
+w przecwnym razie: O0H;nd;ztzm = (QH;ht;ztcim — nHjgn;ztc;m QH;gn;ztcym) | (98)
+98 Zącńrie z an. $ ust. ustawy z dria 12 września 2002 r, o noćmajcacji (Oz U. Kr 1G poz. 1183 2 późn. wn.) Foske Noymy 34 grane
+
+p By psT! 25 EA ME TY je Uwe ny kiecarloe J si635k 4 piana msg kija rk, mię" NY SUN Vie al | lik hy rte ey gi hath Bd tae Ed be Lh i MK
+
+kle; i ole pononństE ac PRON tif ais ile tee aks ME gimme aw bid lide i ad Laid ań bory M KI pon isa
+
+
+
+
+=== STRONA 04 ===
+
+| syg
+
+wyjdą eet tetra penta 7 bs 72 m o m" add ee ee | Ot um Ta"
+u
+
+repożytniknau „EJ TO dami ZB bai babar A hthwiaiiee ws | YY} fot fo Vw tks AA,
+
+Cl ¢ GRR 22> Gia
+
+przy czym, dla każdej kondycjonowanej cieplnie strefy ztc | miesiąca m
+
+016-1:2017
+
+Persian bezwymiarowy współczynnik bilansu ciepinego dla trybu ogrzewania, jak określono w 6.6.10.2;
+Obs eo eee całkowite przenoszenie ciepła dla trybu ogrzewania, jak określono w 6.6.4.4, w kWh,
+Tazpnistem bezwymiarowy współczynnik wykorzystania zysków ciepła, jak określono w 6 6.10.2:
+Ones: całkowite zyski ciepła dla trybu ogrzewania, jak okreslono w 6.6.4.4, w kWh:
+
+b) Dla miesięcy z długimi przerwami w NAŃ Qeredienem OkrEŚlONO w B.6 11 5
+
+UWAGA 1 = Terminy „całkowite przenoszenie ciepla” „całkowite int ciepla” są przybliżone: Wyjaśnienia | informacje
+podstawowe patrz ISOVTR 52016-2!. | |
+
+UWAGA2 Uzasadnienie dwóch „jeżeli dektarowane” podano w ISO R52016-21, |
+
+Zapotrzebowanie na energię dla określonego systemu: |
+
+i
+
+Do obliczenia zapotrzebowania systemu na energię do ogrzewania mogą mieć zastosowanie ograniczenia, jak
+opisano w 6.6.2, w odniesieniu do OOOO: SEZONU chłodzenia. BN
+
+6.6.4.3 Zapotrzebowanie na energię do chłodzenia BI. i ieee
+
+Dla Kazdej strefy roczne zapotrzebowanie na energię do chłodzenia, Centcan w kWh, oblicza sie za pomoca
+wzoru: | | x |
+
+OQcznd;zte;an 7 pa Qczndzztejm SELIE r at | | Lt | (99)
+
+przy czym Hae HRT AN
+
+„PEJA miesięczne zapotrzebowanie na atetglę do chłodzenia strefy kondycjonowanej GRONIE ztc i mie-
+
+siąca m, określone jak określorio: poniżej, w kWh. i i | |
+Miesięczne zapotrzebowanie na energię do chodzenia. oan w kh, oblicza SiĘ zgodnie z | z nasiępu-
+jących 3" przypadków, w zależności Od! potrzeb HET k | i | it |
+
+c RY Dla miesięcy bez długich przeńw w użytkowaniu, Qamdo oblicza Się za pomocą dwóch poniższych
+
+jeżeli H/yczen) > 20: Podae0 JI — (100)
+w przeciwnym razie: 106 nd; ;ztc;m = Aczred stem (QCzgnezte m - ne ht;zte; mo OGhuztem) M 101).
+przy czym, dla każdej kańdycjonowanej cieplnie strefy ztc i miesiąca i m i Ht it | | I i Hi + i Ni :
+
+ARASR 5
+
+Qcicsrem Catkowite przenoszenie ciepła dla trybu chłodzenia, jak. określono w 6 6 4 4, w kWh; |
+Fe ee bezwyimiarowy współczynnik wykorzystania przenoszenia ciepła, jak określono w 6.6.10. 3;
+Qumazym Całkowite zyski ciepła dla trybu chłodzenia, jak określono w646. 6. 4. 4, w KWh; |
+
+Ory m | bezwymiarowy współczynnik redukcji dia przerywanego chłodzenia, jak określano WG. 6.11.4.
+
+UWAGA 1 współczynnik redukcji dla rzerywanego chłodzenia. jest inny w porównania do normy ISO 13790:2008.
+Uzasadnierie podana w ISCYTR 52016-21 R | |
+
+UWAGA2 Uzasadnienie dwóch jeżeli deklarowane" podano w ISOTR sone
+
+dj") Dla miesięcy z długimi przerwami w uzytkowaniu, Qemdistem określona w 6 6 115
+
+ssj Odsyłacz krajowy. Błąd w oryginale EN. Powinno być: „2 nastągującjch 2 przypadków
+W] | Ods yłacz krajowy. Błąd w oryginale EN. Powinno być! Ja)".
+©) Odsytacz krajowy. Błąd w oryginale EN. Powinna być „b)'
+
+ognie z art. 5 ust. 6 ustawy z dela 12 wrzeżna DOLE r. 0 Nomalzac (Ue. U. he 164 poz. 13642 pian, zn] Paiste Marmy 53 7rdnidoye REJ
+m. bead e: js
+
+pzy mśarst m pam uteory kierarke s piborskbie prze mę stkows tą reach prey pg Fokbemi Kor tomi Morph sry nei | 4
+
+£ p , l , 1 5 fo - U Nia L 4 u wx ea 15 | al I R
+klży wisuje patente leat p ka ci4ż Mów tałucęwE cwi fetal Aa dewey KUPIENIA MA
+
+p. 4 y bok
+
+L
+
+
+
+
+=== STRONA 05 ===
+
+Przypadku nIEpoOpPrawacEu wy BWIeLAZC | BL RSE RZA tee A ORA WO DT It Bi tet beds ce EB i R Z arena
+wj Odsytacz krajowy. Błąd w oryginale EN. Powinno być: .b)”.
+
+EK "LIH_F
+
+Biddy kiówuje perndnakzacy pików Oar nee Zabarysgioona ELI O bai anawa kojot an
+
+99
+
+EN ISO 62016-1:2017
+
+Zapotrzebowanie na energię dla określonego systemu:
+
+Do obliczenia zapotrzebowania systemu na energie do chłodzenia mogą mogą mieć zastosowanie ograniczenia,
+jak określono w 6.6.2, w odniesieniu do TENT sezonu chłodzenia.
+
+6.6.4,4 Całkowite przenoszenie ciepła i i zyski INIT
+
+Dla każdej strefy i każdego miesiąca calkowite! pizenoszene | ciepła dla ogrzewania i chłodzeriia, Quercy
+| Qokuzzem, OBIE W kWh, oblicza się na podstawie następujących dwóch bótulyyidi | i
+
+|
+|
+
+Dla ogrzewania: Qu norsen = Qanztam + p IA MINI MALO | (102)
+Dla chłodzenia. Qrzezrm 7 * Ooznieem + Oren MM KIN AMATO | (103)
+przy czym dla każdej kondycjonowanej ciepinie strefy zic l miesiąca m Fa [| | F
+
+(b PRRZARAEŃ calkowite przenoszenie ciepła przez przenikanie dla ogrzewania, in określono w 6. 6 5 Ww kWh;
+
+|
+
+Onar całkowite przen oszenie ciepła przez wentylację dia ogrzewania, Jak określono w 6.6. 6. w kWh,
+i Resets całkowite przenoszenie ciepła przez przenikanie dla chlodzenia, jak określono w 6.6. 5, w kWh,
+
+Qowesstam calkowite shabennitin ciepła przez wentylację dla chłodzenia jak określono w 6. 6 6, w kWh.
+
+Całkowite zyski abate dla ogrzewania i chłodzenia, Quignzzam | (Qopzzeme oba w kWh, oblicza się za | pomocą
+
+Wzorów 104 i 108: i is
+Dia ogrzewania: Aa | NAM WHALER EE CEE U s,
+Dla chłodzenia: Qeguztam = Qcinesscm * Corot | ij. | Hi Ht HH MDA (105)
+przy czym, dla każdej strefy kondycjonowanej cienie z ztc i miesiąca m | WII kt Hi I
+BER H-Aoh 4 aa
+Quinerem Suma wewnętrznych zysków AA dla ogrzewania, jek okieślono west, w kin;
+| HU thay
+
+Orcolrcam  SUMa ZySków ciepła od słońca dla ogrzewania, jak określono w 6. 6. B, w kWh;
+
+M EJ ie MASA
+
+suma wewnętrznych zysków ciel dla chłodzenia, jak określono w B 87, w kWh:
+
+Lak 4 181
+MANNA HE i
+
+Qcisctatem Suma zysków ciepla od, słońca dla chłodzenia, jek określono. w 6.68, wi kWh ;
+
+Icey
+—
+
+Q- ink roe
+
+A
+Be
+
+A, ; LA (B HH be ie: |
+6.6.5 Przenoszenie ciepła przęż przenikanie Han A dł
+6.6.6.1 Procedury obliczania tę KMADIUNIININ INU |
+
+zenia, 2 Farta Qezratem oba w kWh,
+
+|
+
+|
+
+|
+Całkowite przenoszenie ciepła przez przenikanie dla ogrzewania i chład
+
+oblicza się na podstawie następujących dwóch WON | Hy i Hi
+
+| | |
+
+Dla ogrzewania: ; | IJ NEM | BU
+Gratce = (Hynrtezgkmi zsóczm (Otuake: ikęzoom ~~ AMAN GA p Gran) 0.001 At, (106)
+
+Dla chłodzenia:
+Qcrirtem A (Hereteschefim)isteim (; 11 © MB r ALLELE (Bbualedadcim + Paaa)) 0,001 Alm "(U
+
+przy czym, dla kazdej strefy kondycjonowanej cieplnie ztc i miesiąca m
+
+całkowity współczynnik przenoszenia ciepła przez przenikanie dla ogrzewania lub chtodze-
+nia, dla wszystkich elementów budynku z wyjątkiem elementów połączonych z gruntem, jak
+określono w 6.6.5.2, w W/K;
+
+Hyyczejezd.gl);rtez
+
+temperatura obliczania strefy dla oqrzewania lub chłodzenia, jak określono w 6.6. 11, w °C
+
+“cnpealoH/Cistiom
+
+
+
+=== STRONA 06 ===
+
+EN ISO 62016-1:2017
+
+Bream średnia miesięczna temperatura powietrza środowiska zewnętrznego, określona z odpo-
+wiedniej normy EPB moduł M1-13, w °C,
+
+Fi iżiccih współczynnik przenoszenia ciepła dla elementów budowlanych mających kontakt z grun-
+tem, w tym podłóg typu. płyta na gruncie, podłóg podwieszanych oraz piwnić, dla strefy
+cieplnej zte i miesiąca m, w oparciu 6 roczną różnicę inłwtitrtent uzyskany na podstawie
+normy ISO 13789, w WIK; | |
+
+Uzi średnia roczna temperatura środowiska vain tin uzyskana z odpowiedniej normy
+
+EPB moduł M1-13, w © MANI | [l
+
+At. liczba godzin miesiąca m, uzyskana z odpowiednie normy EPB modli M1- 13, wh.
+
+UWAGA 1 Umownie, przenoszenie ciepła przez przenikanie i wentylację odbywa SIĘ od Wiekinajrz na zewnątrz. Prze-
+noszenie ciepła lub jego część może mieć znak ujemny w pewnych okresach, w Korc ciepło jest dodawane Go strefy.
+Wpływ na ogrzewanie i chłodzenie wyjaśniono WISO'TRS2016-4! | |
+
+UWAGA 2 Współczynnik przenoszenia ciepła przez przenikanie dla Elelhetiów budynku bedacych w kontakcie clepinym
+z gruntem, Hye. were Wyznacza Się na podstawie średniej [ocznej różnicy temperatury. Współczynnik przenoszenia ciepła
+nie może być wyznaczony w oparciu o reettti miesiqcznq iii: aunt i aa Podano wIS0/TR 52016-2'1
+i ISOVTR 52019-2'%, : | AMA 3 |
+
+4 „|
+
+AP
+
+Przenoszenie ciepła do przyległych przestrzeni kondylonoiies clepinie:
+
+) i
+
+Jeżeli przyległa przestrzeń kondycjonowana cieplnie jest steel cieplną ocenianego obiektu saver jest opcja
+obliczeń dla stref sprzężonych cieplne, zastosowanie mają zasady obliczania określone w Załączniku D. W po-
+zostałych przypadkach: peers ciepła przez element konstrukcyjny do Pryjegiel EOT jest PO
+
+W,
+
+6.6.5.2 Całkowity współczynnik przenoszenia ciepła przez przenikanie |
+
+UWAGA1 Pole powierzchni elementów budowianych i jen współczynniki prze enikania ciepla. a także długości | liniowe
+współczynniki przenikania ciepła mostków ciepinych należy OPEK 2 tege Hirek kita lub PARA to samo 2100.
+
+Uzasadnienie podano w ISO/TR §2016-2!"), k wy MAIN
+
+tere
+
+UWAGA2 Zaméast określać carkowity wspéiczynnik rea tei cegla z ISO HAKI istosuje la wartości da pOsZCZE-
+gólnych elementów jako dane wejściowe, na przykład ze względu na przenikanie ciepła przez grunt i przenikanie ciepła
+przez przestrzenie niekondycjonowane cieplnie oraz ze wzgledu na różne dla big eerhureraet biveetridinty
+pochłaniania energii słonecznej I emisżi kę ORDO OWE iat nieboskionu. MKS
+
+ayaa | |
+UWAGA 3 Wartości liczbowe mogą się tóżnić między obliczeniami ogrzewania coder (neh i MADA różnych zało-
+Zen dotyczących stosowania zaluzji). Wartości mogą SIĘ różnić WDOSOROWR m lesiącach, np. ZĘ Woo nh na różnice
+w czasie nżytkowinia tych rzadzi KL MNI V4 ANN KRK !
+Ki H aaa Rabe i BECKE |
+
+gb | |
+MAI
+
+Całkowity współczynnik przefioszenia ciepła przez przeniisale dla ogrzewania lub Łniadzeni ia dla wszystkich
+elementów budynku z wyjątkiem elementów związanych z gruntem dla sirely KOC YPO WANE cieplnie zże i
+
+i miesiąca m, Hujcztudzyaaozno W WIK, WYZDOCZ Sig ZR AI i WOMAN We LUIS
+
+|
+
+een (Pree) Mr I Ha | 4 ‘| Hi H | | ii HE | | KEK | | (108)
+
+przy czym dia każdego miesiąca m ZLA MINI Hi i
+
+| całkowity współczynnik przenoszenia ciepła przez mabe dla ogrzewania lub HWOREDO, dla
+
+Ay cielo
+Hut 'elementu budynku k, w miesiącu m, określony jak przedstawiono poniżej, w W/K;
+Husbze o Całkowity wspoiczynnik przenoszenia ciepła dla mostków cieplnych w strefie kondycjonowanej
+
+cieplnie ztc, określony zgodnie z 66 > 3, W WK,
+
+Catkowrity współczynnik przenoszenia ciepła przez przenikanie dla ogrzewan ia lub chłodzenia, dla elementu
+budynku k, w miesiącu m, Hu,cetjem, W WIK, oblicza się Z następującego wzoru. |
+
+Joong z at. b umt 5 ustawy z dria 12 arześria S002 r. 0 norma ac (Dz. Li u WO paz. 1185 2 późn. m.) FSE Noory 13 Swyńmoję 101
+
+Pewee SUCK IT pam trey ierarioe 4 sirotskie powy myjsfk nie 5 ie eT a, Tel shivered Ksierajał owi Mice ener ag „mam "LULA"
+
+kloóg whee pa kolśLZ ec m pokużnw dał ie Łebecgaczeńa Loo eur Menges lo 4 dst!
+
+
+
+
+=== STRONA 07 ===
+
+«w ” M «A = R» twachawyw 13 oder aha kant bebe oe ee Sy oe 4&5 ANAL
+
+EN ISO 62016-1:2017
+Dla elementów połączonych ze środowiskiem zewnętrznym
+Hy /Czel; bem rę Up /Cyłęre | Ags (109)
+
+Dla elementów połączonych ż przyległym zewnętrznym typem (jak zdefiniowano w 6.4.5 1) strefy niekondy-
+conowanej cieplnie
+
+1 a m Dzikim i Ue m ET | | (110)
+
+Dla elementów połączonych z przyległym zewnętrznym typem (jak zdefiniowano w 6 4.5.1) strefy niekondy-
+cjonowanej cieplnie: | | | |
+
+Hęyaza > (17 Borga) | Uuma dak AI HI ECM (111)
+przy czym dla każdego miesiąca m. | | | I
+
+Uu/cekm Współczynnik przenikania Lied określony jak opisano poniżej, w Win? Ky
+
+Dera współczynnik dostosowania R przyległej strefy niekondycjonowane cieplnie k, jak określono
+w 6.4.5 4; |
+
+Aur pole powierzchni elementu obudowy budynku, określone dla ata typów elementów budynku
+zgodnie z ISO 13789.
+
+b Py My
+
+współczynnik przenikania ciepła wszystkich elementu pues niepołączonych Zz gruntem U, Et) Cham określa się
+
+następująco: | | |
+
+i 14 fi
+HOP,
+
+Współczynnik przenikania ciepła elementów ieprzezroczyśiych U „ należy określić z ISO 13789.
+
+Współczynnik przenikania ciepła okien i i drzwi, U,.i Ca, należy określić z ISO 13789.
+
+UWAGA 4 — Współczynnik przenikania ciepła lub wartość U naloznakowaniu CE, określony w oparciu 0 norme wyrobu
+EN 14351-1P|, jest istotny tytko wtedy, gdy rozmiar danego okna lub drzwi różni się mniej niż a 10 % od rozmiaru według
+EN 14351-1. Cytat z nomy EN 14351-1:2005: „WI przypadikul ody wymagane jest szczegółowe obliczenie strat ciepła z okre-
+ślonego budynku, producent powinien dostarczyć dokładne | odpowiednie, obkczone Kb Kertóstttietnkeięt WEPOCZYNOKA
+przenikania ciepła (wartości projektowe) dla rud» rozmiarów" MIA MAMA AAAA
+W przypadku okien, gdy występują zaluzje, Wdólczynnik AAAA IAI przez Hone z SRE TEE Zalu-.
+Zjami, Ua, W Wi(me- K), należy uzyskać z ISO 13789. Średnią ważoną miesięczną wartość współczynnika
+przenikania ciepła przy otwartych i sce żaluzjach ustala się GRONA z kę 2 22) w Załączniku G.
+Współczynnik przenikania ciepła ścian osłonowych, Ua. należy obiczyć zgodni : z 1SO 13789. i
+
+W innych przypadkach współczynnik: U, okna określa się z Iso 10071 lub ISO 15099 dla okien i i drzwi, lub
+ISO 10292 dla stenty" M R Pozycje 112 wie £. ki M iat A Lb MA Ree |
+
+LAU
+HOPRORREECE
+
+hell 4 h
+
+sę zgodnie z 62.22 w Zalątznku © ie MAIN NN KRY
+6.6.5.3 Mostki cidpiite
+
+Całkowity współczynnik przenoszenia ciepła mostków vcepinych Hee w wik oblicza SIĘ Z następującego
+wzoru: Mela
+
+Hrstbzzt = ve (hit Pork |
+K
+
+(112)
+
+przy czym, dla strefy cieplnej zt
+
+lo. długość liniowego mostka cieplnego k, określona zgodnie z ISO 13789, w m,
+
+W... limiowy współczynnik przenikania ciepła liniowego mostka ciepła Kk określony zgodnie z 180 13789.
+w W/(m-K) i |
+
+102 Zgodne z ań. 5 ust © ustawy £ dna (2 arześria 2002 £ p nermaktacji (Dz l. jw 106% poc. 1150 z późn. za.) Page Nomiy JI ryaone
+pz unarsk m ber utwary Meracoe. a aitóąrskee prawa matethicwr og rec orgy stucua Nalaloenu Kamel wa Kodnsig me aa ALBA!
+
+kid» Vf BIOL pe pra kj ialżacm PALM cide Ma taliwzpowć tenia Cel wdra yna Koga bani
+
+
+
+
+=== STRONA 08 ===
+
+EN ISO 52016-1:2017
+
+UWAGA 5 Obejmuje mostki ciepine krawędzi podłogi na gruncie.
+UWAGA6 Patrz Uwaga 1. | |
+
+Alternatywnie, całkowity współczynnik przenoszenia ciepła mostków cieplnych, Ayre, W WIK, można określić
+bezpośrednio jako wartość całkowitą (domyślną) z ISO ate)
+
+6.6.6 Przenoszenie ciepła przez wentylację
+6.6.6.1 Procedury obliczania
+
+Dla każdej strefy kondycjonowanej cieplnie ztć idla każdego miesiąca m całkowity Wabbczynnik przenoszenia
+ERY przez patti Sari) dla ogrzewania I chkidzerie, Ch (eves zc w kWh, oblicza MY) fla podstawie następują-
+Hy Cores (7 A/Qvasremw | (neice - Wess uy aul | 5. Hat |
+
+przy czym, dla każdej strefy kondycjonowanej cieplnie złe miesiąca tf m |! Ha
+
+it
+
+Ay rewestesm całkowity współczynnik przenoszenia ciepła przez wentylację qe ogrzewania/chłodzenia, jak
+
+okresłono w 6.6.6.2,wWK, | AP |
+@ mucaiH/Ozte - wewnętrzna temperatura obliczania strefy ogrżewaniajchłodzenia, jak diresiono WA! 6.11, w °C:
+RMA średnia miesięczna temperatura (powietrza) ) srodowiska arti vdertiaitt uzyskana z odpowied-
+niej normy EPB moduł M1-13, U ye A | |
+At. liczba godzin w miesiącu m, uzyskan i Wi. pdpowiedniej normy EPB hn M1-13, w hit
+
+UWAGA Patrz odpowiednia uwaga na temat możliwego. wemege znaku przenoszenia ciepła i w 6.6, 9, 1.
+
+a
+
+Przenoszenie ciepła do przyległych przestrzeni Kondycjonowanych cieplnie: | ę | |
+
+E
+
+Jeżeli przyległa przestrzeń kondycjonowana cieplnie jest strefą cieplną ocenianego lotek: i wybrana opcję
+obliczania jako sprzężone cieplnie strefy ciepłe, Zastosowanie mają anni obliczeń w orta D.
+
+W innych przypadkach: strumień movies z przyległej przestrzeni jest pomijany h HA ii M i
+
+6.6.6.2 Całkowity wepelcnane przenoszenia ciepła przez DOWN MN | \ ł i |
+
+| i] % 8 8
+LM LA TE BENE:
+HUH Ja (RE Ę
+
+Całkowity współczynnik przenoszenia ciepła przez wentylację dla strefy, ztc i miesiąca m, dia ogrzewania
+
+i chłodzenia, Hy cwestare: należy ¢ pkreślić zgodnie z jedną z dwóch poniższych. metod. Wybór między Metodą A
+i Metodą B podano w Tablicy AL27 | (szablon normatywny), z. informacyjnym Wykorem PONY podanym
+
+w Tablicy B.27. Metoda B ma zasłosowanie wyłącznie poza obszarem KONI H i BK
+
+UWAGA 1 wartości Iiczbowe He Great MOJĄ sie rÓŻNIĆ między obliczeniami ogrzenania | i cniodzenia to Z powodu
+
+różnych założeń born ak otwierania PCA i MAŁA 1 MINA
+
+WIM
+
+AA
+
+F | uk Hh
+
+Wartość całkowitego współczynnika przenoszenia cients przez wentylację, Hs ese BA sate w WK, oblicza się za
+pomocą wzoru: | |
+
+Hi /Cjvejztcim 7 Pa ita X (Byesestypcsor "dykijCz* Fvedyn:kem | | 1 WANARRAKA (114)
+przy czym, dla każdego miesiąca m
+
+fla rciweteim całkowity współczynnik przenikania ciepła przez wentylację do > ogrzewania/chłodzenia, dla
+
+strefy kondycjonowanej cieplnie ztc, w WIK;
+
+Man Odsy Hace krajowy. Błąd w oryginale EN. Powinno być: „Qi, cvezzeza = 0.001 x Parcs xt - (BreacalsBjCza 1 rain) > Aba
+
+Zgodne 1 ań. Gust M ustowy z dria 12 września 2002 60 nómazagi (Gz. U. Ne 166 poz. LIBS spose, zm] Polsids Nye zą onronione 103
+
+powa AL grz ri sb fwory Viecarchre  BKOG(WIE Pin uktdwi zda i ch przyrugaą Mosk ramu Komoje toma |nne ref Pal
+
+kid j a ks. ję pomotślzec ie cdhów Olas bia Laliad oC oaiiia pi le! isę CA aw (SEAT WUDOCWY ZO ede
+
+
+
+
+=== STRONA 09 ===
+
+ww ru Aww
+
+EN ISO 62016-1:2017
+p,*t, objętościowa pojemność ciepina powietrza, | jak określono w 6.3 6, w. Jin? KK),
+QytcH Cum średni miesięczny strumień powietrza elementu przepływu powietrza, k wpływający do strefy,
+
+dla ogrzewania/chtodzenia, jak potłano w odpowiednich normach EPB moduł M5-5, w m/s;
+
+Dee. isti/ee bezwymiarowy współczynnik dostosowania temperatury elementu przepływu Powiem k, do
+ogrzewania/chłodzenia, jak podano poniżej, !
+
+| APRA współczynnik korekcji dynamiki dla elementu przepływu powietrza k, jak wyjaśnióno poniżej,
+
+k reprezentuje każdy z istotnych demented przepływu powietrza, takich jak infec powietrza,
+
+wentylacja naturalna, wentylacja mechaniczna lub dodatkowa wentylacja, do chłodzenia w nocy
+
+UWAGA2 Współczynnik dostosowania temperatury buja A koryguje współczynnik zamiast róznicy temperatury
+
+| ji
+
+HAE R ET EA ED iS a
+Zasadniczo, współczynnik dostosowania temperatur, bito dla przepływu powietiza k określa się jako:
+| 4 wan i) } tj } m. i |
+cale, H/Cim 7 ~ Uzup,k MC; z | RAREREARRSNA MERA AU ie | (BY,
+(Paicayeim Seam) TORBESELLRTRGTAGE | rey he nt vii" APA ŁOM |
+przy czym, dla każdego miesiąca m | BI Hi HER AMI te he | (il
+
+D wężem współczynnik dostosowania temperatury dla strurniepii a powietrza k, dia ogrzewaniarchodzenia
+ŚmicH/Citrm temperatura obliczania Strefy ogrzewanarchodzenia „jek określono w6 6. 11, w Cj |
+
+O-upkiH/Czm temperatura nawiewanego przepływu powietrza, K, a ogrzewanialchiodzenia, w 0
+
+„Ak JUSTA
+Bau - średnia miesięczna temperatura powietrza w Srodowisku zewnętrznym, w WIC!
+Wartość eg oH Cem ź 1, jeżeli temperatura nawiewu, Gab ajm nie e jest równa temperaturze środowiska Ze- ..
+
+W przypadku wentylacji w tym infiltracji powietrza, z ze mętrznega! lub weunątrznego Wu (ak 2 zdefi niowano itl
+w 6.4.5.1) strefy niekondycjonowanej cieplnie, współczynnik: dostosowania temperat tury, Busk. Afr dia i kónatwtte
+powietrza SRA ay ATW NA dostosowania dla stref hevueatnstuathutnneecie anni Ę
+
+k By it» A KBE: be be f
+Ha W aa ka ra A, tb Hel WAN HK
+Dysk/Cim współczynnik dostosowania temperatury dla przepi powietrza k, dla ogrzewanialchłodzenia;
+"4443 | TO URTRERRRRRTOL
+Dia współczynrek Oąztox osowania dla strefy niekondycj e ciepin ie. ztu, jak określono w6.4.5.4.
+
+w przypadku elementu systemu dentylach Q temperaturze nawiewu innej niż kdracakicii powietrza zewnetrz- |
+nego, temperaturę nawiewu elementu przepływu powietrza k, in A! Hem nalezy określić RONA rd EEN
+normą (normami) EPB moduł M5-. ADELI CA NU BRANA i i} 414) KANI ha |
+
+UWAGA3 Dotyczy. tona przykład podgrzewania atts lub, BANIA wałpaba otżysku cepa (z opcjonalnym
+efekiem Bi FT Vlub ochoną przed ietr OZON i z wentytałorów, weer noe do lub Z —
+
+Nie dotyczy to ogrzewania lub chłodzenia LANA eat w kórym lemperatura nawiewu udal w pein regulowana
+przez temperaturę wewnęlrzną (brak wstępnego Ogrzewania, ale ogrzewanie powietrzem), |
+
+WAGA4 Uzasadnienie podano w ISO/TR 52016-2'. HUN i Mili MIANA
+Współczyńnik korekcji dynamiki elementu przepływu powietrza k, esol ma Wartość fk LL ź 1, koryguje
+istotnie różnice między wzorcem strumieniem wentylacji Vlub temperatury zasilania w ciągu dnia (co godzinę)
+
+i tygodnia (dni robocze, weekend) oraz wWzorcem temperatury WC lub zewnętrznej lub zapotrze-
+
+104 Zzodne z an. 6 ust. 6 ustawy z dria 12 wrzeżnia SCE r. 0 noćmalczycj (Oz. UL Ke 160 poz. [0B3E póżn. zi.) Faszkia Novy są aranore
+pzaem seek jsk utwory kterochę, s purorskie prmos mqękoee tą ech przyrugią Posh Komozłow komsgsyjnem (PMI
+
+bidet? ehSwli pó foie in Fuh ae 8 pre Otek ire Laliki owórelia pied fra CS a WATA a {py a an |
+
+
+
+=== STRONA 10 ===
+
+C < GRD 22> Gam
+
+EN 150 52016-1: ‘2017
+bowaniem na energię. Wartość te nale
+
+zy ustalić z odnie
+wybór domyślny podano w Tablicy 8.98 | a z Tablicą A.28 (szablon norma
+
+jam,
+
+puka przenoszenia ciepła pizeż | weny lacy
+-2:2017, Załącznik JO Metc
+
+ytkowych łacznie 3 an roan misty Kuby
+
+| th cyjnych
+6.6.7 Wewnętrzne zyski ciepła Hi i PASHTU TUPLE EU 3
+6.6.7.1 Catkowite wewnętrzne zyski ciepła HEU UNI. }
+W przypadku strefy kondycjonowanej cieplnie zte yaks ciepła z wewnętrznych źłódeł ciepła do ogrzewania/chio-
+dzenia, Gecsncziem, W KWH, ini sę ża pomocą Wzoru: MANARA NH EMMA
+Qujcznyznym = Owyczośrem MEAN i NUN ku Wii (117)
+Lecz w przypadku jednej lub więcej pzyłegiych stref nekon r wanych cieplne (bat 6. 4. Kij
+
+Que; zlntzztejm = Qe: imędirzztcyy F A
+kal
+
+UB) im )- Fe zt; ma Jet gu; micz m „dy siritsdir: M (118)
+przy czym, dla każdej kondycjonowanej StL JA a ANĄ m
+
+UB |
+
+Qa RZARE U miesięczne wewnętrzne zyski, ciepia w strefie kondycjonowanej cieplnie : ztc, do ogrzewa-
+3 nia/chłodzenia „Jak określono w 6 6. TŻ, wkWh, BAL
+
+W A Ą KM R 4
+) (RAW he ay
+t |
+
+7 MERSARS | Seen dostosowania da s pzylegiej stety b nckonaycerewan cep k, jak określono
+F rami 2 PA dystrybiicji zków ta w done okiodiotwanej cieplnie k przypisany
+do przyległej strety' r onowanej cieplnie ate, „Jak określona w 6. 4. 5. 4: |
+
+i | | AWIŁY LU WADAMI | L
+f POR APE współczynnik redukcji, zapobiegający zawyżeniu zysków. str we strefie kondyjononanej
+cieplnie k dla, trybu ogrzewania, jak określona wE3, WWK; Hai i
+
+BARERNEEKA
+SEAGER ie MANI
+
+Qu/cunndiremim Miesięczne wewriętrzne zyski ciepła wewnętrznego lub zewnętrznego ty (jak zdefiniowano
+
+w 6.4.5.1) przyległej strefy terory sdeyettieti tyt bi dla ogrzewanialchłodzenia, jak
+PRE TOT, wih: | MU SUNNIWMNNNINN
+
+| URS: Mi AU HA 4 | | 64 9
+RURLUEARA ER: | ewe hha hs
+
+6.6.7.2 Źródła weumetrznych zysków ciepła KU | AU | | | | Hi aly itt i | | ii | i |
+
+Zyski ciepła z wewnętrznych źródeł ciepła w każdej stteba AU deploie lub niekondycjonowanej
+cieplnie zt i dla każdego miesiąca m, dla: ogrzewaniałchłodzenia, niezależnie RO lego, czy są kandycjonowane
+cieplnie, czy nie, Poaedinae w kWh, oblicza się Za Pomona wzoru: Withee TaN M
+
+h | | | kb -|
+j „| h | || | | | | | |
+| | 4 | hi! A. |
+
+Qu /cspecintincsztim * Qu csspecintia ;A; ztynr hy Qu, IG, spect intils A m |
+
+Qu/ciótdlęztar = „A et (119)
+
+*"Pujspecint WA; atin + W/G jspeczint; HVAC 1 nyc isp, int pres zł; m
+przy czym, dla każdej strefy zt i miesiąca m
+
+“Se WRA jednostkowe wewnętrzne zyski ciepła metabolicznego ad użytkowników, do ogrzewania
+ae it, chłodzenia, jak określona w odpowiedniej normie EPB moduł M1-6, w kthime,
+
+Mż | jednostkowe wewnętrzne zyski ciepła rozproszonego z urządzeń wyposażenia do ogr ze-
+Fomei  uaniakchioch Enka jak określono w odpowiedniej normie EPB moduł M1-6, w kWhim-.
+
+£ POZĘZNKA ZU0E wanazjąj (DE. U Ni 106 poc. 1386 2 póżn. dej.) Posie Krowy SĄ sO 105
+Zgoine z art. Gust. Ś ustawy z dros 12 przęznia SWE r, © nem ZJGI [DE UL W poz ez | pn
+PEM EFC M pak titwory kterarkoę. 5 sunrskye przewo msyjętkawe pa nich przyslupuą | pisowni Karnetefziwi PBL jaeme | |
+BENE" | 4 *
+
+1 xs Prat 7 ' Pee Per poe op ce wani
+bidity aihwuj paGÓNAELaC e pkd DlA ri bal ied fore tet hd Pra Nią any a
+
+
+
+=== STRONA 11 ===
+
+EN ISO 52018-1:2017
+
+Ohi/cspecintlistom jednostkowe wewnętrzne ye ciapa 2 odz zydkiwaltnydh strat od oświetlenia do ogrze-
+wania/chłodzenia, jak określono w odpowie niej normie EPB moduł M3-1, w kwh/mć,
+
+O; Cspezint Were jednostkowe wewnętrzne zyski ciepła ź odzyskiwalnych strat od sieci ciepłej wody | ka-
+
+nalizacyjnej, do ogrzewania/chiodzenia, jak określona w odpowiednich normach EPB
+moduły M3-1 i M3-1. w kwhim?; Ht | [i
+
+Qu/czpecintiaCrem JEdNOSIkowe wewnętrzne zyski dapia z odzyskiwalnych strat sysiemów ogrzewania,
+chłodzenia i wentylacji, da ogrzewania/chłodzenia, jak określono w odpowiednich nior-
+mach EPB moduły M3-1, M4-1 i M5-1, w kwhmć, do obliczenia zapotrzebowania na
+energie dla określonego systemu Iogai mieć ZAODOWANIE Were określone dla tego
+
+RER | | NA AM ij
+be
+
+Oa yorpecinupronsiee jednostkowe wewnętrzne zyski (ED M odzyskiwalnych strat procesów | i dóbr da ogrze.
+wania/chłodzenia, Jak określono w adpowiedniej normie EPB rapguly M1-6, w kwhim*,
+
+Ausęzt pole powierzchni podłogi strety użytkowej, jak określono w 6.4. 3, w m.
+
+p PMA > i |
+Zasady obliczania w odniesieniu do odzyskiwalnych ial ciepła opisano w. Iso 5 2000-1: 2017, 8.1. a, W tym |
+
+dokumencie uwzględniono katy GRĄ ww iratrwnykyi w. Batynki anie Ik założone) ody ane w systemie |
+lub podsystemie. | This | |
+
+Fay
+
+| ARE
+
+UWAGA1 Więcej szczegółów znajduje się w raporcie technicznym ISOTR annie gm
+UWAGA 2  Zrddio chiody, usiwające ciepło pa budynku (are), (ery iaktować jako 2 żródło o waności ujemnej,
+
+Zapotrzebowanie na energię określonego systemu: MA i iW ate | EON V L ||
+Ograniczenia te należy uwzględnić w odpowiednich PANIE stem EPB mody M3-1¢ da M7-1 do obliczenia
+wykorzystania energii. bi me | UIAA NY MAH
+
+Zagregowane miesięczne dane wejściowe: ZET | i A KJ tt A LI 1} Ę | ATENY EA
+Miesięczne wartości różnych składników Ouic, scar r i}. wewnętrznych zysków, dia dgizewanialchlodzenia A
+określa się zgodnie ze źródłami, a których mową powyzej Mogą wystąpić atena, ŚNIE sytuacje: i .
+
+ae E
+
+aan
+
+1. jeżeli źródło podaje bezpośrednio skiiettkowczih miesięczną PADWY zysków ciepła wartość ta i (stoso. i
+
+wana jako bezpośrednia dana wejściowa dla miesięcznej metody hanritiitll [i i Ni a | 1) 1 44
+2. jezeli źródło podaje jedynie wartosc) godzinowe, należy zastosować nest p jaca procedure:
+
+f
+er
+
+| R (KE! KE R. BBR AAA Ale
+a. rozważyć okres w ciągu miesiąc, który się powtarza NAN (l WN 7
+BBRRERE
+
+b. obliczyć skumulowaną wartość dla okresu powtórzeń wszystkich Mitt zysków ciepła it
+
+i aa | f i
+c. przeskalować wartość dla okresu PTC do pelnego danego miesiąca (uwzgiędniając zmienną
+
+4 » ||
+l LI LI! HH Hit ina KOPI [
+pł ; | Lp | 1
+
+4 | b
+fy}
+|
+
+UWAGA3 Powszechne kaśka okresów powtórzeń w miesiącu, e a powyżej) lo | i U
+
+=
+
+;
+
+— pojedyncza doba, jest wszystkie dni miesiąca maja ten sam profil godzinowy, | Ni
+— tydzień, jeśli wszystkie tygodnie są identyczne, ||| |
+— _ pełny miesiąc, jeśli nie ma cyklicznego TAIT] i} | i | | MANU
+UWAGA 4 Powszechne przypadki skalowania to | WM | it | ME pb i i |
+— mnożenie wartości dobowych przez liczbę dni w miesiącu; MMI INN
+
+— dzielenie wartości tygodniowej przez 7, a następnie mnożenie tej wartości przez liczbę dni w miesiącu.
+
+106 Zadnie 2 art. 2 ust. D ustawy Bre Z arzetnia S002 r, p nomnzkzagi Dz U. Mu 100) poc. (3868 z późn zu.) Posie Moony $4 Pirdsona
+
+Pzwem AUO TT jak wła kieradie a autacsbę prewa Tuspethipese rt Tee przyskucuzą Palslusrnw Karedsiówy Nov mpl sy ste j WA
+
+kóry klocaje porsanali Saat pe pik Col ae tw r ali poet Dei Pee a er ew bear A Cr uty
+
+
+
+
+=== STRONA 12 ===
+
+EN 150 52016-1:2017
+6.6.8 Zyski ciepła od słońca
+
+6.6.8.1 Całkowite zyski ciepła od słońca
+
+Zyski ciepła od słońca dla strefy kondycjonowanej ciepinie ztc, do ogrzewania/chłodzenia, Qu/tzoluna, W KWh,
+wyznacza się za pomocą wzoru
+
+Qu/Czolizteym re et fcocolechirizcrsm vay Why) | | | | | | (120)
+Lecz w przypadku jednej lub WINA stref niekondycjonowanych ceplnie (patrz 6.4.5).
+
+|
+
+O/C; soliztezmi = Dive: Se injzte sar + “Slt | alu hm) i receive Sigel gk "Oryczsotydiriztuk | (121)
+| hel i | | MA a |
+IKRA HE U HUNRAA 1 die |:
+
+przy czym, dla każdej strefy kondycjonowanej cieplnie ztc | | miesiąca mn
+
+Qujcsaldźrirteme Aloe kryt zyski ciepła ott słońca strefy kondycionowarie cine ztc, jak określono w 6 6.8.2,
+
+Dzem współczyńnik dostosowania da przylegje stety niekondyjonowane cieplnie K, jak określono
+w6454, | ARR. RA M |
+F anstakm współczynnik dystrybucji żysków Libel w strefie strefy nak ejonó wanie, cieplnie k przy-
+
+pisany do przyległej strefy kondycjonowerie cieplnie zte, jak określono w5.4.5.4,
+
+Jęnmawitznwiem Współczynnik redukcji, zapobiegający : zawyżeniu zysków ciepła w strefie horny jorwowaniej
+| | cieplnie k dla trybu ogrzewania, jak okreśkino wE3,w WIK; 14 | |
+
+4
+a
+i
+
+OB iozaldizanulzm miesięczne zyski ciepla od słońca KRW lub olei typu (jak BAPEREUA
+
+w 6.4 5.1) przyległej strefy notre matin k, dła bravia (raneninitentartny jak
+określono w 6.6.8.2, w kWh. FA (il
+
+t ; > | HK 4 |
+
+6.6.8.2 Shadows zysków ciepla od store | ! LĄ HI UA KATANI di
+
+) j 0% 9 1A il 1
+
+W każdej strefie kondycjonowanej ciepinie lub niekondycjonowanej ciepinie zti dia każuiag miesiąca m, zyski
+ciepła od słońca niezależnie od tego, cay, sA kondycjonowane Bop ini nie, Qsol; Piszę w abhi oblicza sie
+
+za pomocą następuj jwzoru: |. i AMAN
+{ ee HV H-A-A Wo Le eo Tee Lt |
+Qu/csoidinzztym © Deine Żbik MANANA NAN 122)
+przy czym dla kazdego elemen ki miesiąca m | INNI AVG AISNE
+‘| Steere h gl Hud hh |:
+
+Qu/czaliwi;kym miesięczne zyski od storica przez element przezroczysty wik ki da carzewanialclodzenia, jak:
+określono poniżej, w kWh; | SIM it KRERAKRA
+
+i 4 W \ | | k-P | |
+| e k
+
+Oa /cecalsopel-m miesięczne zyski od słońca przez element nieprzeztoczysty op,k dla ogrzewanialchłodzenia
+py określono poniżej, wkWh. | | MRU I BA |
+
+Zyski od słońca przez przezroczysty element obudowy budynku (zwane dalej oknami) wi, On Jęsolwim: WKWh
+
+oblicza się Za pomocą wzoru: | KSRARA |
+
+Ha ik
+
+1
+
+QH/C;soliwi ry Sglywi;H/C;m Aus’ (1- Fewi | F.h. zobstęwięm ” Hai wim pł AH | | ij | (123)
+przy czym, dla kazdego okna wit miesiaca m | MI | |
+
+Sdwńz/em  bezwymMiarowy średni miesięczny całkowity alek współczynnik przenikania perros promie-
+nowania słonecznego dla ogrzewania/chłodzenia (patrz E. 2 2),
+
+UWAGA1 Element przezroczysty może zawierać przeszkienie przezroczyste, ale także (stale) elamenty hinvaanecaads
+promeeniowanie słoneczne lub (stałe albo ruchome) osłony przeciwsłoneczne (patrz E,2, 2) |
+
+zgodne z art. 5 ust. © uty z Ana [2 wzeżym 2062 r p norwakacjj (Dz, L. Nr Sd paz, 1383 2 pen, zm | FPrizkoc Many są cHoorereę 107
+pays suicsk m jek uparary Merszkie a siroreb 4) UŁ DD The path yaw e, thy mpc Ie MMP egy Skea) Pods: mil Pca msgeat wy Kowna CWI
+
+kry kłoGUje poibaralżaca póków a Pa et ee PP ont lta ek Milagro art eget
+
+
+
+
+=== STRONA 13 ===
+
+EN ISO 52016-1:2017
+
+A, pole powierzchni okna wi, jak określona dla właściwości przenikania ciepła w 6.6.5.2, w mi,
+w przypadku wystających komponentów należy stosować rzut pola powierzchni,
+
+Fa ułamek pola powierzchni ramy okna wi. stosunek pola powierzchni rzutu ramy do calkcnftego
+pola powierzchni tzutu oszklonego elementu okna wi, jak okresiono wE.2.1,
+
+Fojobstwim  - DEZWyMIarowy współczyniuk redukcji zacienieńwa pizeszkodami zewnętrznymi, jęk birations
+w Załączniku F, | | i i
+
+Hota miesięczne napromieniowanie | słonecznie na pole powierzchni elementu, o kącie nachylen ia By.
+i kącie orientacji y,.., uzyskane Z odpowiedniej normy EPB moduł M1-13, gł kWh;
+
+Qskynwim miesięczny dodatkawy przepływ ciepła spowodowany promieniowaniem długofalowym m don nie-
+boskłonu, jak określono w 66.8.3, w kWh; | MANANA, |
+
+KB, kąt nachylenia okna wi (od poziomu, mierzony y do 00), uzyskany z danych geometrycznych |
+elementu konstrukcyjnego, w stopniach. | MMI MI KLR |
+
+Fur kat orientacji okna wi „uzyskany z Uanych bedeneryeonveh elementu Sos w Loni
+
+(wyrażony jako geograficzny kal azymułu rzutu poziomego nachylonej ROW rtktnyótii
+konwencja: kąt z rtyrtyku na wschód dodatni, na zachód ujernny). IN PERI
+
+UWAGA 2 _Zewnetrzne przeszkody dla elementu przezroczystego” to przeszkody. znajdujące się w potu, takie jak
+wnęki, boczne pilastry lub gzymsy lub przyległe części budynku. Odlegie przeszkody mogą py PORN, brane ne MAT,
+w zależności od wyboru dokonanego dla tych potr2eb zgodnie 4 anita UMA, 4 |
+
+UWAGA 3 Zalecasie zaokrąglanie kątów orientacji do 45 stopni, zgodnie z tea segmentów pni horyzontu da
+comiesięcznych obliczeń zacienierin, jak podano w ZBIĄCZNIKU F Fl Af Hi i ła | | |
+
+4
+
+Przepływ ciepła spowodowany zyskami ciepła od słońca prz z pla eprzezroczysty slater ADHERE budynku k,
+do ogrzewania/chłodzenia, Cujenalim w kWh, w miesiącu m, a ablicza się ż następującego wzoru: AA LĄ
+
+„JĄ ks 4 h Thee i
+Qu /ciealiopdam = Ak "Rzy U gonik Age” F, chicbrwicm | LM ŁOWI (EU) EE ROPRORROERE RES 028) |
+
+. | * ) Ye a) Ę |
+NR | p KE iR (M
+
+przy czym, dla kazdego nieprzezroczystego elementu ki miesiąca m 1 | | | U)
+
+H
+
+Ja kl
+
+Ca.  beZwymiarowy współczynnik pochtaniania promieniowania słonecznego, stany ‘ Tebicy A 29.
+
+z informacyjnymi wartościami Bomysnymi podanymi w fey) B. itt iN} it PERE RRTCSE
+
+1
+Ę jk BE
+it PPR Re Ree
+4
+
+R... opór cieplny powierzchni zewnętrznój, R, = 1/(h, + h.), o aj Ole: UN przenoszeni. ciepła na...
+powierzchni Ai KEŁK Aes i A piła zISO 13769 4 w ANO i W | U |
+
+A.. pole powierzchni rzutu, ik ‘ison w6.65, 2, w ne, i i} | iy R l iit iit MAW
+i ORO ROLES (UMI R
+oraz z innymi zmiennymi zadekiarowanymi w poprzednich wzorach (orey zm zmianie indeksu wi na indeks kh.
+UWAGA4 Tylko w szczególtych przypadkach © najmniej jedna zmienna RY prawej s stronie równania jes inna w trybie
+caer Ę i MIKAN KIE | |
+
+NE | |
+| | |
+
+a 1 ry MI MD
+
+Jeśli element biadyńikai zawiera warstwę, kora jest (np. naturalnie) wentylowana powietrzem zako ZtWTI
+a wartość U oblicza się przy założeniu, że opór cieplny między tą warstwą wentylowaną a środowiskiem |
+zewnętrznym można pominąć, przeniknięte zyski ciepła od słońca obliczone za pomocą powyższego wzoru
+zostaną zawyżone. W celu uniknięcia zawyżenia, w powyższym wzorze zaleca sie zaslosowanie Skorygowa-
+nej wartości UJ, w której warstwa wentylowana nie jest pomijana, ale uznawana za proces fizyczny usuwający
+część ciepła od słońca. Skorygowaną wartość U można nel ti na podstawia metod ACCYA w E.3.5
+
+dla wentylowanych elementów obudowy.
+
+UWAGAS Na przykład w przypadku dachów z dachówką w rotate strukturze umożiwiającą zwiększoną cyrkulację
+powietrza; patrz ISO 63460". | | | WIO TT |
+
+|
+
+108 Zgożne z art 5 ust. O ustomy z dria 13 erzeżnia Od r. o normalizacji (Oz. U Ni CF paz 13832 pódn, 5%.) Fot: kie! Noma y są chroni NAA
+pzerem sutorsiam jak utwcry terarke_ a pitprskie peers pieyykwew: 39 neh przysuzęq Posten Kommtetnwd Normalrscy neo (PMI
+
+kły akż ju fit ad EL ed pów Giak Ime zabecgzec wia przed i kup ds ered ip Mr, kupon atm
+
+
+
+
+=== STRONA 14 ===
+
+KN "WH FE
+
+EN ISO 52016-1:2017
+
+6.6.8.3 Promieniowanie cieplne do nieboskłonu
+
+Miesięczny dodatkowy przepływ ciepła BONGO promieniowaniem cieplnym do nieboskłonu, Q.,,„, dla
+określonego elementu obudowy budynku k, w miesiącu m, w kWh, oblicza sie z poniższego wzoru:
+
+Quant = 0001 * Ep Roa Wo: Aaa” Mines” NB se ‘Me | (125)
+
+przy czym, dla każdego elementu ki miesiąca m.
+
+Fink współczynnik widoku thiedzy elementem a nieboskionem określony z Tablicy A.30. Informacyjne
+wartości domyślne podano w Tablicy B.30; |
+
+H
+JA
+
+Rzek opór cieplny powierzchni zewnętrznej Lanne Rig = 1 / (h.. + lp), © współczynnikach przenoszenia
+ciepła powierzchni zewnętrznej hai M uzyskany zISO 13789, w MKW
+
+Ux współczynnik przenikania FRA elementu. jak określono w 6. 6. 5 2, w W/(me: K),
+
+A?
+
+Act pole powierzchni rzutu elementu, jak określono w 8 6.52, w, mó may
+
+rzek współczynnik przenoszenia ciepła przez RCÓC AM powierzchni zewnętrznej,
+uzyskany z ISO 13789, w Wł(m*K), _ WALL HA |
+
+(KRA
+
+Adm Średnia różnica między pozorną lampe zali nieboskienu a lemperatura, powietrza, uzyskana z Ta-
+blicy A.31. Informacyjne wartości domyślne podanó id Tablicy BJ wk; | |
+
+At, hczba godzin miesiąca m, uzyskana z odpowiedniej dry EPB moduł M1 -19, w hi
+
+UWAGA  Patrz wyjaśnienie w UWADZE do 6.6.4 2 dlaczego ten 'skladnik i AWZIĘONARY w  tryrtkEiy a nie stratach.
+ti, ety i! Lita
+
+6.6.9 Wewnętrzna efektywna pojemność Glepina straty |
+
+W miesięcznej metodzie abliczania niezbędna jest wewnętrzna afektywna pojemność ciepina strefy cieplnej
+
+(powietrze, meble i elementy WOBLLKCYNO), Wielkość ta Feneecefitule rititnein POIETIIOSG cieplną przestrzeni
+
+wkiziang od wewnąlrz. Ma UDANA
+
+5 p
+4 a
+
+UWAGA1 Z perspektywy całkowitej dokładności Verio bibhtenchi efextywme} polemnosct ciepinej moze być przy-
+bliżona: TENET e: PEPE węgiędna dziesięciokrotnie WAD niż w yeaa OC CIA PA
+
+4 4 | ia
+ciepła. bbs is | SUGHLERLELEC EAT
+Fa" F ETU j Mi t h
+
+i WUJ
+KB H 4 H
+
+Podano dwie metody: MARA PM ors uwzglednia szczegóły kazdego. ASEH konstrukcyjnego, oraz
+
+uproszczoną, która określa wartości domyślne jako funkcję powierzchni użytkowej. Szablon normatywny do —
+wyboru metody rrr itty lub b pete podano w ee A. 32, a a ONY wybory ene w Tablicy B.32.
+
+riiranteerereetentinle ST [4 MAY A INNI i
+
+SERRE aL
+
+Metodą szczegółową określa się wewnętrzną Sreltywiia pojemność cieplną arcy cepire na podstawie w we-
+wnętrznych pojemności cieplnych elementów budynku, | TAGEROE hy the
+
+h | U
+k-H at I
+h
+
+Wewnętrzną efektywną pojemność cieplną BAM kob owaaj Babin zte ŁADNE) z, W JIK, oblicza się
+przez zsumowanie pojemności cieplnych wszystkich (wewnętrznych i zewnętrznych) elementów budynku w bez-
+tir kontakcie cieplnym z powietrzem wewnętrznym rozważanej strefy, zgodnie z następującym wzorem:
+
+|
+
+Cin. intselfizte 7 Py Kintzj * A; | | MMA MI | (126)
+
+przy czym, dla każdego element budynku j w strefie.
+
+wewnętrzna powierzchniowa pojemność cieplna elementu budynku i. określona zgodnie z delnicje Ka
+
+Kin
+w ISO 13786:2016, Rozdział 7 lub, jako prostsza alternatywa, zgodnie z definicją x,, w ISO 13786-2016,
+Załącznik C, o maksymalnej efektywnej grubości 0,10 m, w Jifm*'K),
+
+A, pole powierzchni elementu /, jak określono w 6.6.5.2, w m*. |
+
+Zgoćnie z ant. 3 ust. © ustawy z da 12 wrzesnia 2002 r. 9 moemialczacji [Dz U Nr 969 pas. 13B3 2 pian. zm.j Folzkio Mommy są chromone 103
+
+PEM BUDO EK UT Mierache. © piore prima mejętkawn= 90 MCH pPrzyryjęą Pąstęny komanetow Normal w YFPery [PMN
+
+bidty ui perhor abr etm ple) Oraz me cabeuipeecpedia piel neLugfaratonryn Lopon
+
+
+
+
+=== STRONA 15 ===
+
+EN ISO 62016-1:2017
+
+Metoda uproszczona
+
+Tablica 21 zawiera klasy typów konstrukcji z wartościami domyś ślnymi wewnętrznej pojemności cieplnej
+
+Tablica 21 — Wartości domyślne wewnętrznej takty iaj pojemności cieplnej
+Metoda miesięczna
+
+| Umiint elite
+IK
+
+ł
+|
+
+RWE 1 4 = mę Poke |. Re BW " p złą ge pe + _—" |
+
+(M 260 000 x Armee | | ny, ;
+370000 Awe |) ||
+
+Agar Pole powierzchni żytkowe! podłogi eirety cieplnej ZE, jak określono w64.3 w m?
+[8 by
+
+Wewnętrzną pojemność cieplną oblicza się z uwzględnieniem pon powiec wewnętrznej
+
+h PR
+
+Szablon HTWRNNW dla Tah kacji klas poner w Tablicy A: 33, a informacyjne wartości i domyślne w Tabli-
+
+Minc Mei wa
+6.6.10 Współczynniki wykorzystania — BTO WNN RM
+6.6.10.1 Zasada KIA PGR UNI UNNL UMA NN
+LF BER KRERER 4 Ą
+
+W metodzie miesięcznej wa zolęcinia się efekty dynamiczne, wprowadzajje współczynnik Wiko zyałatw zysków |
+dla ogrzewania i współczynnik wykorzystania przenoszenia ciepła dla chłodzenia Efekt bezwładności w przypad-
+ku przerywanego ogęzewania lub chlodzenia, lub w przypadku CET LKR vet osobno, patrz 6.6,11.
+
+Ha BOA
+a MJ
+
+risk
+
+6.6.10.2 Współczynnik wykorzystania KARM dla ogrzewania Ak
+
+NN { KM Mt:
+
+Bezwymiarowy współczynnik wykorzystała zysków dla OBAN Nets ae Wy funkcją bilansu SERRE dia
+
+a U 7
+
+ogrzewania, yy, | parametru liczbowego, (ty, który zależy od bezwładności cieplnej Kii Oblicza się go dla
+kazdej strefy i dla każdego A za pomocą nastepalneycn dwoch Wzorów: A
+
+| | ABAT FAY ew MIARA LAY
+JEZEN Fyuuczm OTe mags FP Hzgnizte ym Ł te LL 027
+1- h ) JLiztegm ! BMI
+Tee POP
+: , R i a : iP : | | | |
+jeżeli umym = 1: MHzgn;ztejm = ATTRA RATATAT et MAREK ETAL RT KA I (128)
+b Tt steven * | |
+jeżeli Vit scm: = 0 oraz O ignistem > U: M H:gneztcm Ti 1/ Fiatem RAE REGINA | | | (129)
+JEŻElI Jyyzzam © O OTAZ Qypnzzm = 0: Yemen = 1 | ML I MU ! (130)
+UWAGA — Uzasadnienie dwóch „instrukcji, jeżeli” podano w ISQ/TR 52016-201 : |
+110 Zgodnie z art S ust, H ustawy z dróa 12 września AOC? r. 6 nomaltzacj (Ds. Lt Mi 109 poz. 1984/27 późn. zatr.) Polskie Womy zą orfordore
+
+ponent sytorsn jak utwory bieracke_ s pucrzkie upa mejykawae da rect oy Su Fęspem koreetrwi kod rw ypemy (Phi
+
+eid i w! + si. pó personal zem PILNA WIAŁ Ee Pri ie ee kuj SPR ee isa pon JE UL LE
+
+
+
+
+=== STRONA 16 ===
+
+DJ 4 13VZYNE KI
+
+EN ISO 52016-1:2017
+
+gdzie
+£4 © Hgnizte nt
+FH;ztezm — Q o STY (131)
+Hihtzate ine
+przy czym, dla każdej strefy kondycjonowanej Geplnie zic i miesiąca m
+Yilatam bezwymiarowy współczynnik balansu cieplnego dla trybu ogrzewania;
+mana bezwymiarowy parametr liczbowy, określony poniżej,
+Qu;kuznym Całkowite przenoszenie ciepła dla trybu ogrzewania, jak określono w 6.6444, w kwh;
+Qmgnziem Całkowite zyski ciepła dla trybu ogrzewania, jak określono w 6.6.4'4) w kWh.
+Bezwymiarowy parametr lic2bowy Obę.„ę-.;4 oblicza się ze Wzoru 132: |"
+Giizteżm 7: SIĘG 0777] AURA PE AAC I MI (T3ZY
+TMN | PA
+
+przy czym, dla każdej strefy kondycjonowanej ciepinie zte i miesiąca m
+
+Go bezwymiarowy referencyjny parametr liczbowy, określony poniżej,
+I
+Thhstam stała czasowa strefy do ogrzania, określona zgodnie. Zz 6. 6. 10. 4,wh,;
+RET 2
+Two referencyjna stała CZASOWA, jak określono poniżej. wh.
+
+| (ti | A |
+Wartości referencyjnego parametru liczbowego, at oraz referencyjnej stałej. czasowej, To, dla współczyn-
+
+nika wykorzystania zysków cepa można KORKACH z TORY A.34. yriitwoynth wartości domyślne podano
+w Tablicy B.34. ka
+
+Ę
+i
+2
+
+a
+
+6.6.10.3 Współczynnik wykorzystania strat ciepła dla chłodzenia
+
+Bezwymiarowy współczynnik wykorzystania strat ciepła dla chłodzenia, SUEY est fahikcją stosunku bilansu
+cieplnego dla chłodzenia, y,. „sera. i parametru liczbowego, Arest w, Który zależy od bezwładności cieplnej budynku. —-
+Oblicza się go dla dani strefy I idia kazdega miesiąca za PRA BA pesenuacjch dwóch wzorów.
+
+H
+
+ba tj | | RY ER it \ cia: a
+
+b
+
+jeżeli Verem > 0 oraz Vosiam * 1: Toheężzem = ze TEDA NWN (133).
+r COMP a
+Abit A de 141 MAMIYA RS
+jeżeli Yozztum = 13. fę;m:ztezm = 7 aS YNA ANNA EC 43: (134)
+gdzie
+Oc;gn:ztcim
+Fc;zteim. (136)
+Qe heztcum
+ated czym, dla każdej strefy kondycjonowanej cieplnie ztc i miesiąca m.
+Velo bezwymiarowy współczynnik bilansu cieplnego dla trybu chłodzenia:
+
+Oe. chem bezwymiarowy parametr liczbowy, określony poniżej,
+
+Detection całkowite przenoszenie ciepła przez przenikanie | wentylację dla trybu chłodzenia, jak akreślono
+w 6.64.4, w kwh, |
+
+Qeen-etcm  alkowite zyski ciepła dla trybu chłodzenia, jak określono w 6.6.4,4, w kWh.
+
+zZgośnę Z art. © ust. O uzawy z dra 12 arzEŻNA z0G2 r. 6 armata (Dz 14 kw 153 prz 19842 piin, ze | Pinsiie Normry 53 otmomione 111
+PEST ALS M [EK UTATIrY bierachhe «a uugrekwe firs majpsfkowie 0 WEŃ Bozy Rupes | azer Komińztowi Mar padlo «r poem aN
+
+Mory słosuje póisónakzacw plaze arat Iro rabacie Flżed kus da vendoe yn kopowatiwi
+
+
+
+
+=== STRONA 17 ===
+
+Sl < MED 22> GBA
+
+EN ISO 62016-1:2017
+
+Bezwymiarowy parametr liczbowy ap, oblicza się ze Wzoru 137
+
+Coste ih | |
+Qe stem rę he. * | | i) (137)
+Too | | !
+
+przy czym, dla każdej strefy kondycjonowanej cieplnie zt i miesiąca LUB
+
+a bezwymiarowy referencyjny parametr liczbowy, określony ponizej,
+
+Towem Stata czasowa Strefy do chlodzenia, określona zgodnie zB. 10.4,wh, M
+
+||
+
+Teo referencyjna stała czasowa, jak określono Poniżej, wh. | KKA ie atl
+Wartości referencyjnego parametru kczbowiaji, Gab. oraz referencyjnej stałej CZASOWEJ, Ting, dla współczynnika
+
+aty dog przenoszenia ciepla naley uzyskać pa ady A 39. informacyjne Marjąści OSHC podano
+w Tablicy
+
+|
+
+6.6.10.4 Stała czasowa WY APA
+
+NEA KH
+6
+
+Stała czasowa strefy kondycjońowanej cieplnie ate TW i Wozinak iarsktakyzlija wewnętrzną bezwładność
+cieplną strefy kondycjonowanej. Może się różnić między obliczeniami dotyczącymi ogrzewania i chłodzenia oraz
+zmieniać się z miesiąca na miesiąc dla każdego z nich, w zależności otizmienności (lub nie) J jego zmiennych
+składowych, zwłaszcza H,, oraz : He. Henne się ją za pomocą następujących WYCH wzorów. |
+
+i |
+
+FEzne ją. = i : Gm; efięzec | 3600 i | i fi MI Hii | | | it (138)
+H, N;tr(fexcl. gril);zteym T Hivgraaiste ję Hal, cane hea MALA bY |
+Om [3600 ae AAA | |
+
+Gzztezm = |
+Ae. ‘rtexcl. grilhizeesm: 7 He ier zedjzzte + Hove ezetezm KAMAN AN 141 |
+
+| f a i | ' j ł
+
+i i | | yf k 4 a a Be i
+
+\ i us a Hs k 5
+| W ! h Ą h | El
+
+przy czym, dla każdej strefy kondycjonowanej cjepipi BA miesiąca 1 m; MDA
+
+gf ją | bad Ji
+
+GZ efektywna wewnętrzna pojemność ciepina surety, jak ales w w 6. 6 9, w Jk;
+
+Aitycarjescerfirletam Całkowity współczynnik przenoszenia ciepła przez przenikanie ciepła dla ogrzewania lub
+— chłodzenia, z wylaczeniem podłogi na Lanne jak określono we. 6. 5, w Wik. :
+
+ULE ERR bape
+
+Liu fowieżcim adj wspiłcznnik p przenoszenia adi przez menace dia | ogrzewania lub ¢ chło-
+
+Huczredjite średni session  colkowty współczynnik przenoszenia enia prżez | przenikanie przez
+podłogę na gruncie, dostosowany do sezonawej Sk sitininnits dla SEZONU ogrze-
+wania lub chłodzenia, uzyskany z ISO JATPP. w WIK. Ba |
+
+i} b k a
+
+UWAGA  Wiecej intormacji na a temat ŚGimnirytn rect pres z podłogę na uno m można znależć w ISO/TR 52016-210
+I ISO/TR 52019-2!"1, KOELM
+
+BK (R ER
+j fi
+i]
+
+6.6.11 Temperatury obliczania i tryby pracy
+6.6.11.1 Temperatury nastawy i tryby
+
+Wyróżnia się następujące tryby pracy ogrzewania l chłodzenia.
+— ogrzewanie Vlub chłodzenie przy stałej wartości temperatury nastawy: patrz 6. 61 11. 2.)
+
+— okresowe ogrzewanie lub chłodzenie: poprzez obniżenie (zmianę) temperatury nastawy lub wyłączanie
+i włączanie systemu w ciągu dnia, nocy Vlub weekendu: patrz 6.6. 11.3 (ogrzewanie) lub 6.6 11 4 (chłodzenie),
+
+~ okresy nieobecności (np. wakacje) patrz 6.6.115.
+
+112 Zgonie z an. 3 Lst.D uztywy zdra (Z mzeżwa 2002 r. o meracacji (02 UL Kr 159 poz 1330 2 pdźn, ze | Polske Normy Są Coroner
+
+prawem autarskm jek utwory Merąche. » autorskie nawa najstkmae do nę ony sug Pose Komhetpw Harmekzscy nemu (PN
+
+kły wici je pina ed kali sc w pannm Glaić We m zabaczoecbódd (oai! fy alla ela inane hon pó ki onwiesih
+
+
+
+
+=== STRONA 18 ===
+
+TERA Wee eee ae hs dts
+
+c 4 UD 22»
+
+EN 150 62016-1:2017
+
+W przypadku okresowego trybu pracy możliwe jest uproszczenie poprzez przyjęcie równoważnej stałej nastawy
+temperatury.
+
+UWAGA 1 W przypadku zasłosowania lakiego uproszczenia informacje o tym należy przekazać jako dana wejściową,
+odpowiedniej normy EPB moduł M1-6; na przykład dia MATMY kalegorii przestrzeni lub kategorii budynku (np. budynia
+mieszkalne).
+
+UWAGA 2 W skomplikowanych sytuacjach, takich jak okresy Ze Fanaa trybami, w których hie ma wystarczające
+mocy ogrzewania lub chłodzenia podczas doładowania, metoda miesięczna jest rzadziej stosowana. Więcej informacji na
+temat ograniczeń zastosowania metody miesięcznej znajduje się w ISQ/TR 52016-2'. W niniejszym dokumencie nie podano
+
+normatywnych kryteriów slosowalności. Można je określić np. na poziomie Krajowym, ROPIE metode miesięczną
+dla określonych zastosowań, zgodnie z wyborem podanym w Iinwvedvea frei B.2.
+
+Dla każdego miesiąca należy uzyskać profi wewnętrznej nastawy temperatury roboczej dla ogrzewania,
+A marecit.rge, I Chłodzenia, O nrretrrize: dla KaŻdEJ strefy kondycjonowanej cieplnie, ztc, dla dni tygodnia, weekendów
+oraz okresów nieobecności z odpowiedniej normy EPB moduł M1-5. Najpierw. zidentyfikować, czy jest wolny.
+czas, czy nie. Następnie (osobno dla zajętych i niezajętych okresów, jeśli dotyczy) określić, czy nastawa tempe-
+ratury jest stała, czy nie. Jako pierwsze ustala się, czy są okresy nieobecności, czy nie. Następnie (oddzielne
+dla okresów użytkowania i nieobecności „Jeśli Potyczy) określa SIĘ, czy nastawa temperatury jest stała, czy ! NIE.
+
+p |
+Jeżeli reguła dotyczy przestrzennego uśredniania temperatury nastawy dla budynków mieszkalnych. jak Opisano
+w 6.4.6, nastawę temperatury ogrzewania należy odpowiednio dostosować. |
+
+ii is [:
+h
+
+Zapotrzebowanie I na energię właściwe dla systemu: b Pn
+
+J. i
+dE
+
+Do obliczenia zapotrzebowania systemu na energię do ogrzewania i chłodzenia może mieć zastosowanie do- |
+stosowanie wartości i okresów (takich jak liczba godzin dziennie i i liczba dni w tygodniu) nastawy temperatury,
+
+w zależności od określonych charakterystyk technicznego site budynku, które AN red na podstawie |
+odpowiednich norm EPB moduł od M3-1 daM7-1, ‘i
+
+6.6.11.2 orzewnania | i chłodzenie przy stalej torpersturze nastawy
+
+H
+
+i
+
+W przypadku nieprzenvanego ogrzewania przy ‘stale; nastawie bins przez cały miesiąc, aka temperaturę
+obliczania strefy, Śwęcakc W w °C, należy zastosowat nastawe riduvetrett Gectinacen ak okrestono w 6. 6. 11. 1,w'C.
+
+W przypadku nieprzerwanego chlodzenia i przy stałej nastawie ktaberatinj| przez cały koles jaka YRRREOSAA 3
+obliczania strefy, A,._-.c, W °C, należy zastosować nastawę temperatury, Śnię, kt akregiono we, 6. 11.1,
+w °C. Wartość współczynnika redukcji dla okresowego chłodzenia, Azad atm U Vet Rone
+
+M i
+
+UWAGA - W przypadku metod miesięcznych rzeczywista średnia temperatura wetmętrzna m może oe Kabah w trybie
+ogrzewania ze względu na natycnmiastowe przegrzanie; jednakże wpływ tego zjawiska uwzględniany jest za pomocą
+współczynnika wykorzystanią zysków. Podobnie w przypadku Irybu chłodzenia Bees Hin RO sinitinittt
+maze być niższa 2 pówośśi TRARY większych a NZ DA | MANU hat MANN BARKI
+
+6.6.11.3 Poprawki dla ogrzewania okresowego | | the KU Jl REDA
+
+W przypadku ogrzewania przy zmiennych nastawach temperatury ‘lub okresach wyłączenia, temperaturę :
+obliczania swej do ogrzania, B;prealczzym, WC, Oblicza się wedlug następującego wzoru: |
+
+Śnezcaje Hearse = AHiredzztcym x (Onusetiiizte 7 r Sein) Beam um aR eA | | ANIE (140)
+
+przy czym, dla każdej strefy kondycjonowanej cieplnie zt | miesiąca m: U
+
+normalna („poziom komfortu cieplnego”) nastawa temperatury ogrzewania strefy uzyskana z z Od-
+powiedniej normy EPB moduł M1-6, w °C; | | |
+
+Ope tate
+
+BÓG > średnia miesięczna temperatura powietrza w środowisku zewnętrznym. uzyskana Z odpowiednie;
+normy EPB moduł M1-13, w °C; |
+
+współczynnik redukcji dla okresowego ogrzewan ia, jak określono poniżej.
+
+Zgocne z an. $ ust,  użtawy z Ora te urzeżnia D002 r. o notaacacji Dz. U. NP 156 poz. 13B3 z poŹn. rt Polskie Nonny są otpntwe 113
+prawem Ki ia" m jek utwory Fieraske a aibwske prowa puma ibn ep rp rech przy MURACH Pubie komet wi ie yn rcypery WALI
+
+kóry kłowuje poisorial tace ZEW Chime NTG pibocpochania Stead! Mee ace ane woe ny ni Koppówać sai
+
+
+
+
+=== STRONA 19 ===
+
+m < GE / 222 |
+
+EN ISO 52018-1:2017 | |
+czy wartości miesięczne danych dotyczących
+
+miesięcznej metod obliczania nie jest oczywisle,
+viata ba ORdkIi leer att pesca (vy są damy dla okresu użytkowania lub są uśredrwon mn GEJ.
+presales użytkowania lub nieobecności (godzin ub dnt). Obie opcje wprowadzają błędy. rial są dtp skos jan
+sięcznej metody obliczanla. Można wybrać We iotr w czasie. Patrz więcej wyjaśnień w rapo
+
+ISO/TR 52016-2!"
+m oblicza SIĘ zgodnie z jedną z dwóch
+
+kre b jrzewania, (js red:
+współczynnik redukcji dla o soweg og TóyA 30 (szablon normatywny). a iń-
+
+Bezwymiarowy
+„s avi deer th B wskaza now
+
+ponizszych metod Wybór między metod
+
+formacyjny wybór domyślny podano w TAR B. R MU M Pio Ula,
+Metoda A MINI PALA EA MANN eg
+Stosuje sie następujący wzór: HEA HUAMINUNNWNNNNACHNU U ea |
+Ty red:ztc;m ~ l -(1 ią Ge rwdkio stay JT (1 "ds redznghtteim) (1+ Sary wk ele; har) (141)
+gdzie i AMIN se
+he | Atiuredyuzte Pany WAWAROYNNTNUNANUONAN oSA
+b W as | | | | |
+przy czym, dla każdej strefy kondycjonowanej ciepinie ztc i tniesi m. ANKA 4] MAL
+4 W
+Gi bie współczynnik redukcji dla okresowego ogrzewania ze zmniejszoną nastaw, przy czym
+y = dzień, noc lub weekend, gii ll; NN ea | |
+Vitredrecet względna część czasu (ty = dzień, noc lub weekend) ze zmniejszoną nastawa ogrzewania,
+M aakicdznste liczba powtórzeń w tygodniu | okresu zmniejszenia M uzyskana z odpowiedniej Fens EPB
+moduł M1-6, heh (eth | UM ny JANKA |
+UWAGA 2 PrZYKIadOWO: Ng, xi,rudy; je =7 JIA dziennego tub nocnego ograniczeni o | aw pap ato pola. 243
+czone z weekendowym ograniczeniem lub wyłączeniem ogrzewania. KARLA it NH ERA |
+dl ażmenszea, SFEdNIE (względne) zmniejszenie różnicy temperatury w okresie 8 obni nizone] nastawy tempera.
+tury, określane jak Slr gstono Poniec. KARNA ANN ate He KU LY
+Alyrednnrte długość okresu że zmniejszoną nastawą temperatury ogrzew rania 07 = dzień, r noc lub week-
+end), uzyskana 2 odpownednic) normy EPB moduł Mh 6, w wh. KODU
+
+Poniższe wzory w Metodzie A mają zastosowanie do każdego z okresów ograniczenia ogrzewania v= = dzień,
+
+fl
+
+noc lub weekend), jest GOEL YS: MIA AAAA U
+
+i]
+ee
+
+Ww celu obliczenia średniego (względnego) zmniejszenia JARO, temperatury w | okresie obnizenej nastawy
+temperatury, dredznnzcym: określa się następujące trzy dodatkowe wielkości. UAE NAD EBS | |
+
+Bezwymiarowe (względne) zmniejszenie nasta | !
+która jest dana: mene) wy zwązane z róznicąz temperatura zewnętrzna, dB aiouy as
+
+Jeżeli (O; eet Herts m (sR) s O: d EO seartclenpyeatesm = 1
+
+Oraz jezeli (8 ;zsetHilowiyizte ~ Baa) 0. O ee ilawynstem = 0
+
+114 Pa gy? . o a PB P -
+Zgodne z art. $ ust. B ustawy z dos 12 mrzcżnia NCL r. 6 nocemialzacji (Oe UL Mr OG) paz. 1330 z pdźn, zw | Pazkie Normy
+Poser ey Leh ey TE z Ite io JĄ a da Le
+pozer autorsken jsk utwory bigrache, p aiecrshie prmym iresyathovws 20 rect gery sug Faszary Momibetows Hameńz (TYAN!
+NT” WAW i W et MAMY «rj!
+
+bite wie Tbs eee pł OMe |w Fabiż
+y jak i W Pom Olza IF Z zbiżyoaczwńhi Ela fleet baranka fm kojot igi
+
+
+
+=== STRONA 20 ===
+
+Cl < MED 22> GBA
+
+EN 150 52016-1:2017
+W przeciwnym razie:
+da Fine: sec Hslowiyiztc | Goran |
+set low;ysatcun (a iT paar NITE (144)
+imę settee olan |
+przy czym
+8.
+
+jakis Hilowezzzce  ODNIŻONA („poziam. ekonomiczny” ) nastawa temperatury ogrzewania strefy w okresie obniże-
+nia y, uzyskana z Msi normy EPB moduł M1-6, w °C.
+
+Bezwymiarowe (względne) zmniejszenie różnicy między temperaturą wewnętrzną | żem iętrzną w warunkach
+
+Dh ae: 0 A
+swobodnych (bez ogrzewania), 00 zyj L Gi nefldat,ztc;m _L£BM oblicza się następująco
+
+ink; gat: H: yee 7 Pea; int
+
+MAKA |
+
+dógpaiym = 1 WOUKNNNNNIWANNNKTN W aaa (145)
+UWAGA 3. W tym przypadku i tak nie ma potrzeby ogrzewania !
+
+W przeciwnym razie:
+
+lh é Mid cet a | Ly : | NI
+Far: tc 7 Tahhtv cr anitat PO WTTY ZAŃI gi! | | (146) rę
+
+(Hy, triztczm + Hqpvezztem )* ‘(nesecitize 7 3 Dosa ra) (At
+
+z wartością maksymalną: dO, „..„ = 1 i wartością minal roar = 0.
+
+UWAGA4 Minimalna wartość jest potrzebna w rzadkich przypadkach gdy zyski są ujemne. w przypacki przeważającego
+promieniowania ciepinego do nieboskłonu. Ay |
+
+AR | i |
+aR i i
+
+przy czym, dla każdej strefy kondycjonowarij cieplnie zi i miesiąca |
+Goeusinm _ całkowite zyski ciepła dla trybu ogrzewania, jak określono w6 6 5 4 4, w | Wh;
+
+1
+
+m
+
+4 1
+
+4.
+
+Haacza całkowity współczynnik. przenoszenia ciepła. przez przenikanie, określony w w 6. 6. 5, w WIK;
+
+| ARRRATE m o Całkowity WP CZYNIOB przenoszenia ciepła przez wentylację dla ogrzewania jak określono w66.6,
+w WiK. 4
+
+IRR MNI SRA BR:
+
+1 %
+
+UWAGA5 Prawa strona równania wygląda podobnie do stosunku bilansu -epinego dia bu ogrzewania Pen
+(patrz 6.6.10.2), ale OSO) eko CUG AWorzyony Rede || BRR
+
+BA
+
+n't A SKR
+
+Bezwymiarowa (względna) długość określi do osiągnięcia obniżonej HDR |
+
+Jeżeli (dO..uowatim > Ado mm.) £ Olub w przypadku wyłączenia ogrzewania KI 1
+
+ad
+|
+
+Oraz jeżeli Adnnanezzyę Z 1: Jusedlawyzą m = 0.
+W przeciwnym razie:
+
+Ps (
+AL reddowsy ;ztezm / FH;ztc;m
+
+fuiteddowiy:ztchi rę (147)
+
+|
+Ati rad-y złe spi | TH-ztezm
+zy, 2) Odgytacz krajowy. Brad w oryginale EN. Powinno być:
+, ARDO ALA LEA Qi genset CU Tw ||
+4 Mostztem * OF x(1 +H }-(@ |; Az ||
+0, <| bronze Myy int Int eetAiere ~ Daa. ra
+Zgodnie 2 an. S ust, D ustawy 2 dns | 2 wrzesnia SOS r. o eae! (Dz. Une Ie pow. 13B3 2 późn wes.) MOVSKIC Normy są otraniore 115
+
+prawem ALUM ESR (M ;BM Pvc bbe ache Bere ee nii niejethous rx) fe ch przy ran tm Grą | ps aIDĘSTEJ korea Noo KCyJ emy (Pah
+
+Mory ROR pe GND cet pe pdków Glaż iMia żeli OGErGNia przed ia Edi syta i
+
+yi R! le a
+
+
+
+
+=== STRONA 21 ===
+
+Z < UMD 22> GBA
+
+EN ISO 62016-1:2017
+przy czym:
+
+Aly, reu,lowiy;tbezm In MA Mławy zeczy GO naczktt im | |
+
+(148)
+TH-ztc;m Lr WO sat-vee iad
+
+oraz
+
+Tuirtem Stała czasowa dla trybu ogrzewanie, w h.
+
+Średnie (względne) zmniejszenie różnicy lemperatur w okresie obniżonej deat temperatury, de, tódzpkóyicze ne
+jest równe: | | |
+
+Jeżeli fędłewnam Z |
+an
+ns PA „l | J Hus te THeate: mi }
+Gt redamnjzte;m 7 Phoatyy.ztc:n * Ati |1- sk: ! | (149)
+| H: edkyizt m (FH.zten i dh | |
+W pozostałych przypadkach ts MEAN U i l " iy ayy
+do l — Oz, ;H;low; apticon an wat .d0 | |
+H;red;mniy;ztc;m 7 AK, rezerwy FERTATERRA [RELL rene m ost, ztejm | +
+Hired, y;ztc; IM; ‘THezee, dn AU | PIRZCEM | (150)
+R (1- f H;redzlow;y;zte; M (A set;H; dlowiy;ztc m Np 4 ji
+
+Inna metoda, jak określono w Tablicy A36 (szablon nortniatywny) i i Tablicy B. 36 (niormacyyny TE domysiny,
+w tym przypadku pusty). © AKI ię ę. HBAMAIADNN 3
+
+M
+
+6.6.11.4 Poprawki dla okresowego chłodzenia We A | \' i UT | i!
+Poprawki w przypadku chłodzenia przy zm pnych temperaturach ilub okresach wyłączenia stosuje $ię w za-
+leżności od potrzeby chłodzenia, a nie od temperatury obliczania. Temperatura obliczania kati chłodzenia, |
+Giccalecm W °C, pozostaje taka sama jak dla ciągłego ' chłodzenia, jak określono w 6 6. u i
+
+UWAGA1 W przypadku metody obliczania miesięcznego nie jest oczywiste. ciao EAU EL PRANIA i
+
+w przypadku okresowego chłodzenia są danymi dla okresu użytkowania, czy są uśrednionymi danymi ponad użytkowanie
+i okresy nieobecności (godziny i/lub ani). Obie opcje wprowadzają błędy, które są nieuniknione dia AC ||| metody
+
+obliczania. Mazna wybrać warlości usśrędnione w czasie, Więcej wyjaśnień patrz report ISON R 92016. a
+Bezwymiarowy współczynnik redakcji dla okresowego chłodzenia, PAU oblicza s się Wa z iedna z dwóch
+poniższych metod. Wybór między Metodą Ai Metodą B określona w Tablicy A 37 NO normatywny). a in:
+formacyjny wybór domyślny podano w Tablicy B37, HUNA A
+
+f | |
+j HR
+
+Metoda A
+
+Niniejsza metoda uwzględnia zmniejszenie zapotrzebowania na chłodzenie tylko wtedy, ody chłodzenie jest
+zmniejszone lub wyłączone przez cały weekend (tj. co najmniej 49 PodZIOtYdRÓWY, Jeżeli ten warunek nie jest
+spełniony, to Ogiidiecem Z 1-
+
+Bezwymiarowy współczynnik redukcji dla okresowego chłodzenia, UNIAN w przypadku weekendowego
+zmniejszenia lub przełączenia, oblicza się zgodnie z następującym wzorem:
+
+i + 2: | bi | |
+Gc.rediztem 7 (l e.redwknd;zteim (1 fozeszwkadzzc) * bo adzekna Forecaster | | (151)
+116 Zgodnie z art. $ ust. OB uscowy z dréa 12 wrzeżnio 0G2 r. o momma cacy (Dz. |b M TOT pce. 13562 późn. zi.) “osha Nowy! sa anronone
+Fer RUOTEMM | Ly Meraclee. BI BU SH Ledl UL. b Naga! zfkrgse do rion i oazy slip "mą Mriisłoernu Karczel wa Mint UBTYNPATE FK)
+kidży ru: paredńaiE wom |p Bón ee Pa eee Pee a ee hE ee ry
+
+
+
+
+=== STRONA 22 ===
+
+LUU'"m0
+
+EN ISO 52016-1:2017
+przy czym
+
+At, redzwknazzte hi MepiCired; iwkni,zte
+
+Ie. :red,wkndiżte 7 RENTY NNT Ż4%7 ! RTR | (152)
+
+przy czym, dla każdej strefy kondycjonowanej adabinie 5 ZEE.
+Jordanie względna część tygodnia z obniżeniami;
+
+Mrepcrdakndse lezba powtórzeń obniżenia Mi tygodniu, określona z odpowiedniej nórrby EPB moduł M1-6,
+
+UWAGA 2  Naprzykiad: ZAPADA = 1 dia weekendowego obniżenia lub wyłączenia chydóżenya oraz Npgę;Caradywkndzzte = O
+przy braku weekendowego tiwi lub udrstnniin cmaarenia, | Tay the
+
+h
+i |
+
+Aloredwkadze CZAS trwania weekańdowej obniżonej nastawy temperatury lub przerwa, określona z odpo-
+wiedniej normy EPB moduł M 1-6, why NUMA. |
+
+Doredrskad ||| empiryczny współczynnik korelacji Z Watedchą podaną w labiity A.37 (szablon normatywny),
+z normecying wartością domyślną podaną | w Tablicy B. af.
+
+UWAGA 3 Na wartoS€ ac seanamacenm wpływa tylko czas trwania weekendowego Śbbania temperatury nastawy lub wyłą-
+
+czenia, a nie samo „obniżenie” nastawy temperakuty. WISO/TR sz0je 2) wylasniono, że w przypadku ię ARNI:
+dokładniejszy wa nie jest mice M DY nt | |
+
+Metoda B:
+
+Inna metoda, jak określono w Tablicy 8:37, i | NAW H iil i
+
+W niektórych budynkach lub kulegortach cecil eich jak szkoły, kusy ninobatioee: w SEZONIE grzew-
+
+czym lub chłodniczym, na przykład okresy wakacyne, sabia do ancrena wisn energii do
+ogrzewania lub chłodzenia pomieszczeń. fi, hand |
+
+Md BE! t att
+
+ch
+
+6.6.11.5 Poprawka dla okresu nieobecności i}!
+
+H i K 4 j jr |-
+4 i , : 4 A RU RERE LĄ Ld " ee
+y a OBAMA A 8
+
+ZarizEnoWani: na energię ogrzewania I chłodzenia, boa pod SONG ora eabaciościi „+ AGD oraz
+Qomdzzzm, W kWh, oblicza się w naslępujący sposób. Jeśli miesiąc Zawiera okres nieobecności. obliczenia
+wykonuje się dwa razy. a) dla (normalnych) ustawień w okresie użytkowania ogrzewania/chłodzenia i b) dla
+ustawień w okresie nieobecności, a następnie wyniki obliczeń | interpoluje się | liniowo ROPNE z ułamkiem czasu:
+
+nieobecności w miesiącu, jak Rodan w dwóch ponizszych wzorach: | 1 1h \ A MiNI
+
+ł C5
+Md 7 eRe oy
+td
+
+Qamdziam = (1 fax): Qhinteccenom + fun Hiregecem ON M ; i SeeeRe BB (153)
+Qrmdzzteem = (1 een Ocaiecezem fana Benton | i 14 | I i ; (154)
+
+przy czym, dla każdej strefy kondycjonowanej ciepnie zte i miesiąca m. i th | HE i
+Quy cimdioonsteom zapotrzebowanie na energię do ogrzewanialchłodzenia, bbliczone zgodnie 266.4 2 (ogrzewa-
+nie) lub 6.6.4.3 (chłodzenie), przy założeniu dla wszystkich dni neste ustawienia regułach
+
+3" termostatu jak dla okresu użytkowania, w kWh; Ul |
+Omi rasd-aazolne m zapotrzebowanie na energię do ogrzewanialchiodzenia. obliczone zgodnie z 6642 (ogrzewa-
+
+' nie) lub 6.6.4.3 (chłodzenie), przy założeniu dla wszystkich dni AAA ustawienia regulacji
+i termostatu jak dla okresu nieobecności, w kWh; | |
+
+Tice szem ułamek miesiąca, która jest okresem nieobecności (ogrzewanielchiodzenie) (np. 10/31).
+
+6.6.11.6 Obliczona temperatura strefy zordyojonowane ciepinie jako zmienna wyjściowa
+
+lemperatura w strefie kondycjonowanej cieplnie jest wymagana jako zmienna wyjściowa o. do oceny strat
+
+ciepła ze źródeł ciepła lub chłodu, systemów magazynowania i dystrybucji energii (rury i kanały) znajdujących
+się w przestrzeni lub przestrzeniach kondycjonowanych cieplnie. | |
+
+Zgodnie z art. © ust. 6 ustawy & Ora 12 września 2092 r, o nozwatracji (Dz. LA Hb 100! paz. 1356 z późn. Si.) Poe Nowy 34 Pirgtię WT
+
+pzwem ańęrz jak utadry blerschee s aitorzkoe preven majafkGuee pig mch paz rye, Fatsłoerwu Karela Nowa aę owwyemy (Fis
+
+klwg EG [Ef sdialiżet je bów olac ia Balsa pect ela rbakii Wah Z AG NACH KygOSW ak HY
+
+
+
+
+=== STRONA 23 ===
+
+(GR > Ea
+
+EN ISO 62016-1:2017
+
+W (rybie ogrzewania, średnia miesięczna termperatura Strefy O, cutest WC | jest równa temperaturze obli-
+czaNnia, Powesleterene, WO, jak określona w 6.6.11.2 6.6.11.3 oraz 6.6.11.5
+
+W trybie chłodzenia średnią miesięczną temperaturę strefy, ZWALA W /'G, wyznacza śię ża pomocą ha
+stępujących wzorów |
+
+(Odzie + Qe an:ate.in |
+
+6, t:op;C;zte;m — 6 ‘aah | | | | (155)
+niy HA | ł Fchtizte;m x 0,001 x At) |
+przy czym: Hip. BAI kt Dest Mate ‘at ea RE | FE | ! ; (1567139
+(Bune ;ztejm mir 0,5; an | | ł U |
+przy czym HUTT | HI MIAU
+Goan średnia miesięczna temperatura powietrza środowiska zewnętiznego. ‘uzyskana z odpowiedniej
+normy EPB moduł M1-13, w *C, | | 11 | AUY hy |
+Qc nsec: miesięczne zapotrzebowanie na, enetpie do chiodzenia FA stety kondycjonowane cieplnie ztc
+i miesiąca m, jak określono poniżej, w kWh; HM Ny the Ą |
+On! całkowite zyski ciepła dla irybu chłodzenia jak określono w 6.6.4. 4 w kWh:
+Qcihzenm | całkowity współezynnik przenoszenia ciepła przez przenikanie wentylację dla trybu chłodzenia,
+jak określono w 6.6.4.4, w kWh; eT ky ty
+
+KASI
+Ozi temperatura obliczania strefy do chodzeni ak określono w 6. 6. 11.21 i 6611 A, w *C;
+
+At liczba godzin miesiąca m, uzyskana z odpowiedniej normy EPB moduł M1-13, w h.
+
+ed
+
+UWAGA 1 Weory są prastym wyrażeniem PATON banów cieplnego w którym owziędniany jest wpływ okreso-
+wego obniżenia i niewykorzystanych strał DTR. Es gą
+
+LR j
+
+i f ; t | i
+
+: Hd dh H KA.
+
+q | 4 | | | 4 | ł
+i a. + » 14 | i | | bh | ae
+
+Jeżeli w normie systemu wykorzystuje: się tę temperaturę jako dana wejściową, ni nie można l wprowadzać rozróż-
+nienia między trybem ogrzewania i chłodzenia; temperaturę trybu esa pył i | chłodzenia PY Wyznaczyć
+jako srednia ważoną miesięcznie odpowiednio gle ogrzewania i chłodzenia | | 3 i} EA
+
+UWAGA2 Dia stref niekondycjonowanych cieplnie lemperatunę jako zmienną Witowa dia mych norm Określono 4
+
+W przypadku braku chłodzenia mechanicznego istnieje ryzyko przegrzania, || i 4! 1 i Walt!
+
+UWAGA1  Żapomocą metody miesięcznie nie można wyznaczać oś ooo bład a systemu PARSE chyba
+że dostępne są wiarygodne (krajowe lub regionalne) godzinowe Pane ein CZĘStONIWOŚCI obciążenia chłodzenia dla
+każdej kalegorii przestrzeni. | MAI i | KARE l MIU
+Ryzyko przegrzania ocenia się tylko na poziomie BY deołiej W zależności od weobdjo wych zasad podziału
+na strefy strefa cieplna może zawierać przestrzenie a różnych właściwościach. cieplnych i l różnych obciążeniach
+gepinych. W takim przypadku wskaźnik przegrzania może niedoszacować yayen Pra
+
+wskażnik przegrzania strefy cieplnej ztc jest wyznaczany inks skumulowana roczna liczba stopniogodzin
+przegrzania za pomocą następujących 2 wzorów. |
+
+loH:ztcian Hy AAA l MI NAA LT || MANNY (157)
+
+m=l.
+
+oe en ee
+
+Os yłacz krajowy. Błąd w oryginale EN. Pawinno być: Ochtzre:mi
+
+hab cate Coney | Mt) * th, 001 x Nm
+
+al. ściqt-ztem T (
+
+118 zgocnie z an. 3 ust. ustawy z dria 12 września 2092 r. o nomacay: (Dz. U. Ke NG poz 1384: pin Bri Fold Noni sh bhcarecin
+Pry suguca Fospeny Ko Ine Mr Momo w YPemy (PRI
+bids p zka je par carókżać a kOe iar ify a tabblo iż py alae Cd ve bbon yy tn
+
+i
+
+Pree autorskm |sk utagny Merache 5 autoceko e prem mystkowe chp prerh
+
+W A LL LLL
+
+
+
+
+=== STRONA 24 ===
+
+ali 4 111YDO8 M
+
+EN ISO 52016-1:2017
+
+T. i l 000 x (obligniza: I Qo: „ht; Myy NIA |
+OHiziczm 7 aw ec ue kwlo (158)
+
+‘Non: stryetezmi | + Mólsyezreimi |
+
+przy czym, dla każdej strefy kondycjonowanej cieplnie ztc:
+łóttiwssi roczny wskaźnik przegrzania, w Kb
+Totti miesięczna skumulowana lemperatura przegrzania, w K-h
+
+Ohibziiecim wkWh, zyski ciepła dla obliczenia przegrzania dla miesiąca m, określone. jak opisano poniżej,
+
+Qaliktztim Całkowite przenoszenie ciepla przez przenikanie i wentylację do obliczenia przegrzania, dla mie-
+siąca m, określone jak : Opisano poniżej. w kWh, |
+
+Hoznatzm całkowity współczynnik przenoszenia cepła przez przenikania do obliczenia f przegrzania dla
+miesiąca m, okreslony jek opisano poniżej, w WIK, Z TPA LI
+
+HGereintrsi całkowity współczynnik przenoszenia ciepla przez wentylację do obliczenia przegrzania, dla
+miesiąca m, ARENY jak opisano ponies w WIK. i‘ |
+
+LRC A BUIE
+(ARÓW
+
+Obliczenia są zgodne z ją samą metodyką l wzorami co w | przypadku obliczeń chłodzenia (patrz od 6.6.4
+do 6.6.11), ale z następującym różnicami. | ULA | |
+AMAN A
+
+— _ Jeżeli nie podano nastawy chłodzenia, obliczenia nalęży wykonać z nastawą chłodzenia AEG = 26 pod
+44
+
+— _ Warunki brzegowe są różne, co wynika z różnchi wartości liczbowych dla wszystkich zmiennych nizszego
+rzędu, stąd MYCO indeksu OH zamiast indeksu G. Różnice są TIE x jedną pa następujących dwóch opcji:
+
+Warunki brzegowe, opcjaA: | KUJ Het A NM MI | KRN
+h 55
+— Wartosé całkowitego współczynnika przenoszenia ciepła draż! A Hon erates jest równia jego
+wartości dla chłodzenia, Hoen jak określono, zgodnie z 6 65. til HA (A
+
+By SH l
+— Catkowiy współczynnik przenoszenia ciepła przez wensylocie | HW okteśla SIĘ Z z uwzględnieniem
+przepisów dotyczących intensywnej wentylacji (w dzień lub w nocy) (np. bezpieczne otwieranie okien)
+
+w celu odprowadzenia nadmiernego ciepła. Specyfi kacje należy podać w metodach wymienionych w 6.6.6.
+
+— Wartości wewnętrznych sine ciepła i aw od słońca są równe ich wartościom dia chłodzenia.
+
+Toh Ree
+
+i b Hay j | ARUECRORE ey
+WAR ee: LEJE. | i URE.
+4 bia eae ee
+
+Warunki brzegowe, opcja B ud | ub ANYA KONAN MK KRUREKIE
+
+POZNANE
+
+Każdy inny zestaw warunki Akrożlónych w Tablicy A. 38 (szablon normatywny) i i Tabicy B. 38 (informacyjna
+wartość domyślna, w tym przypadku pusta). | SARA
+
+UWAGA2  OpcjaB obejmuje rownież małe warianty opo w takim przypadku wszystkie warunki opcji A są kopiowane,
+a następnie modyfikowane w razie poirzeby.
+
+UWAGA3 Informacje podstawowe można znależć w ISO'TR 5201 KE
+
+UA eee Mk athe RAR
+
+6.6.13 Długość sezonu drririntny i chłodzenia do eksploatacji urządzeń zależnych od długości
+sezonu |
+
+Gdy należy ocenić czas pracy urządzeń pomocniczych zależnych od sezonu, takich jak pompy vi systemie
+ogrzewania, przy braku szczegółowych danych, długość sezonu ogrzewania można oszacować sumą miesięcy,
+dla których zapotrzebowanie na energie do wróci jest większe od zera.
+
+Gdy należy ocenić czas pracy urządzeń nomochiczych zależnych od Sezonu, taloch jak wentylatory w systemie
+chłodzenia, przy braku szczegółowych danych, długość sezonu chłodzenia można oszacować sumą miesięcy,
+dla których zapotrzebowanie na energię do chłodzenia jest większe od zera.
+
+UWAGA  Aby uniknąć nieskończenie małych wartości zapolrzebowania na energie do ogrzewania i chłodzenia, wyzna
+czono ograniczenia określone w 6.6.4. W tym przybliżeniu sezon ogrzewania i chłodzenia moze się pokrywać.
+
+| rysie Normy są ofnordooe 119
+
+PBWEEM SUE M sk utwory Merao kie, s nibGzO= pia ma aha wae [kj EŃ Przy UJ, ry Pp sbogrmy komosti wi Norm Cy PEN IF WI
+
+Zgodne z vt 5 ust 0 ustawy TORA ts mrześrda 2002 r. o nomia zacji Dz U. Nr 509 poz 1383 & posh. zm
+
+bhaty kee | eotediiem Ueto POAÓW Oar iii 4 labmenecreia pried Niels ta atop in Riga = ah
+
+
+

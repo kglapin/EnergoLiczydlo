@@ -1,0 +1,1899 @@
+
+=== STRONA 01 ===
+
+EN ISO 62016-1:2017
+
+6.6.14 Nawilianie i odwilżanie
+
+6.6.14.1 Nawilzanie
+Miesięczne zapotrzebowanie na energię ulajong do nawilżania jest wyznaczane przez.
+
+Qu; hdjztejnt = = JHU;m be “(1 Mau srvzee) Py dv; mechizteym (ax: t)
+
+a Supiele jan (159)
+iq b |
+przy czym, dla każdej strely kondycjonowanej cenie zt: i miesiąca m
+Quinn zapotrzebowanie na nawilżanie, w kWh; JI ł | | fi il
+fiom miesięczna część zapotrzebowania na energię do nawilżania, uzyskana OM z TablicąA 39
+(szabłon normatywny, A laforrneicyjnyre wartościami do WYD, w Tablicy 8 it
+||
+vce utajone ciepła parowania wody, jak określono w 6. 3.6, w Jikg; TRU
+| SRA sprawność odzysku ciepła utajonego w DNA obsłajiu jącyńis strefę cieplną ztc, określona
+z Tablicy A.40 (szablon normatywny, z informacyjnym wybor w Tablicy B.40);,
+p. gęstość powietrza, jak określono w 6. 3.6, w kg/m, | nt ąda EET |
+Qv.mochztam średni miesięczny strumień objętościowy powietrza cA nawiewanego do strefy, |
+określony w odpowiedniej notmie(normach) EPB modut M5-5, w m?/s;
+
+oh i I |
+(AX*O)cupseras  TOCZNA skumulowana ilość wilgoci do dostarczenia na kg suchego powietrza nawiewanego,
+
+szlag z Tablicy A. Ri | ERGO śię: dirt ą Zlinformacyjnym MAT w abi B. 41),
+
+jA l
++ i
+
+UWAGA  Akumuilacja zawartości wiigoci x Czas jest PUBINKR które przyjęto: weelu uniknięcia przeb oddzielnego
+tabelaryzowania wartości zawartości wagoci| i czasów eretaci HE pitt ‘ypu HA i i Vii
+
+Miesięczne zapotrzebowanie na energii utajon: do odwiiżania sty yznaczane BZU);
+2 RK i Hf } KH LEAR | Fath hd ee Ra eh j Ji
+QbHurmdjzzeem = fonie” Qandzczm | Mh A II THE ROROBY. | (160)
+przy czym, dla każdej kondycjonowanej ciępinie strefy ztci miesiąca i a HEE it
+Quimiaduce» Zapotrzebowanie na odwilżaie wkWh | | I MA TE MNI
+Py | | NALE U |BRRROPEE
+Dre tece zapotrzebowanie na (ciepło (nej do chłodzenia, jak określ ono w 6.6.4, w kWh,
+RAR
+fonu-ce część zapotrzebowania na ciepło jawne, które bales E dia odwilżania, według rodzaju
+
+układu chlodzenia 58, określona na podstawie ONA norm dit eCTRT EPB moduł M7-1
+H q ł i | | i Koń
+
+Roczne zapotrzebowanie na energię utajona do (odwilżania) WII icza się ako sią ę zapotrzebowania
+miesięcznego: MAMMA MILI
+
+6.6.14.3 Roczne zapotrzebowanie na a energię utajoną
+
+QHU/DHUiadzztc:an zi > Q0HU/DHUsndzztcjm LARA | | (161)
+m |
+
+przy czym, dla każdej strefy kondycjonowanej cieplnie ztc: |
+Quu/pkuwduzza, (OCZNE Zapotrzebowanie na (odwilzanie) nawilżanie, w kWh,
+
+Qwu/pkUndzte„ Zapotrzebowanie na (odwilżanie) nawilżanie, w kWh.
+
+Trodne z art £ ust. © usawy 2 dnia [2 wzeżnia 2002 r. onorrawaci (Dz. U. Mi 199 poz. 1389 2 pdźn, m] Pita Narpry 53 coronene
+LEONE = AT Pus. ose
+
+pozwem sutorskam jak utnony Herche, a atosbe primers majętboas Oo tech pizy sig | sr horton Hwipag pone ie he
+
+kła if ebb pe pelcONAlLIz=M bor dae Mów tabktisechaiuą pł tet) NmelidiaAcia! ELS howe aa dae iy
+
+
+
+
+=== STRONA 02 ===
+
+EM ISO 52016-1:2017
+
+7 Kontrola jakości
+
+7.1 Raport z obliczeń
+7.1.1 Postanowienia ogólne
+
+Głównym celem raportu z obliczeń jest.
+— umożliwienie śledzenia lub weryfikacji danych wejściowych, założeń i wybranych metod,
+
+—  umożlimenie szybkiego określenia wzglednego wpływu każdego z lyc h główn ych parametrów obliczania
+h Aa jakościawej kontroli Miafygornnoe wyników i i wrażliwości na niektóre dane wejściowe, założenia
+lub błędy. i AUM. |
+
+UWAGA 1 Określenie, gdzie i jak RM z  obiczeń powinin Zostać warren es dina zakresem tej normy.
+
+Raport zawierający ocenę zarioczebowalik h na | energię temperatury. wewnętrzriej lub projektowego obciążenia
+grzewczego lub chłodniczego, które zostały określone zgodnie z niniejszym dokumentem, powinien zawierać
+co najmniej informacje opisane w. odpowiednim paragrafie encanta by Rozdziału.
+
+UWAGA2 - Opracowane przykłady przedstawiono w Wie R 52016 AH MY raporcie są dostępne również wyniki walidacji
+metody godzinowej i miesięcznej. 1 | (REA kj | R |
+7.1.2 Obliczanie zapotrzebowania na energię " f RANA
+
+LAQZA: ‘Dane wejściowe 3 Hi | | M
+
+Do obliczania zapotrzebowania na energię raport powie: zawierać wartości następujących danych wejściowych:
+)
+
+a) wszystkie dane wejściowe należy wymienić i uzasadnić, np. poprzez odniesienia do norm międzynarodowych
+lub krajowych lub przez odniesienie do odpowiednich załączników do niniejszego dokumentu lub innych
+dokumentów. Jeżeli dane wejściowe nie| sa danymi hormone, debits vee podać dokładność i źródło
+danych wejściowych: BUUU ZAP EO WPN
+
+ł ak Ty hol, } ‘ KU i hol
+PLAST ś. Pe oe eee
+
+ao
+
+b) odniesienie do MZEYO | dokumenitu, het: KALKA ate it | Wa i i. i! | | | i |
+kowych, oceny skutków. możliwych do zastosowania środków oszczędzania estan lubo POW
+d) opis budynku, jego budowy lokalizacj | M | M Ni M WI i! i Hi if
+BARR A hit MEN hi
+g) dla metody miesięcznej lub godzinowej, Hy, Hua, Ac oraz c dia kazdej strefy, dla kazdego miesiąca.
+
+c) cel obliczenia (np. w celu OCENY th intsc z przepisami, optymalizacji energetycznych właściwości użyt:
+zapotrzebowania na zasoby enęigetyczne w danej skali), A 4} IU MAMI
+ANN ah IU tee
+omieszczeń do. stref oepinych,
+f) notatka wskazująca, która metoda (godzinowa czy miesięczna) MA zastosowana; ę
+WU ada
+7.1.2.2 wy hile obliczania BAT JĄ bias | | | l i} | Hi | ! tl | | KR
+
+74.224 Metodagedzinowa l CUE
+
+Dla każdej strefy cieplnej i miesiąca?" KUMA U l M
+
+- érednia temperatura wewnętrzna (robocza i powietrza),
+
+|
+
+— ésrednia temperatura zewnętrzna, |
+
+średnie całkowite natężenie promieniowania słonecznego na płaszczyznę poziomą.
+
+całkowity współczynnik przenoszenia ciepła przez przenikanie;
+
+ma a zenóRć
+
+ry ©) Odsyłacz krajowy. Błąd w oryginale EN Powinno być: „godziny”
+
+Zgośnie z x. $ ust, 5 ustawy z ards 12 września ZACZ I. O Me mazacj (Dz. U. Ne 163 poz. 1380 z późn, za.) PRZE Nom zą obrone» 121
+
+as be MaM ft Bs oiocine prem
+
+bidity stócije prac beatae w POM Ofaż ine £ zabekotsoteiia ld Ded! NielidinóŃ>5:
+
+ra rele this 30 woń pay ryshurz gą Fatskiernu ko nrestrwi Micon camer SYNEM Taba
+
+hs kk pł ówna
+
+
+
+
+=== STRONA 03 ===
+
+EN ISO 62016-1:2017
+
+— Całkowity współczynnik przenoszenia ciepła przez Wentytację, |
+
+- całkowite wewnętrzne zyski ciepła, w tym odzyskiwalne straty diabla syslemu,
+- Całkowite zyskicieplaodsioita, „|| ||
+
+~ zapotrzebowanie na energię do ogrzewania;
+
+| \! i UJ
+hh ih MBM I
+
+-_ zapotrzebowanie na energie do chłodzeniia. UNIA
+
+Zdecydowanie zaleca się diagram słupkowy przedstawiający te główne warunki miesięcznego bilansu ener-
+getycznego, w celu szybkiego Wskazania Mówi Mitt kriwiinii z Pory PPI na bilans energii.
+
+Dla całego budynku:
+
+Bi zapOrzeoOWaNie na energie do. ogrzewania, iN ti LI | | | I | Hae Ml, LM M IAW
+~ roczne zapotrzebowanie na enetgię do chłodzenia. it Hh GU Akg |
+Dane godzinowe: | HHI il ut FAN JAN M Hp | AW FH MIANA
+
+— Jako wynik obliczeń należy ABN co najmniej adziacyje wartości terran zewnętrznej i całkowite
+
+| _ promieniowanie sloneczne : oraz obliczoną WADA netii, r oboczą i i tyrytiGkti energetyczne do
+ogrzewania i chłodzenia dla każdej strefy. RADCA my | | |
+
+UWAGA 1 Zdecydowanie zalecane są wykresy granczna wartości dia okresów fenieertahanych A dia RY SEZONÓW |
+
+Patrz przykłady w raporcie technicznym. ISO/TR52016-21 || ih Ay Wit UE
+
+UWAGA 2 Zdecydowanie zaleca sie przedstawienie Wyż DAB KA) zapotrzebowania na energię jako funkcję
+
+temperalury zewnętrznej. Wyjaśnienia praz więcej przykładów o jących orsay | recente ttr WOW
+
+różnych elementów na zapotrzebowanie na energie PRE ISO/TR RADCA wi li MM
+
+74.2.2.2 Metoda miesięczna RRRERKSRRZRRSASEE ( Be AAA 8
+{ gb P i f KE ELE JĄ BAM: NEWER EE) U a-ha. BCE
+i a el A | AG HH Ht ae He a a op LM Bde
+SE, | a9. hal Ue ję |) UAM NA Bi NA Neat Met ec fa
++. eee CESGRGR OBER BORGER ERCEELE Ę
+Dla trybu ogrzewania: BANER A IW AN |
+— cakowteprzenoszenea cegla przez przpikanie | CAAT Hay
+— całkowite przenoszenie ciepła PZ wentylację, ANI Pa HANNA Wahi
+
+— całkowite wewnętrzne zyski ciepła, w tym odzyskiwane straty ciep
+= całkowite zyski ciepła od słońca,
+
+kb
+
+Th Bh Ę wae = Wah ba |
+b p BBE R BĘ q i JĄ De HY
+i 04
+
+z zapotrzebowanie na enetę do ogrzewania KADNANNNNNNNNANNNNNNNN
+Dla trybu chłodzenia: 4) | OHIO NANA NANA
+- calkowile przenoszenie ciepła przez saan MANNA NUNININN
+
+= całkowite przenoszenie ciepła przez wentylację, M 1h i| JR. | an | | | | "| IRA i (ONE
+
+— całkowite wewnętrzne zyski ciepła, w tym odzywa straty cieplne sysłetnu: | Ib
+
+— całkowite zyski ciepła od słońca: TaD ETE
+— zapotrzebowanie na energię do chłodzenia. |
+
+Dla całego budynku: HOUT We BIN Wat |
+— roczne zapotrzebowanie na energię do ogrzewania,
+
+— _ roczne zapotrzebowanie na energię do chłodzenia.
+
+122 Zgodne Z an. F ust. 8 ustawy z dra 12 września 2002 r b noemalcacyi (Biz. UL Ma 199 poz. VBA 2 pdźn zw | Polska N WAY 24 OWNED
+Pen BUSES m je LTA bierache s sirarsk= prawa mąstkoa= r [och przysujua oben Eqrdsiwy Anions w yey il
+
+kiows kien teerenfislieem
+
+SR Wiad Wie Fabaryelreiia GiiGd
+
+= ili 4st URZ
+
+a=)
+
+
+
+
+=== STRONA 04 ===
+
+
+
+
+=== STRONA 05 ===
+
+.pizypaukRu ICPUJM awhcrvu wy WYW ACR eRRR ee | 12 Se Lk MARA 608 Y 5) BS PARAS Fee WY Bee Fy ee ree ES es, VE sere eye ZA Sa] es
+
+prawem sutorsem ps utwory erarbe, a sifprskje pre majatkowe do nich orrywuggą Fosbrow Komstetow Normatnacyjnena (Pedy
+
+ah C 0 Cl « QB 22> Ga
+
+EN ISO 62016-1:2017
+
+— Zacienienia przez przeszkody zewnętrzne (odległych przeszkód, lub własnych elementów budynku).
+
+- Ztozonych harmonogramów sterowania (np. weekendowe wyłączenia wentylacji mechanicznej lub ogrze-
+wania i chłodzenia, ilub zacienienia słonecznego itp.; wentylacja nocna jako chłodzenie swobodne, odzysk
+ciepła przez wentylacji itp.). |
+
+W przypadku godzinowej metody obliczeń te sytuacje nie zwiększają złożoności obliczeń, więc nie wyma-
+gają specjalnego testowania, chyba że wymaga to iteracji, lub przybliżeń w celu uniknięcia iteracji, lub jeśli
+wymaga to zastosowania środków zapobiegających oscylacji.
+
+W przypadku miesięcznej metody obliczania aspekty te objęte sq współczynnikami korekcyjnymi, popraw-
+ność tych współczynników wymaga dedykowanych przypadków walidacji.
+
+— „Zapotrzebowanie na energię utajoną. Przypadki do walidacji bilansu energii utajonej nie są potrzebne,
+ponieważ dla przyjętych założeń równanie bilansu jest proste | | można je łatwo sprawdzić analitycznie
+
+UWAGA 2 — W przypadku miesięcznej metody obliczania weryfikacja obejmowałaby rozwiązanie równań w 6 6. Jednak
+meloda miesięczna zawiera wiele opcjonalnych współczynników, które zależą od specyficznych warunków regionalnych,
+co sprawia, że weryfikacja przy użyciu danych specyficznych przypadków testowych Jest nierealna. Metode miesięczną
+można porównać z metodą godzinowa, szczególnie za pomocą kluczowych danych miesięcznych pochodzących z obliczeń
+godzinowych, jak opisano w 6.5,15. Ponadto podstawowe wzory dla metody miesięcznej można łatwo sprawdzić ręcznie
+
+Elementami obliczania w metodzie miesięcznej, które obarczone są największym koty błędów, są spegalne elementy
+obliczania, które nie są objęte HG OWIANA przypadkami weryfikacji.
+
+7.2.2 Procedura weryfikacji całej metody obliczania — Rób Sa
+
+7.2.2.1 Postanowieniaogólne = ts 4 Hii
+
+Weryfikacja całego modelu obliczania uwzględnia obliczenie temperatur roboczych i i rozsądnego zapotrzebo-
+wania na energię do ogrzewania i chłodzenia przez cały rok ve kilku przypadkach z(rorrynizksi poniżej.
+
+UWAGA Przypadki weryfikacji oparte sąna przypadkach 60800 pred B BESTEST, jakopisano wANSUASHRAE 1407
+
+I: WEEK! M h IB. HE I
+IR by 1, Ak Aol ja i ie
+
+7.2.2.2 Geometria pomieszozenia testowego Raa PAW PAY HI HM MI
+
+} H
+i
+
+Różne przypadki testowe DENA się do geometri stanowiącej jedną strefę iz! dwoma różnymi rodzajami
+obudowy: lekką i ciężką. Geometrię obcy Bast: OBH pokazano na Rysunku A Warehiaithtiti Doo,
+
+U 4 ' PR.
+
+metryczne pomieszczeń podano w Tablicy 22. | | SERU ORS A MADA
+ee ee ABA a A
+O ile nie zaznaczono inaczej, WSZY elementy zykiękicić są zewnętrzne (powiązane ch przestrzenią ze-
+wnetrzna). : KH ae | it MAMI 1331
+> LT " in M gh NEAR: f EAA R Be gS
+a MANN Feeeeee
+oa nn oe Ne ae oe eo Ee A
+Wd gon i PEGERE: diay
+PR oN GH a Bf DOERR ROBRE: 444 4
+| HP EL PIE | HH 4 DR LJ I f |, 1 | |
+MBA H | hee a ae |
+Hl | ARERERRERI |
+AKT | WK KRRAPANA i
+eed ey BORENRENERI |
+BU HI | kok M: [ Hi f
+H | i | a ee | |
+l {| |
+|
+| |
+124 Zgocne z ań. £ ust. 5 ustawy z dra | 2 wrzesnia POOŻ r. o noastalizacji (DE. ŁA, Ms 153 pac LABS 2 późn. zen.) Pizkda Noory 1 WrUWOWĄ
+pw RTW |ER Jeno fp Miermchie, 8 sitorshe prawe riage: > Te Piz Pay Pig sienny Kamssłowi Nore alty ayn Puk
+
+KK yzk uiape pól auliaci em 0aUKY | Raz u @ Lab kTZ etretiia Cited) Nmitżrawa airy W BTY Wit eal
+
+
+
+
+=== STRONA 06 ===
+
+EM ISO 52016-1:2017
+
+2,/m
+
+05m]
+
+Rysunek 2- - Geometria pomieszczenia testowego
+
+Ht a
+
+eo
+4
+
+| |
+
+Tablica '22 — Dane opatki |
+
+Kubatra mar" ł PREREL
+7.223 Właściwości ciepln ofiz czne elementów niep rzezroc; zystych KAN 3003301)
+ME i RAR aii ee.
+Charakterystyki ową yądóc ścian, Leth i kg podano w Tab icy 23 dla przypadku obudowy lekkiej,
+a w Tablicy 24 dla przypadku obudowy Bethe | MANNA
+| KARK 4 oe ee ee ee eee ee ae
+Peeeeeneae U een 4
+
+Aby zmniejszyć niepewność dotyczącą testowania innych aspektów symulacji obudowy budynku, przyjęto
+bardzo grubą izolację podłogi, aby skutecznie oddzielić cieplnie | Padiogs od od ants
+IAR
+i AMMNANYJ
+W niniejszym dokumencie oznacza to. że w obliczeniach można zastosować ne cieplny podłogi z powietrzem
+
+zewnętrznym jako środowiskiem Fibytórat iw zamiast efektywnego oporu cieplnego (R_;.5)-
+I i MII i i |
+Zg0cne z ar. £ ust. ustawy z dra |2 reese Lol r onemacaą (Os U, Wr 163 poz. 1383 2 pocn zh | Poza Narry SĄ UNIMOCE 128
+
+ka nia o „MA | be + id Pd A) ka UMM Wp
+
+
+
+
+=== STRONA 07 ===
+
+LU yo LEO —_
+
+EN ISO 62016-1:2017
+
+Tablica 23 — Właściwości cieplnofizyczne nieprzezroczystych komponentów dla przypadku obudowy
+lekkiej
+
+Konstrukcja
+
+Ściana zewnętrzna (od wewnątrz - i}
+na zewnątrz)
+
+Płyta gipsowa
+
+EE AE EA
+
+Mata z włókien szklanych
+
+_Oblicówka drewriania
+
+"Suma PoW.-pow.
+
++-3—r-Rznpiiia wez ET WI LB, ELI ae ee» RKR ES Se Bh
+
+Do zastosowania ISO 52016-1: |
+— Klasa właściwej pojemności ciepinej
+— Klasa dystrybucji |
+
+| 0140 | moc | 4293. | (590 | 900 |
+
+Me ea CZAR RE
+pa: oe Phebe Aa 1930 adi F SR lea OŚ MW oz ok ókcinóć
+
+M 789
+
+cap TRNEATRFUM prak *P € LOWER BoE 2 e
+
+BarGzo lekka
+
+Q, 140
+
+ce Bde lads »: ip ern
+
+| 0,025
+
+eee |
+
+11,003
+
+SS SSS ee o Bo A Bo m Ta Pc eR s Be
+
+"lzolacja *
+Suma pow -pow
+
+Do zastosowania ISO 52016-1:
+
+— Klasa właściwej ŚoTYYEĘSE) ciepinej
+— Klasa dystrybucji |
+Dach (od wewnątrz nazewnątrzj || |
+
+Płyta gipsowa z Hit 0,010 76160
+Mata z włókien szklanych Ę 10.1718; „0040 Vi
+Poszycie dachu - BB | iy 0,019 | 0,140. a |
+
+Suma pow -pow
+
+Do zastosowania ISO 52016-1. |
+— Klasa właściwej pojemności cieplnej.
+— Klasa dystrybucji pty
+
+3 W celu zmniejszenia niepewności i dotyczącej t testowania innych aspektów symulacji obudawy bi | nki
+| grubą izołację podłogi (poniżej rzeczywislej konstrukcji podłogi), w calu skutecznego oddzialenia awek saree od ani |
+W niniejszym dokumencie oznacza to, ża podłoga plus izolacja jest modelowana jako nieprzezroczysta konstrukcja do powie-
+trza zewnętrznego; to powoduje, że w przypadku podłogi związene| z gruntem w obliczeniach należy zastosować opór ciępiny |
+| podłogi zamiast efektywnego oporu ciapinego (Rye). Aby zapewnic, Że niasa cieplna rzeczywistej podłogi jest modelawana |
+| jako część rzeczywistej podłogi i nie jest rozdzielana pomiędzy rzeczywistą podłogę i sztuczną grubą warstwę izolacji cieplnej, |
+opór Gepiny grubej warstwy kałaćji cieplnej jest przypisywany pierwszej (najbardziej zewnętrznej) warstwie przewodzącej. |
+która nie bierze udziału w podziale masy cieplnej konstrukcji ie | (patrz 5.6.7.2), tak więc: hy 1>0, 04 Wi(m*-K). |
+* izolacja podłogowa ma minimalna gęstość i ciepło właściwe, na które pozwala te testowany program, ale nie < D. Dia zasło- |
+sowrań niniejszego dokumantu przyjmuje się, 20 gęstość, ciopło właściwe i właściwa Polenośe GODNIE izolacji podłogowej |
+| wynosi zero. l KORRANEK: uh IM BEM
+
+126 Zgodnie z an 3 ust. © ustawy z dróg 12 września S002 FI. p mere ag: (Dz. LL Mr 102 poz, 1386 2 późn, ort.) Hoske How są Sranie
+
+pozwem autorem [xk utwory Hench, s freske pews majątkowee co men przysuzwa Festa Komietwa Korek acyjnewy (PII
+
+Miry wiówuje fawreutali ać głów Olaż lia zahór pacz (iD OWIĘKAMO ia Lupżw athe
+
+
+
+
+=== STRONA 08 ===
+
+lk?
+
+EN 150 52016-1:2017
+
+| ntów dla przypadku obudowy
+
+Tablica 24 — Właściwości ciepinot
+
+onstrukcja
+
+ściana zewnętrzna (od wewnątrz | | |
+na zewnątrz) | it HA RODESEDUTEDAGDNSS 17) a EE
+FIT EPO 4; 4600 140% Of
+Blok betonu 0100 | 0.510 0,196 140000 ABYM. vos il ‘3 i
+Izolacja piankowa 00615 | 0040 | 1,537 Sa: age tte m
+
+RIED WEZ TE i OPR" RER 1.44 mop „|. 6-66 > ae -6% | = | 4: od | j
+100/140 | 0.064 4232 has
+p | l ‘ J EB ER: |
+| ez EHF ] = , jell „iż |
+
+Obbcówka drewniana MADE Middiswiał. Hikari dł AACS
+Suma Pov -Ppow. LE | BZ! ARIA a LL hed nal |
+oe ea sz RAZ TAR EEE TAKA TIRA | ih | |
+
+Do zastosowania ISO 52016-1. | | M |
+— Klasa właściwej pojemności Clepinej | | ae ank!
+HALA if ROwnomierna (I) |
+
+Mata z włókien szkianych
+
+| Poszycie dachu
+| Suma POW. “Pow.
+Do zastosowania ISO 52016-1: | | HAMMAN
+— Klasa pojemności ciepinej | LDU Bardzolekka i].
+— Klasa dystrybucjjmasy ==!) | I | Równomiema(D) |
+
+WA MA eB
+
+*' W celu zmniejszenia niepewności dotyczącej testowania innych aspektów symulacji obudowy budynku, zastosowana bardzo
+| grubą izolację podłogi (poniżej rzeczywistej konstrukcji podłogi), w oełu skutecznego oddzielania cieplnego podłogi od gruntu
+| W niniejszym dokumencie oznacza to, że w przypadku podłogi związanej z gruntem w obliczeniach nalezy zastosować opor
+| cieplny podłogi zamiast efektywnego oporu cieplnego (Ain). a środowisko zewnętrznekonsirukcji jest traktowane jako powie
+| trze zewnętrzne. Aby zapewnić, że masa cieplna jest modelawana jako część rzeczywisłej podłogi i nie jst częścią sztucznej
+| grubej warstwy lzolacji cieplnej, opór cieplny grubej warstwy izolacji iepinej jest przypisywany pierwszej (najbardziej zewmętrz-
+| nej) warstwie przewodzącej, ky = 0,04 Wilm*'K) PELE CANA EERA BAAR LONANAA, |
+| © lzolacja podłogowa ma minimalną gęstość i ciepło właściwe, na kiore pozwala testowany program, ale nie < 0. Dla zasto-
+| sowań niniejszego dokumentu przyjmuje sie, że gęstość, ciepło właściwe | właśdwe pojemność cieplna Izolacji podłogowej
+| wymośl Zaro.. [| FIR KIRLACNANANNA pł
+| FW przypadku cięzkiej obudowy właściwości ścian I podłogi są bardziej masywne, A Właściwości dachu pozostają niezmie-
+
+"Notte.
+
+
+
+
+=== STRONA 09 ===
+
+— — ~ AM +4 rap pie er 8 utd gło r eet fe SMA RA Be JA 44 14
+
+Fapa A w ae KH m jk a eee es grave, w PJ » z 8 3 | apcpa z»
+LJ OCE Z ar „Um YS z OMA |< MZEŚTAG LAMA | 33! [z U W 153 pa : Ekin Noy :
+ayer! were er ik teeter wyw wytrwał uwa ruaotdywype cies r ) Prrywzzsice Firmie "p Korrzatrzzą ? =- mr ery Ter 8%
+| £ £ | | ł , ;
+
+EN ISO 62016-12017
+
+1.2.4.4 Wewnetrzna pojemność cieplna strefy
+
+Miesięczna metoda obliczania:
+
+W celu zastosowania miesięcznej metody obliczania w niniejszym dokumencie wewnętrzną pojemność cieplną
+
+strefy oblicza się na podstawie metody uproszczonej, stosując domyślnie wartości dla wewnętrznej pojernności
+cieplnej (Tablica 21)
+
+— W przypadku obudowy lekkiej: klasa „bardzo lekka” (80 000 A...)
+— W przypadku obudowy ciężkiej: klasa „ciężka? (260 000.4
+
+use)
+
+To prowadzi do
+
+— _ W przypadku obudowy lekkiej; C,, = 3,84 MJIK;
+- W przypadku obudowy ciężkiej: C= 12,48 MK
+
+7.2.2.5 Właściwa pojemność cieplna powietrza I mebli
+Metoda obliczania godzinowego
+Wniniejszym dokumencie właściwa pojemność cieplna powietrza i mebli RNS wynosić K, „= 10000.J/(m* K).
+(2.2.6 Właściwości oszklenia Ny
+Okno jest podwójnie szklone, o następujących właściwościach: | |
+- Gen = 0,789;
+F, = 0.9 (współczynnik korygujący dla szyb nierozpraszających). W konsekwencji: g, = 0,71
+
+UWAGA  WANSUASHRAE 140” podano wspóźczynnik zacienienia dla podwójnego oszkienia © 907). i lego powodu
+wartość li, jest dostosowywana w celu uzyskania tej sane wartoscl R, dla okna. IAA
+
+W niniejszym dokumencie przyjęto następujące dane WEJSCIOWE:
+-  [4,72984 Wi(m”*K), ci
+— R,_=0,04 m*K/W; (patrz Tablica 25)
+- Riy= 0,13. mK, (patrz Tablica 25)
+
+- =D
+Wartości R,,., oraz R. W niniejszym dokumencie różnią sie od wartości dach W ANSI IASHRAE 1407!
+WASHRAE 140 podano wartości dla emitancję promieniowania podczerwonego do półprzestrzeni dia zwykłego
+niepowlekanego szkła (0,84 lub 0,9), co powinno prowadzić do podobnych kite Z tego powodu
+wartość U, jest dostosowywana w celu uzyskania tej samej wartości. Ke dla okna.
+7.2.2.7 Współczynnik pochłaniania promieniowania wianki We
+
+Współczynnik pochłaniania promieniowania słonecznego wszystkich nieprzezroczystych powierzchni wynosi
+05
+Heol 7
+
+7.2.2.8 Współczynnik konfiguracji do niebosklonu
+
+W niniejszym dokumencie współczynnik konhguracji do niebosklonu należy przyjąć
+
+Fey = 1,0 dla dachu,
+
+bint
+
+- [= 0,5 dla ścian
+
+"y
+i 177"
+
+OJCZE
+
+
+
+
+=== STRONA 10 ===
+
+EN ISO 52016-1:2017
+7.2.2.9 Udziały konwekcyjne
+
+Przyjmuje się następujące udziały konwekcyjne:
+— fete = 0,40,
+
+— fax = 0,10;
+
+— fire = 1,00;
+
+— foe = 1,00.
+
+UWAGA 1 Ogrzewanie ichłodzenie KOWNEKYRH może mieć znaczący wpływ na wyniki i jest ście powiązane z przyjętym
+ustawieniem termostatu, co omówiono WANSLASNRAF 140% B11.1. Patrz dyskusja w (SO! TR 52016-21',
+
+Udział promieniowania słonecznego utracony w wyniku ponownego odbicia przez okna nie jest brany pod
+uwagę (przyjmuje się, że wynosi zero). | ji FOLIE | | |
+
+|
+
+UWAGA2 W ANSUASHRAE 1407! udział en wos 0 03.
+
+7.2.2.10 Warunki brzegowe HIM JH Bf M i int li gł.
+
+kl
+
+W niniejszym dokumencie dostosowano wartości współczynnika przeńoszenia ciepła i podano w Tablicy 25
+1 UTES Ae Uh 3 | HH
+Tablica 25 — Konwencjonalne współczynniki przenoszenia ciepła
+
+Współczynnik przenoszenia ciepła
+wi(m*:K) GR ię,
+| współczynnik konwekcji; powierzchnia wevmetrena h he |
+
+| współczynnik konwekcji, powierzchnia zevnetizna |
+| współczynnik promieniowania: powierzchnia wewnętrzna
+współczynnik promieniowania: FEE Wewnętrzna Bi
+
+M j
+Bi J h
+
+UWAGA Te wartości współczynników. przenoszenia ciepła Poda M w ISO 13789,
+
+Fe Sy Współczynniki wykorzystania gł Hit i | i) Hi ji | | | RU
+W celu zastosowania miesięcznej metody obliczania w niniejszym dokumencie współczynnik wykorzystania
+zysków etyk dla ogrzewania oraz byo piss ebdagigsitnah strat dla sanserreeddy oblicza się na EA
+
+aż |
+
+f |
+
+AE GB gig
+han | HATA I | a4 | i
+— Oco= 884 6 | MEMO RASA TRRRTRRTRRRRAE RARE
+. J | | 4 U Łk | hó h bh Hon
+Li ! | Wha ' KERRRAREUE Hi
+- maz 15h | ETRE
+A } jg (i
+
+= Teg = 15h.
+7.2.2.12 Dane klimatyczne | Ma | HALI |
+
+Dostępne godzinowe zmierzone dane promieniowania słonecznego (promieniowanie globalne, promieniowanie
+rozproszone i promieniowanie na powierzchnię normalną) zostały przekoriwertowane zgadnie z ISO 52010-1.
+
+Godzinowe wartości temperatury powietrza zewnętrznego oraz calkowite bezpośrednie I calkowite rozproszone
+promieniowanie słoneczne dla każdej orientacji (pozycje pionowe i poziome), wraz z wysokością słońca | kątem
+azymutu, podano w arkuszu kalkulacyjnym dołączonym do niniejszego dokumentu, który jest dostępny pod
+następującym URL: http://standards iso.org/izo/52016/-Wed-1.
+
+Zgodne z art. 2 vet. 6 ustawy z kinia 12 mrzeżmia 2002 r. o nermaksacji (Ds. U. Ks 197 paz TES z paln, zm, Fogkje Nonny sa crronone 123
+
+- a - Lo, iG Tech serves Jalskiemy kznańelsma Norrunke scvine Lh
+[OEM BUŃEZ M | BX IL wary Meracke 63 rorskie pra mejstt ee HG TWOI PLY PUA | WSZTM korońełwy WI qi |
+
+Bice y wkówijk Peet erate me ZPO OLA ify # fabecpoectiedina nites NRLUELArEA Siig 4 pout be! 12
+
+
+
+
+=== STRONA 11 ===
+
+Gl 4 ey /212> Ga
+
+EN ISO 52016-1:2017
+
+Miesięczne wartości temperatury powietrza zewnętrznego oraz całkowite, całkowite bezpośrednie i całkowite
+rozproszone promieniowanie słoneczne dla głównych orientacji podano w Tablicy 26
+
+Tablica 26 = Miesięczne wartości temperatury powletrza zewnetrznego oraz bezpośrednie
+i rozproszone miten Nina
+
+a) wnpofalika powietrza zewnętrznego i calkowite napromieniowanie słoneczne
+
+1 1825
+NAA ROCCA ESET | we (508 [968 |
+3 9.6 //// 11/1) / 355i) 1) 481.4 || ab li 159.8
+a Psat ean TRE Vi tia!) I WRZE
+5 ROM WCZK am: 974 | 218,0
+6 182) | 584 [i 126,7 | CM 223,8
+8 RESET" CINI| 101)
+16,8 M 348 | aout) |
+
+0 | 35 263 || ein mite
+a | 88 | 189 | |561 NE
+12. ZG TN Tage i Sia |;
+
+Rocznie s6 | 4297 | 11600) | 15
+
+165, i Hy
+| feng Niles Haale ni aug} VE ite
+25S SERS ei CrR SERS = ee maces prezen warna (
+
+"Rar ił ETH EE VE 942i
+1, | HITE me
+
+ean ae a meee
+
+3
+
+s fi] a9 | mate ea HA S88)
+7
+
+8
+
+9
+
+46,6 | AGE || Hf aeie | |) 456 | NI. 325 |;/;|
+ŻA ||| LISSI 1) /)/ 24,8
+
+= eM wedi st indie POECIE seer eens 8 te remem
+
+17,5
+
+MIMS MBB UN BO) IJ, HEF | 449
+12 | 159 159 01 //459 | MAS NN MA
+| 394,6 | | | (310,8
+
+130 Zgodne z a. 3 ust. b ustawy z Ora (2 erzesrda 2002 r prarraizacji (Cz. UN 18) pee. IIEC 2 pon, ZP. PaldG May 13 EMOMDOC
+pozwem autyeskim jek ulwóry Me ache p mićaebe pine mapethowe Oo TL frzywugom ! kayzem Kamielw Narnakryyn=rny (Pis
+Mary bse pe fatsaakzatw pików Bać NE 2 ee se ee beer ee ai
+
+ee
+
+
+
+=== STRONA 12 ===
+
+a <= | a i ad VAST PVT We Pi et Un Rt ite rae ee ee ee I Postawa MŁ ¥ 1 Sune Pupil L402 WCISNIĘCIE przycisk
+
+J 82016-1:2017
+
+29,7
+376 |
+mss |] //\649))/)[ dear
+
+east i
+659) 01883
+Jeża 711980 |
+66,8 AA ‘641. TTC dey ai:
+
+SLES Sle boj 90. gr 90 ON GI ler ede esha howto stsgódldl gal LULA
+| | | |
+| 25 | |
+|
+|
+|
+
+few i PT a LIE
+
+|
+
+EST Lili 108,9. 4 630 | 1440
+aoi klad [MI Ba80 | Mil inasanii|| 63.3 112.9
+ag TTT gig M 3621)! m i ia egal)
+Z TOON Tae | MEZEM "aż | 610
+
+Rocznie 7584 ||| 11525 1 e519 | 18877
+
+JĄ bala,
+Ft MB
+
+W niniejszym dokumencie założono, że temperatura gruntu jest ro równa temperaturze powietrza zewnętrznego.
+Zamiast wirtualnej temperatury gruntu (Fe evisna) do obliczeń innsani przyjąć temperaturę powielrza zewnętrznego
+Fifa
+
+UWAGA 1 Wcelu zmniejszenia niepewności dotyczących testowania innych aspektów obudowy budynku, zastosowano
+bardzo grubą izolację podłogi, aby skutecznie odrizielić preter iti od suet Z eae powodu przyjmuje sie, że wpływ
+lemperatury gruntu jest ograniczony. NIK | LAME
+
+W niniejszym dokumencie przyjęto, ze różnica między temperaturą powietrza zewnętrznego a temperaturą
+
+pozomą nieboskłonu jest wartością stałą, SO are = = 11 K dla wszystkich przedziałów czasu t przez cały rok.
+
+UWAGA2 Mote to być przedmiotem dyskusji jeśli przepływ ciepła pominięto w analizowanych przypadkach (co nie
+jest łatwe do wr) to dodanie w +I; money sieennaftEt ey aa tiachiniwnani więcej informacji podano
+w ISOQVTR 52016-2171. at Feary ft |
+
+Hy i
+
+7.2.2.13 Wewnetrzne strumienie ciepła MUUMINHNININAHNNNI li A
+
+Całkowity wewnetrzny Sannioh ciepła powinien być stały i wynasić 200 w wie godzny na a dobę przez Espa rok),
+co daje JRC ONY strumień ciepła |m5 1 ies KRY | Hi TG
+
+Strumień infiltracji powinien być stały i wynosić 0,41 wymiany poietrzajh b Na nese (24 godziny na dobe
+przez cały rok), co daje strumień powietrza q,. = 0 0148 mis. een fo ane 1, Aa? Hi h). W budynku nie
+
+ma systemu wentylacji.
+
+Strumień infiltracji powinien być niezależny od prędkości wiatru, tóżnicy temperatury wewnętrznej/zewnętrznej
+oraz innych zmiennych. |
+
+Jednostkowe strumienie infiltracji dostosowano ze współczynnikiem 0,822 w celu uzyskania przepływów ma-
+sowych równoważnych przepływom występującym na określonej wysokości stacji pogodowej na wysokości
+1 609 m n.p.m. (Cęstość powietrza na wysokości 1 609 m to około 80% tej na poziomie morza).
+
+ZGDZ0E 2 alt. © Ust, W Ue Z ree 12 przesrój LOU r. o nomałzsqi (Dz U. Kr Ri pcz 1398: 2 pjłźn zm. Posie Normy tą orrąniwia 131
+
+pismem KOT jEk wfwory becar be r aitockhe preven mósjstkcyee jo m ch przyskgu a loisloemu Korragjsizwi Maral Tec rience (4h
+
+hides wiżódje pańkónaizać 6 plow Gtaż irew coher pecress pla nwudiawictym kopionia tar
+
+
+
+
+=== STRONA 13 ===
+
+L : uonmILY UZYC WŁ ZERYNIĘ UPILCZ WLIBIIĘLIC I ZYCLISE
+ pizypawnti APY PAV LAU VY Yo Vv eee LULU LUZ Cee ey BL ¥ J pe
+
+Z < UE > GBA
+
+EN ISO 562016-1:2017
+
+7.2.2.15 Strategia regulacji termostatu
+
+Rozważane sq dwie strategie regulacji termostatu
+- Ciągła
+
+— Arerecn = 20 90;
+O nąsayć = 27 4 PF
+
+— Okresowa: |
+— Od 07:00 do 23:00: O rata =20'Ci Praesent = 27 TC.) |
+
+~ Od 23:00 do 07:00: 6, „x = 10°C Bl cP a7 ‘Gi
+(brak nastawy dla chłodzenie w Hoey) |
+
+7.2.2.16 Dostępna pojemność ogrzewania i chłodzenia AI |
+
+Maksymalna dostępna pojemność ogrzewania i |chlodzenia jest praktycznie nieskończona:
+- O..4=1000 kW (1.000000W); TEEN
+
+- Bogi = 1000kW(1000000W). IA Natt)
+7.2.3 Opis Przypadków testów weryfikacji LAG MINI: kj ij
+
+Należy przeprowadzić cztery testy", jak Pókdżinicj w Tablicy 2 27. i
+
+Mat fe
+| LB
+
+Tablica 27 - zu. ta
+
+Identyfikator przypadku l ‘typ | Strategia regulacji
+|| BESTEST |||. |. „Kostki |. termostatu
+
+600 FM | Lekka || MA, | Ciągła | | |
+
+ea bait ||. iLekka, 47/1) || Ontesowa | KANE | |
+
+} H rf T \ ji | |
+
+See etl EA lth apse
+
+A i AH hee (KARIM pf
+i |,
+A OKI ESOWA |
+A r a |
+
+Dla każdego testu należy obliczyć i podać następujące dane. Hf ‘i f [| j i ji | iy |
+
+miesięczne i roczne jawne zapotrzebowanie na energię do ogrzewania, Qa. ea MJM
+
+— _ miesięczne i roczne jawne zapotrzebowanie na energie do. chłodzenia, Qe Lh
+
+W przypadku metody godzinowej należy również obliczyć i i podać następujące dane.
+
+— $rednie miesięczne wartości lemperatury roboczej, 8. BRA,
+
+— godzinowe jawne zapotrzebowanie
+
+) na energię do ogrzewania i chłodzenia oraz temperatury robocze
+4 stycznia. nee |
+
+Kin Jawne zapotrzebowanie na energie do ogrzewania i chłodzenia oraz temperatury robocze
+ipca."* | |
+
+1 Odayłacz krajowy. Blad w oryginale EN. Powinno być: „sześć testów”,
+* Ddsylacz krajowy. Błąd w oryginale EN. Brak tablic dla 27 lipca.
+
+132 zgodne z at Sst
+
+21. U ustawy z dra 12 WERE 2902 r. 0 norma Ig iO7. U M
+iKoczk im jes Utwgry israrke s» ICC be eR
+
+"63 poz. 1388 2 późn zm over res
+"age m BIAL
+r Teething do meh przys Meeps Fry singel: Horretelc wf
+kióry ztoaiija poraGnakzać a ebhy
+
+| 4
+bów Glad irek Cob peed sees a ramet! i) BU A ace Wp Fs, kotek so kami
+
+
+
+
+=== STRONA 14 ===
+
+roe ee ae Ep ere
+
+- ułwgry Heneckre 4 40 4 pm
+cj 4 135 / 212
+
+.—
+
+Psy Pao BIN
+
+p myje i 4
+
+aa
+| +4
+
+EN ISO 52016-1:2017
+
+4 gdonecznego fa po
+
+0 promieniowani
+ości te są już Uosiępne
+
+wartości hezciemowed
+4 do obłoczen. Wart
+
+fe) 4 również godzinowyt
+atthe ites ; dku są to dame wejściowe
+
+wierzchnie 0 określonych onentacjach, lecz w tym przypac
+
+w ramach wabdacji ISO 52010-1. | PIN
+na porównać z wartościami podanymi w Tablicach od 28 do 34
+
+Dia każdego przypadku wyniki moż
+jawną do ogrzewania
+
+Tablica 28 — Wyniki testów zapotrzebowa nia na energię
+
+p AA ee
+
+term LI |
+
+358 |
+
+a pola ek Jogichotcóskiosh
+
+PU a le ee ee to saith oe
+
+> ik
+ty BRR
+
+jj bica 23 — wyniki testów z potrzebo
+
+Pd A 2
+Os is seas i eh ile a
+
+862
+
+J
+Paw" RAFA (GPOGOTOPAPAŹ La RIEMIKA WWR
+
+876 812 el 412
+
+ee ee EE EFS"
+
+PEPE ZE
+
+pz Re EPROM EE OF > PEB M a mh ot
+
+ik
+
+ef Fo H NE PM 0 BJ ae t= Pi SES Ba i
+
+12; || 614
+
+abelian aiid
+
+7503 | 7057
+
+Pama
+
+eel |
+
+Rocznie —
+
+fan = a p p. 7 - r; “9
+Zgodne z art. 3 vst. 0 ustawy z Oram 12 mrzesróa SOE |. 0 Meal! (De. U. Ki 197 prz. IBS z późn. zmi.j Moa
+it =r’ ae Fe RTD IZBĄ W f ie b = nai R i ni SIG MONTY 4 NIA a" 5 133
+even ry i arche, A AMG bie prrwa m | mill, hee th ret airy ei „DŁ!
+v M TBH ry saga, || alstiemyv koreqjstywi Mortar cy nr LENA
+
+"kóry si «im Cet wel
+- itil ome gh oś A J |
+. DLL — pad Z eth wes eel et 164 (7 we) i MUL law eA woos
+
+a ee ti
+
+
+
+
+=== STRONA 15 ===
+
+EN ISO 62018-1:2017
+
+Tablica 30 — Wyniki testów średniej temperatury roboczej
+
+R ia ee de de
+
+22,0 |
+22,0 |
+
+mm pz i he TM DL
+
+276 | |
+22,9 | |
+SGI 1286 iT ESI MI | dhol eee
+| 25,2 11077251 if TEŻ, WE
+
+vn ąz ali raty | mph hh BW a SES kg 4 <P> 6 FR
+
+242 |
+23,0 | dl
+m2 | | 194 || 1228 |
+
+on
+
+221 HERR” (NUK mE
+
+14 papą SS
+
+TRE EH EE) Bs | |
+
+1
+—
+
+Ce ee ee ee W IWO
+
+3
+
+1
+4
+5
+7
+hit
+TEM
+
+=
+oO
+
+—
+—
+
+zk
+ra
+
+Tablica 31 — YO testów zintegrowanego dodzinoniśtje szczytowego obciążenia ahinitinay
+| Hevansiann w age roku: Li MIRIAM 4
+
+M 0, 001 Tet
+_kWh (szczyt)
+
+Bh 10 ne WR RE ; a ns
+
+446 l FLELANNAE
+
+UWAGAŻ- W bzyka Z obniżoną, temperaturą nocną te ohozyżcnia szczytowe w  dhiżyna HUH RZA od tego, czy
+temperatura powietrza ma osiągnąć nastawę temperatury, czy temperalurę roboczą. W niniejszym dokumencie wybrano
+temperalurę roboczą, ponieważ IB One pes zbliżona do odczuć. WYDAC | niż tylko recite 2 owielrza (pami-
+
+jającą masę zimna).
+
+FA PR
+(LENO,
+
+Tablica 32 = Wyniki testów godzinowej maksymalnej, minimalnej i średniej temperatury roboczej
+i welaguroku
+
+134 Zgocne z art. $ ust. b ustawy z dna 12 arzeżnia 2002 r. o oomacaci (Ds. Ma 199 paz. WES 2 pdin! Zar.) Solside Niery sa onnocuce
+
+
+
+
+=== STRONA 16 ===
+
+Cl < MED 22> GRA
+
+EN ISO 52016-1:2017
+
+Tablica 33 = Wyniki testów jawnego Pr ornia obciążenia grzewczego (+) i chłodniczego (-),
+4 stycznia
+
+Miesiąc
+
+parą
+
+Testi. TT
+04189 | |
+
+(ager ||| zer ||
+JI p KM Marea 71 aaa)! 111i bio
+
+my |
+NEZONIN
+
+PT "<> _ ' ”
+1678 |
+| i f ' IN.
+FA ie ba o aa da Me W BO BOBS HO Pokoik 6-0 | i har aaŚ de ciecz czerni teed (Str ie b: lic 6 "r ] zł>
+
+1890 | |
+
+1330 dd Hone. 1001, 1700
+OOO AKA opona |) rere rer pp PRE Z DRE, król rób W A a ad
+
+16. | „Ay O OUI 336
+
+p
+ine, meee ew: c b - "PMI kg ‘ewe ssiaieiciamedeaed zonc OE st 8 Ooh 8 8 es ie a te eS
+{|
+
+mei | 3047. m i 3143 RES Taha |
+
+PP: PR w. cia
+
+18. Ri "31M | | a2rsj| || |1es2)| || 2614 |
+20. |1,l03347 | | 346 | Ht UNO Mare2 |.
+
+7 1 i TRE RZETREASĘPY
+246. Fs | 3529 3588 | ||| 289 ||| | 2948
+
+ee Tb 3602 _3854 | || 2388 | | || 3040)
+eye 2661 | (hi Se 2880) ua128 |
+
+( i |
+TEEEYORENGA 731 ae WORSE AWARE YNA = re Budd i
+
+ca m 3729 a (2688 HOWL
+
+ogrzewanie | 8086S | |. SU47 || |eoeeż || 4223
+
+po każ p Sree Serene jh ore a oat PPPOE Sal Bo tee » Ae PASE BERS
+5 i
+
+chłodzenie | "1372 oes 1 OTT He
+
+= pe
+
+Zgodne z art. $ ust. b ustawy z dna 12 mrzcznią 2002 r. 0 nomaszacjj (UZ LL Nr, 104 paz. OBS R pózn. zm.) Poss Normy zą chroniona 185
+pozwem autorska jsk utmóty Merarbe, p auozke pms megethoves (0 ruch Oy Pugs Poaskusnnj ksmnelom Narraą scyynemy [PA
+
+kliry aiw pal MOT ft bee ea ee ye ey a przed ite de NOE ian
+
+
+
+
+=== STRONA 17 ===
+
+EN ISO 62016-1:2017
+Tablica 34 — Wyniki testów godzinowej temperatury roboczej, 4 stycznia
+Miesiąc HI ie | |
+| a7 | ||069
+Vinge MANDECJI
+
+SS es ae ee See ene ee eee ee
+
+145 PJ | 2011
+
+ali «m earynare-
+
+| Jee | JA (fea
+
+[I -16,4 i 1,66,
+
+KAFAGA JI
+
+i UM
+| 00:60. b b ee 0 eee ee Bb B
+
+1017103
+
+. 3
+| JH
+ee ee ee os m KK NRA I ib, bee ARKA
+
+4 | M.
+ń ' il
+F | j fo @ peed | p M | Ę |
+| Ve tf KRY wi |. | ie a ioe ee
+l | R ERA py | ŁA | ij h | URSS Ę i
+| ful i ae @ ht UN ECA | I. | ; |
+7 Rej 4 |
+1-4 1 i 2, | eae er ’ Ha
+> + ‘ p
+
+j
+Ę
+ee:
+k
+|;
+| ;
+|
+I p
+f
+i
+f
+fs
+Ja
+ł
+i |, l
+! ;
+( fi i
+| HERA OE, EM hp ify |
+e | | f | j ht FM: R: KM | p i
+i ‘a | ł
+Bi LF FP f |
+| | } M i f | fs
+i ł f | | | j ję | p H i |
+| | ) y |
+ji \ | 5 | j a | j |
+| ;
+H 4 REKASSRO |
+ł i j H |
+| | Pk | | Fy
+j Ae | i
+| H aa)
+| i | | } | |
+Ji i | r
+MB | f
+tf
+F i
+|
+[ j
+|
+ji
+JĄ
+|
+|
+136 Zgocnie z art. Ś os. © ustawy z dna tc morzna ZMIE r. © pore! (LZ, IU ioe A poz. NSS z póżn. im.) Polje Kremy ta obronone
+
+aury m jak utmany Hereckie. © pitacstoe tez mijętowe dą peck przystoi | pskdemu Kopocekmi Namoa sójnemi |
+
+| Sarr"
+
+wiry b etal: fi pocanaliż Ek pad Dide aw całki j eCiwla Cid! mięli AÓWAA A kg one! ten
+
+
+
+
+=== STRONA 18 ===
+
+EN ISO 52016-1:2017
+
+7.3 Metoda godzinowa: walidacja w przypadku określonych alternatywnych procedur
+obliczania
+
+Dozwolone są następujące alternatywne metody, podane w szablonie nor matywnym w TablicyA 10, z miormacyj
+nymi wyborami domyślnymi do wyboru w Tablicy B 10, pod warunkiem że przypadki weryfikacji określone w 7.2
+wykorzystano do walidacji zastosowania metody alternatywnej i podano odchylenia z wynikami referencyjnymi
+
+— alternatywna techruka do obliczania rzeczywistych wartości lemperatury i obciążeń, jak podano w6 552
+
+- _ dopuszczona allematywna opcja podziału każdego elementu konstrukcyjnego na określona liczbę węzłów
+oporów | pojemności cieplnych, jak opisano w 6 5,6 3
+
+—  alternatywna metoda obliczania wymiany ciepła przez promieniowanie (długofdlovie) (na podstavne aprok-
+symacji współczynników ikari) INN śriittiriwini w strefie clepingj, jak opisano w 6.5.7.1
+
+8 Kontrola zgodności
+
+|
+Uh
+
+Celem tego rozdziału jest zapewnienie procedur, Kore pozwalaja sprawdzić, czy procedura obliczania ma
+
+zastosowanie lub została zastosowana Popes oraz czy założenia obliczania, w szczególności dane wej-
+Sciowe, są prawidłowe i ith | 4Hyy
+
+W niniejszym dokumencie większość danych wejściowych jest gromadzona za pośrednictwem innych norm EPB,
+
+odpowiednie procedury kontrol zgodności są zawarte w RASA) notmach,
+
+> e 4 pe Hry his TD rys A PAT had "a Sg MM re ey hehe eo
+4 a 11.1064 Pe  DWYPECJE Z. uv dee POZ NE = peel. a mar “ 7 ae lu ad
+= a ma My rkeniaj w Mea M [a ry we. (1. 0 MO ak lob. M iwa fae)
+To oe pe | a bec 4" M sk
+Zgożneę z at © UZ, 7 UmAWYĄ © Gres , Vas aM nawu (PIM
+rg" p a 7 * r
+
+Móty aie PART Ra See pe zz NAZW Cee we „alk PIW 4 UL A (DOTY i to all i
+
+
+
+
+=== STRONA 19 ===
+
+EN ISO 520168-1:2017
+
+Załącznik A
+WOTAN
+
+Arkusz danych wejściowych wyboru metody - ~ Szablon
+
+A.1 Postanowienia ogólne ©
+
+Do określania wyborów między metodami, wymaganych danych wejściowych I powołań r nai mne U dókinieniey
+należy stosować szablon z Załącznika A do Hbrtienitwri dokumentu, Weal i |
+
+|
+
+UWAGA 1 Postępowanie według ego szablonu nie wystarczą do zagwarantowania spójności danych
+
+UWAGA2 Informacyjne wybory domyślne podano w Załączniku B. Altematywne. wartości iwybory mogą być narzucone
+przez przepisy krajowe/regionalne. Jeśli wartości polskie era tin nin B ły: Przyjęto ze względu na przepisy
+
+krajowe regionalne, politykę lub tradycje krajowe, oczekuje się, że. VAAL Ny 9
+
+it
+— krajowe lub regionalne wiadze przygotują arkusze danych zawierające arses I wybory ajowe lub reglonalne zgodnie
+z szablonem z Załącznika A, lub, id | PERE PEELE IMS
+
+| i |
+— domyślnie, krajowa jednostka normalizacyjna rozważy możliwość dodania lubo włączenia załącznika krajowego (Za-
+łącznik NA) do niniejszego dokumentu, zgodnie z szablonem h FPRCWAG podając MARTA lub fepionaine wanlości:
+i wybory zgodne z ich dokumentami prawnymi. BER righ EA i? M
+| i
+
+UWAGA3 Szablon z Załącznika A ma różne ZABIORIANNE (np. prjekdowanie NOWEGO bódyniki, certyfikacja nowego
+budynku, renowacja istniejącego budynku i cestyfikacja istniejącego budynku) i i odnosi się do różnych typów budynków
+(np. małe lub proste budynki oraz duże i złożone budynki). Wartości fwrpary¢ dla ił riki lub Pitti typów
+budynku możnaby wyróżnić poprzez” RTA EEE RON | |
+
+(4
+
+— dodanie Kołumn lub wierszy (jeden dia kazdego PADZDAIŁ; esi dopuszcza | to szablon:
+
+— włączenie więcej niz jednej wersji tablicy (jedną do każdego, zsosorana Poole itil jo 3 a, b, Ci
+Na przykład: Tablica NA.3a, Tablica NASD. nt: y Ki LADMJI|
+
+— opracowanie różnych arkuszy danych krajowychuregionalnych do tej samej normy. w przypadku zaczna aan
+do normy będą one ponumerowane kolejno (Załącznik NA, Załącznik or FRANK Not ARERIE !
+
+UWAGA 4 W rozdziale Wprowadzenie” mozna dodać iformacyiny a arkusz z oanych kajonycregonanycn na a przydać
+o stosowaniu przepisów krajowycivregionalnych. i. fi yy Wy EL |
+
+UWAGAS W przypadku niektórych danych wajsójówych. które powinien ab kiżyłkownić. KUMAM danieli zgodny z SZa-
+
+blonem z Załącznika A mógłby zawierać odniesienie do krajowych procedur OCENY potrzebnych danych wejściowych. Na
+przykład powołanie na krajowy nnn OPONY zawierający ścieżki mani PARA i atti abiiczenia.
+
+h
+flea i r IE |
+
+3 i '
+
+ką | (w hea Be ETE al
+
+Pola zaciemnione w tablicach są częścią szablonu, więc nie są przeznaczone do wprowadzania danych:
+
+(SER: s | | FRRSRCORERTORERS |
+> ee fu i j 1 p AJ NIA AU |,
+
+|
+
+1.74
+
+tt
+| if | I ) (MAE: j Ę |
+EF f « H | 2 e) | A 4 f
+2 a ł | i | p | "8-4 | | 5 ry
+’ | | i Pp ap bbb | | JE Ff e f
+
+ps
+
+Odniesienia, identyfikowane na podstawie numeru kodu modułu EPB, podano w Tablicy A. 1. Z
+
+138 Zgodne z art. $ ust. h ustawy ones 12 wrzeżnia DOL r, p normaśzicji (Dz, LA Mr 366 post 13882 porn, rm.) Moise Honma sa IWODOWE
+
+peeve Airs BK UlwONY Wera bie. n syprztoe piwa igh one ja mch pmr ys Hoskienu Komqsłowi Narrairac yore IFK
+
+
+
+
+=== STRONA 20 ===
+
+EN 150 82016-1:2017
+Tablica A.1 — owada
+
+gaci podchody
+
+eo iwa oaza
+
+M1-4
+
+I IC AZ
+
+- a ee eee ww. teks Hm 4 6 4 oo Bidet r leaf x kg minh rf oi ke ft thet e th tah lh db ae ha - > a
+
+REZ => Cpe | CEC ZZ o FE += EM Ser Soyo.
+oe +See —— - See EW U a kl SB. or a bite wwa w eee E - z "<q TRS [are
+
+- Pe AR Oe me eh che Ee cee le ered? fe 4 M0 ee ee
+« |
+| | | I
+
+PME Ea FE MJ paazzej - RODZ MCP
+
+lh eal | 4 | | |
+Por pe Sa a i ee O PH ee ee ee ee ee ee ee ey 4% ew PR eH Pee RnR z EA
+
+a r ST dA FOE eee ee ZE ere
+| ,
+|
+| |
+|
+U }
+|
+
+Hy |
+
+| NETARA O CZY Mn CE
+
+PMA
+
+| |
+a RE O WE TI et — me - E KB > p - . R ód Eni BC Mh AN a
+j j
+
+| |
+| | hel | ji
+| i} hee an | iia | | j }
+} |
+METAL o | 3 a aj a >
+SS ncnć oo ete TE koci roznych oceniona Rt tai
+
+= (8 218 <uZ= el
+| |
+M2-8 | TIM : | NN
+| | hh | |
+| } | | | | j |
+‘ anna "pz h . p =
+| | [ j | | | | i ji
+- U || Ę || || | ł
+r | LI | j | |
+RE:
+
+|
+o | | | | | } 8
+RTR A HA SE A EAS BIEC HOĄE ZO KIE; A 241 BA ZE BA pp R BH SH sh BR A 0 mó I Bp GOP ee ee M W WIA AI BM a te
+
+= == kk . . a fa Z "AE p | zo oe 5 8
+: | h | Ace a |
+M3-4 > | TT TT ag 43]
+| | |
+
+mocni EA SPPAŃ
+
+- c . 4a M6. bio A ui milk ee l lin ko ko ee ee ee a Sr di ko se kj dc s ae ee ae Biż
+| 1 | IJ
+- Al.
+
+| | | | 4
+| | J
+Wkra icz kotka W PZA —— wee Treeipae; rere. hee ote fe al pani a ka gi hh czt int i jn se ip cpl nap bi. m mob m ne z ee
+U 4 v
+M4-5 nrg
+| | |
+}
+om = Seiwa rare Pe -— - ee M 0 Cn a omotnomoncnać
+\ Ril
+=1
+
+a | H | | | } |
+4 1 i I i
+j ( j } H
+: J b 4,7 | Kl | | p | | | f
+| NP re
+ey eh Se ZEE EE 2 Sa KiS Ri ah OGG ii a c A aha GB A aa KARA aw"
+MG-4 JĄ MONA |
+j || 4
+PAL ł | g |
+ba fy 4) | j j i } i)
+; hee fu Hg Ye es a aes
+aa lll i ia) Wo ee ee onie edad: alate A I be mn Pee ae 8 SE RST TSE RS Re ER Ee ee Se ree
+= j ł |
+5 J a p
+f i 4 uł ł KE f i ] P [
+PU i f H ' } fi f j ft Ky i i
++ —— ae 2 Z m - << ~—— + — —
+Ę | ł \ ? p | [ tase ROPER. he l i
+PRES Se BW R a YTY RZE Ó 055% PDA OE 0 = ZP U jr a OE AZ)
+
+"typy TT ee a aa
+t M I ] |: | MA || Ę
+r f BU | nou h U NB. RH pia : ł
+cc” | ME | | j |: j i p
+3 j | je F re „1 Faq f
+: j "EM j oo ea f
+i roa ( : a:
+| KFTTRZĘYTTYPYFERYETY BEM ++ a www i 29 mok lh WO w: JB a
+
+;
+é
+)
+a Blip th
+re
+4 | i] i gi a4 p ; F
+| ) | |: +
+M1 1 i et A t | { } ,
+
++: REAL oP 2
+
+” Jeśli odwołanie zawiera więcej iż jeden dokument. r mażna je RR i rr i yi 7 m 1 : Tm ł j | | af fi | if i;
+
+A.3 Wybór głównej metody H LF] Mi
+
+Tablica A.2 = 7 WYBÓR miedzy DA obliczania. godzinowege a miesięcznego (pare 8.2)
+
+Rodzaj obiektu lub zastosowania
+| Opis
+
+cz
+Few TEZ 1 ECT aati i mm ned na a ea a JE I PE TO
+
+| Dozwelona tylko metoda godzinowa
+
+ze IEEE AW 6 27 RR Eee tw
+
+Dozwolona tylko metoda miesięczna
+
+ONE fe wrz Ń Oe yo r Ka W mi UP ew R RWE
+
+Obie metody dozwolone
+
+ra FREE PS | WSETOS ÓW ANNA OW OGAR: taaa * OL) EEE Ew "ti" EE e-em R: Z > ee mz
+
+Tak/Nie | M TakNie
+
+|
+"ew BES EE Wi gwi ES Ow eee: RD CSS Ak & Dee cee PP W
+i]
+
+TakiNie
+
+* Moziwe tylko jedno Tak w kolumnie
+
+* W razie potrzeby można dodac więcej kolumn, aby rozróżnić między typem obiektu, rodzajem budynku lub przestrzeni, ro-
+| dzajem zastosowania lub rodzajem oceny. Stosować liste Identyfikatoréw z ISO 52000-1-2017, Tablice od A? da AT (szablon
+normatywny, z informacyjnymi wyborami domyślnymi w _Tablicach od B.2 do B.7).
+
+Zgożnie z ant. 6 ust 6 ustowy z cris [2 września BOOS r. b aoemalcacji (Lis U. Ne [99 poz. 1386 2 późn. zm) Pozn Noomy są enccniore 159
+
+
+
+
+=== STRONA 21 ===
+
+100% ER _12WPODH M
+
+EN ISO 62016-1:2017
+
+A.4 Podział na strefy
+
+Tablica A.3 - Zasady podziału na strefy cieplne (patrz 6.4.2.12)
+
+| | Zastosowanie
+
+Jeśli „Nie”: metoda alternatywna
+
+| Jeśii opisana metoda nie jest stosowana, opisz
+| iytotecyi metody alternatywnej lub odwołać p
+
+| | He PETERS ES EELS EY (do dokumentu źródłowego
+| Podział na strefy, krok 1. Ocena obój Tak/Nie | | | "dowolny tekst> |
+<iepinej | | | | |
+Podział na streły, krok 2 Grupowanie wedlug | MQ TakNie WIR HR <Gowolmy leksl> |
+| _kategom przestrzeni | kJ | |
+Podział na strefy, krok 3. Grupowanie | | | TakNie | HI | edówolny tekst>
+W przypadku dużych otworów | i IM MT, | (l |
+Podział na strefy, krok 4. Podział ze wzęjędu na tit Tak/Nie HANOI i jeóawolny tekst> |
+tę samą kombinację usług | M m | i. A
+| Podział na Strefy, krok 5. Dalsze grupowanie | JE TakiNie Fue Md F <dowolny tekst
+zgodnie z podobnymi NNS BERNAT NANDA PRU Td: OS ee
+użytkowania ki Vt
+
+EEE EE
+
+re ee eae jw a a kp
+
+| Podział na strefy, krok 6 Podział według
+
+rdr nb mle shi skl WA Rhea of PRD PEPE Mh e ri wą wk cd a ofi a ck w UMM) i ee
+j
+
+Taber Pr «dowolny tekst>
+
+| okreslonych właściwości systemu Lub SPER: Lg 1
+| GB OPINI SOS ee rem OSTRO GORA est fdeieeieentmeied Po Re 2 SP 0 GE DW EE CY Z A ZN ZK
+Podział na strefy, krok 7. (Dalszy) podział w celu. Tak/Nie | || <dowolny tekst=
+
+uzyskania wystarczającej jednorodności bilansu:
+cieplnego l
+
+Podział na strefy, krok 8. (Dalsze) grupowanie |
+| stref niekondycjonowanych cieplnie Fee
+
+Sa
+
+Podział na strefy, krok 9. Uproszczenie |
+
+<dowolny tekst>
+
+| Ę
+— acne eet, - ee EE
+
+w przypadku małych stref cieplnych | | 4 |
+Podział na strefy. krok 10. Uproszczenie | i Hi U «dowolny tekst:
+w przypadku bardzo małych stref cieplnych TEALFOSEEFAPEEAFELEORLEDE
+
+. w razie potrzeby można dodać więcej kolumn, mh rozroznic é zastosowania. | | |
+| * Można dodać dodatkowe wiersze dla altematywnych kroków.
+
+BAP
+
+Wena domysina Bi pstra 364 sah ekonaygonowane) "
+ZSEM | cieplnie, typ: zewnętrzny”
+<dowolny tekst> | MGH od 0 do 1 Uk HY
+<dowolny tekst> od 0 do 1
+<dowolny tekst» | TTT fod Odio Rll Lith 1)
+
+FEMI „Czy dozwolony jest wewnętrzny typ strety niekondycjonowanej ciepinie? iy
+Wybór iR TakyNie ff
+Jeżeli Tak: (opcjonalnie) OKTEŚMĆ wartości domyślne wspóczynńika dastosowania pony teks |
+Sytuacja | Wartość Morryskea Bi w przypadku strefy niekondycjonowanej |
+
+| | _ <leplnie, typ: wewnętrzny” |
+
+| <dowoiny tekst> JĄ | | odOdo1 HI nin
+edowolny tekst> | 3 Odo 1
+2 w razie potrzeby dodać więcej wierszy |
+
+140 Zgocnie z at. 5 ust. b ustawy z dra 12 przeżnia 2002 r. o htgralcacji Dz. U. We NED poz 1396 z póżn mt | Friz są crroniang
+prawe 00m sk twory Hisrace. s mitackie pra mejątkowe ta wi” Dery acing * pały Kazmóstowi fh psr |!
+ullj wiowiije pęefwolialiwie © kom draż ich ee zobeczwceia (ILG Mge eos MW Ney ak (lim
+
+
+
+
+=== STRONA 22 ===
+
+(UW c < MED /--> Ga
+
+EM 1560 52016-1:2017
+
+Tablica A.5 — Domyślny udział wentylacji w zewnętrznej konstrukcji strefy niekondycjonowanej
+cieplnie (patrz 6.4,5.4)
+
+PN BB EN Ee LULU LLL LIL MILL = UWE UBNE
+
+4-4 RS Se M POT pana W o 0 POTTOWOGH ANGWOW AM LM
+
+| "współczynnik domyślnego udziału weniylacji, Ghul | | od O do 1 | eer TTT
+
+| Zaslosowanie pocevedy WZORU do pzediżennego uśredniania lemperatury |
+a ! | PRRYYREWĘE TTW
+
+PPSA U FBRSBSDEŚWA Ali f | | ł | | I
+
+ea a beet Alp etl ath s nh c s ta ta 0 EE el Abe M i 4
+
+PATA Zakłada KA, że ta sama nasława temperatury | TakNie
+| dla ogrzewania dotyczy także przestrzeni p)
+| mieszkalnych częściowo [u umiarkowanie | MAM
+
+kondycjonowanych ciepirie, | Ve
+
+rere | rh Pere
+
+pawia vats ; i: i NY om | Oiczyć przestrzenie mieszkalne CZĘŚCIOWO | ine Tak/Nie
+temperatury soo) lubi umiarkowanie kondycjonowane cieplnie bajęf] |
+RRRIRSAN. oddzielne, nieSprzężone | cieplnie, strefy sióedókł
+
+ere a
+
+| Obłiczyć przestrzenie | mieszkalne ¢ CZĘŚCIOWO |
+lub umiarkowanie korkdycjonowane. cieplnie jako
+
+| OSE. perce zasiać, skal sad ai
+
+ee EŃ R FR te a ae
+
+| 5 Mozliwe tylko jedno Tak.
+
+EP PEREOERERR BERR ERR SERS od 0 do 1
+
+fmodzp ł Be Oe ROBIE. 44 |. ; |
+ene et FET SS POZ
+= |
+
+Re Re I ER Oe RE ee W ih 0 AT A A i <a NADZASKANA Z REZ A Ses ROIFE
+| p j
+
+wadi
+
+Tablica A.7 = Wybór między obliczeniami ze strefami neutral! 3 przężonymi lub niesprzeżonymi
+cieplnie (patrz 6.4. 7)|, Paar fs
+
+Obliczenia niesprzężone cieplnie
+| Obliczenia sprzężone cieplnie
+Obie metody dozwolone | TakiNie PEPINA, | |
+
+| s Możliwe tylko jedno Tak w koluronie
+b W razie powzeby dodać więcej kołumn. aby rozróżnić zastosowania (np pease budynków, nowe lub istnejące budyn-
+ki ap. J. Zwrorse uwagę ni na l odnośnik z wyborem w Tablicy AI |
+
+Zoocnie z ań. $ ust. © ustay = ODB Ka arzeżnia C002 r. o hopiacaci (2 Uh 199 paz TBS z poem, zm.) Posie Mamy sa Faronore 141
+
+prawe sides ry paw umory Jimacioe. p aułąrske pozna mepłkowes 52 nh Ory Py ya Pirat emi korwaysłow Npmaszeacy mene (Fe
+
+kikałyj ICH uje peleorahiacn pdb ota |i £ sbóc piw pora Pe oe ae ZTM KOfooniar ża
+
+AAAA rasowa wś
+
+
+
+=== STRONA 23 ===
+
+EN ISO 62016-1;
+
+Tablica A.8
+
+(patrz 6.4.7)
+
+| Część przenosząca ciepło MII wielkość. IJ Domyślna wartość
+współczynnik przenoszenia ciepła przez przenikanie <dowoainy tekst > od 0 do w
+między strefą z ly
+
+s
+wf
+
+| wspókczynik przenoszenia ciepła przez wentylację
+| strefy z do Strefy M
+
+m heh db aloe tz chide
+
+współczynnik. przenoszenia ciepła przez wenitylaicj aR ||
+ze strefy y do strefy z
+
+"W razie potrzeby dodać więcej wierszy
+
+A.5 Procedury obliczania godzinowego
+
+Tablica A.9 - Współczynnik uwzględniający wewnętrzne zyski ciepła w obliczeniach projektowego
+obciążenia cieplnego patrz 6. 5.4. 6 2) ||
+
+|) Jeśli wybórjest: Nie, opisać lub
+El ra odniesienie do zastosowanej
+
+| | _. Alternatywnej metody
+Zastosować metodę opisaną Ww 6. 5. 5. 2 do. ERA <dowolny tekst>
+
+| liczenia rzeczywistych temperatur | obciążeń | | | MIKI |
+
+| zastosować metodę opisaną w 656 So TR TakNie 1 sdowołny tekst>
+obliczenia wymtany ciepła przez (augotaldne) i, ! eT ae | |
+promieniowanie
+
+ee WW SE WRC RP EE TĘ esse PIECAERZEG
+
+Zasłosować metodę opisaną w 6.5 7. 1d0 |:
+konwersji fizycznych właściwości elementów
+budynku na właściwości warstwy: (węzła)
+
+RM 8 EA ZE ZY | | lod ka) SESS Se Chada | ofe sau e 2 © Pe ee SS? eae eg
+j ‘ M H ił |
+T La | |.
+ak/Nie |
+
+UWAGA W przypadku jednego lub więcej Nie”. procedury zatwierdzane z uwzględnieniem przypadków sprawdzania
+poprawności w 7.2. jak opisano w tym podrozdziale. eae ee a eee
+
+PAPAE FT MBRSRARE
+
+a Można różnicować według typu źródła.
+
+142
+
+zgonie 2 an, © um. 6 ustawy z rks | 2 wr
+
+Tess Ase ro NE macaci [Dz Ul Ne 105 osc. 1383 z późn af. St.) Poian NIcrTy 23 on TONE
+powasm norm jee twory kiecachie p» aorskie pi wra majatkowe do nich n mzysyżęą Folsłoznny | Kamństowi Koszt ESCY NEM, ih
+dhtit ie Sibóń Gee ine la Zabazzwotedia Erte! ris uid danwiban pin kupiówa: ia
+
+bóg Głońzi pleat led fh
+
+
+
+
+=== STRONA 24 ===
+
+100% JAN MEC) / 212 » MB -.
+
+EN 150 52016-1:2017
+
+Tablica A.12 — runióniańi ards italian vias 6.5.6.3. 7
+
+Wybór ||
+Czy należy uwzględnić przegrody
+wewnętrzne? |
+| Jeżeli Domyślnie: określić domyślne charakiegsiyk ene
+
+Domyślne charakterystyki PREDMITI specyfikacja” |
+
+NOW 2 PBN" aver es Ae BS EE 2 ie
+
+_ [dowolny tekst] [dowolny tekst]
+
+z > oe ee
+Sa EO SF + rer BE DE =P
+
+* W razie potrzeby dodac więcej wierszy.
+
+| Klasa I (masa skupona po stone iF epee ~ <dowoiny Pay
+
+eee Z =
+
+| ned Elqnasa skupiona po stronie | | Bees eri <dowoiy tekst>
+zewnętrznej) Med |
+
+= m en ee Se M R M = = m > s = = ra a bn Ć
+
+Klasa IE (masa skupiona po stronie NZEROPREREE lędowólny tekst>
+| Kia D (o rozłożona petri ty eeeaety
+rawnomiemie) 137
+
+Tablica A.14 = Właściwa pojemność clepina elementów nleprzezroczystych | podłogi na gruncie
+__(patrz 6.5.7.2 6.8.7.3)
+
+BFP <dowoiny tekst>
+0001 edowalny tekst>
+
+za = w eet
+
+| Średnia HEC Mt FFE <dowolny tekst>
+
+| Ciezka i ję i 175 EE NIS SARE. Ii | <dowolny tekst=
+| ted. SOLE. Lf row wists 1}
+
+Tablica A.15 — Współczynnik pochłaniania bromleniowacia słonecznego przez nieprzezroczyste
+57 Iridutitywi roksi. warka 5. 7. r Fee.
+
+; He an $ lab
+OSI
+
+| Zrónicowaniić © FEnAzóaaia pocia | H
+| POD shonecenega? | 034114444
+
+3545 PB
+
+Jióówówy tekst]
+
+= += mop SE oz" eS W zk WE EE Se PO oS ee we |)
+
+[dowolny tekst]
+
+| Kopołaiz 3 | | [dowolny tekst]
+| Ma = 0,3
+(ciemny kolor)
+
+ZONE Z an Z ust D ustawy z dra 12 erzeSraa 202 r. O nożmaktacji (De. LU. Nr 160 pz. 1386 z późn zn) Puskie Normy 32 Granna 143
+Fracem autor m jsk utwory Merache_ 9 Uno hie preg mspaihipese chp rech przywugują Posta Komestowi Nor maly ag; nem (PSK
+
+2) ff wimp Pehle ace bum Olać ih a Pabery a Sew ised) A A UST da rw NOOTYN LOGÓW aa W
+
+
+

@@ -1,0 +1,25 @@
+name: energoliczydlo-frontend-test
+app_id: da_nYYILtXU15QZ
+owner: kamilglapinskipoczta
+package: .
+env:
+  BACKEND_API_URL: https://energoliczydlo-backend-test.wasmer.app
+annotations:
+  anybuild.run/config:
+    commands:
+      start: node server.mjs
+    edgejs_enable: true
+    edgejs_precompile: true
+    name: out
+    node_build_command: pnpm dlx next-bundle@1.0.0 --build-command 'pnpm run build'
+    node_framework: next
+    node_install_inputs:
+    - package.json
+    node_package_manager: pnpm
+    node_package_name: energoliczydlo-frontend
+    node_remove_native_binaries: true
+    node_server: node
+  anybuild.run/provider: node
+  anybuild.run/version: 0.27.2
+  wasmer.io/version: 7.2.1
+kind: wasmer.io/App.v0

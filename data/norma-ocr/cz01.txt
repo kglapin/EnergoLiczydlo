@@ -1,0 +1,2144 @@
+
+=== STRONA 01 ===
+
+| «kw el | p
+
+RPE Se £4.48 ki ~
+
+POLSKA NORMA
+
+ICS 97.120, 10
+
+' PN-EN ISO 52016-1
+
+POLSKI KOMITET
+NORMALIZACYJNY
+
+Wprowadza
+JEN ISO 52016-1.2017, IDT
+Hin $80 52016-1.2017, IDT
+
+Zastępuje
+
+PN-EN 15255:2011
+PN-EN 15265:2011
+PN-EN ISO 13790:2009
+PN-EN ISO 13791:2012
+/PN-EN ISO 13792:2012
+
+Energetyczne właściwości użytkowe budynków
+
+Zapotrzebowanie na energię do ogrzewania:
+i chłodzenia, wewnętrzne temperatury:
+oraz jawne utajone PRS WA
+
+Część 1: Procedury obliczania
+
+Norma Europejska EN ISO 52016-1:2017 Ela performance of buildings — -
+Energy needs for heating and cooling, internal temperatures and sensible
+and latent heat loads — Part 1: Calculation attr (ISO ini 6-1: :2017)
+
+ma status Polskiej Normy
+
+nr Fst PN-EN itis sada auudadd ha
+
+a Z
+
+© Copyright by taki Warszawa 2020
+
+— W EE ERA
+
+Wszelkie prawa autorskie zastrzeżone. Żadna część niniejszej publikacji nie może być
+
+zwielokrotniana jakąkolwiek techniką bez pisemnej zgody Prezesa Polskiego Komitetu
+Normalizacyjnego
+
+kipy aleja poet ee hake et pe [ad ius (I
+
+
+
+
+=== STRONA 02 ===
+
+SE LJ
+
+PN-EN ISO 62016-1:2017-08
+
+Przedmowa krajowa
+
+Niniejsza norma jest identycznym tłumaczeniem angielskiej wersji Normy Europejskiej EN ISO 52016-1.2017,
+stanowiącej wprowadzenie ~ bez żadnych modylikacji ~ Normy Międzynarodowej ISO 52016-1.2017.
+
+Została zatwierdzona przez Prezesa PKN 28 września 201 GI |||
+Komitetem krajowym odpowiedzialnym ; va normię jj tumaczenie es KT ne ih ds, ulhvvatanti¢ Ciepine Blidynków
+
+W zakresie tekstu Narmy Europejskiej wprowadzono odsyłacze krajowe oznaczone pd! d0 Hed)
+
+Niniejsza norma zastępuje PN-EN 15255, 2011, PN-EN 15265: 2011, PN-EN ISO 13790 2009, |
+
+PN-EN ISO 13791:2012, PN- EN hited 13792. 2012 AAU | HEE REET EE A BJ
+
+Odpowiedniki krajowe norm i nych dokiinientów powołanych w niniejszej normie mozńa znaleźć w katalogu
+Polskich Norm. Oryginały norm i innych dokumentów powołanych iii w Bar ||
+
+W sprawach merytorycznych dotyczących treści nórmy można zwiacać się da wai eof Komitetu Technicz-
+
+nego lub właściwej Rady Sektorowej PKN, kontakt. www. ‘iit nat „b
+
+ji SUE KU ' fie | |
+oo ee CE eee decane 14.4
+F " i REESE hy hee -G-E-R-Ę RE KI HB |
+ae ee U aed deg eded did | i |:
+BG GE Bob ee hs, ewe | DORR RE REE RERERERE,
+| M | BDOGRERKEKEKERERE, j k | |
+ł vp ES. ie Oe ae ee bh +
+| Pap pee i i) Ae oe a ee ee ZEZ ER: '
+ją FF «KĘ } oe Woe KERERSRA: a E eek en ee f
+5 te 4 ! Hea | hh 1111 a ee a a HW)
+f j Mz WPI „RAKI hit dł 6 oe | H WSR 9:8 4 4 "a.
+RSP Ree RE TEPER TITER ROS RWARRRE OPER RR ERS ES:
+3 ty ok I BAREROSZKKEK. TREE eee 138 bot
+Ji EH Ba e-( I ee r 4 RENAKI PA BEM ł h i 141
+re bh ie ty | hee KE-Ha PPR Bd A B IARRRAORAKECEKEECEZEK
+| JES NEA (BAH. re ee (RRZRRRADRI bh gt
+Bide | a a ta i Go -k-6 4 Bad Bd p Oe ehh Bo ak BoB ag
+1 | ie 1 B PER IOWA NRA HAHA Ę HAR A JAA | BM | }
+ae! eee ea | SERRE P RRA LALA LEO REAP OR POSE RE EEERE
+rs eee ae LA SORACRUR ORDERS ROSSER Sete
+BA PAŃ HI | WORRARRAROEEEROOREPENKASRELE | 4 |
++]84 | KE had he ‘Teoh ORR RAE + i
+4 | NE AJ | woe a HAHA i f 4 a i |
+J f H | l ik MBR. CTPA heap at ł (| |
+KAJ! | | | ih ‘i. rae KA Ko 4 BREE | (M. |
+a oe a | ye Ree ae oad ER 1 A RARE | |
+CEJ HE Aa eae te ah Il RAW K ko H 4) IB. | |
+fia E 1. | u | KI ł | t |
+eH ae Hi BUM WERE. KRA | | |
+| od j Ah Yoh Bo PE | \ y i
+wy di | BIE Tr ke I | Hol | aa |
+RA | | i i | | | |
+h li | | | ht | |
+i h | | p UB || |
+fi ! h | h | | B | |
+; | LF |
+fd | | | [
+H | | |
+|
+|
+|.
+f || | |
+|
+| H
+| |
+ź rd cza P LEIDY £ pa by a „i a LE £ l £ | ' 3 wia
+f ‘ | Vey | b:6 44 b j A Ł 1 LE ; . |
+| je (= s. ie + : ~ e! (howd a
+
+
+
+
+=== STRONA 03 ===
+
+Z < UMD => GBA
+
+NORMA EUROPEJSKA EN ISO 52016-1
+EUROPEAN STANDARD
+
+NORME EUROPEENNE
+
+EUROPAISCHE NORM | lipiec 2017
+ICS 91,120.10 SZĄ: Zastępuje EN 15255:2007, EN 15265:2007,
+
+EN ISO 13790-2008, EN ISO 13791:2012,
+EN ISO 137922012
+
+; Wersja polska
+
+BARA właściwości żyGkóWa budynków — _ zapotrzebowanie na energię
+do ogrzewania I chłodzenia, wewnętrzne temperatury. oraz jawne | utajone
+eT POD ini 1: a Propeaney ów, (ISO tatki,
+
+wał |
+Energy performance of buildings | Performance eheryetiques ses : | Eńargzdecha Hainer te von
+~Energy needs for heatingand —_—_batiments - Besoins denergie pour o. i _Gebauden - Energiebedarf
+cooling, intemal temperatures and " Ie chauffage et le refrolaissemeni, 600 - fir Helzung und Kihiung,
+‘sensible and latent heailoads- les tempóratures intériéures et less Innentemperaturen sowie Tanibare
+Part 1: Calculation procedures - chaleurs sensible et laten und latente Hezlasten - Teil 1:
+(ISO 52016-1:2017) = Partie 1: Methodes de calcul | Berechnungsverfahren
+
+aso KONW ANIE 52016 1.2017)
+is
+
+Nalejsza norma jest sy etsją Na opi EN 180 5201 6-1 2017 Została ona a pzetumaczona PR Polski Li
+Niniejsza Norma Europejska została przyjęta prez CEN 27 tego 2017 6 f. it} BEE bY | +
+
+Poda! pa Przepisami. wewnętrznymi. GENICENELEC członkowie! GEN są h obowiązani % wia Normmie
+Europejskiej statusu normy krajowej bez wprowadzania jakichkolwiek; zmian. i Aklużine wykazy norm krajowych,
+łącznie z ich danymi bibliograficznymi, można otrzymać na zamówienie w Centrum z eat RTAS
+
+lub w krajowych jednostkach edhe jnych DRO TAT CEN. ią + V | ŁEPEREŁE:
+4 i Ę REE BEEERESS
+Sy: AM PEEGRE BEREK
+Niniejsza Norna Europejska istnieje'w trzech ońdalnych Vata Pinpieskką Yeontboke | i b obnackicj), Wer.
+sja w każdym innym języku, przetłumaczona na odpowiedzialność danego c członka CEN na jego własny język
+i notyfikowana w Centrum Zarządzania CEN-CENELEC, ma ten sam status co wiej gii KRAK
+
+Try | KSRERERRRATEEEER
+
+JEJ BIE:
+
+h
+7
+BENA hehe
+
+Członkami CEN 4 krajowe jednostki nomazacyne Pasięaujacy ch państw. Austrii, Belg Bulgar byte Jugo-
+
+>it Bik
+
+Irlandii, lsłandii, Li Luksemburga, Łotwy, Malty, Niemiec, Norwegii, Polski, Portugalii, Republiki Czeskiej,
+Rumunii, Serbii, Słowacji, Słowenii, Patrini. Szwecji, piach, Węgier, Włoch i Zjednoczonego drażtżzi
+
+ł i a i) m | | RA ga ©.
+z j 4 | ! | h U a i fot ; |) i) fl i ih | BE: | 1 h | ae i
+{ , ) ' "RR ; i i 8 | ‘ 4 i} + Hh 4 » |
+U k JK ; \ 2 be wo JĄ
+LI
+
+ZEE
+
+7 u
+
+iy 05 06
+
+MBR i
+
+=
+
+lt
+
+RZ fate | Europejski Komitet Notmalizacyjny ||
+European Committee for Sbndadzaliów | b 4 |
+Comité Européen de Normalisation BER
+
+Fufcpnięcheę Komitee fur Noaruna ||
+
+ee Zz az
+- = -
+=
+
+: ś | 4 U - ‘ q
+k GE be Be ee oe ee
+
+Centrum Zarzadzania CEN-CENELEC: Avenue Marnix 47, 'B4 000 Brussels
+
+———
+
+© 2017 CEN Al rights of explogation in any form and yła any means k "nr ref, EN ISO. 52016-1:2017 E
+reserved worldwide for CEN national Members. | | |
+
+Zgodne z at Sum 6 ustawy z drag 12 mrześria 2002 r. o noreia zacji (Dz U. he 166 poz 1388 z późn zm | FGzbE Non 3Ą OWONOWE
+prawem storm jak utwory Meradbe. s utotske prmwa majatkowe co moh przysuzęę Polder Komżetywi Norma scyjnemu (PKA
+bide? sau paratulizzc ją płk 6187 fra 2aberpeecterila pried (use amonics ya koje>óna am
+
+
+
+=== STRONA 04 ===
+
+AB © m < EMD 22> Ba
+
+EN ISO 62016-1:2017
+
+Spis tresci
+
+Stronmca
+
+Przedmowa do Normy Europejskiej oii ci cece dl ccc elects s baboo daeasdaads lącdocączo ao amo go ndk
+
+Wprowadzenie Seo OOS OS ERE EAE RS RR Re eee ee eee Khe See tee rer ett Tt Oe ed ce bdliiatied 4dadsziadccnokczazsckzank ee
+
+1
+2
+
+3
+
+3.1
+3.2
+3.3
+3.4
+3.6
+3.6
+
+=
+
+4.1
+4.2
+4.3
+
+6.1
+5.2
+5.2.1
+5.2.2
+5.2.3
+5.2.4
+
+6.1
+
+6.1.1
+6.1.2
+6.2
+
+6.3
+
+6.3.1
+6.3.2
+6.3.3
+6.3.4
+6.3.5
+6.3.6
+6.3.7
+6.4
+
+6.4.1
+6.4.2
+6.4.3
+6.4.4
+6.4.5
+6.4.6
+
+6.4.7
+6.5
+
+6.5.1
+6.5.2
+6.5.3
+6.6.4
+
+|
+Zakres normy RókaśkokkGBAEDKZBLOGRKGEEZNĘ Eby cae bes besdsensbadba beaks bad be deche chs pas Kaś KickzZczkAG<dcŚCOGA sea ha deeded seed eRadaebe ese PERŁA vce
+Powołani k |
+ówoó an a normatywne ukkcharkcckGk4kkitŁAsZAYsANEk ASA sEaGERAKNAPLENSÓIEZzCkaY Noa CiiiWi fas dad ba eae eee a ee eRe ETE Be one Hekate nee std ees ee
+4 |
+
+| ||
+Iny I definicje SERGE We ORES ERS E RS eek kkk i £9 OOS RON ESR eR ee eRe Ree hee ee eee reese AKA sms daesasne ene <caczakał Wa paskezkcka chi
+
+Budynek ere RASA G KROK R SEREK eer eo TVR ae PP ee eit itis i ee ese |
+
+Warunki wewnętrzne i zewnetrzne sarna aane wazon zerze Nao zas zesz e męska ng ras unssasgusannaasiens .... szaonerzeroezeszońeria "a. 14490 2
+i
+
+Techniczne systemy budynku PvERTENUESUED LEST ESN eReUMeEsrEETEEreHENFERSETETErT odór owiewki suenerdvnaceorsrescsrrerercowrsseseys
+
+ne ia Pe 8 Sr tee REET ESE eRe Re EEE Ere eee Pees SaaS ES 2 De eo ee ee ee RR Mo IE. cocdedactacéedecsnehrenrined= 7
+zy
+
+Energetyczne właściwości użytkowe ......-..-..-.-,-eroeneeneermmnerseeo reader an iolnojolin
+Obliczanie energii PTT TYTOCEGTTTTWYTTTTYT ST odb odaodocko theakadlakode chosia doda
+
+1.
+
+w _
+
+Symbole, indeksy dolne I skróty . sansensccustasnasssecnscneseseestessauta wd ed oda disdinsonsnssbasnatasencsssnnenabansesnecsstasaas
+
+Symbol AL
+
+ym e SEBEESSASRESROCE EEL ERR ERAS CUA Re ee
+= U
+
+Indeksy dolne uennseuseueesueserssesereoress nesDeczasaussessuesmaspseexepneesntanksesninssezeysugarauaseuacensenuasessrseeserserersersenssvenes
+
+U
+Skróty SESE SEAS SSARESE ES SALE See | 9 Gud 400005920004D64DS4RSSROEPO UPOOSYBEZAPO ANON NOE
+§ ij
+
+4 A >
+
+€ .
+Opis metod PREPRESS SECERR REAR AE st ch tah tu hah it lke i
+u i 8 Li j ,
+Dane wyjściowe metody GRZKRZARAKZEE - > Pół! ae tpeanascesranenareneesmeseeener PPEFEEFEEYWYT ATA
+3 M 2 : | | , L : 2 5
+Opis ogólny metody Oe ee ee ee ee RERYWKI TERURELS ee ee ee ee ee ===" See err ens ene ee eee
+
+iv
+
+Procedury obliczania godzinowego ........ueuuemnaragedwo ness omawiana waza AROMA WENA A KA A AA
+Procedury obliczania miesięcznego EER? SRADEENELUECEEUURECRSEDS ES
+Dane wejściowe i założenia do metody godzinowej i miesięcznej . RESROREKYRRRKKA
+Wybory między metodami eee eee
+
+4 i a
+| £i, e] » wy 0 i 43 h £ = > 5
+y | . } } = U 3 7 i i
+4, o iczania ozeezerrzzrekyrkErycez it 6-12 avncsnvanraerauerarrigeauevns TR ET O AC resersers wecsasa
+U z
+i 4 r 4 4 H
+t 2) 3 l
+
+ł
+Dane wyjściowe ee ee ee Ree ee eee ee ee eee © 489000 tO YO 0 0 rr ene
+
+Dane ogólne na temat ocenianego oblektu i zastosowanie . OE -EESĘRYI
+Dane obliczane PPPOE JS HEE ssnoghranesoqatnanuetnsorbesaineatuantocsennonte Aesdusdesduasuasnanunsenseneussensens +eoe bo eee ee
+
+(8452 35 3
+
+Obliczanie przedziałów czasu i okresu obliczania . sueneceesnesiassasannaganenensnusneenennenssenneaneneseuscesnas taaeass
+
+4
+qi ¢ 4| I i i ih
+
+Dane wejściowe TORY TOTTTOTTOATTTTTTN IE
+fk 4 U : ©
+
+Źródło danych, ogólnie cer ereeereernns ceeteegessengsnnnngutmennntnsnnsnnasanssnsrogeenanenanagenpennennenneenerresteeeenee rFE"Ff+t40743
+
+DEL. 3
+
+Ogólne dane na temat ocenianego Obiektu i zastosowania) 10.8.5 ceceeceecnreerethede~cbecdeoserseeteotents
+Charakterystyki geometryczne BESRESAERCA ERE REESE RES ER LREERE i
+Parametry clepine budynku | elementow radni" EE
+Warunki pracy i warunki brzegowe O ZERNZZE
+Stałe i dane fizyczne KERRYSZTAKKURYGERYRĘPDKRERASSORKINE
+Dane wejściowe z Załącznika A (Załącznik B) wee away
+
+a
+
+Podzial ocenianego obiektu na strefy EZ doda wicie oi |askaiki<uiuJ
+
+f
+
+PROZA a LI JE PIEC WOW W CE WAR RA pay © ee ee eee ee
+Rozmiar stref cieplnych i obudowy dlopinoj|. INZKRZRRKASINRAKORYSKNAJ a4
+Wymiana ciepła między strefami cieplnymi i obszarami USŁUG ...2.....-cseseresessesscecseruesnsensentenss
+Przyległe strefy niekondycjonowane cieplnie .......-ceceescesreseenstersesensiansensensenssensteetsernerteneevennsenanes
+Budynki mieszkalne lub jednostki budowlane, dostosowanie do Średniej te temperatury
+przestrzeni ....-...-..----e-szecnoczernzon te een EMO ZE ZOE OM LAO OO TORY ona
+Strefy sprzężone lub niesprzężone cieplnie ...............2.-m1-21-- ata fattor awizo MURAKAMI
+Procedury obliczania godzinowego ......c:.csscsstescssssasepssensesnnessensstnssteccussgontnsensunsnctsnnetisassgasensanase
+PE DOD JROKAKARIKOZ WIE MW W WM EM IAI W NE TE SA da A ZANE WW RL MM JAMA S UE BB
+Odpowiedni przedział czasu | okres obliczania M RP 28 Ra MARIĄ W RE A A ZAW W WAMI
+Zalożemia l określone WATT ccceccee cies ene ctencsvedbecdbecteceeectvetevensechrenneaiuctatgocsarapoupaepecieaipepoonuagenteaases
+
+Prożeadura erie ee | 5.5.20 a AS SS A Ae I Bose BAM BM AMM AAA Bi
+
+Zgożne 2 an. Bust 0 ustawy z dra 12 września 2002 r. o Moomazaqi (Dz U. Ne 102 poz. 1382 z późn, Zm.) Pazke Nodmy 3ą orronane
+
+OŁ zzaśdłe Pos ar poe utwory bierach= = azońsloe prwws ma,sib „ae tg ech Driyw rou | pacsny komssfwi kwoaiq w YlN=rFu (Poh
+
+który włocuja parconslizztye póków Olać M6 2 alee power ia cried Austere pre Łopeżwria” Gait
+
+4
+6
+9
+9
+
+- 10
+10
+14
+16
+17
+19
+20
+
+22
+22
+
+aR
+
+ŚCYTYUWEN NANYNUW
+
+LJ
+cn
+
+SESeRSESS
+
+TT
+
+
+
+
+=== STRONA 05 ===
+
+6.5.5 Obliczanie (jawnych) obciążeń grzewczych I chłodniczych oraz temperatur ..-..:-«-«4:-=rs«-: m 67
+6.5.6 Ogólny bilans energii strefy cieplnej oa... ccsecsrsrsccssensnesnnceseresersscenerenenesansssevdavedsnnnnesansenaetanneesrens 72
+6.5.7 Właściwości węzłów zależnie od typu konstrukcji ........-csccccccrerrstnressemisresnsnstnaseennesundterserennenes 77
+6.5.8 Parametry przenikania ciepła ............-.-----+10+-s10-m-m10rteneuaaneser zerowe rt eewpaw wez zya aan cz 0000 dad PO 82
+6.5.9 Temperatura przyległej strefy niekondycjonowanej cieplnie ... |... . 84
+6.5.10 Współczynnik przenoszenia ciepła przez wentylację, temperatura powietrza nawiewanego
+
+I zawartość wilgoci .....cccccecevenncee ABŁAA ETA AE Eliade thes ldacedecubiaussuchocsisaddsestkesdaietues §ent¥issSandfncatoes 85
+6.5.11 Pojemność cieplna srodowiska CG WWI strefy cieplnej .. NE TM M „ 86
+6.5.12 Wewnętrzne zyski ciepła .......csssssscsrsererreseenssrnnanenees a Si. ee 86
+6.6.13 Zyski ciepła od słońca ............ BIE MAE M RAA A A TAE ać 87
+6.5.14 Zawartość wilgoci i utajone obciążenie cieplne .............-....--.--<. „e WoD. A CWE 89
+6.5.15 Obliczanie kluczowych danych miesięcznych z godzinowych danych wyjściowych ... 93
+6.6 - Procedury obliczania dt Jk NE SĘ W M. A RE sensseseessnsenseceses A . 96
+6.6.1 Zasada ...... OE MEIR A M A R Se AB JE BB BB ee: ksodlpo moore Genedened b .eduacdivedsarduves 96
+6.6.2 Stosowany przedział czasu i okres obliczania sscusensuseotturesensrserstivrstecestseerstersas rane ep i. Te 96
+6.8.3. ee, 5.2: ee ee teo Te | 8 LIAM Si dtodkccheckoci 97
+6.6.4 Zapotrzebowanie na oserglą do ogrzewania i chłodzenia przestrzeni .. sg 28888 8% 97
+6.6.5 Przenoszenie clepła przez przenikanie ssisseensaneunsnessteescieeebenlussspipennnsstassntsseaesauasstaaessnauninaten Lest 100
+6.6.6 Przenoszenie ciepła przez wentylację . cesanecesnanseubicanssconssenssssuaneenensnanssnsaeensinsndanassneueuatssnaucceuseaerenane 103
+6.6.7 Wewnetrzne zyski ciepła ...... SE JĄ 4 ARONA NACE: EA c „105
+6.6.8 Zyski ciepła Od SHOMCA .....sseceresernceresserrsmersersssesserenenss Ae SBM MMA A EAC AA © 107
+6.6.9 Wewnętrzna efektywna pojemność cieplna a strefy faeneesemueetesneerbsrenerrenerreservecerennssanastnen® ala. hh 100
+6.6.10 Współczynniki wykorzystania Shah RERRENE ABA AR AN -110
+6.6.11 Temperatury obliczania I tryby pracy -.......... yta - RR MORAWA A TAD
+6.6.12 Wskażnik przegrzania wn R. R Se BE LESAGE" BEM 118
+6.6.13 Długość sezonu ogrzewania i chłodzenk Q eksploatacji urządzeń zależnych od długości
+
+CC eae ee W ee WR. Kom me RE A „R BIERIKM ZEM
+
+6.6.14 Nawilżanie i odwilzanie SERB ER Ww beast JE IETEDE A 120
+7 Kontrola jakości — a We seem a os a2
+7.8 Rapoftz obliczeń ee gre EPE. Sn elles hn nctnancfepenctbee cite edhe tose deseetncs -...121
+7.1.1 Postanowienia ogólne dk. i SATE SE EATERS eS EPIA ....124
+7.4.2 Obliczanie zapotrzebowania na energię -TETIKITELTYCERE 121
+7.1.3 Obliczanie temperatury wewnętrznej coveceannstngunensnseen posetnieed A T2D
+7.1.4 Projektowe obliczanie obciążenia grzewczego i chłodniczego ch, 23
+7.2 | Metoda godzinowa: przypadki weryfikacji ......... "BE M eS ee RETE |
+7.2.1 Zakres i ograniczenia . EW KÓW CEE ELE REE ES: ZE 123
+7.2.2 Procedura weryfikacji całej metody obliczania ......c...esccssssecccscssseeteeccecenesseseenneesecannnssescnnescenssnes PZA
+7.2.3 Opis przypadków testów weryfikacji ...... Leet ES oes ee sk 132
+7.2.4 Wyniki przypadków testów weryfikacji RUM 35 8.8. 33.h = Ek.
+7.3. Metoda godzinowa: walidacja w przypadku określonych alternatywnych procedur |
+
+ObliCZANIA -1.--m-«m+: AISE RE- enserseesueenrssveresetesssn = es dE NE. A M m EA a R M. 137
+8 Kontrola zgodności ZŁEGARĘDIYYAKYRIŁĘSREK |
+
+"my: "ME i w
+
+Załącznik A (normatywny) Arkusz Uanjeh wejściowych i wyboru metody — Szablon ~ : szer 138
+
+załącznik B (informacyjny) Arkusz danych wejściowych i i wyboru metody — ' Wybory domyślne e 100
+
+Załącznik C (normatywny) Regionalne odniesienia zgodne z Globalnym Znaczeniem Polityki ISO ...178
+
+Załącznik D (normatywny) Obliczenia wielostrefowe ze ) sprzężeniem cieplnym między strefami ....... 179
+
+Załącznik E (normatywny) Przenoszenie ciepła i zyski ciepła od słońca z okien i elementów
+
+: O ao ELU JUR EOĆ a Me LA Le = 8 182
+Załącznik F (normatywny) Obliczanie współczynników redukcji zacienienia VARGA PW "MER 189
+Załącznik G (normatywny) Dynamiczne przezroczyste Beciantabuliowians X RIALĄMMIE 203
+
+F__ Bibliografia ee ee ee ee. a © * AA 3 W. Lee 209
+Zgone z art $ um. © ustawy I Oda | 2 mrzeńnia 2002 r. o namnajiracji (Dz. U. Wr 160 pos 1383 z późn zm) Sblskie Normy są errenone 3
+
+powem supceshery | sb utwory M=rache_ a sitorske prewe mejafkowe= do nch pry vagy, Pasberu Korazelowi Noreadiz acy nemu (PKW
+kóry skła w paiófuliacw pików otal inom Zabużgwciwiia pried (miary MA kopów wile
+
+
+
+
+=== STRONA 06 ===
+
+EN 150 52018-1:2017
+
+Przedmowa do Normy Europejskiej
+
+Niniejszy dokument (EN ISO 52016-1:2017) został opracowany przez Komitet Techniczny ISO/TC 163 „Ciepl-
+ne właściwości użytkowe i wykorzystanie energii w środowisku budowlanym” we współpracy z Komitetem
+Technicznym CEN/TC 89 „Cieplne właściwości użylkowe budynków i komponentów budowlanych”, którego
+sekretariat jest prowadzony pres, R a
+
+Niniejsza Norma Europejska powinna uzyskać status normy krajowej, przez opublikowame identycznego tekstu
+lub uznanie, najpóźniej do słycznia 20181. a (ky DT ‘aa ® z dana norma powin yt wycofane
+najpóźniej do stycznia 2018 ry |
+
+. ik € ; q i ne la | if. a :
+Zwraca się uwagę, że niektóre elementy niniejszego doluniestu mogą być przedmiotem | praw patentowych.
+
+CEN nie będzie top odpowiedzialność) za AtkzzK jakichkolwiek: ani | wszystkich takich praw pa-
+tentowych.
+
+|=
+
+. e Z) ‘
+= e ko 4 " "2 - = | z vf 7 kę:
+= = 4 |. = , 4 £ % 4, A e Ę > 4
+
+le Ę" "
+
+Niniejszy dokument Sosias Gpracowany na podstawie mandatu, u udzielonego C przez Komisję Europejską
+Europejskie sk eee | Wolnego Handlu. 113453 M 4 ż | |
+
+(e
+=
+
+Niniejszy dokument jest częścią zestawu norm adyżzódh energetycznych: 2 użytkowych bduyniwi
+_(zestaw norm EPB) i został opracowany na podstawie mandatu udzieloneg eo przez Komisję Europejską
+
+| i Europejskie Stowarzyszenie Wolnego Handlu (Mandat M/480, patie odie e [EF] ] poniżej), i wspiera zasad-
+pet nicze wrpspan Praw UE ZOŁORWIE w ai s chęrakterysjk energetycznej yw (EPBD, [EF2]).
+
+tych szczególnych zastosowań można podać wybory obowiąz ha poziomie. krajowym lub regionalnym,
+
+» Jeśli niniejszą normę stosuje się w kontekście wymagań przep sheen lub obrialiych, w przypadku
+W eee: do zastosowań wires cle dyrektyw | UE „przenjeśk nych do Pay" stó KRKA!
+
+“4 Kolejnymi grupami docelowymi: są Statin AOR wspólnego dh Unii Europejskiej, RABA +1
+| certyfikacji dotyczącej energetycznych właściwości użytkowych budynków niemreszkalnych (EPBD art 11.9), |
+_ jak również dowolny inny podmiot regionalny (np. paneuropejski), który chce oceniać swoje założenia poprzez JĄ. 1
+-_ klasyfikację eeczyd właściwości POWOLNY w on Rt Pw odda- Le
+; : | = NE +. aj 3. "TE it M ee = [E LEFT
+Niniejsza N Nexis a Misdzyńwodowa hiena th Mente EN 1301870, która zosata opracowana wrakcie be
+Pa ag ete Se (M343) 'ppubiwana ję 2205 4. M 1's ę ¥ Jk LESS he =
+Niniejsza norma  Sadiępoje! EN 15255: 2007, EN 18265 2007, EN 180 13 1379 0:200 08, 'EN 1 N Iso 137912012, a he
+_ EN ISO 13792:2012. SZEW A. Tit cee ok a | 4 Leet ay vi
+
+Zgodnie zPrzepisami wewnętrznymi CENICENELEC do AKADRIAAIĄ Europejskiejsą L eS ;
+
+wiązane krajowe jednostki normalizacyjne następujących państw Austrii, Belgu, Bułgarii, byłej Jugosłowiańskiej
+Republiki Macedonii, Chorwacji. Cypru, Danii, Estonii, Finlandii, Francji, Grecji, Hiszpanii, Holandi, Irlandii, Lei
+Islandii, Litwy, Luksemburga, Łotwy, Malty, Niemiec, Norwegii, Polski, Portugalii, Republiki Czeskiej, Rumen | 2. t ++
+Serbii, SS w Słowenii, A ŁEB Szwecji, Turcji Węgier, „ Włoch i Zjednoczonego Królestwa. = 3 2 a
+= 2 | SOREZTEERIEKŁICARSSTEGLRAGŁ ;
+7% = 3 * = 4 . j ’ E 1 i R = s ae t ję
+[EF1] Mandat Maso, Mandate to CEN, CENELEC and ETSI forthe e elaboration lend atioption af stondatds for ;
+5 va methodology calculating the integrated energy performance of buildings and promoting the energy —
+efficiency of buildings, in accordance with the terms set in the recast of the Mówi on l ihe.energy
+
+perfotmenge of buildings ove) of m Secret 2010 k
+
+Sw”
+
+kt l
+
+‘ Ai
+
+Vek
+
+ie
+
+(EF2) EPBD, Recast of the Directive on n the energy performance of buildings 201073160) ot 14th Decem.
+“ber 2010
+
+& 4 =.
+ei . 8 Ś
+4 z Ą c j
+2
+
+są : ‘ 5 f
+
+4 Zgodne z at $ um. O ustawy z dna (2 wrzezżnia 2002 r. o nomatteacji (Dz. UL WE 165 pac. 1353 z późn. zr.) Po skie Nonny zą o”ryniore
+p'swem munoraken jak utwony bterache. = autorske piewa majątkowe do mech przystapują Pozigery Komsetowi Normakrscypemy (PRN
+kióry siókuje farconaltece pikÓr oraz ree reberpeecrenia cried n matiz Lope il!
+
+nn A LR TRE SAE ICSE DZIA O ee TE oo LIWO o LDL TET RAITT NIT OOOO NEAOZA
+
+
+
+
+=== STRONA 07 ===
+
+ij jj U 4 td | ń BR a 4 0 y ia | yy © W. k Wy i) M a | | ( 7 : My
+4134 4 4 | bi || RE Ł k 3 ty || | My Y Y% RE } U + a J |! 4
+t KNU ĘAKAKĘYWEGA YKK Y KK U sz 1% 1 4 | *
+00594] PORTE Sah ow yee U A Yow Ę i
+
+© | KM BĘ RMA Ę Ę t
+
+ALA DERARANKKR: \ |
+
+AM BA + =
+l | vę
+
+„I
+
+4 | $ U Ł Ą L a || hi 7 ząń |
+ks | iF A | {| A ; 1 \ s M h - . Maa
+Ly KYLE KEES JĄ: 4 64/80 82016-,207%,
+z Ms u u M ' } '
+x , ". ł i i ;
+
+— Calculation of energy needs for space heaind aot
+
+*
+
+Ą
+
+[EF3] EN 15265:2007, Energy performance of buildings - ‘Calculation of e
+
+— cooling using dynamic meth ROC RÓ W procedures o 4
+> a a - - K a, k-q Ę * * M " ; Ę | ię M e 4) [| th 4! Ih R. JU Ż Ę 4 al I ba
+ [EF4] EN 15255:2007, Thermal bite mance f buildings Se cooling load calcu
+Criteria and validation procedures |. eet \ ty 44 LRA ERO.
+
+I
+= T i i
+= J b || j + \
+RA A. e HB > © i, 1 R" U 2 A
+ie | j t
+4 +
+sz
+
+Gi 8 4% 4 U "LR x
+nsible room lation’ — General
+
+sk em sh
+— e. a irorobe prs mnyethnee > ech przy
+
+
+
+=== STRONA 08 ===
+
+EN ISO 62016-1:2017
+
+Wprowadzenie
+
+Niniejszy dokument jest częścią Seni norm, której celem jest międzynarodowa harmonizacja metodyki szacowania
+energetycznych właściwości użytkowych budynków. Z tego powodu seria jest nazywana „zestawem norm EPR”.
+
+W celu zapewnienia ogólnej spójności, jednoznaczności i przejrzystości wszystkie normy EPB sa zgodne
+z określonymi zasadami.
+
+Wszystkie normy EPB umożliwiają pewną elastyczność w odniesieniu do metod, wymaganych danych wej-
+ściowych i odniesień do innych norm EPB przez zamieszczenie w Załączniku A szablonu normatywnego a do
+Załącznika B informacyjnych wyborów domyślnych.
+
+Aby prawidłowo stosować niniejszy dokument, w Załączniku A zamieszczono szablon normatywny określający
+te wybory. Informacje na temat kark domyślnych podana w Załączniku B. T
+
+Głównymi grupami docelowym niniejszego dokumentu są architekci, nzynierowi i organy prawodawcze.
+
+W przypadku wykorzystania przez organy prawodawcze lub i w przypadku przeznaczenia dla organów prawo-
+dawczych. jeśli słosuje się dokument w kontekście krajowych lub regionalnych wymagań prawnych, dla takich
+określonych zastosowań można podać wybory obowiązkowe na poziomie krajowym lub regionalnym. Te wybory
+(albo informacyjne wybory domyślne z Załącznika B, albo wybory dostosowane do potrzeb krajowych/regio-
+nalnych, ale w każdym wypadku zgodne z szablonem z Załącznika A) można udostępniać w formie załącznika
+krajowego lub: osobnego dokumentu inp. KKTŁYŁ prawny) (krajówe arkusze danych).
+
+UWAGA1 Wiakimprzypadku |. INTRA |
+
+-_ organy prawodawcze określą wybory, BER li Ę
+— indywidualny użytkownik zastosuje | dokument do oszacowania enerstycznych właściwości użytkowych budynku a tym, |
+samym skorzysta z 4 dokona przez organy Z Ą |
+
+- Tematy poruszone w niniejszym dokumencie mogą Podlegać SEA REVARS! publicznym. YEDWAWM |
+
+"publiczne dotyczące tych samych | tematów mogą zastąpić wartości domyślne zamieszczone w Załączniku B.
+Rozporządzenia publiczne dotyczące tych samych tematów mogą nawet, w przypadku niektórych zastosowań, *
+
+_ zastąpić stosowanie niniejszego dokumentu. Na ogól wymagań prawnychi I wyborow nie zamieszcza sig w nor-. '
+mach, ale w dokumentach prawnych, W celu uniknięcia podwójnych publikacji trudnej aktualizacji podwaynych
+
+EŻ dokumentów, w załączniku krajowym można powołać się na teksty prawne, w których władze publiczne dokonały
+
++3 ; EE pion Do różnych The | możliwe sąróżne MA (CU UO prince Cha Ą
+
+i Oczekije się, że jeśli wańłaści domyślnie, Mytoy | i odniekienia do innych. norm, EPB wg Załącznika 8 nie ie będą
+| przestrzegane — ze względu na rozporządzenia krajowe, politykę lub tradycje, WALLA PUR EERW TLS
+
+LRS TERRES SEL
+
+|4
+A
+
+Tee
+
+Ę L = krajowe. lub regionalne władze! Pizygotują arkusze \derlyert zawierające wybory | | wadości alow OWĄ
+
+regionalne, zgodnie z szabłonem w Załączniku A. W tym, przypadku | zaleca się opracowanie R
+= „krejowego (np. NA) zawierającego odniesienie do tych arkuszy si yi AI 4X%4% KRK A
+4 Tee VA 44 WAY,
+|= lub, domyślnie, krajowa jednostka normalizacyjna rożważy mó alate d dodania Ik lub włączenia DEANA
+3 krajowego, według szablonu z Załącznika A, zgodnie z dokumentami prawnymi, ka PROW czne |
+| i wybory krajowe lub regionalne. (eee cee. ih ‘ : +4 4 NU LKR Lhe
+
+A 2
+
+Kolejne grupy docelowe to strony, które dej oedyteiwic io e 0009) kasyfkająć energetyczne właści ę
+wości użytkowe budynku w odniesieniu go zasobów budynków oddanych do użytku. RĘKĘ! 44
+
+ae
+
+£ JĄ ę | LK a PERRAELRS LU%E
+
+więcej niormacji podano w Raporcie Technicznym (Isom R52016-2) związanym z niniejszym dokumentem. |
+
+* 4 i % by (WA EB"
+Część zestawu dokumentów EPB tpigchianiich przez ISO c 163/50 2 (Thema perfomance and energy
+- use m the built environment, Calculation methods) PPE innymi: | ń
+
+„procedury obliczania dotyczące całkowitego wykorzysana energi i energetycznych właściwości FARNA
+* budynków; RE ; f i
+
+te 3 " = :
+E
+
+ę
+
+k
+
+sly,
+
+„3 7 [2 4
+ź t 4 z |- 5 + 5 3 3 7 r je n |
+56 © 5 Zgoznie z an 5 ust. O wstawy © dra (2 arznśnia 2002 r. o nóemazac [Dz U. Nu 108 poz. 1388 z późn zm.) Polske Namy 2g o"roniene
+5 fezwrem ainzrsk m jak utwory Merache, s sutorskie Prwra majstkowe do tech przysujają Posipemu Kamżetowi Noraatrscy nemu (PRN
+
+bidity akedu paisunał sae pain ać im w zabszpiecneciia erzad Baugi ace Za be pań a kar
+
+są
+red
+
+
+
+
+=== STRONA 09 ===
+
+||| >. poważne zmiany redakcyjne oparte na Szczegółowych zasadach technicznych
+
+Wynik obciążeń projektowych maze be równe: TLG
+posażenia przy okazji kontroli. || 500050050
+
+; ee
+
+W przypadku danych wejściowych i sze egółowych procedur obliczania nie uwzględnionch w niniejszym doku-
+mencie podano odniesienia do innych Norm Międzynarodowych lub do dokumentów krajowych.
+Niniejszy dokument zastępuje EN 13790:2008. Główne różnice |. |
+SE a2SECEEL ELECT ECELS O TREES: LTRERTEL EERE '
+"7. Inlegracja w zestawie norm EPB, jak określono w nadrzędnej normie EPB (ISO 52000-1). Uwzględniając
+_ Hatnięcie elementów obliczania, które są objęte lub mają być obiete innymi nc i (na przył
+
+_ zasady 1 na strefy (pr | budynku znajdują się obecnie na poziomie nadrzędnym (moduł
+_ EPB M1-8)), zakłada SIĘ, że warunki użytkowania będą w oddzielnej normie (moduł M1-6);
+
+sonia Ym przeniesienie wszystkich załączników informacyjnych do odrębne
+SORE ZI Fe LEA LESTAR
+
+dla wszystkich norm
+
+‘th
+
+Ę e : kj ¥ ov =< . rpa. CS PLZ .= se w JE M = JE” 1 x = - > = E z - =
+— 2miana metody obliczania miesięcznego i usunięcie metody sezonowej, * 7 RES TULEES AYE
+— Zastapienie prostej metody obliczania godzinawego metodą ban ej bezpośrednią i przejrzystą, bez po-
+| rzeby dodawania danych yłEjściowych, “EL LL LL RE Lhe 7 RAR
+
+_ —. integracja obliczania projektowego obciążenia grzewczego i chłodniczega, w tym u
+_'. _. €ieplnego, wstępnie przygotowana jako prEN 16798-11:2015 przez CEN/T G 156. —
+
+hie & xy ALEBO eee. R! Las 2% % © jg M KIE :
+
+- Dokonano odpowiednich zmian redakcyjnych opartych na szczegółowych zasadach technicznych dla wszyst-
+
+_ kich nom EPB, w tym przeniesiono wszystkie załączniki informacyjne, o ile nie zostały one omówione gdzie
+
+_ indziej, do osobnego związanego Raportu Technicznego (ISO/TR §2016-2!)
+a) = Ę ‘ | JE * "R SB R =| 4 > = ik NE E
+
+tajonego obciążenia
+
+fe
+
+Wraz z ISO $204 7-1 niniejszy dokument zastępuje również ISO 13791 2012P] oraz ISO 13792:2012*1,
+
+W Tablicy 1 przedstawiono względną pozycję niniejszego dokumentu w zestawie norm EPB, w kontekście
+struktury modułowej określonej wISQ 5200011 | EGS 2. JA" BGS |
+UWAGA Ż. WISO/TR 52000-2'1 można znależć tę samą tablicę 2 numerami odpawiednich norm EPG dla Każdiego modułu
+i związanych z nimi raportów technicznych, które opublikowano lub które są opracowywane . >
+
+UWAGA3 Moduły reprezentują normy EPB, chociaż jedna norma EPB mogłaby obejmować więcej niż jeden moduł,
+
+“ajeden moduł mógłby być objęty więcej niż jedną normą EPB, na przykład odpowiednio meloda uproszczona i szczegółowa.
+» Patrz także Rozdział 2 oraz TabliceA 1iB.1. | a. +8 a.
+
+Zgodne z an. Bust B ustawy z dra 12 września 2002 r. o neemazacji [DZ Ul Ne 106 por. 1368 z późn. zm ] Pose Normy są Srroniore 7
+p ZY AT js utwory heracke. s sutotskae prawa magatkow= ia rect przywujarą Pozcemy Komsietowi karma ac pinetrg (PION
+
+kiśry slów. je gaikónakcać w plane Gaz (fra faberpiecrenia pros! Niki aedk=ty MŁODA AD af
+
+
+
+
+=== STRONA 10 ===
+
+avu ru M W
+
+EN ISO 62016-1:2017
+
+Tablica 1 = Pozycja niniejszógo ASSES (w tym przypadku M2-2, M2-3, M2-6, M3-3, M4-3, M6-3, M7-3)
+w ramach Ytyszx struktury zestawu norm EPB
+
+„Techniczne systemy budynku
+
+i | kotu
+
+Z
+
+lle w Hey coats eae Th
+
+im
+
+iy
+
+zgodne zat 2 us 2.0 ustawy 2 dra 12 wrzeżna 2002 r. o noemalzacji (Dz. U. Ne | 168 paz. 12082 późn Jes Normy 24 rynna
+= „ prem irorskim ish Utwory Hersch » sure pig majka ię ch przysuzą ga
+
+ormakzacy per (PQ)
+z 3 £ kidey slota pozonakża-m pików Otaż inne Bab
+
+atts imi trade Dęta aim
+
+iJ
+
+
+
+
+=== STRONA 11 ===
+
+" ze zmianami).
+
+CG < UMD /--> Gia
+
+EN 180 52016-1:2017
+
+Energetyczne właściwości użytkowe budynków — — Zapotrzebowanie
+
+na energię do ogrzewania i chłodzenia, wewnętrzne temperatury oraz
+jawne i utajone obciążenia bartitiy --
+
+Część 1:
+Procedury obliczania
+
+1 Zakres normy
+
+W niniejszym dokumencie określono metody obliczania do oceny: ‘ »
+
+a) (jawnego) zapotrzebowania na energie do every i chłodzenia brrr obliczeń godzinowych
+lub miesięcznych; | iy |
+
+i
+
+b) utajonego zapotrzebowania n na energię do 0 odwizanianawizania na MEEAHG obliczen godzinowych lub
+miesięcznych, i i ! ) ‘a git:
+
+c) tem peratury wewnętrznej na i podstawie obiczeń godzinowych, |
+
+d) jawnego obciążenia grzewczego | chłodniczego na podsta ot obliczeń godzinowych,
+
+e) wilgotnościi Pejanega obciążenia cieplnego do odwilzania/nawilzania na | podstawie obliczeń godzinowych;
+
+f) projektowego jawnego obciążenia grzewczego i „chłodniczego oraz peekiowage utajonego obciążenia
+cieplnego z wykorzystaniem przedziału obliczania gadzinowego; q |
+
+g) warunków powietrza praca pi: W celu zapewnienia niezbędnego n nawiżania i i odwilżania.
+Ę ta 3 w?) : |
+
+Metody obliczania można stosować w odniegiehi do budynków mieszkalnych lub nemieszkalnych, lub ich |
+
+części, zwanych rzyć lub „obielfepioteny 5 | POSUCRELEEGEE EELS
+
+ip z R A) i Ą he + 4 > LS
+
+Niniejszy dókuchark zawiera także specyfikacje. db | oceny stref ZAL w budynku lub w części. budynku.
+
+SB SE ae JR R Se -
+
+Obliczanie wykonuje się dla strefy cieplnej. w obliczeniach można założyć, że strefy Tys: a POZA +
+
+if d
+
+2 p Ą 4 Aj ry i | KE EE EEE E Ek
+
+cieplnie lub nie. FEEĘ c. € ARIE NTA |
+] Ea | a a ee
+
+= gd) = se sg
+
+NKZRĄRA metody obliczania póoinicwych a obciążeń energetycznych i zapotrzebowania, bez powiązania
+
+la systemu obciążeń energe- —
+i systemami budynku, oraz do obliczania właściwych d
+zzo pópbtzatojenia aka oddziaływania z określonymi pack Procedury obliczania godzinowego
+
+" 2 i i 43% p i |
+7
+
+zakoń.
+Niniejszy PARSE 2 ma | zastosowanie do budynków na 5 capi rojckkowinb, do nowych budynków stę |
+
+| amet hi GG eee hae eel
+czeniu budowy oraz do istniejących budynków w fazie corr eeREReeeeee:
+
+norm EPB,
+UWAGA Wy Tablicy 1, we wprowadzeniu, podano względną pozycję niniejszego dokumentu w zest RER
+w konlekścię modowe stulury określonej w ISO 52000-1 SARE. PERERERIIERE
+
+31 3 3 3
+eh bak
+‘
+
+ia
+Afr
+rb,
+
+3 € 3 L p 4 = Ń : 3
+a
+
+nt
+„pal
+sn
+
+2 Powołania normatywne ARA oF
+
+Podane niżej dokumenty są powołane w tekście wiki sposób, ze ich bok częś lub Gaci sap sę w. |
+maganiami niniejszego dokumentu. W przypadku powołań cs tee e dokument tagi
+wy ak W przypadku powołań niedatowanych sie sig roe : wie como
+
+Ę r z
+
+"150 7345, Thermal insulation — Physical quantities and aefniton 4
+
+9
+nane
+Nz pain z | Porshe Norm są ro
+2002 r. o noreaizacji (Dz U. W 306 po
+B ustawy z Org 12 września 2002
+ZąDi nezat? ust
+
+r; FP meth No-=góz szy namy (PK GW)
+-— m jak utwory kierachoe a sitorskoe piss majatkowe do pect przy Suzi FD ssemu Ko .
+pew EOG | U
+
+IB pańmóńakzzc a Pon ofar how X aberpecre tis | Gad fie  amńwatyrń Kojszanat in
+y staGuja (=
+
+i eee ee
+
+var ji opcjami eyes Seren i
+
+
+
+
+=== STRONA 12 ===
+
+"AEC Z < UD => GBA
+
+EN ISO 62018-1:2017
+
+ISO 9050, Glass in building — Determination of light transmittance, solar direct transmittance, total solar energy
+transmittance, ultraviofet transmittance and related glazing factors
+
+ISO 10077-1, Thermal performance of windows, doors and shutters — Calculation of thermal transmittanée —
+Part 1. General
+
+ISO 10292, Glass m building ~ Calculation of steady-state U values (thermal transmittance) of mp glazing
+
+ISO 13789:2017, Thermal Pono | of buildings = A wak gy: and ventilation heat transfer coefficients -
+Calculation method rye
+
+ISO 15099, Thermal performance of windows, doors and shading devices — Detailed cafculations
+
+ISO 15927-2, Hygrothermal performance of bukdinąs Calculation and OM of climatic data — Part 2.
+Hourly data for design cooling fond’ + 4 4 ne | A a
+
+ISO 15927-4, Hygrothermal fefolniantcj of buildings — Calculation Bri presenti of climatic data — Part 4:
+Hourly data for BRR the annual energy use for ‘eee and cooling 4 g |
+
+ISO 15927-5, Hygrothennal performance of bukdings — Caleulation and WGRA of climatic data — Part 5:
+Data for design heat load for space heatng ZŁ: 4 j yt
+
+ISO 52000- 1 2017, Energy performance of. buikings - Overarching ERB assessment - Part 1: General frame: q
+
+| EN 410, Glass i m bółdlng - Determination of luminous and solar characters of oleeng
+
+EN 673, Glass i in building — Determination of thermal {ransmahce (U vale) - Caleulation method
+
+EN 12831-1, Ener paomance of binge eg Glan of the design heat load — Pat 1 ‘Space
+heating load, ModuleM+3 s w |
+
+a
+
+Ś, | UWAGA - INFYPEARZEPERATN=JNY Śudeddhckołak Addeżoniniaknce) ,
+1 podano w Załączniku A (szabion normatywny i ga 1 | Załączniku Smbojadiat wyotr domyślny w Tablicy B.1).
+
+* PRZYKŁAD "Numer kodu modułu EPB: 5.5, Wb M55: 1 oe modu M58 paietono), lub M5-5/1 (eśli jest odnęsienie I
+- do pige=pnen rozdziału Po, premiaceno M5-5)
+
+a + Ę E = = Ą
+ls" a a = 2 =
+
+>
+
+fs
+= 3 = +
+4 b Zz Py 3 = | us EE = l
+
+ża 5 4 = = >
+
+(4
+$
+= a
+
+FS "Terminy i definicje Tavs , fy
+
+€
+
+£
+
+*
+
+g
+
+* 4 eG
+
+74 z x a = re =
+SAF "SRA BE” EE E
+* | = > i Ey a; E fs
+
+A AM = ię
+
+07345, IS ISO. 520001 oraz wymienione niżej.
+zy 43 3)
+
+"AR
+
+A
+a oe
+
+j w niniejszym dokumencie stosuje się terminy! i defingje oa
+; Ę- p. a
+
+é
+ISOi IEC prowadzą ermnoloiczne bazy danych do sosowania w
+
+m|-F > - R = E |
+
+* Elekiropedia IEC: dostepna na hip Zn a i 2 3 |
+— platforma niemgfowa włewii dostępna na Mts wwo crab | ESCEZEE i ! rę
+
+a 5 A = 4 E Ę | re e | = , E = A = „= = Ę a
+3.1 Budynek — "5 B > eC a 3 r a 14 72 FEE PEEL i
+3.11 je. ee. weet By EEZZY
+oceniany obiekt i i i Ja JA
+
+| budynek, część budynku lub grupa budynków, które są przedmiotem oceny energetycznych właściwości użyt.
+
+i E EJ
+
+norm zach dostępne pod następującymi RY
+
+3 A : = = 5 i 4
+R JE = = |
+
+Nu
+
+ay
+
+[Dim
+
+m
+
+ip
+iy,
+
+JE
+
+Uwaga 1dohasła Przedmiotem oceny dunia pomieszczenia Fe ecmniczne które mogą przyczynić się lub
+wpłynąć na ocenę charakterystyki energetycznej. | 1 © |
+
+‘Uwana 2 do hasła: - Przedmiotem oceny może być jedna lub kika jednostek budynku, ie nie Są ane Incywidualnym
+przedmiotem oceny energetycznych właściwości użytkowych. 5
+
+10 3 Zgożne z ant 2 ust © ustawy z dra | Zurzeżna 2002 r. o ntemainacji (Dz. U. br 166 paz. 1363 z późn zm.jj Fasłbe Nomryj są sromone
+prewar sutcrsk en j sk utwory Merackm s sutorskoe pre msjatkows to mech prz ystuguą Po sem Komestawi Normal scyne (PAN
+‘ key sicaup peafkonalżać a póków ofaz inte cabeipet Denia crted Aieucrare > ZN
+
+i=
+
+
+
+
+=== STRONA 13 ===
+
+ka
+
+€
+
+EN 150 52016-1:2017
+
+uwaga 3 do hasła. Można wprowadzić rozróżnienie między np. zaprojektowanym budynkiem, nowym budynkiem po
+wybudowaniu, istniejącym budynkiem w fazie użytkowania i istniejącym budynkiem po generalnym remoncie.
+
+[ŹRÓDŁO: ISO 52000-1:2017, 3.1.1]
+
+3.1.2
+
+budynek
+
+konstrukcja jako całość, łącznie ze strukturą i i wszystkimi technicznymi systemami budynku, w których energia
+może być wykorzystana do utrzymywania parametrów cieplnych środowiska wewnętrznego, zapewnienia ciepłej
+wody użytkowej i oświellenia oraz innych usług związanych z użytkowaniem budynku
+
+Uwaga 1 do hasła: Termin oanosi sie do fizycznego budynku jako całości lub wszystkich jego części, które obejmują
+przynajmniej pomieszczenia i i lechniczne systemy budynku istotne do oceny energełycznych właściwości użylkowych
+
+Uwaga 2 do hasła: Części budynku można nzycznie oddziekć, ale są one na tym samym miejscu budowy. Na przykład:
+stołówka lub wartównia lub co kb, Pre sala szkolna w oddzielnej i. yt lub podstawowa przestrzeń
+w mieszkaniu (np. mm 2 i
+
+[ŹRÓDŁO: ISO 52000-1:2017, 312) RORESZERORSCRKO 3.
+kategoria budynku eheseieres: ay
+kategoria elementu > 4 4
+
+klasyfikacja budynków l ilub elementów budynku związana z eye przeznaczeniem lub ich specjalnym
+statusem, w cełu umożliwienia zróżnicowania procedur oceny OPC waściwości OTC iMub |
+wymagań dotyczących energetycznych właściwości użytkofych | | i |
+
+PRZYKŁADY Budynki oficjainie chronione Jako część wyznaczonego śrogowiska lub ze względu na ich szczególne walory .
+
+archiiektoniczne lub historyczne, budynki wykorzystywane jako miejsca kullu i działalności religijnej, budynki mieszkalne,
+
+(a) domy jednorodzinne różnych typów. (b) błoki mieszkalne, (c) biura; (dj budynki edukacyjne. (e) szpitałe. (f) hotele |
+I restauracje; (a) obiekty SOME: O) budynki usług handlu hurtowego wees me cenira a 0) inne rodzaje
+
+A Uwaga oo nasi: Rodi budowiane często extant Kategorie tenon. i Ong
+
+|
+oh
+
+; - Uwaga 2 do hasła. | prożradyswówni! y ocena el sca vest yh ; 4
+
+ne, duże budynki użyteczności publicznej) itp. r innym rodzajem kategori jest TRAE SVSRRAERE
+-_ aistniejącymi i remontowanyr. FA z. b NE. oe) ) j ( A RRZĘESEKLE: RAGE
+
+“Fy Uwaga 3 do hasła: - Wiele dyke A eiementów pudynków ; z danej kalegórii (użytkowania) za zawiera pomieszczenia
+
+=
+
+- jest obowiązkowa (np. nie w daremny budynków działalności religijnej ej lub historycznych) i jakie są minimalne wymagania
+
+(np. w przypadku nowych budynków); w niektórych krajach zmierzone 1 Red:
+
+dotyczące energetycznych właściwości |
+przewidziane dia określonych kategorii budynków (np. budynki mieszkat-
+
+energetyczne właściwości użytkowe budyn | są
+
+id a JE Ę
+
+różnych Bao? (żyto, | BZTEEK wd może PrzT Goan pee eke 7 ne ax ail gi
+
+Ą (wiodą do tesa Pr aa nina nić ne i spol eds irdeto bong eon
+= mice AŚ mj aya eye. trzymałość poc ) lub jakość środowiska wewnętrznego (np BRA
+: UE. 08 MEDREKERTTECEZŁA: i
+= IZPERZRZOREARZRZĘCE Teak
+| (ŻRÓDŁO. 180152000-1 2017, a1ą] EERE eee karssceresy
+14 Ę Ą ME 8 fe. i EEL
+£é2 FF a oa 2 AZEARARYSCEERA! a Fé
+SAB ZNP TRRERSTZEŁA FERRARI ‘
+element budynku © AP i BPRRATESECE ZA ey ras
+pe komponent. technicznych órYcii Pi Struktury budynk BRRR Go reek ie)
+[ŹRÓDŁO: 180 52000-|: 2017, 314] | 5 ZZERZERIZYE SĘEEBARIYSY
+3.1.5 BIAIANINNI REGRRIEWTS
+struktura budynku © ; . "BE PEROTAJPRGRL &é *
+_ wszystkie fizyczne elementy budynku, z wyjątkiem SKYE systemów £ budynku CAMEL
+ee wy
+_ PRZYKŁAD Dachy, ściany podłogi ro tray cen wtmętze TYSOCOGAJAA
+: i i FB F Ę lz & j
+Zgozne z art © ust D ustawy © dnia | Ziarześnia 2002 r a noe alicaci (Dz. U Ne 165 poz. 1188 z edźn JARY ER R 11
+
+rae sunesicen je utwory Merachae. s Stork piavre Mapai do rech przystugują f Posiceme Ke priiietu sc ee he ee |
+balay ś sens persona lias palaires Graz irae zabazę GCB ia zed "He wg pra kopania sm |
+
+
+
+
+=== STRONA 14 ===
+
+ię
+
+EN ISO 62016-1;2017
+
+Uwaga 1 do nasła Obejmuje ełementy zarówno wewnąfrz, jak | na zewnątrz obudowy Ciepinej, w tym obudowę budynku
+jako taką. |
+
+uwaga 2 do hasła: Struktura określa współczynnik przenikania ciepła, szczelność cieplną obudowy | (prawie całą) masę
+
+cieplną budynku (oprócz masy cieplnej mebli i lechniczny ch sysłemów budynku). Struktura sprawia, że budynek jest wia-
+tro- i wodoszczelny. Strukturę budynku czasami oleje © Sie jako budynek jako taki, tj budynek bez tecnnicznego systemu
+
+(ŻRÓDŁO: ISO 52000-12017, 3.1.5]
+
+3.1.6 | RZA. |
+grupa budynków | 8a.
+zestaw budynków i wspólne techniczne ARR) budynku Mórych razi waste użytkowe określa
+
+się z uwzględnieniem ich wzajemnych oddziaływań
+
+Uwaga 1 do hasła Przykładem powszechnego bl dad jest system aria ener (pórieje fotowoltaiczne,
+turbina wiatrowa, agregat kogeneracyjny, eghakeyees pheeetet ‘ „A
+[ZRODLO: ISO 52000-1.2017 348] | MNE 455
+strefa cieplna budynku. EE ARE Ę ABE ę 73 |
+strefa cieplna | ee = wi i
+środowiska wewnętrzne z zikażówymi wystarczająco jednolitym wafun warunkami cieplnymi, aby umożliwić aiw
+__ bilansu cieplnego zgodnie z procedurami zawartymi w normie ERB moduł M2-2 AUM
+: Uwaga 1 do hasła: Noma EPG w mode M2-2 estaieszy Sku \ a Ki kk.
+wi SŁU | |
+ŻRÓDŁO: EJ 52000-1 2017, 3. 1. 6 zmodyfikowany - Laga do hasła: zmiana | na „niniejszy dokument] +
+| jednostka budomana | = ues © Gy ico EERE Ree eee TĄ
+_ . . sekcja, piętro lub mieszkanie w budynku zaprojel wane gp zmienione do uzytkowania oddzielne od reszty.
+© budynku ERZE zh RĘŁERELEETOREE KLASE
+= i 1 5 i - U : i is | A JE ti Th 4 E A A tL > k
+‘a PRZYKŁAD. step w centrum handlowym. mieszfanić w apartamentoncu | m wytajmonana powierzcwia b biurowa |
+Uwaga 1 do hasta „owocowy Satna 4 CULL EREEMA ULE RES
+[ŹRÓDŁO 150 52000-1: 2017, ZU aya i jk \\ MANSEN
+3418 SSZZ KW UUERO NA WYS aS Seay. ARRBKTIREEG
+przestrzeń kondycjonowana ee PEPECLARRER EEE PSL ERE LE CLA !
+pomieszczenie lub PP (przegtrzeń budynku objęta co n najmniej jedną z usług Ef Bait TEE A oe. :
+Fa 3 ZE JE” M. CUAL VLEs S45
+| przestrzeń chłodzona ert SEGRLUEE SR ERE PT ER RES ULES cą
+_ pomieszczenie lub zamknięta  Bzidzój budynku, które do celów 'obliczania przyjmuje się za chłodzone do |
+określonej wartości temperatury nąstawy lub wartości nastawy, RR 41 453 1% UIEREGSZIA +
+RZA. WYRAREĘKĘERRESTIRRESRIA L
+[ŹRÓDŁO: rar tt. ‘eee Soe RE ROE E EA EEEE EES ELEGS EAS
+przestrzeń elementarna Ą 6 RZ a RERERLEEEERERGGELAAGe
+RE SZR SDA: LES vee Ge ee
+
+przestrzen —
+pomieszczenie, część pomieszczenia lub. grupa przyległych pomieszczeń, które należą do jednej strefy cieplnej
+
+i jednej powierzchni serwisowej j kazdej usługi, wykorzystywane « do zarządzania: granicami stref cieplnych i powierzch-
+m serwisowych oraz do zarządzania es danych z! Pzp zetwisowymi pew aga
+
+L IB R 1 | ’
+BAROLO, IS052000-12017,31100% 85034335 REL ERT VEER EVER TE |
+r 5 a e i 4 i$ hg (5 1
+Ę L p) 3 = x 8 5 p
+12 , = soins: an. 5 ust b ustawy z dnia 12 września 2002 r. 0 noemaleacji (Dz U. Ne Ibajpoz. 1388 z późn =m |Poitkie Normy sąoronane
+
+pomo siferzkim jak wtwoty bere zloe. 5 uutarske pomoz megałkowe dą ch przysuzi Piska 'eimy Korestówi Noszuskr szy namy (PLM
+: kóry głEsuje uowew | plkówi otal ira Labec ce ie pied fiaugiaraai Tym kopoaar mir a
+
+
+
+
+=== STRONA 15 ===
+
+EN 150 52016-1:2017
+3.1.12
+wymiar zewnętrzny
+wymiar mierzony na zewnątrz budynku
+
+Uwaga 1 do hasła: Patz ISO 137892017, Rysunek 1,
+[ŻRÓDŁO: ISO 13789:2017, 3.12]
+
+3.1.13
+przestrzeń ogrzewana
+
+pomieszczenie lub zamknięta preśtrzeń: Budynku; które do celów obliczeń a a się za ogrzewane do
+określonej wartości temperatury trytk: lub Hetty SPY
+
+[ŻRÓDŁO: 150 52000. 12017, 31 MI (RE aie,
+
+wymiar wewnętrzny. CEO R EGRET EG GE GE 6 „4
+
+wymiar mierzony od Ściany do ściany i od podlog dol prace budynku
+
+Uwaga 1 do hasta: ITA Rysunek 1. ALLES O, 4.
+
+(ŻRÓDŁO: Iso 13789:2017, 7.341) | sea" +i 1 Ą A rę a Li
+
+ogólny be driawiziyi Geet | ‘le
+
+wymiar mierzony wewnątrz budynku, bez wale p” wewnętrznych
+
+-. Uwaga 1 do nasa: 'Palfz ISO 13769:2017, Rysunek 1 10 A. RURKĘ 4 AM
+ŹRÓDŁO: Iso 13780: 2017, 3.14) | 14 A | % | yy AU ki
+
+RZEB A: 4.81 Rodieeńni BRO AS 332N energię słoneczną Sas
+
+’ oe pole powierzchni rzutu pres elementu "> weed świ do przezroczystej ub póprzeztoczy
+EE + 4 ste] części elementu
+
+= NE Sea,
+Lee Uwaga 1 do hasła: W przypada! elem md odpada total sth wi wok a kL
+ZEE GTTEŚGUJEKEWU | b: $ i ER REX 14 Luee eee
+Lies. PRZYKŁAD „ Okna. Z5353PE. ERA Lins | & KKRĘRĘ: zk
+sje $ =) 3 EE = me) yew Sh) oh ol ee eS a = = ©
+Be. 'zrzutowane pole powierzćhńi elementów ramy ‘ Le: 4 % kę | z Ę
+JRE peg powierzchni rzutu SES er & na płaszczyznę “re ą « 9 oszkienia l lub farsa utrzymywanego
+z, Pz r o> ; AEREREEEEES > Ę
+| PRZYKŁAD Ra oieme EES LER RRTAURARELLQ EERE
+— my a | ie =: > it M" Ai p U + “¢ % A ‘ 4 LE Ę Ę 4 k JF 2. ę
+A A ę :ę ’ 7 „4 oq ś, 5 & = = 3 4 | = = 4 = % bs = : = = Ę F
+es. 34.18 AE 4 ’ KKR YE si ę “he? : SLE a ke eS
+_referencyjne pole powierzchni podłogi IRR | ie. A z i (UKRA 4:53 =e es ¢
+Pe powiec paog seca 5 a ne odniesi Va : 4 % «= A | | ees ces
+A 33534 & GS R. >
+"Uwaga 1 Go hasta: GYYJERGWNI 4 * \ 1 SELES S SE ees.
+7 5,03 EE EE Z = = FG ET
+[ŻRÓDŁO 180 52000-1.2017, 3.1.12] SIA R AA. PL ALS SEE GY'
+i. = y = pig: A = = - Pe 6
+; = fea Ste SA: : 323 — & “> © i
+3.4.19" S225. 3 a. TERED AROGREGG +"
+rozmiar odniesienia . RES Dea * R. Jk
+| odpowiednia miara do znormalizowania ogólnych lub częściowych energetycznych właściwości darko
+_. arazwymagań dotyczących energetycznych właściwości użytkowych po wielkości budynku lub « SER ACL bf
+_ -oraz do porównania z wartościami ARE Le Raa ie & \
+; 3 A ;
+z. RĘERZAJ AAAS z |
+| (ŻRÓDŁO: ISO 52000-1:2017, 3.1.13] ee Fates Ty +.
+Ę RE Zgodne z art. 2 ust Se REE ES SF che Bes a tae (RB chignona \: 13
+
+E bi
+p sw zuza m | sk utwory Merack=. s sutorskae prawa magąjiorezę do rech przystuzugą Pointer zrmóstzma i orm recy ray (POK -
+key s ok wuj pańonaliżace Show Ofaż | rea abe pene rzad pisuzrarakctym kopzowiniam. h IB
+
+
+
+
+=== STRONA 16 ===
+
+EN ISO 52018-1:2017
+
+3.1.20
+
+kategoria przestrzeni
+klasyfikacja przestrzeni budynku źwiątanych z określonym zestawem warunków użytkowania
+
+PRZYKŁAD _ Powierzchnia biurowa, restauracja, hol wejściowy, toaleta, salon, sala montażowa, sklep, sypialnia miesz-
+kalna, parking wewnętrzny, schody wewnętrzne ogrzewane, schody wewnętrzne nieogrzewane Ap.
+
+Uwaga 1 do hasła: Kategoria przestrzeni jest odpowiednia do obliczania oceny energetycznych właściwości użytkowych
+| do definiowania rozmiaru odniesienia. |
+
+ŻRÓDŁO: ISO 52000-1:2017, 3.1.14]
+
+3.1.21
+
+pole powierzchni obudowy cieplnej
+całkowite pole powierzchni wszystkich elementów budynku, które zawierają przestrzenie kondycjonowane
+
+cieplnie, przez które energia rybi jest przenoszona, bezpośrednio lub cer qi do lub ze środowiska
+zewnęlrznego
+
+Uwaga 1 do hasła Pole powezii obudowy cele zależy 0d tego, czy zastosókano wymiary wewnętrzne, ogóne
+wewnętrzne czy zewnętrzne.
+Uwaga 2 do hasła: sprz aty ep oerue pał poecie pat aa
+
+Uwaga 3 do hasła: Pole powierzchni obudowy ciepłej może odgrywać rolę W spośóbach wyrażania ogólnych i częścio
+wych ogółnych lub częściowych energetycznych właściwości użytkowych oraz wymagań dotyczących energetycznych
+właściwości użytkowych oaz do porównania z wartościami odniesienia. 7 +: |
+
+[ŹRÓDŁO ISO 13788. 2017 39 zmodyfikowane, dodano red i Ą do hasła]
+
+$422102003038771031 BUMIK a
+przestrzeń kondycjonowana ARERE cee eye SE ATU
+raestzeh ogrzewana Vlub chłodzona ee tk ie IE" i
+| (ŻRÓDŁO: | ISO 52000- 1 2017, 3.1. Hej | Ty: ry + W
+BE" "84 i WAB RAE Leeann}
+pa231| | EEL OE AA
+Ę przestrzeń niekondycjonowana ciepinie ką” FUT TAAALER UE RERERERLEL ERAN
+- pomieszczenie lub zamknięta przestrzeń, które tył a częścią p przesz kondyononanyeh cepiie | |
+FT] ROP ISO 520001 2017,31 17 | nil ZEE: U A i 4 44 | MEEŁELEKKE ELITA
+
+| Lk
+
+teak ek & &
+
+fe) Mowa Gola PoMariztai podeg | "ERĘDERRAEK A 1
+<do oceny EPB> pole powierzchni podłogi idle bolzioje jako | aini bd ięśówedo określenia SZCZE-
+
+gólnych warunków użytkowania wyrażonych na jednostkę pola GERE podłogi oraz do zastosowania |" + aA
+
+Ve a
+= = są = e jr = G
+
+Ad | 1 i ik |;
+$ uproszczeń oraz zasad 64% 208 | (ponovmego) przydziału 2% 33 i LLL ELA, CLERK OS
+| | > 5 | Ł E = B e, Ę i
+
+E - 4 | e (Ę |
+4 s a =, 5 : ik i. b 4 i \ 4 ż 3 4 7 + E Ę hi E fe ls 5 "a e et ee Ę "
+| (ŻRÓDŁO: 10 52000. 1201 3.1.18) EER RR ERS i} RER LR Eki bke ee ee
+BERSELELELE % & ¥ EES ESS
+
+32. Warunki wewnętrżne I zewnętrzne Ak dy R BOR N : EE j ib ESĘKRŁŁŁŁAGAE
+
+ps
+ET per ee = *' Ss oe. ANA ORZEKŁ KIREEZE 3%:
+'z : w: ; ee PRGA GAAPRAREARRAS SAAS i =>"
+fee’ S45, | \ RER. ŁKEKĘĘE
+
+wymaganie iflub ograniczenie stosowania kalegorii przestrzeni RW ZWIĄZANE Z usługami do oceny er. STA KĘRE
+
+IE LKERĘT
+
+getycznych Meg ościiużytkowych lub warunków brzegowych BR i " " A. ges AR Suen
+PRZYKŁAD - Nastawa ogrzewania, nastawa chłodzenia. koniki wentyłacji związana . z Jakością powietrza,
+
+zapotrzebowaniem netto na ciepłą wodę użytkową (np. na m? powierzchni podłogi lub na osobę). poziomy oświetlenia, !
+
+|
+
+wewnętrzne zyski ciepła itp.; w tym rozkład w czasie (działanie). Ab skie wea we au hczbie 295 28.
+EPRERGS WEY R. s ię 3 JAJ ! eve’
+
+is : Ę 1 .| 4 BR: Ę oh
+[ŹRÓDŁO: ISO 52000-1:2017, 3.21] EE ‘SSD UREREER ERAGON TES
+Lb ees RES TASER
+*V Odsylacz krajowy. Błąd w oryginale EN RRGRA KR RA. sak A a ę !
+a TE | : 5 | Ę " T2
+14 ocb vi 5 ustawy z dra 12 zninigżodói A JE SĄ he 6 ae o z pó 2) Pete Hem stone „A A. ja
+? prawem auterskim jak utwory Meracke surah pra majjkawe dc Greys Polem tometowi Norek a aw, |
+x kiżey stosuje pańonalzacj pide Oraz (neo zabucziwczeńia EOB nimu;taveiionyn kopia a + JA
+
+
+
+
+=== STRONA 17 ===
+
+E energetycznego lub zapotzzbowania na chłodzenie „W Je! oS 5 4
+
+EN ISO 52016-1:2017
+
+3.2.2
+
+temperatura zewnętrzna
+temperatura powietrza zewnętrznego
+
+[ZRODLO: ISO 52000-1:2017, 3.2.3]
+
+3.23
+przerywane ogrzewanle lub chlodzenie
+
+schemat ogrzewania lub chłodzenia, w którym normalne okresy ogrzewania lub chłodzenia występują naprze-
+miennie z okresami zmniejszonego ogrzewania lub chłodzenia, lub ich braku
+
+3.2.4
+
+temperatura wewnętrzna:
+temperatura robocza
+
+średnia ważona temperatury powietrza i l dei tempeałury promieniowania w środku strefy cieplnej
+Uwaga 1 do hasła. Temperatura wewnęlrzna jest przybliżoną temperatura roboczą zgodnie 2180 7726.
+
+Uwapa 2 do hasła: Temperatura robocza jest termnem stosowanym w niniejszym dokumencie.
+Uwaga 3 do hasła WISO 520174 podano bardziej ogóną definicję. , /
+
+(> Y
+[ŹRÓDŁO: datempertuy wewnętrznej 1505200041 2017, ae (NN dodano Uwagę 2 3d0 hasła]
+temperatura aeiańczą wewnętrznego | eee
+temperatura eheraheerter wewnętrznym, b _ Md 4 LT
+średnia temperatura promieniowania WKFS LI
+
+jednolita temperatura powierzchni środowiska We'knętrznego, v w której Leiter pomieszczenia wymieniłby
+
+taka samą ilość ciepła na | GR ee ne Jaką ' wymienia PY exert ehh hs temperaturze
+
+poweena Dano | SZRECE What SELERECCEEESSEELL EES?
+
+| oagelspidcbkicha tes Fe wi La BES AR i
+- minimalna temperatura wewnętrzna BABA Fodzzna dródnich olrżztye ogrzewania [ub maksymalna
+TYS TY dysk w ere a podczas TE | okresów chłodzenia . FETĄ Ą
+
+_. wewnętrzna (winnie re beka bbc dd ALLS energetycznego lub zapo- :4%1
+_ trzebowania na ogrzewanie, lub wewnętrzna (maksymalna zamierzona) temperatura do obliczania obciążenia a
+
+4
+
+te a E Ę - -
+
+| 8 5 11 U | R 3 LS ERY
+A * ‘Ve Ę |
+
+Uwaga 4 do hasła: fa i czas trwania (model) są określone w normie w w. module EPB M16. Mirtytatki metod
+miesięcznych I sezonowych wartość nastawy MOŻE: obejmować korekię ; z powodu sporadyczności, jak określono w 66.11.
+
+E diżęew RREGSRRRE’ ŁZA ŁERYERRYSYYKE sterowania systemem. \
+
+329 a2 s i EE U A A k t ń $ 4 3 Li ę ‘ R = 3 Ę — ea
+natezenie promieniowania słonecznego 8 3 4
+
+gęstość mocy promieniowania padającego na powierzchnię, i doraz strumienia promieniowania padającego
+na powierzchnię i jej pola powierzchni lub Gw enetgi Se padajacy na sosnę w
+jednąstkę” pola tej powierzchni ; fe 4 LA k 2 8.53 1 AE
+
+=
+
+yt
+
+pronto: 150 52000-1:2017, 326] LERERELLELS DS REEGG ESE
+
+R m z 4
+zgoane z zn. 8 um dustawyz anta fZwrzzśna 202 re nownazaq) [Dz Une 165 poz 13532 odżn. zm) Sy: kB Normy z są orreorz . | 15
+przez sutersk m jak Utwory hterache. B aurgrskce prseńg majathowe do mch przystiguyą Poisioeme Kamaedowi Norsake scones (PHN)
+£ Hog stowuja parzótaki: s ków GAZ sf so zabazzizezocid rzad niapiarekicnyfa kogatw abe a = kg
+
+
+
+
+=== STRONA 18 ===
+
+a en eo ROEE moz Ez EE zzwe DJ
+
+EN ISO 62016-1:2017
+
+3.2.10
+napromieniowanie energią słoneczną
+ciepło słoneczne padające na pole powierzchni w danym okresie
+
+Uwaga 1 do nasła: Energia padająca na jednostkę pola powierzchni, obliczona przez całkowanie natężenia promienio-
+wania słonecznego w określonym przedziale Czasu, CZĘStO godzinę lub dzień (ISO 9486).
+
+[ZRODLO: ISO 52000-1: 2017, 3.2.7]
+
+3.3 Techniczne systemy budynku
+
+3.3.1
+
+usługa budynku | | |
+
+usługa świadczona przez techniczne bie budynku i urządzenia w celu zapewnienia warunków środowi-
+ska wewnętrznego, ciepłej wody rikista poziomów oświetlenia i i innych usług ease z użytkowaniem
+budynku | RA:
+
+[ZRODLO: ISO 52000-1:2017, 3.3.3]
+
+3.3.2
+
+pole powierzchni usługi budynku Tek: SS PRRPES uslugi) 40 + 7
+część budynku składająca się z jednej lub więcej elementarnych stbóh ODDANY przez określony
+techniczny system lub podsystem budynku | $.
+
+Uwaga 1 do hasła Pole powierzchni obsługi bużynku preez określony obwód instalacji grzewczej, określony obwód —
+instalacji chłodniczej, określony system dystrybucji ciepłej wody użytkowej, tire sm Vikas określony system
+mni Zk określone oświetlenie (Sato sztuczne lub Swialio | ! | |
+
+(ŹRÓDŁO: ISO 520001 2017, 384), SEEREERPET | a
+
+= Ne he 543 Frrliit dfi VLA
+
+inne ushipl budynkal | EEESERS LEST. ow FRRERERLEEELICLERS
+
+usługi świadczone przez urządzenia wykorzystujące miał EESESRL ELEC eee see ah ee
+phage ISO 52000- 1 2017, SP | OKA R RRERRRERIĄ: PECRELCLEC OURS
+Aa EES STEELE | SHA |
+- odzyskiwalna strata ciepła z systemu ty PERCERU LE RCL RE RRR EBRELE GET
+
+- część straty cieplnej systemu, którą można odzyskać w celu zmniejszenia zapotrzebowania na energię do |
+__ ogrzewania lub chłodzenia lub wykorzystania energii przez system ogrzewania lu lub chłodzenia PRE ELE
+
+Uwaga 1 donasła: _ Załeży to od metody. obliczania Metr do obliczenia „odzyskanych AA st oan se szcze-
+
+gółowe lub uproszczone, patrz ISO 52000-1. 2087,15... 41 14 4 ii i i | 1% | ŁR KLIKU
+§ e M k t ‘ [| te |
+
+- Uwaga 2 Go hasła: W niniejszym dokumencie. jeśli nie zastało to bezpośrednia uwzględnione jako beż strat
+w systemie, odzyskiwalne straly ciepła w systemie oblicza się jako część wewnętrznych zysków ciepła. Na szczeblu kra-.
+
+p a MAL M. i OENENEERSE! '
+ŻRóDi0, ISO 52000- ł 2017, 3 3 9, zmodyfikowano Uwaga 1 do hasta edytorsk o bape wiona, a Uwaga 2do
+3.3.6 ve, FEE SEE ee eee ee LULA VA katya kĘĘ
+odzyskana strata clepta z systemu rE RE eR EE i ł ł it id \ i ik 4 % || y rte eEEER RES
+
+część odzyskiwalnej straty cieplnej z systemu, Gdżyskana w celu zmniejszenia zapotrzebowania na energię do
+ogrzewania lub chłodzenia albo do wykorzystania energii przez system ogrzewania lub POD LER ER GER
+
+; Peer eee EER |
+Uwaga 1 do hasła Zależy to od metody obliczania wybranej do obiczenia odzyskanych zysków i strat (podejście SZCZE:
+gółowe lub uproszczone; patrz ISO BZEOCMI Z, nt. 3).
+
+Se ee ee."
+
+PERE ORRADREEERE ESS |
+(ŻRÓDŁO: ISO 52000-1:2017, 3.3. 10; zmodyfikowano, Uwaga 1 do hasła edytorsko poprawiona] tek
+
+4 = oe che ee
+: cc eEEcC eR EEE FY
+
+= 16 | Zgodne z at $ ust | O ustawy z ród |2wrzeżna 2002 F. o neem aétzagi (Dz. U. Ne 165 prz 13502 późn zm.) Poskie Neem 2 oronoce > | R
+7 preemavtarztm jsk utwory lierache. s autorskie pr s makowe do ech przystuguą Posloenu Krmżetom Nor=atzacy name (PEN
+
+kiory tissue pat corm bz peje płbór oraz in « Zabezgrwczenia przed sisuprammiarym kopia : i k ae
++=
+
+
+
+
+=== STRONA 19 ===
+
+LUU%0 19 4
+
+EN 150 52016-1:2017
+
+3.3.6
+strata cieplna systemu
+
+strata cieplna z technicznego systemu budynku ogrzewania, chłodzenia, ciepłej wody użytkowej, nawilżania,
+odwilżania lub wentylacji, które nie wpływają na użyleczną wydajność systemu
+
+Uwaga 1 do nasła: Strata systemu może stać się wewnętrznym zyskiem ciepła dla budynku, jeśli jest odzyskiwalna.
+
+Uwaga 2 do hasła. Energii cieplnej odzyskanej bezpośrednio w podsystemie nie uważa się za stratę cieplną systemu.
+lecz za odzysk ciepła | traktuje się bezpośrednio w związanej normie systemu zgodnie z modułami EPH od 143 do MB.
+
+Uwaga 3 do hasła: Ciepło rozproszone przez system oświetlania lub inne usługi (np. urządzenia sprzętu komputerowego)
+nie jest częścią strat clepinych systemu, lecz częścią wewnętrznych zysków ciepła.
+
+[ŻRÓDŁO: ISO 52000-1:2017, 3.3.11]
+
+techniczny podsystem budynki | seces ae i
+część technicznego sysiemu budynku, icons peniokresiong funkcję (op wyarzanie ciepła, ODA ciepła,
+
+„8
+
+emisja ciepła) eee eee EGU Leah aaah ety cy 4
+
+(ŻRÓDŁO: ISO 52000-12017, 98,1 Saeaee | hae ai 4
+
+3.3.8 z eee OUTTA a 1 KAN
+
+techniczny system badynki! SEDEZREER s
+
+wyposażenie techniczne da ogrzewania, dbdzank) wentyjacj, wilzania, odwilzania, ciepłej wody uzylkowe},
+
+oświetlenia, automatyzacji kontroli budynku oraz produkcji ens elektrycznej
+Uwaga 1 do hasła: "Techniczny system budynku maze odnosi sę o jednej lub kilku usług budyniu (np. ogrzewane.
+
+ogrzewanie | ciepła woda użytkowa). — SERE| ką aah Ki nh SW
+Uwaga 2 do hasła: Techniczny system budynku składa się. z różnych podsystemów. |
+Uwaga 3 do hasła. ain God yore rae seo gej oai worse ote,
+IŻRÓDŁO: 180 52000-1:2017, 23.13] | A | w, LE EEE Ę a al Yeh hh
+
+2 i q 4 $ s : 4 7 \\ i \ 4 i \\ i \ i i te heh || \ = ę | ję i
+
+: 34 Energia . 2 7 Ś 31 i CEES Ss SALE LERELUEELE ESE.
+
+i j AW i | A i iy Ę 3 % 353 4 i. i i | i i \ k LEEK)
+
+EYE: REORARŁZARER KKLKTĘZĘEKĄKE KA
+
+R 3 E z J 2 i : B = 3 s 3 7 ) = — = <= (> = A prz
+2 a. 5 i SĄ -2 - b 4 A | m 3% 3 | =" LE. & i [= le JE = "$> R
+- odwilżanie 8 JRERZADTRKEKEKCERE Ct REE ee Eee
+u 5 i JE | BE SĘ TE e =
+
+|| proces usuwania pary mał: i eee RDS
+
+Si 3 AL |: et & &
+PER LEREERRESEELELE CER GE SSS]
+(ŹRÓDŁO 180 52000-1:2 M7, 145] ERREEEREREERE EEE EGER SS Saat
+| obciążenie płojekfówe | | NZARRE SE | SĘKARE: .
+1 = 4
+maksymalna średnia godzinowa wartość obciążenia wystębuj jąc ca w projektowym o Okrksia klimatycznym: AAA ę
+FEYIZ EGGEWT Ss a 5 . 3 4: 14%2 353 3 2 te & eee
+
+ogon te trdigh © tgiosarh i> KAL | || SSSRELEECUN SELES
+
+x
+
+3
+ciepło, które ma być dostarczone do lub wyprowadzone z przestrzeni LESLEY | ciepinie kozę
+mania zamierzonych warunków temperatury w pomieszczeniu wd: danym okresie > $ 3
+
+E |.
+3 8 jŁ 8 | Ę k $ 4 3 Leet es JER Ee he
+(2RODLO: ISO 52000-1. 2017, 34 13] | RER GRIŁA RER
+EE A 48 SA Soh REGS SERS +.
+=... a" NE ite. a3 STREF 4
+EE Łk ik 3 3. FE A
+Tiree RE AK
+RA. i kS% SARI . .
+Ę ‘ 3 3 8 - Ę 7 k "
+Zgozne z an. * ust b ustawy z dr ia 12 rześnia 2002 r Ooormattagl (Dz U. N 189 paz 1388 z późn. z Persie Nery są © Fromme A 17
+preaem sutersh mysk utaory Herackie s sutorskie pr mire majsłkowe do tech przysługują Poker EETT P NL
+Ę kiiry ROL paiużn uliat= pików o! (a ina Babargiecienia a ż "aji a retiówzyra zwy
+
+
+
+
+=== STRONA 20 ===
+
+|
+
+II
+
+EN ISO 62016-1:2017
+
+3.4.4 |
+
+zapotrzebowanie na energię do nawilżania lub odwilżania
+
+cieplo utajone w parze wodnej, która ma być dostarczona do lub odprowadzona z przestrzeni kondycjonowa:
+nych cieplnie przez techniczny system budynku w celu utrzymania określonej minimalnej lub maksymalnej
+
+wilgotności w przestrzeni
+
+[ŻRÓDŁO: ISO 52000-1:2017, 3.4 14]
+
+3.4.5
+
+wykorzystanie energii na oświetlenie *
+wkład energii elektrycznej do świe oświetlenia
+
+[ZRODLO: ISO 52000-1. 2017, 3.4. 16] |
+
+wykorzystanie energii na inne ousting | SUSEEEEL SE LS AV
+
+wkład energii do urządzeń świadczących sług obit usługami EPB | p
+
+Uwaga 1 do hasła: 'Palrz definicja usług EPB. i’ i RERZAE i ».
+
+PRZYKŁAD. Winoy, schody ruchome tac, tle, koper nie są objęte usugami EPB)
+ [ŹRÓDŁO: ISO 52000-42017, 3447) itt 4d: te 11 |
+
+wykorzystanie energii do Bates, lub ichtousenia NADU lub ciepłej ady ubytków)
+- wkład energii do systemu ogrzewania, chłodzenia lub ciepłej wody użytkowej w celu zaspokojenia zapotrze-
+bowania na a energię odpowiednio do ooówan chłodzenia AY tym odwiiżania) lub SPA, wody RER
+
++: ŹRÓDŁO. ISO 2000-1 2017, 3.4. 410) RDN za u kk a" „+
+EF (wyliadejkticio BA. & wantyłacji | i We RE" kd ;
+See Segerewseie do systemu wen ji do anspor power ARBRE ciepła
+ł ż ! 5  EBE 5 ĘĘ eS ee, BR
+( is „A, ‘ 6 3 a KE M ik L 11 ADEL ŻĘ % Ę 3 R U :%
+BĘ 348 ] Fi 44 ; i He 4 : i i ! i ee k Ę 3-9 3 ‘ Ą U $ 13 A % 1 Ę Ę k ę Ę 5 a seh eee
+paper ek, BEŁYWUUNN KKĘKĘKEN SKK ŁRKKK
+; zad UN GLEKLĘEŁE TAL ARG uy
+en j 3 3 a a. a "SEE ie SĘ ZZ E: T
+eevee ks ry PEEELVLLVAAAY ke REE RERS
+E 8 - = 5 a AR > TE.
+obciążenie zak nia lub odwiiżania 5 + * * STARK Le ee hs
+
+_ średnia godzinowa wartość przepływu masy es wodnej, która ria 2 zostać dostarczona lub odebrana ze Śro. —444 1.
+
+dowiska z W. pete r j gimalnej lub maksymalnej cba ŁYCĘWE rei
+33 e = é 1 = =
+RE | SZAAR LALLY SERRERASS VEC ERES
+
+utajone obciążenie grzewcze i chłodnicze 8 AR oy
+ae w edna goa va wartość ciepła utajone ej w parze wodńej, ‘dora ma być dostarczana do lub odbierana zee ©
+
+„Łaby j celu utrzymania WHLAGETLL powietrza w przestrzeni wah. 5
+
+: 3 = Es ,: 4
+
+aaa Aj ŚMIELEN SILNIKU
+_ proces zapewniania oświetlenia ż Ę 18 4 Pees SIE ey |
+
+PES SRALERSLARREL AVAL żę"
+- IŹRÓDŁO: ISO 52000-1:2017, 3.4.23] | i p 23448 ‘ at 3 sA
+BDZZ EE & Ę a 4 * Ę ‘ . R % . 3
+18 u ai e o ee re z *
+
+earn secs m ye utymry Feradhe a sitorskie pr nrg majejk owe Co rey przystają Polzcena Kam ree | (Pa)
+
+
+
+
+=== STRONA 21 ===
+
+CJ < MED => GBA
+
+EN ISO 52016-1:2017
+
+3.4.13
+(jawne) obciążenie grzewcze lub chłodnicze
+
+średnia godzinowa wartość strumienia ciepła do ogrzewania lub chłodzenia dostarczanego do lub odbieranego
+ze środowiska wewnętrznego w celu utrzymania zamierzonych warunków lemperatury w pomieszczeniu
+
+3.4.14
+chłodzenie przestrzeni
+
+proces usuwania ciepła z przestrzeni budynku w celu osiągnięcia i utrzymania zadanej maksymalnej tempe-
+ralury w pomieszczeniu
+
+[ZRODLO: ISO 52000-1:2017, 3.4.30]
+
+3.4.15
+ogrzewanie przestrzeni | |
+proces dostarczania ciepła do przestrzeni Gadka, w celu osiągnięcia i Utrzymania określonej minimalnej
+
+temperatury PEAT | on | Lin 4
+
+3.4.16 POREZZZRAESEC Seeley om "
+
+wentylacja BBE j %: kd i: © dk |;
+
+proces dostarczania lub usuwania a powietrza środkami naturalnymi i lub. mechanicznymi do lub z przestrzeni
+| [ŻRÓDŁO ISO 52000-1 2017, 3.4.33] ee ee |
+Aegis EEC. SS 2 eee
+_odzysk dajiż z qantylses Sees | SAH ALA Ko |
+
+> om sien Zz pos usuwanego w Gott wymiany y ciepła weniyacyjnego
+
+LIE | A =
+
+4 36 erotyczne waco uytowe (Leek cee eS Lk
+
+4 L Ą 4 ą Ad ki y “= SB"
+
+PŁ ERO właściwości AAAA 334 4 " a: ARE a A LEEKS
+ogólne energetyczne właściwości ża | NER: Ak | £2355
+
+<oceniany obiekt> obliczona lub zmierzona ilość (ważona) Energii | potrzebnej do ARRZA zapotrzebowa-
+‘Nia na energię związanego z typowym wykorzystaniem ocenianego Ge R tym Paa Lee ey: na
+
+„określone usługi (usługi | EPB) | a PEER! a 1 ; A TEL BANS
+Uwaga 1 do hasla ear een ‘ A s 1% ft AR |
+
+energetycznych waścinściużyoych BB" i + A =" ę A. ‘
+
+UL © ib 4 2) = = = Ę Ę E = = > =
+(2RODLO:1S0 6200012017 357) > 2 8: Lees? Ą 1433
+3.5.2 é eS DD ee ; a | 3 k : A * 1% TIRRĘERRRKA
+usługaEPB | HE 3. | DREKZSKKAEE oak
+usługa pady ku uwzględniona w ocenie energetycznych waścwości użytkowych Ex 14%! E |
+Uwaga 1 60 hasla Paz definicja usługi budynku Uwzgiędnione uj to wą krajowy lub regionalny. okreśkny
+w ISO 52000-1 2017, Załączniki Ai B. E kk Ę s% z i
+
+3
+PRZYKEAD Energia wykorzystywana 00 ogrzewania, chłodzenia, , went naan odnżaia, ele wody użyt-
+kowej i oświetlenia A
+
+= 3 : 2 1 a 4 ‘
+[ZRODLO: ISO 52000-1:2017, 3.5 13) ARES + s
+: AE 7 ! 4
+Ę ©
+3 E E it
+Ę
+= 3 =
+Zgozne z ant. $ um 6 ustawy zdra 12 mrześmia 2002 r. o noemaicac) (DE U! Nr 960 poz „1388 z późn zn.) Polsios Neary są ctromore 13
+
+- p'maeema nuersk m jak Ulery Merach=. s aiearzłoe pr mn majątkowe gó rech pi zysluguzą Pos oem bi a Hiconak: synem Fen)
+kiżey stosuja parnotal: stig płód dear || tabetpoecreriaa p PBN NFL 4 pea pia zaj Ę
+
+
+
+
+=== STRONA 22 ===
+
+EN ISO 62016-1:2017
+
+3.5.3
+
+norma EPB
+norma zgodna z wymaganiami podanymi w ISO §2000-1, CEN/TS 16628F1 | CEN/TS 1662971
+
+Uwaga 1 do hasła Te rzy podstawowe Gokumenty EPB opracowano na podstawie mandatu udzielonego CEN przez
+Komisję Europejską i Europejskie Stowarzyszenie Wolnego Handlu (Mandat M/480), wspierają one zasadnicze wymagania
+dyrektywy UE 2010/31/WE w sprawie charakterystyki energetycznej budynków (EPBD). Kilka norm EPB | dokumentów
+związanych opracowano lub zmieniono na padsiawte lego salnego. mańdatu.
+
+(ŹRÓDŁO: ISO 52000-1:2017, definicja 35 14] |
+
+3.6 Obliczanie energii
+
+okres obliczania EB *% UBZERECERA oy
+okres, dla ktorego preeprowadzane są obliczenia | DARA 4 a
+
+Uwaga 1 do hasła” Okres obliczania można podzielić na KK przedziałów obliczania. %
+
+Uwaga 2 do hasła: ora cpn va a an
+dzenie logrzewanle. +
+
+Wa
+
+ee
+
+Uwaga 3 do hasła: Dużość Śoesti dbkcześńa beck sezon grenczy lub. +
+być powers dwu: zastosowaniami. ee" |
+
+w ; am AY BE" - foe JE i
+
+'przedzial obliczania. REKZEKĘEŁEKĘE Ww „KRKA X
+przedział czasu obliczania KR: LIE NE REES R REA A!
+„dyskretny przedział czasu do obliczania energetyczn geń właściwości użytkowych ee ae utes
+
+feRdoto: ISO 52000-1 2017, 3 6. alt
+
+=
+
+a
+
+PRZYKŁAD sedna godzina, Są miesiąc. jeden i SKE lub chłodniczy, jeden mg mó 1
+
+(ŻRÓDŁO: 150 520001: 2017, 3.63; ;zmodytkowanć dodano ein altematywnyj Ę oe Lhe EL oh
+'383 5 243 RESA. wt ik WV RĘKE: AN AGES ELAR OSS S
+“obliczenta ze stretami sprzężonymi - A. af KEEL AKE RA 3 A LĘS 4" Ch k
+
+obliczenia wielostrefowe ze sprzężeniem cieplnym między strefami, uwzględniające dowolne przenoszenie +. mie
+ciepła przez „przenikanie korea Leen między rm KRSYTKEERNINN
+
+= | k a Z = UE ć JB
+= A E a, = i q ©. = * ik a) 3 4 te a ą A ś JEĘ R: = ae * 2S
+obliczenia ze strefami Iniesprzężanymi | k: Ę 3 . 4 * a KE = Ę LRĘ1
+
+obliczenia wielostrefowe bez sprzężenia cieplnego między strefami, REVERE zadnego pr przenoszenia JSK
+
+ciepła porz przenikanie, wentylację lub infitrację powietrza między s strefami - L454 454.8% tk}
+SZEWYZGKZĘSNĘ" RESEESLEERS SECURES.
+3.6.5 & p * 4 y R 5 + = x 3 > J% % ‘ EAS 45
+SAEED ERs AR" LIE 5 1% |RUKIRRŁEKIEELSTEOSTE
+5
+współczynnik zmniejsz cy całkowite miesięczne zyski ciepła w miesięcznej metodzie « obliczania, „celu uzy. z%3 -Ę
+skania wynikającego zim ejszenia zapotrzebowania budynku na energię do ogrzewania REZ SR Ę
+a RUREK: GLERARERAZEJCKKERIKORITE
+* stosunek bilansu ciepła. "BB DE NĄ © 8 2 + k KREĘŁRŁEREEĄŁ SR
+miesięczne zyski ciepła podzielone przez z miesięczne przenoszenie ciep dą | AF . © £ k 1 3 i R
+3.6.7 Me E 3 5 4 5 LR | $ ah MAKA
+
+zysk ciepła a
+ciepło wytwarzane w lub i rdwadżońći do przestrzeni kskdytjonakraiih cieplnie ze źródeł ciepła innych miż
+
+a ©: celowo sa do ogrzewania, chłodzenia lub jprzygołęwania ciepłej wody użyłkowej
+F
+
+s = Ę - 8 Ę a
+20 - £ Zgoznie z at. Bust B uztawy z dra (Z września 2002r. o neamaicacji (D2 UL he 168 pos. 1368 z późn. zm | Polskie Narmy są orranore
+= 1 peso aust orm jek utwory lterache. s aurcesioe pr odpo we nl dok junk | la 7
+> be wy ioe pańónałżecję póków Oraz inne Baberpaecteres fil ned Spik ony kopanie fi
+
+b,
+
+
+
+
+=== STRONA 23 ===
+
+EN 150 52016-1:2017
+
+Uwaga 1 do hasła: — Wewnętrzne zyski ciepla I zyski ciepła od słońca Wycieki pobierające ciepło z budynku, są przykładami
+zysków ciepła ze znakiem ujemnym.
+
+Uwaga 2 do hasła W warunkach ECH zyski ciepła ze znakiem dodatnim stanowią dodatkowe obciążenie Gepine
+przestrzeni
+
+[ŹRÓDŁO: ISO 52000-1: 2017, 3.6.5]
+
+3.6.8
+sezon grzewezy lub chłodniczy : | ę
+okres roku, w którym potrzebna jest znaczna ilość energi do ogrzewania lub chłodzenia .
+
+Uwaga 1 do hasła: Długości SEZONU a do określenia okresu eksploatacji Kręgi technicznych
+
+[ŻRÓDŁO: ISO 52000-1 2017, 366), ! 30
+3895 05050384 PEEL GRATE AW,
+współczynnik przenoszeni ciepła 41 14% % | i IR
+
+re b) ciepła podzielony przez różnicę temperatury RER womódłodwiiskami szczególnie stosowany
+do współczynnika przenoszenia ciepła przez przenikanie lub teins "
+
+uwaga 1 do hasła: W przeciwieństwie do zysku ciepła, sila napędową noszenia ciepła jest różnica między tempe-
+_ rałurą w rozpatrywanej przestrzeni a temperaturą otoczenia po d abe (w Giwe przenikania) lub SRR
+powietrza OTe (w przypadku KRZ ZKE” as ,
+
+3.8.10. SZĘERRZKEZĘŁE *% 4 Li ‘Oy SER ERTL " |
+ciepło dosbwtzżne do  bicdynich przez mieszkańców fiwie: ciepło metaboliczne). oraz’ przez urzadzenia takie
+
+jak sprzęt gospodarstwa domowego, sprzęt biurowy y one m niż energia ee dostarczana ae ROWE,
+chłodzenia lub przygotowania ciepłej wody |. RYN =. Za" 2"
+
+’ i ) 4 uwaga 1 Go hasła: W niniejszym dokumencie, jeżeli + PEAS EAR AREAL SLE
+
+_ odzyskiwalne stra z systemiu wo te jako Część węwnęrznyc zysków dep Abeer AY
+z meza podj decyzję ode apo ea EO WY KOR TE: j
+
+Uwaga 2 do hasła. „zo po saa ce (zmwych) źródeł procesów, które MĄBAAALĄA ŁA 3
+| -- ogrzewania, chłodzenia, lub przygotowania ciepłej dy użytkowej. Ciepło pobierane z budynku, od REUSE
+= Bean do Zac zine (odpływów). jest pije iwa SRK
+
+jĘ >
+SALCE TE = EB
+
+śl ił if
+
+ź ŻRÓDŁO: Iso ) 52000-4 2017, 367; fons „Uwagi 12 do hasta dostosowane] = 5." “ee ee
+ś EE 4 a 4 $ ° JE 5 > Ź k 5 ‘ A) k : ż % Ę Ś $ 3 rĘS e + > * ;
+współczynnik wykorzystania strat 1 JE SĄ s * 2 + PER: i A
+
+współczynnik zmniejszający całkowite miesięczne przenoszenie ciepła imiesiącznej. metodzie obliczania,
+
+w celu uzyskania wynięśląceoo th Rog s EWS K KU do dłodzegaę =a. 5 “eS
+uwaga 1 do hasła: Tradycyjny termin strata’. ee a odnosit s sie odo trybu ogrzewania, zachowano do
+Re Pre eee yi ania. ETA EAT =
+ed ę 5 oe “2S RES ORES RE Se hes.
+ER „OKE SKAŁ R. x 3 ‘ ‘Eudes REGA KCS"
+zyski ciepła od słońca A SEE ee "A * + & > =, % X > i . |
+ciepło dostarczane przez promieniowanie sloneczne wpadające, bezpośrednio lub pośrednio (po pochłanianiu 4
+k w elementach budynku) do budynku przez okna, nieprzezroczyste ściany i dachy lub pasywne urządzenia „BAG
+słoneczne, takie jak przestrzenie Poz cee AH jes i omen: , Ę 4 "<A
+Uwaga 1 Go hasla: Aktywne urządzenia słoneczne, take jak kolektory: słoneczne, są uważane za część echnicznego ć
+systemu budynku a BDZE R” A SERKAN
+s E M 5 ; = — = 1 ws
+z (ŹRÓDŁO. ISO 52000-1:2017, 3640] REZ a : x. j " ie +
+= = = ; | = = 5 . i E bs ‘ ie ‘ R ‘
+= | a | z 1 * 3 A |
+. Zoodne z an Sus Sus zawy z dre 12 mrzeżria 2002r Ono udiaci r U Ne 167 por. 12 882 późn zy sie Normy 3 są GMonone | 21
+= pal swem aifiorsk mn jah iwory lierach=, 8 guint ge. iw dą Pech przywiuazu; pot Noezęśceiena po
+
+EJ Bukit hs za lhe or ua LV, Ma ita ac Asko far rie hed
+
+
+
+
+=== STRONA 24 ===
+
+fii
+
+EN ISO 62016-1:2017
+
+3.6.13
+współczynnik przenoszenia ciepła przez przenikanie
+
+strumień ciepła wynikający z przenikania ciepła przez strukturę budynku, podzielony przez różnicę temperatury
+otoczenia po obu stronach konstrukcji
+
+Uwaga 1 do hasła.  Umownie znak jest dodatni, jeżeli przepływ ciepła wychodzi z mzpalrywanej przestrzeni (strata ciepła)
+
+3.6.14
+okres nieobecności
+
+okres kilku dni lub tygodni bez ogrzewania lub chłodzenia
+PRZYKŁAD Z powodu wakacji
+
+użyteczny zysk ciepła | | Wj
+część wewnętrznych zysków ciepła i | zysków ciepła od słońca, która przyczynia się do zmmiejszenia zapotrze-
+bowania na energie do ogrzewania _ |
+
+[ŹRÓDŁO: ISO se de 36.11] PEETUTLA CLES 4.64
+3.6.16 3 SED ERZE: Lia
+wspołczynnik przenoszenia fas przez veerihylacte | oo by
+
+strumień ciepła spowodowany wprowadzeniem powietrza do zamkniętej przestrzeni przez infiltrację lub wen-
+tylację, podzielony przez różnicę temperatury powielrza wewnętrznego | I | powietrza nawiewanego |
+
+Uwaga 1 do hasła: Znak współczynnika jest zawsze dodatni. umownie znak przepływu ciepła jest dodatni. jeśli tempe-
+ratura powietrza ere Ęt niższa niż Seek szwy aes (strata ciepła).
+
+é=% Lk
+4 Symbole, indeksy dolne i skróty _ = ALES SAULA
+4.15 PP. 225 : ‘ BEES WI j 1 ‘
+; i gołe A =
+
+współczynnik pochianvania promieniowania Sionecznego.
+
+A Lal = — = = ‘ rs)
+oe — — —————- — 4 = — i 3 = =
+
+| parame uray wopółczyiika wykorzysta q ae ea AT
+| czymik redukcji temperatury JRAKEUESĘEZ. : Set
+
+eS
+
+pojemność o e
+
+| ® Godziny ay stosuje się jako jednostkę czasu zamiast sekund przy sumowaniu przeł a mięb: ener-
+| git(W) do ilości ciepła lub energii (kWh).
+
+inz
+
+22 Zgozne z at. 5 ust. 6 ustawy z dny 12 września 2002 r. © ncemaicacji (D2. U. Kr 163/poz. 1380: późn zm) Polze No my są GPronane
+
+poem autor m jak utwory kterach=" s sttorske piers maystioowe Co mch przystugują Posner Kzarrsteizwi Nulieńziy per (PRN)
+bidey siocuje personalize pókór oraz ine Baberpaecieriia przed hiwuci aan paka Swain
+
+
+

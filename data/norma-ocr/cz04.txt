@@ -1,0 +1,2105 @@
+
+=== STRONA 01 ===
+
+POK ee
+
+EN ISO 62016-1:2017
+
+6.5.5.3 Temperatura robocza
+
+Temperatura robocza w strefie ztc i przedziału czasu t obliczana jest jako:
+
+d Fin azztcjt * 6, intcmn,ztcit (35)
+ntopizte;t 7
+
+przy czym, dla strefy kondycjonowanej cieplnie ztc i przedziału czasu t
+ EAAFE wewnętrzna temperatura robocza, w °C;
+Ua temperatura powietrza wewnętrznego określona w 6.5.5.4, w °C;
+
+hae ee średnia temperatura promieniowania, jak określono w ponizszym wzorze, w °C
+
+Średnia temperatura promieniowania jest średnią ważoną temperatury wewnętr znych powierzchni WYSPA
+elementów budynku od elf = 1 do eln w strefie złc i jest obliczana zewzow |
+
+|
+
+>) ( Aes vines) KORRE: Lie ‘ SBE" b
+Onur; amnjztcjt ~ =F ela | | BORE’ , GE is (99)
+| te Peet beh Fe RAR:
+> | | | RA 1 ret GR ee
+Armie  §rednia temperatura promieniowania, we; ja kot | Saas
+A. 3 pole powierzchni elementu budynku eli, a okiedono w 57, w mą, 33
+
+O piepinetiż temperatura w wężie pli= pln demo byk ell, jak określono w 8.5.5 5, wt
+
+6.5.5.4 Temperatura powietrza wewnętrznego eee eee a:
+
+if hy ‘SS i, a + (2 JE le
+
+R %
+
+Temperaturę powietrza wewnętrznego w strefie zło wę przedziale czasu t LBA wyznacza SIĘ, rozwiązując
+
+_ wzory podane w 6.5.6 p, 109 frzędniau ey RZEKA. i ‘ TAL EaE SE
+RER TERRE EE TS
+
+6.5.5.5 Temperatura powierzchni elementu budowanego » " 5 bees
+
+i, 7 +2 R
+AL. 4 ME a
+
+Temperatura powierzchni elementu lt w strefie ztc w przedziale czasu t jest temperaturą węzła wewnętrznego
+pli = pln i jest określana przez rozwiązanie wzorów podanych w w6. 5.6 dla tego przedzialu CZaSU.
+
+UWAGA Zgodnie z konwencją międzynarodową numeracja ! warstw een w elementach  konsrukcjaych jest od
+zewnątrz (numer węzła pil = 1 b goyówiatrz (numer węzła pil = spin). | | EEG’
+
+| Seah ake
+
+6.5.6 Ogólny bilans org sty cieplnej i | 4 | | ‘ ‘ i \ ) i , kę
+6.6.6.1 Postanowienia ogólne Ą i ‘ i | ‘ h j " \ | j |
+Rozwiązać dla strefy ciepnej zt i przedziału czasu CY twzory 165. 52orazt 456 6. 3, które tworzą r macierz kwadratową
+
+[Macierz A] * [Wektor temperatury w węzłach x)= (sor wyrazów wolnych 8] gi eh | (37)
+przy czy, M4 PERS Y a |. BAŁ Li | ' |
+[Macierz A] af | ! Grin) współczynniki polewie stronie wzorów 656.21 6.56.3
+[Wektor By (znane) wartości w prawej części wzorów 6 562i 6563
+
+[Wektor temperatury w węzłach X] Wektor stanu, (nieznane) temperatury do rozwiązania (pli=1.. pln,
+
+AM. eln): (84, iuztrż * a a Fel one O afisze |- + Oshalizze “7
+
+pllalnizteb w YE £ Gadz ninc)
+
+72 Zgosne z art 5 ust Bwstawy Gre 12 września Ms r. o noematagi(Dz U. Ke 766 poz 1388 z późn. zm | Poise Normy ta oronone
+Peewee sizes m jak utwory klerache. s pitonste pras majątkowe ce nchiprzysuzują Posen Komzetowi kprmakrszy namu (PIN
+
+kitry tices parkolislzaz phon ofa Ra Faberstecrenia piled ha upiamnisaTym LOW ali
+
+
+
+
+=== STRONA 02 ===
+
+Cl < UMD «> Giga
+
+EN 1SO 52016-1:2017
+
+przy czym, dla strefy kondycjonowanej cieplnie ztc i przedziału czasu t
+Gy zttanęc temperatura w wężle pil elementu budynku elf, jak opisano we wzorach 6.56 216562 w °C:
+O sock ete temperalura wewnętrzna powietrza, jak opisano we wzorze 6.5.6.2, w °C
+
+6.5.6.2 Bilans energetyczny na poziomie strefy
+
+Bilans energetyczny dla strefy ztc i przedziału czasu t
+
+C eln ven | en
+‘intete
+At r 2 (Aan: hetett ) * 2 Meer Meena  Bimzacztezt 7 > (Ant h che © Spin: elt}
+ei=1 | jwefel) R | elit
+c ih wer | 5 ™ (38)
+“int, ste | bi
+sg "FACE | | Ojntazzte: | + > (He velit Dery wit) Her :boąjł i he
+ys | „fl WO,
+Ji k M
+tfinte" Hnizztczt + sole | Bolzicze + Fares’ Skczózj | || są
+
+przy czym, dla strefy kondycjonowanej cieplnie ZŁE i przedziału | czai t
+
+Cruse  - Wewnętrzna pojemność cieplna strefy, jak określono w 68 11, w JNK;
+
+At | długość przedziału czasuttws; o; | uł ł ; Lin EE
+
+Cntisirese temperatura powietrza wewnętrznego, w w °C; cy | KA BZARE Jl
+
+Prrasrene 1 temperatura powietrza wewnętrznego w "$ret poprzednim przedziale czasu (t — At), w °C;
+Agy pole powierzchni element budynku eli, jak BORE w 6.5. 8, wm,
+
+a 2 współczynnik | przenoszenia PRUE COMA na powierzchni wewnętrznej elementu budyn-
+
+ku eli, określony dla rodzaju ee Sey konstrukcji w 6.5.7, w Wi(m* Ky
+
+! 7 Cree temperatura powierzchni wenę zn elementu budynku. eli we 4 f 4 |
+‘ th ik a. „AL
+ew R całkowity współczynnik wik Ciepia Przez weniylację. dla elementu przepływu wentylacyjnego k,
+jak określono w 6.5.10, 4 Só Lenegay yh LeeLee
+
+KOKA. a KK EE
+
+Oki i _ temperatura powielrza na KARE AA wenn kwchodzącego do strefy,
+wiszwsky ai wc, ree eS KABE RB tę pt
+
+(R 18 i i 5h 1 1 1
++ h 4 i * R NE” RE
+
+Dz temperatura powietrza zewnętrznego, uzyskaną z z „odpowiedniej normy EPB moduł M1-13, w °
+
+E toe BRR 'S REG =
+ie ae 3 30) ogólny współczynnik przenoszenia ciepła damosków: cieplnych, fak określono w 6. 5.8.5, w WK;
+cee Se eS TE 4 A
+fies część koda wewnętrznych zysków, jak tey w Tabi icy Ail (szablon narmatywny),
+"z wartościami i informacyjnymi w Tablicy 8.11; NAKRAREE
+
+1 - ;
+
+k
+
+frote me część konwekcyjna promieniowania słonecznego, jak określono. w Tablicy At (szablon norma-
+
+yy): z wartościami informacyjnymi w (ay B. MA 3 SEZ”
+tk r % JR:
+fujceze  _ część konwekcyjna systemu ogrzewaniałchłodzenia, a określono w Tablicy A.11 wicbh nor-
+_ matywny), z wartościami informacyjnymi w Tablicy B.11, w m%; do obliczenia zapotrzebowania na
+
+>. energię dla określonego systemu mogą obowiązywać określone MADA uzyskane z odpowiednich
+o "norm EPB moduły M3-1 i M4- -(1 I a 4 | ZĘ!
+
+5 & R
+
+Ę
+
+20. SRA | całkowite wewnętrzne zyski ciepla, jak ustalono w 6 65. 12, w WW;
+
+Poorer obciazenie grzewcze (jeżeli dodatnie) lub chłodnicze (jeśli Uednoj w strefie obliczania zte, w prze-
+dziale czasu t, w zależności od rodzaju zastosowanego obliczenia określonego w 6.5 4, w W:
+
+O ołame bezpośrednie zyski ciepła promieniowania słonecznego przenikającego do strefy, zsumowane dla
+j wszystkich okien wi, jak określono w 6.5 13,w W.
+
+Zgodna z art Bust 5 uztywy z dna 12 września S002 r o nzemaczci (DZ LU. Kr 106 paz 1158 z późn. zm | Folzide Nanny 29 eronoce 73
+przyr AVRO pm utaory erative. s suqykie pisa msęstkawe Go nrch przystuguą Polskie Komeetow Korma Sacer) (PN),
+
+kóry skauje pońonsliZać w pików OFAL ie Lalierpeecnenis piled Amu arty Loo A ii
+
+
+
+
+=== STRONA 03 ===
+
+1VU 0 7/0
+
+EN ISO 62016-1:2017
+
+UWAGA1 Wewnętrzna temperatura powierzchni elementu budynku Boon, one NIE JEST Odpowiednia Go oszacowania ryzyka
+kondensacji.
+
+UWAGA 2 Szczegółowe wyjaśnienie równań w 6.5.6.2 1 6.5.6.9 patrz ISO/TR 52016-2'!
+6.5.6.3 Bilans energetyczny na poziomie elementu budynku
+
+6.5.6.3.1 Postanowienia ogólne |
+
+Każdy element budynku zostaje Podzicony tystetyzowany) na kilka równoległych warstw, oddziełonych
+węzłami
+
+W przypadku nebizażkicniebćh elementów bódyiyk liczba węzłów wynosi 5 (węzeł pli = =... 5), gdzie wy-
+stepują, odpowiednio, jeden węzeł powierzchni zewnętrznej, trzy węzły weet elementu budynku i jeden
+węzeł powierzchni wewnętrznej Pery do. wre) ‘ M
+
+W przypadku elementów mających kontakt z gtuniem liczba wężsów wynosi I również 5, dla kombinacji warstw
+opisanych w normie EPB moduł M2-5.2: ustalona warstwa gruntu i podłoga; ze : współczynnikami przenoszenia
+ciepła na powierzchni zewnętrznej zastąpionymi pee przewodzenie errs wirtualnej warstwy gruntu.
+
+W przypadku okien i drzwi liczba węzłów wynosi 2, są LĄ lolitoiódnić cel zańnętrznej powierzchni i we-
+wnętrznej powierzchni (zwrócony do strefy cieplnej) okna lub drzwi. Dla uproszczenia przyjmuje się, że efekt
+pochłoniętej energii promieniowania WETRKE uvenlcatay jest jako PCC GE promie-
+niowanie słoneczne. 5 53 | i JE. ) |
+
+Przegrody debielnina lub dept budynku przylegające do innch budynków lub ech stref kondycjono-
+wanych cieplnie są modelowane jako nieprzezroczyste elementy budynku. Alternatywnie elementy te można
+pominąć lub zastąpić danymi domyślnymi. Tabhca Ę: 12 zawiera szablon FOTO, z roman’ warto-
+ściami heey w eg! B1 żę + 4 Kas |
+
+Dozwółócie są alternatywne opcje podziału ki ede R Jerstakoyicego na A oredbód liczbe wezlow |
+z odpowiadającymi im oporami i pojemnościami cho, | pod warunkiem że zostały. zastosowane przypadki
+weryfikacji KszWYKY w 7. 2 do weliiacji mętocy, a PE od wy qlęeze EPORCH
+
+| To samo duly alternatywnej EES bbkczanić (dkipokakwiejj Wyrazy ciepła przez z promieniowanie (na Pod \. 1
+
+- stawie aproksymacji współczynników konfiguracji) między powierzchniami w strefie cieplnej (patrz wzór 6.5.6. 2). ART
+- Tablica A 10, przedstawiona w6 5.5.2, zawiefa szablon normatywny dla |lychwyborów: między ZRRÓWA EŃ hh
+
+obliczania a metodami allematywnymię Pty yta OF ver eee B. 10, ° A
+
+| „UWAGA ‘Pat także 7.9. Sey W AERŁULIY A: u A 4 AXE AAA M 1 eS
+6.5.6.3.2 "Procedury obliczania |, „A: Les 154 \ ‘ KK ł NU KUKE
+W przypadku elementów neprzezoczytych bans. energi dla węzłów pli = = Ą 6 podań we Wzerach cd (29) i ;
+PO KAR TALERLA RA RRA RRRAE REELS
+
+> | [b A A : Ę ŁA: A Ę ;
+
+Wprzypadku elementow mających kontakt z gruntem obowiązują tes same wzory. zespecjalnie dostosowanymi ;
+wartościami (patrz 6.5.7,3). VES eee a he NK: 4 , 3 k' Leeann ae *
+"W przypadku przegród wewnętrznych Wzór (49) zastępuje się Wzorem (42). i 40 Peake Leh
+
+3 ik
+_ W przypadku 21 i dowi bilans energii dh węzła pli= 1 b 2 podaną ko we Wzorach (80; 1 (4 ». podczas. '
+gdy Wzór wey jest enemy, pomenss węwpórzhe wozy nie kj:
+
+5 = jeż
+2 7
+e
+
+Bilans energii elementu bidynku eli dla strefy zt przedziału czasu t. A % ! \ a rey
+
+= &
+
+74 Zgodne 2 art 3 ust. 0 ustawy grea 12 września 2002 r. o norma zacji (Dz U. Wr 106 poz. 13822 piźn zm.) Poisons Nomry 3 otronione
+pezwem zutorsk m jak utwory bieracjoe. s aworsbe prawa ruzatzese do rect przystuguą (p uskbem, | karżsłowi Kormatzacy neu (PK.
+key s oleae =" kófulżzecje pików otac fe cabarzowcówiu 4 pred disuse efiy m bp tam
+
+
+
+
+=== STRONA 04 ===
+
+c < GD Giga
+
+EN 150 52016-1:2017
+
+6.5.6.3.3 Węzeł powierzchni wewnętrznej
+
+Dla pif = pln (wezel powierzchni wewnętrznej skierowany do strefy cieplnej ztc).
+
+eln |
+k zgi A fr |
+
+- (ha, Tiel a pl ~Vsellit | + A + oh * ei el I 2) [ża |; hp er Osti-eti;t
+l |
+
+Ar = th
+ela
+Atk 39
+-Bepzgłi * Ointaratit 4 0. la Me eG plizełk; | (39)
+elki tot |
+Kpl ze 1.; „KE La R |
+5 a Opteitct- H ie tt m A ) ‘Datiztert \ Jol, c: solizte:ć ae a H/C.c ) dyczte |
+Mat ‘Vi | REY
+
+{hI
+
+przy czym, dla każdego elementu eli w przedział c czasut. ||| 1.
+
+Aux, pole powierzchni (tego lub innego) elementu elk, w strefie ate, jak określono vw 6.5.8, w m”,
+Az Eat pól powierzchni Ax wszystkich elementów budynku M. = 1,. „ eln, w mó;
+
+Osialt: temperatura w węźle pli, w °C. as ł LS ‘ 1)
+
+Betel: - (Emperatura w wężle pli- 1, w C, \\\ ALAA $ 4 k |
+
+że | temperatura powietrza wewnętrznego: w strefie, w tj.
+
+| hi 55 przewodzenie między węzłem plii węzłem pi 4 „jak określono da rodzaju elementu konstrukcyj-
+% nego w 6.5.7, WWAmEK), LAL ey | |
+
+a
+
+Kolzefi ‘ | powierzchniowa pojemność cieplna węzła pli jak określono wi 6. 5 ‘4 w Jm K),
+
+heh E współczynnik przejmowania copa power wewnętrznej przez końwekcję, określony dla
+|. rodzaju elementu KOGA 57, wWł(m*: MESA ek’ |
+
+| DA ae współczynnik przejmowania cepa powerzchni wewnetrzne przez promieniowanie okreslony
+dla rodzaju elementu konsukcyjnego w 6. 5 zw wir Ki.
+
+Opancą . temperatura w węźle pli dla poprzedniego Kina czasu Ta at, w te |
+
+k 3% % =
+
+wraz z innymi zmiennymi i zadekarowanymi w poprzednich wzorach lub w 6 5. 8 2.
+
+% k LA ey JAY LIKE LIKE LATE . Ę>
+Dla pli= 2,2, ple Gaża zt wemetany) LAREREEERERE RED FO
+= 2 ę te im Ę e m = 2 >- E "ARE L
+‘ el 4 | A ‘hk NE *% 4 4 * Ę E Ę = xp Wel
+> |. BW + ; a Ę A ht tk 2 +
+€botzi © Bonet | Spit "Holak Bpkekelit =~ wę A 1 (40)
+L " k 4 k ‘he u % . . fs a AL
+. Ł 4 % A - i
+bs hy ł is A My 47%
+przy czym, dla każdego clerics eliw przedzie czasu | JKA
+q 4 Ik k ; % Ś 3 x 3
+cpkęiee | i temperatura w wężie pli+1,wsC; A \\ A 4 1% KAR ć
+‘ik ALR LA 383 R
+Poy ay a ( ; „. przewodzenie między węzłem pila aweziem pit, jak określono dla arodzaju elementu u konstrukcyj
+4 . fiego w 6.5.7, gaj z 3 GA SJR%Z ES 1 LEKKA
+Ę ż 3% 0 3 8 JE 4 :
+
+wraz Z innymi zmiennymi zadeklarowanymi w poprzednich wzorach lub w 6 5:6 2 be
+
+UWAGA 1 Wzór (40) ne doyczy okien zen, żevażelemen te s zielone jk
+
+‘2
+
+godnie z ant. Suet B ustawy z dees 12 mrzeżnia 2002 r. onosmazacjj (Diz U. Ne 163 poz 1285 z późn zn | Polskie Normy są otranone 75
+Piwa aLtorS< M jak ufory Merache. s sitorskie prawa majatkowe cio mech przyskezną Folsieme Komieto mi Nomnaśz scyjnema (PHN)
+liózy slócuje pafkonalzację płków Gai live zabazzwczea grad nibuzcare a tyn hoped
+
+
+
+
+=== STRONA 05 ===
+
+EULA 100% /8
+
+EN ISO 62016-1:2017
+
+6.5.6.3.5 Wezel powierzchni zewnętrznej
+
+Dla pli = 1 (węzeł powierzchni skierowany na zewnątrz ):
+
+/
+K pltzeh
+a A Nowell | Meet eli * by ell Bon: elit ho; „ai: 8, pli+ 1;eli;t
+K pie (41)
+At : Opnęeli;t-1 + (Reese + Meret): Be Dost
++ Oyo: stisel (opat + boki Fon. obistielit )- Doky;eli:l
+przy czym, dla każdego elementu eliw przedziale Czasu c"
+Ou: temperatura środowiska zewnętrznego, Ki określono dla rodzaju elementu konstrukcyjniego
+„wB5.7,w'C; „ERĄ LANE! | „W
+Piceseh współczynnik przejmowania Sólo i po bowierzchńi zewnętrznej bag? octwelicie jak określono
+dla rodzaju elementu konstrukcyjnego w857,w Wim: K); |
+Decca & % współczynnik | przejmowania ciepła po powierzchni wewnętrznej przez promieniowanie, jak okres-
+lono dla rodzaju elementu konstrukcyjnego w 6.5.7, w wi(m*: eK);
+"A
+
+Azoheż i współczynnik pochłaniania promieniowania słonecznego na powierzchni zewnętrznej jak okre-
+Slono dla rodzaju elementu konstrukcyjnego w 6.5.1 5.7; | \ ’ kk
+
+Irokdintotelót | bezpośrednia część (z wyłączeniem okręgu Ma ADA hótężónia promieniowania sio-
+
+-  necznego na elemencie, o kącie nachylenia Bei kącie WORA Yeh, it z odpowiedniej
+| normy EPB moduł M1-13, w wim, 1% U 4 «1 |
+
+ PRFRARZAH rozproszona część (łącznie . ż oak Akon, Malężeńia pfomieniowania soviet antics
+
+_ na elemencie, o kącie Swą ROTY Yet ORE CENTS AOGRY EPB
+moduł M1-13,wWłmć, 5 4 4%! „GRAŃ
+
+A 2
+
+: | EK | współczynnik tcc bleed, ch ‘cba helt btesinlatachch ebcioitch ok wa
+0. ślono w Załączniku F. Stosowany w oh obliczania wistolnych przypadkach, dodatkowo
+— określany jako współczynnik (A zewnętrznych alemagiói okna k, ind lub
+
+= przegród nieprzezroczystych Towne | 44 + LL L%
+
+hy
+KU KZ A
+
+Oyyaliz + | (dodaikowe promieniowanie cieplne dugfaiowe doń nieboskionu, jakokaeśono w w 6. ie ta 3, win?
+
+Bai 4 kat nachylenia elementu (ed póziomu, mierzony 14 góry) uzyskany z danych PORY
+SZ] elementu konstrukcyjnego, w stopniach; a 4% KARE ee ee 8
+
+BE =L05 = JE 3 = Ę -- 4 ys h s 4 KANN KKA :
+
+Ya. | > kat orientacjielementu, uzyskany 2 danych geometryeznych koniaku kolalakcynajo. w stopniach
+
+(wyrażony jako’ ‘géoaraficzny kat azymutu r rzutu POWA nec noransh
+“7 konwencja: kat 2 z połodnia, na wschód dodatni, 1 na i zachód ujemny); eT
+a b a a 4 ko 1 I LĄ Ye
+
+wraz z innymi zmiennymi zadoklarowanyni w poprzednich u wzorach lub w. 6 5 8 4)
+
+UWAGA Z wspóźczynnik redukcji zacienienia a podano wy funkcj czasu t mozna by to a jecnak uprościć do wartości mie-
+| EW eS patrz Zażącznik F. 4" ‘ts 5,1 Ye z %
+
+a le i . ES
+
+UWAGA 3 Żadna z wartości tempertuy weaneremyeh węzłów Crome 0 obliczona awiym paragate nie jest FADARA |
+
+do oszacowania ryzyka kondensacji ©
+
+Es |: k We 1 A =
+
+UWAGA4 „ Szczegółowe wyjaśnienie równań w6 56 2i 6 5 6 9 pat ISOTR 5201621,
+6.5.6. 36. > Wezet powierzchni zewnętrznej w przypadku przegrody wewnętrznej
+
+Jeźli dotyczy (patrz Tablica A 12 i Tablica B 12 wprowadzona w 6856. Ą 1), przegrody wewnętrzne (np. podłogi
+lub ściany) w strefie cieplnej (dwie odsłonięte powierzchnie) lub między strefą cieplną a innymi budynkami są
+
+modelowane podobnie, poprzez przypisanie właściwości przegrody do geometrycznego środka jej konstrukcji
+|] przyjęcie adiabatycznych warunków brzegowych w tym położeniu:
+
+16 Zgoane z a6 um. BD ustawy z dra 12 września S002 r. o manaiezci (Dz VU. Me 169.pcz. 118 z póżn. zm) rasie Mommy zą Baromora
+peewee suflorsiten jak utwory Merache » autorskie pave majatkowe co mech przysięgą Foscsnu Komiełtowi Nore Se szy nem (FW
+kóry ctosuje porzonałcają póków Guat inne Pabebprecbertia gile 1 musta reticd ya kufeowi aiw
+
+
+
+
+=== STRONA 06 ===
+
+aww iw |
+
+EN ISO 52016-1:2017
+
+Dia pli = 1 (węzeł powierzchni skierowany na 'zewnąlrz:')
+
+Hozyah z; Rrevek = 0, Gzolpine = 0i Pes reine 4 0 | (42)
+
+przy czym, w przedziale czasu t
+
+wszystkie zmienne są zadeklarowane w bópzedich wzorach lub w 6 5.6.2.
+
+W przypadku konstrukcji asymetrycznych środek można aproksymować NEK + 4 ścodkiem masy kon-
+strukcji.
+
+UWAGA 5. Biorąc pod uwagę stosunkowo niewielki www es lo wystarczająco ookladnie pene
+
+6.5.6.3.7 Przenoszenie TERA do przyległych stref kondycjonowanych cieplnie
+
+iT
+
+Jezeli przylegajaca przestrzen iondyaignivecio’ Gepinié jest strefą ciepina ocenianego obiektu i wybrana jest
+opcja obliczeń jako sprzężonych cieplnie stref cieplnych, zastosowanie mają zasady obliczania określone w Za-
+lączniku D. W innych przypadkach. element konstrukcyjny przyległy do strefy jest traktowany jako wewnętrzne
+POS (np. podłogi lub ściany) między strełą PA a wł: AN ee ‘igang powyżej.
+
+ce
+
+6.5.7 Właściwości węzłów zależnie od typu konstrukcji. 4 , ¥ » |
+6874. Postanowienia ogólne La AA
+
+jed 4 =
+
+ciwości fizycznych na właściwości dla warstw
+
+w poniższych rozdziałach podano ród) przekztalcakią yła
+i nda gruntu, i przezroczystych elementów cadyka
+
+(węzłów), crores dla; UCR AEETOCEYRVEN, Przy
+
+Alternatywne techniki przekształcenia można wibtadi Skreślić: Tablica A10, pieetstzwiónii, w 6. 5. 5.2, zawiera
+szablon normatywny do wyboru między. zalecanat techniką przekształcenia ; a TE Boman prze-
+| ksztalcenia z informacyjnym wyborem dómyśln POL Tablicy. B, ęk R z dk ‘Gk
+
+(5 4 INE"
+
+Ę j te, _ = ‘ Re 4 1 z
+= = -4 7h 4 4 % w" e > =. , dE z ! k=
+6.5.7.2 Elementy iezzroczyste ótany dachy i tp. : LA" eh ae KE SAE YEE eS
+
+ę lk a 3 || = ' = | Ę = c =» e
+= 3 > UJ f AR x Z
+„Wszystkie zmienne pa lewej stronie Cd zadeklarowane w658. Oke oo 2
+2 ss i ts, 3, 3 La
+KZZĘRKEA BE SĘ * WER. WE EL: 4% 114 536 =
+7 | ż l 2 AL 4 3 * ba 4 J 4% 4 4 ię 46 s
+AW 6 ie Se 18 5, 1% JC JĄ 38 62 R z
+Przewodzenie węzłów: ROW KULKA ‘ ALEUSE ES ES ET
+6 ę Se 473 14% ki IR Le! k SĘ ZĘ
+Przewodzenie myc pł węiem pl określono sko. |: ALLRED
+, 1 = RB 5 TE" z
+= 4 2 - H L * 4 JB, } 15, . =s) 7 Ss = k
+ADA NELL AKAKLRKKKKKKKAN
+bęlącii = KJ SELLELELEBEERRERE RR SEN EES RS
+So l2: eli” ze = 1 + 8 2. JE 5, X W ż 3 ~~ & M. s 3 w oS A
+R a WE z a h l je b | 4% 4 R X - s = 5
+celi SIER. KE KIE BĘ ok ba . 4 *
+€ 2 | ; A rid ż ‘ 4 a 4 & z ‘ ; M 3 A 4 4 a x k M &
+3 5 , 4 . > 4 z 1 | 4 R = 1:1, a L te a = =
+
+Rees, AA cieplny nieprzezroczystego « elementu budyn el jak określono w 465. 8, w m. KIW.
+
+3
+
+= ty
+
+We półczynniki przejmowania sabia po powierzchni: |
+
+: Wawnciand i zewnętrzne wspólczynniki przejmowania ciepła po powierzchni na drodze konwekcji i promienio-
+- wania, elementu eli, hg, zależne od kierunku przepływu ciepła oraz bn HNL ceeds ! ręki okresla sie z normy
+ISO 13789 2017, 9.5, w Wi(m-K).
+
+Zgome z art 3 ust 0 ustgwy z dra | mrzeżna 2002r. o nosmazacgi (Dz. U. Hr 153 poz 1363 z pdźn. zm.) Prizje Homry 24 mromone 77
+preven) siferskm jak uteeory bteracloe © autresb e peers maysthoves clo rech ayaa, i Cainer) korestwi Wore a (heme (PN
+bicey 5) mia poet et algae me pekow fal fee zał ela Det! pli nr MUSt Sey testy! 1 kę Za sk mit
+
+
+
+
+=== STRONA 07 ===
+
+EN ISO 62018-1:2017
+
+Pojemność cieplna węzłów:
+
+Przyjmuje się, że każdy nieprzezroczysty element należy do określonej klasy pod względem rozkładu masy
+w konstrukcji. Specyfikację dla każdej klasy ustala się na podstawie Tablicy A. 13, Informacyjne specyfikacje
+domyślne podano w Tablicy B.13.
+
+W zależności ad klasy konstrukcji w odniesieniu do rozkładu masy w konstrukcji, powierzchniowa pójemność
+cieplna węzła pif elementu nieprzezroczystego eli rozdzielona jest na węzły w następujący sposób
+
+Klasa | (masa skoncentrowana po stronie wewnętrznej): 4
+
+i | 4 “ q (i Ap | a 4 TĘ M I
+Kęilieli = Kou Kalsiek = Kinet 0, LEM EES EERE LER TEE SE AM: 4
+Klasa E (masa skoncentowana po snie zewnętrznej) | SELEY a uf
+Mitel = Kite = © Kens =O She eet ahh i dw !
+Klasa IE rz! rozdzielona na stronę wewnętzną i zewnetzna) “yy 4
+Kplzieli * = Kplzielt = tei = = =O. s |
+Klasa D (masa równomiernie rziożena) Te
+| | SEL ERE EY: VRSELES UES & ES Lisa)
+| Pa 4 JA NY BM. BA WARKERAKELKE LAN
+tn yn = LeU ry 5 GERRELERER SEER:
+p "SILNIE" z = k E
+LIKE NŁTE'! Ę
+PEER nA ŁA: JE EL ŁK 5
+Ln Ss & eS
+Ee Sy 3 eS 2 ARE Oj
+Kyle = Metta = kawi Ma 4 | Ls ję" k +" 5 ER"
+4 PZU. 3 4 3 % LĄ es (47)
+PrZYCZYGA (ŁA ee lei" = GE" Seeene se’ AAS +" 4
+Kona; powierzchniowa pojemność ciepina elementu nieprzeztoczyśie oli iP k określono poniżej, w (m).
+4 “ KĘ 4% + A
+
+Przyjmuje się, że każdy nieprzezroczysty Alehcni nalezy do jednej: z z ograniczonej Szy klas o danej wartości
+powierzchniowej pojemności cieplnej dla kazdej klasy, i Kauop: w. Ji(m* K). Klasy z wartościami powierzchniowej
+pojemności cieplnej elementów konstrukcyjnych Określa się na | podstawie: z. gk 4. 1 The SREY
+fikacje domysine podano w Ur B. 14. 1s ves: s% | ę
+
+Dopuszcza się alternatywne metody bizi wzi deka przez rieżwizjsh elemen.
+ty budowlane. TablicaA. 10, przedstawiona w 6 5.5.2, zawiera szablon normatywny do wyboru między zalecaną
+metodą es a melodą alternatywną, z teneziyn MOCE dowy 8% 44 w Tablicy B.10.
+
+UWAGA Patrz także 6.5.6.
+Temperatura środowiska zewnętrznego:
+
+W przypadku elementów konstrukcyjnych przyległych do środowiska zewnętrznega temperatura otoczenia
+zewnętrznego w przedziale czasu t, 6,, we Wzorze (41) jest równa temperaturze powietrza zewnętrznego,
+8,,., określonej z odpowiedniej normy EPB moduł M1-13.
+
+78 Zgozne z at £ un 5 ustawy I Ura 12 mrzeżnia Or r. o normacaci (Dz U. Ni 168 poz. 1786 z późn. zw.) Polsloe Normy są oronwma
+Povey sutorsican jae utwory Merąche. s autorska pray’ rupykowe Oe rech przystzzyą Posten Korastow hormakr = ynamu (PIĄ
+
+kłóry słocje taiaOfialżsć 6 Meow Otaż foe zabarpacitefku Efied aiw arekrem b agen Wa en IT)
+
+
+
+
+=== STRONA 08 ===
+
+EN 150 52016-1:2017
+
+W przypadku elementów konstrukcyjnych przyległych do strefy hiekondycjonowanej cieplnie k, temperatura
+środawiska zewnętrznego w przedziale czasu t, 8,, we Wzorze (41) jest równa temperaturze stref y niekondy-
+cjonowanej cieplnie, 8,,, 4, jak określono w 6.4.5.3, w *C.
+
+Jeżeli przylegla przestrzeń kondycjonowana cieplnie jest strefą cieplną ocenianego obieklu | wybrano opcję
+obliczania dla stref sprzężonych cieplnie, zastosowanie mają zasady obliczania określone w Załączniku D
+W innych przypadkach: element konstrukcyjny do przyległej strefy traktuje się jako przegrodę wewnętrzną
+(np. podłoga lub ściana) między strefą cieplną a innymi budynkami, jak opisano w 6.5.6.3.
+
+Współczynnik pochłaniania promieniowania słonecznego:
+
+Współczynnik pochłaniania promieniowania słonecznego, A,.peh, NA ZEWNĘtrZNEJ powierzchni elementu nieprze-
+
+zroczystego eli określa sie z Tablicy A15 (szablon normatywny), z miormacynych, wartościami domyślnymi
+podanymi w Tablicy B.15.. 9”
+
+6.5.7.3 Elementy przyległe do gruntu ||. AR
+
+Wszystkie zmienne po lewej stronie wzorów są zadeklarowane w 656.) ; i
+
+Liczba węzłów: GES EATER 43 51534 oe
+Przewodzenie węzłów: ALI" SERA! xy
+Przewodzenie między weal l węiem li oeóleno jako LKKKĘSA
+z JE ESTEVES LOANS REMI
+Pete ELE ER SAA
+TCA! Gi Forse | c "a3 AWA eR LAZER ZKERIKE
+E = * = 4 = Pi m, _1 = % ; Ss Ę 5 4 N 7 4 > HM Wh : :
+ees kt Sts xc TELE AREBEERSRER EEE ES
+: = : a | : J. "8 Ą h ai » . a > 3 A ak 5 4 q Z)
+grzeli 1 ' i, IEF 8 aL he JM % 44 a) KK ŁA Ą +
+s = kę Ę Me U 3%
+Rze opór dępiny Re dur elementu rzytegiego do grunt (wączają „woli gruntu) eli jakolaesonowó8 8.2,
+w m? “KW, - a: 4 , Sk AK: 4" =) 4% 4 185 U Z
+= 5 : S's 13 tL th 5 3 of “hk * x Ś = 5 5 3 =
+Renex OPÓT Parę Stall warstwy grunt w modelu elementu podlogin na gruncie ok, jak określono w 6.5.8.2,
+a ‘ Ve A 4 : i 2
+Współczynniki przejmowania ciepla po powierzchni: Ń EA
+
+Wewnętrzne współczynniki przejmowania ciepła | po SSA ial kotwice i promieniowanie elementu
+podłogi i na gruncie eli, ho. oraz Peas wyznacza sę Zz 150 13789: 2017, 9.5, w w(r “K).
+
+Zewnętrzne współczynniki przejmowania ciepła po dhuierźchai przez Kaela p promieniowanie elementu
+
+podtogi na gruncie elf, h,,.„; oraz h,..,),, wynoszą Zero, ale w modełu stosuje się łączne przewodzenie dla oporu
+‘ cieplnego wirtualnej warstwy gruntu: | |
+
+(eel + Nee-ell y= 1/ Rzrwiżetim a (49)
+
+zgozne I art. 8 ust. D Uztawy 2 Oma 2 mzesnia D002 r. o nowwatac! (Dz Li Ne Tod poz 13388 z pdźn zm | Pose Normy 54 chronone 73
+praaem aytęs m jah utwory Merschee s autorska prmra mejetkowie clo mech przywug ją * o>esmu Kordeima Korawiz s Knor"u (PN
+
+Mióey biG patolólcezm pba Olać ire Zabuig-etpela cited nikużracetiwny FA hopicen aoi
+
+
+
+
+=== STRONA 09 ===
+
+|. f
+EN 180 62016-1:2017 MIŁKA LK NA
+| 4 4 t |
+
+przy czym KASŁAA M ANIU 1 LK 1, \
+Rermiaim OPO Cepiny wirtualnej war stwy gruntu, tay w wa582, w (m kw. i powierzchniowa polem
+
+41% 44% R
+
+ność cieplna, Kw Sim). | ATI HURL < sę
+ie p : i pd ię i h \ be 4 \ Mp |. A A * 4 a, M | i ‘ Vg R
+
+e eT
+
+Pojemność ciepina węzłów: |. x n 1 | WALRA LARA KERRY ;
+
+W zaleznosci od klasy Konchribtates odniesieniu w, du LARA konstrukcj, Mobieżzieki = O
+
+dzie tę jest na ak! w knox ta
+
+cieplna węzła plt elementu PRO neg vee
+
+_ Klasa I (masa skoncentowana po st q
+
+m 4; - 1
+« "A, "NB a ik =
+| r, j a LĄ 5 }
+, 8 | a, R i
+* l % 3 5 =
+; 8 k | 4 z 4 |
+M U W. IA 1. = Ę
+' » BM 4
+[| H . 5 |= a
+we U" x) 4. 8-5 *
+
+i h I 4% 7% 1 l 3 -
+I a i> Ny lg WB ię ¥ Ti % | * I | 4
+= ę U $ 3 e = i 3 s L i | a te i h a .
+Ę iL 1 = 1 EJE "NIE ; “le e ę 2 ; "| HL m RR Nhe Ne 4 iz c 1 + Is
+> 4 ts, | 4 a 3 4 kj ż ę % OD IA | 4 Ik 5 k kT t
+Klasa IE (masa rozdzielona atone wewnzną i Wika MELRRREELEEERELLOREERA ROS:
+= a 4 4 a : » i 1 4 = Ę < * 4 Ę + 4 3 A 4 ę 1. LJ Hy #8 s 3 % 5 ! 2, : AR. z 1 ls \ Ę% U 4, i if iL || Q 1 iL z
+2% 46 AE AU VIXA AF RA 4 XŁ% LE EGLE TEKA KKKKKE?
+Kp == 4 LE AE AE 5 AB A Sees 4 eS aBL: 4 UL RR jem ż i 1 le 4 3 he
+E - M) 1 7 2) 5 >
+j = x ae - 0 IE e - > Ę Ę 5 is ; a ż ię k h al ę * © Ę 1 fs We a
+5 = zel a 2 i 3 e a i 8 5 SE 4 1 Ę 1 ALGI AU Ja: 4 5 1% 5 Z
+j KGLĘZTAWREJERŁELE RB ŁASKA" a
+= E . IE = tr. ie = £ a 3 1 Me e. IĘ t k je [3
+s a = je SE R. BE BE ŚL e 4 ly * e = = p Ne Me M. %% a ihe
+Klasa D (masa rownomiemie rozłożona): 3 4 5 Ę Sh ‘e 4 Layee?
+= ® = S - = E = 4 Ę + = 4 . 6 l 4 \
+[3334285 6s 3 ETT EVENEL ELS Lhe ihe yeh vee
+hoe ecte tet ee ee Be ę 2s
+ie . "2 2b ames | Le 4 M | 4% 5 2 kee ee &
+Ss ke 2 Kmg jj = © 4Ę- „BIE A R': if BA R Ę he 4-4
+" .Pplżzelt - *plSel  : 4.533 81%, 3 LĘVTŁĘK KASZE
+KS ie SECZĘRKZKKKEZKE R IKER Leche I
+= z Ę e 1 z a JE = = 4 z = * = JE: iS =) s (= 5 le 4 % = a Ę le h 5 q Mh, be te =
++ 4.6 sre Cae ea k Se Lee tts IE AR"
+2 = K = = . LS - Z * 2 ie, = r A ; 1 ZE 1 EG, JE SĘ >
+E 4:el/ = 5 A © A [Ł'5, FH IE U AE Ę SX. JB 5 Ę ei }& Ł£ =
+L ee SM = a 3 FE TE R f= LI E i= | 4% be le
+445445346 $2254 EEE LIE A x bs Ce. ew KE
+: SZK eee; KE ER VERS VER
++ 2 Ą |
+SEE" 15.1 kĘ ki + =
+
+| KiasaM (masa skoncentrowana w. i) U
+
+) = 3 ę - > : a k 4 IE I = - % ~ 8 M l 3 k
+L = + = = = 7 Te z 4 % 5 : 8 > ; 3 4 ę Ę = y iz io
+
+4 Kpldnei ~ Newelt _ © * Ss a. re pi \ 8 AŁER A ki sę "a te
+: P1234 ESSE Lae = = 5, (50e Lię 8
+i Ę VELĘEĘ | TE Seca. 15 5 x ee Ho Ę |
+x = E_TU | 3E Ś SE EX: 53% Ę = kę
+Les sę 0 Eo: OKE RER LEER
+= 4 4 ce Sh fig * k a iE 4 ES Ę A Ę = IE
+
+z = _ [JE 4 Ne Ę le ie JE oe k Fe
+
+Ve
+
+4 ‘prey czy xy KULA | 4 SOA
+JE. | | y
+
+A Kg k * ponierzcbniowa pojemność cieplna stalego elements gruntu, ak NOSA 502 TAL 0 h i h “A „%
+Uwaga 1 *-Bowezchmiowa pojemność ec ir ie th on i \ A kt „Ą ALESS
+fe a 4 S Ae LR 4. AL. "
+a R Zakłada się, AA derień podłogi na gruncie należy do jednej z ograniczonej liczby klas ba wartości
+powierzchniowej pojemności ciepinej dla każdej klasy, Knej, ¥ „w Ji(m? K). Klasy z wartościami powierzchniowej
+pojemności cieplnej elementów podłogi na gruncie są takie same jak dla | nieprzezraczy ch elementów . ze-
+
+pepe anycn, orzyrgnę Zz Tapley's 14. oRmocjnę specyfikacje domyślne podano w w Tabi aKa B eA t.
+
+& k iz 2 ęĘ 5 5 by. ja 2 h H | M hę
+
+z =F 7 ae. k 3 > AA a RU LG \ , 4 \ { ę \ A.
+"80 A * zgośnez an 6 = Busty z dria | Zm zeżnia 2002 r o neemaizagi (DE. U. N 166 paz. 1383 z sn. zm. oinlve Nc emy :ą crynono
+| | nha ems utwory Mersc bie s autórzki Me prmra nr vat hee de tech pity spają Po leo M móztwi Nowa scyjnemy | iP M
+
+? i bey shay poorecriiah tae w półw 0! aż ów Lałowi powera zad nia rac pan bape „a ate
+
+=
+
+rr
+
+
+
+
+=== STRONA 10 ===
+
+pie y pawn SAARE W pre aa vy cewey A ee SS ee a a młota ag ea ee Ś0 rm oe ae ek ke oe ke nee a a rh FT - m =. [4 £
+
+EN 150 52016-1:2017
+Temperatura środowiska zewnętrznego:
+
+W przypadku elementów konstrukcyjnych podłogi na gruncie temperatura otoczenia zewnętrznego w przedziale
+czasu t, 8,, we Wzorze (41) jest równa wirtualnej temperaturze gruntu, 8,,.,„„, jak określono w 6.5.8
+
+UWAGA 2 — W przypadku elementów konstrukcyjnych zewnętrznie stykających się z wodą, temperatura środowiska ze-
+wnętrznego w przedziale czasu ¢, 6,, we Wzorze (41) jest równa temperaturze wody.
+
+Współczynnik pochłaniania promieniowania słonecznego i promieniowanie niebosklonu:
+
+Współczynnik pochłaniania promieniowania słonecznego na powierzchni zewnętrznej elementu podłogi na
+gruncie eli wynosi zero: @,.).7 = 0. -
+
+Promieniowanie cieplne do nieboskłonu na powierzchni zewnętrznej elementu podiogi na gruncie elf również
+wynosi ZETO: Ponce = O dla każdego PZH CZASU Ę LE k
+
+Dopuszczalne są aliemalywne techniki rozwiązania godzinowych współczynników przenikania ciepła przez prze-
+grody przyległe do gruntu. Tablica A. 10, przedstawiona w 6. 5.5.2, zawiera szablon normatywny do wyboru między
+zalecaną techniką a techniką Senay z informacyjnym wroci domyślnym PORTU w Tablicy B.10.
+
+6.5.7.4 pr zz! okna, drzwi i ST osłonowej 4! Ą : i i r
+
+Wszystkie zmienne po lewej stronie wzorów są zadeklarowane w 6 5. 0.
+| ie j 3 i. 6 Ą j : % = *
+Liczba węzłów:: CLES RES RELES TERS KE ps
+
+TEETRUKLEA GE Spears =e G. M BB R ELKA
+
+Przewodzenie węzłów: SR + 4% 1 ę bę A 4" Laue’
+Przewodzenie między węzłem pla Lwęziem ri) określono jako: ,
+
+L Ę z 5 - 5 a * A 4 4 = k 4 + E = = a Ę 2. .
+A = 1- u © ‘ : | „A % 6 LB I WY % | * EPL Sk & = R h
+* AD Stk EER TERE LES RES TES SEES EE BY
+, - Ee |S E 4 i 15 = J. * SREB JS > We . M TR > : Ę = |
+przy czym | SERA COREL ELERRER EE EER 5% 23
+x ą if +, 4 b NĄ A hh » z = >
+Rae: Opór ceny elementów gli ścian Onion, rzy Sein Sloth, jak określono w 658, wm? KW.
+i = 5 k IS ę - = * =
+> =. ok Ą Ź 2 1% * 4 0 3
+Współczynniki przejmowania ciepła po powierzchni: "15 4 LX 434 4 SS 4854825 4%
+= 5 | = | Ne 4 4 ć 4 % a * 8 Aj c = 5
+
+Wewnętrzne i zewnętrzne współczynniki pi przejmowania ciepła po powierzchni przez konwekcję j promienio- .
+
+wanie elementu eli, his zależne od kięrunkij przepływu cie oraz ht i
+ISO 13789: 2017, 9.5, „w Wie? K). e: Aue" epła or Prot 'ceeln res określa się z normy
+
+R i 2 i ; : te ‘
+Pojemność cieplna węzłów: LES PEERLESS LES 4 \ 4 2 2
+J : A: ‘i = a : a % : a h k M i q k
+
+Powierzchniówa pojemność cieplna, kę węzła pl przezroczystego elementu elt wynosi zero:
+
+ee Par 0 Cun A 443 ę ‘ ys 4 LEG: ‘ 4tG tee (52)
+ap rotclgacdatetrt teh ‘LN ‘, ' (1 4% : i
+
+LU
+a
+
+ią
+R”
+
+W przypadku elementów konstrukcyjnych brzyjcpyth ko shdówikiał zewnętrznego famkerstia środowiska
+
+zewnętrznego w przedziale czasu t, 6,, we Wzorze (41) jest równa temperaturze
+0,.,.,, określonej z odpowiedniej normy EPB moduł M1-13. KA peraturze powietrza zewnętrznego,
+
+w przypadku elementów konstrukcyjnych przyległych do dh niekondycjonowanej cieplnie K, temperatura
+
+środowiska zewnętrznego w przedziale czasu t, 6, , we Wzorze (41 6
+cjonowanej ciepinie, 6,,, jak określono w 6.4.5.4 w °C ( Jiest równa temperaturze strefy niekondy-
+
+Zgodne z art 3 um 6 ustawy z dr a 12 rzezni D002 r o nore tałcacji (Dz U. Ni 166 poz. 1305.2 pan zw i
+
+/ Polsion Mony 53 GFrz Noce
+powa autor m jak: utwory Meracke. » gutorskie prmwg majątkowe dz rech przysugąą Posies Koraeltow Nomaizacy ne mg (PW +
+ald us
+
+hey 6 «ja oe ulicę Hava Oa? ieee ta Les
+
+PeLzeka (lied AGUŻTAIE WCM hig mien,
+
+
+
+
+=== STRONA 11 ===
+
+c < GD GEO
+
+EN ISO 52016-1:2017
+
+Współczynnik pochłaniania promieniowania słonecznego:
+
+Współczynnik pochłaniania promieniowania słonecznego na zewnętrznej powierzchni elementu przezroczystego
+eli wynosi Zero” d,4..k = 0.
+
+UWAGA3 Wpływ pochłoniętego promieniowania słonecznego w przezroczystych elementach konstrukcyjnych jest
+uwzględniony w całkowitej transmitancji energii słonecznej elementu, g.
+
+6.5.8 Parametry przenikania ciepła
+
+6.5.8.1 Nieprzezroczyste elementy budynku
+
+W przypadku zewnętrznych nieprzezroczystych elementów budynków (scian I dachów) 2 z normy ISO 13789
+należy uzyskać następujące właściwości: - LA (5
+
+- pole powierzchni konstrukcji, A wim? ' Lh % & 4" Ks k i
+| — opér cieplny elementu, R,, w (m2 KYW: t VALERA LEK "i
+
+Jezeli element konstrukcyjny jest połączony, z przylegia strefą niekondycjonowaną cieplnie ztu, w przypadku
+zastosowania Metody 2 (Wewnętrzna strefa POPO kę" 1 ztul) z 6.4. 9, opór cieplny należy
+skorygować, jak pokazano poniżej. 1 | SSA: * LAA"
+
+6.5.8.2 Elementy przyległe do gruntu ŁA. +h) x U 4
+
+w frzypadku elementów budowlanych w kontakcie down z grintem, w wia podłóg typu płyta na gruncie,
+podłóg podwieszanych | i piwnic, należy uzyskać GE: właściwości : z ROLNY ISO" 13789:
+
+\ : 3 *
+— pole powierzchni konstrukcji, A w mó i 1 * x U „A !
+= efektywny opór ciepiny podłogi, > uwzgjęniniem upływa gruntu, Ra w veo? ków *
+— opór cieplny, R,,, w (m*-K)AW, i powierzchniowo poierweść cepina, pw w dn k), warstwy gruntu o o Li?
+
+„ bości 0,5 m, KELESEĘ. ae, eine hes
++.
+= „opór wek Re w (me KW poeta pojemność celna, Ia „waka K) wire warstwy
+
+- temperature wirtualnej warstwy anti, D> mo W wc, dla kazdego miesiąca m
+
+UWAGA 1 właściwości obliczono w 18013370. ale wszystkie właściwości przeka ena sgranedzene zap0 posed: a
+nictwem ISO 13789, aby zapewnić spójność Patrz ISQ/TR 52016-2'!. ru A ih KĘ KRA 4"
+
+k ; » |
+UWAGA 2 Miecz informacji na temat pee oblczania dla przenoszenia cegła podłogi nagunce mozna znaleźć
+w ISO/TR 52016-2 ISO/TR 52018-277, aye ikea ks KEKKKIKS KE |
+
+5 SL. he en 2 e -& x. = —& KRA KAC 5
+TZ me” . 1 > 4 eS BET” = Ę z. ć |
+
+6.5.83), Elémenty okna. drzwi | ściany oslonowe) WAALS
+
+4 | X 3% % = a = ik
+W przypadku przezroczystych! ‘elementow budynku (kro, arzwi A lub Ściana osonowa) 2 normy ISQ 13789 x E
+należy uzyskać ky YEKZĘTE! k SERRA ee 4.5 dh W A 52 . A
+
+= współczynnik AA ciepła okien i drzwi, NY oraz Uy wać WO |
+
+| ra
+UWAGA3 współczynnik przenikania ciepła lub wartość U na oznakowaniu CE, w oparciu o normę Konie EN 14351-1
+obowiązuje tylko wiedy, gdy rozmiar danego okna lub drzwi różni się mniej niż o 1 10% od rozmiaru zasłasowanego w EN 14351- 1.
+Cytat z normy EN 14351-1:2005. .W przypadku gdy wymagane jest szczegółowe obliczenie strat ciepła z określonego budyn-
+ku, producent powinien dostarczyć dokładne I odpowiednie, ae & lub zbadane wasi POT aa i Ciepła
+
+(wartości projektowe) dla danych rozmiarów.”
+
+— W przypadku okien, gdy występują żaluzje, współczynnik przenikania ciepła okna z zamkniętymi żaluzja-
+| mi, Ux W W/(m*K), należy uzyskać z normy ISO 13789; niezależnie od tego czy żaluzje (okiennice) są |
+
+obecne w danym przedziale czasu, czy nie, wartości dla każdej godziny uzyskuje się zgodnie z G.2.2.1
+w Załączniku ©,
+
+=
+
+ustawy 2 Onde | Zerzesrem 2002 r. o noamalzacji (Dz U he 168 paz 1359 2 późn Em.) Poste Namy 59 orranone
+sine Komiełwi Nomazacyneru (FW
+
+82 NE Z AM $ Lt
+
+as Eócnkobydi, piu Ba autorske pimas majzłkowe do mech przy supe
+ley sle e fered elnece aÓw Ofaź fi a Labażzowczenia cited nigusramiany in Kaper atari
+
+KA EEE
+
+
+
+
+=== STRONA 12 ===
+
+< GD 22> Ga
+
+EN ISO 52016-1:2017
+
+— współczynnik przerukania ciepła ściany osłonowej, Ui, w W/(m*-K)
+
+— Wprzypadku okna lub fasady ze zmiennymi parametrami współczynnik przenikania ciepła uzyskuje sie dla
+każdej godziny zgodnie z G.2.2.1 w Załączniku G.
+
+Opor cieplny okna, drzwi lub sciany osłonowej oblicza sie jako
+
+1 |
+R, = U. “AN gy Remy | AA | | (53)
+
+przy czym |
+R. - opór cieplny okna lub revit w mz KW;
+
+Raw wewnetrzny opór przejmowania ciepla po powierzchni okien, drzwi i i ścian osłonowych w pozycji piono-
+wej, Rzy = 0,13 Włim*K), IE" M |
+
+a zewnętrzny opór przejmowania ciepła po powierzchni okien: i drzwi w pozycji pionowej, R..„= 0,04 W/(m*-K);
+
+U. współczynnik przenikania Ciepła okna, drzwi lub ściany oslonowe} jako zewnętrznego elementu Kory;
+strikcji, w Wi(m*K). es | KERI RE
+
+UWAGA 4 ' Uzasadnienie zastosowania ewrięliznęgo | i zówiekznejo R; przejmowania deta po pomaerzchni ele-
+
+mentów okien, drzwi I ścian popowych w ustawieniu pionowym wa ISOPTR s2ne-2.
+
+Jeżeli element kanstrbeeyin jest Połączony z przyległą sifefa niekondycjonowana, ciepinie ztu, w przypadku
+
+zastosowania Metody 2 (wewnętrzna strefa ns kondycjón wana GERNE a z A 4. 5, one ey nalezy
+skorygować, jak pokazano RODZA 11% 3% 4 A 1 '
+
+ye LL
+
+6.684 Poprawka oporu ciej n ow rzypadku e we n the
+clepinie („Metoda 2", ztul) m ego | Mi ya 4 Pyle jw w mętrznej s ty riekondycjonowane
+
+"W przypadku Erie Konstrukcji eli połączónego | z ARA uieś riekońdy |
+ycjonówaną ‘bia pines ztu, W przy-
+_ padku zastosowania Metody 2 (Wewnętrzna strefa iekondycjonowana wee aut): z6 4 hg opór Seam
+| Rzh FP DREW TR OT W, 1 ko LKR a |
+
+etc ik (54)
+ha = eat hay -(55)
+zi = Re +h é +. 53
+
+ali $ reek . © (56)
+
+a: % = -. =
+
+niekondycjonowane} ciepinie atu, dia miesiąca m, określony
+
+ae Jk współczynnik dastoctwiats dia strefy
+zgodnie z6.4.5.4;, .
+
+3 Ę A hed = LH 4
+
+het „współczynnik przenoszenia ciepła aS A \ 4) 3% ŁA 3%. 6
+przez kormekcję. po wewn trzn r Tal"
+4 cyjnego eli, uzyskany z ISO 13789 2017, 9 5, w Wien? ) c | el Rake elementy konstruk.
+boja współczynnik przenoszenia ciepła przez promieniowanie dł
+
+bs ugofalowe Wwe
+) elementu konstrukcyjnego eli, dysayc Iso 13789: 2017, 9.5, A K): naj powierzchni
+
+|=
+
+=
+
+Reset współczynnik przenoszenia ciepła | 3 | R ER GM
+ES ; | przez konwekc po zewn JE i?
+cyjnego eli, uzyskany z ISO 13789:2017, Ie PS i: nę! powi erzchni elementu konstruk-
+
+hyęe: współczynnik przenoszenia ciepła FAB WAL
+przez promieniowanie długofalow ZEW
+elementu konstrukcyjnego eli. uzyskany z ISO 13789-2017, es w WK RIO powierzchni
+
+Zgodne z an % us Bustuwyz nis (2 arzeżnia time r. dDnommaczacji [Dz
+
+U Wr 163 poz lig
+Fam nasze jek utiayry Mera 152 poz 1JĘ BI 2 późn. zm. Pis
+
+she Baj ALES she pina magatkcows sm To reach |
+
+zda Mommy: 13 PMNs 83
+hee my BORG gareofalloce płłÓw Olas inne Z ab wry.
+
+Ary Sugg Poles Komżejowi Noomal: sary nemu (PMO
+Seta pI) Nis si Arty r i kufozawizi | |
+
+
+
+
+=== STRONA 13 ===
+
+an in C9 Oo < UG 22> Ga
+
+EN ISO 62016-1:2017
+
+6.5.8.5 Mostki clepine
+
+Całkowity współczynnik przenoszenia ciepła dla mostków cieplnych, Hy... W VV/K, oblicza się według nastę-
+pującega wzoru.
+
+Hintbsz! a > (hee Mpx) | (57)
+
+przy czym, dla strefy ciepłnej zt | |
+
+lat długość liniowego mostka cieplnego k, określona z ISO 13789, w m,
+
+Fx liniowy współczynnik przenikania ciepła liniowego mostka cieplnego k, uzyskany z ISO 13789, w W/(m K)
+UWAGA $ Obejmuje to mostek cieplny krawędzi podłogi na gruncie.
+
+UWAGA6 _ Patrz Uwaga 1w665.2. AREA
+
+Alternatywnie całkowity współczynnik przenoszenia ciepła dla mostków cep Haina w W/K, mozna uzy-
+skać bezpośrednio jako. ogólną (domyślną) wartość z ISO 13789. 1
+
+a
+
+6.5.9 Temperatura przyległej strefy niekondycjonowanej <lepinie . y: Ni
+
+W przypadku zewnętrznej strefy niekondycjonowanej cieplnie (patrz 64 5) uwzględnia sie wpływ przenoszenia
+ciepła przez przegrody zewnętrzne przez przenikanie i wentylację, a także wewnętrzne zyski ciepła i zyski
+ciepła od słońca w przyległej strefie niekondycjonowanej cieplnie poprzez zastąpienie temperatury środowiska
+zewnętrznego (przestrzeni zPwerznej takes strefy niekondycjonowanej cieplnie. |
+
+Swe |
+Temperaturę tej strefy k, zj A w°C, wyznacza sie za pomocą współczynnika dostosowania, bou dla strefy
+niekondycjonowanej cieplnie plus zyski ciepła w gra RER: GER A,
+
+gad: atu M 4 R 4 3 e
+tut Śjntopztcżt-1) bi (eh wę s Hz REŻ LEKKE _ » (58)
+5 3 . 3 - : = a 8 > , Ą a = | 4 : A i } ę . 1 F 5 1
+5 wiriodnia nayniltać : Ce eS 7 a „ u i % 1h M „JA 4 (a 44 j =
+: = | eh. ie 1 5 5 7 » > r 3 3 NK 3 8 = -
+. = + ; = LIE |) = » H' Sa. ly “i 5 = the | > 5, | =
+Oztu;t min(0 ot * Gztu;h,max (mtopstet_1) Bee )iPzrwe ) 1 oy 4 Re ee SIE" : (59)
+oraz i =. Ng Fo * “Se fs s “al BR ee IK %L Jk > SR
+z j > y z “ De >, 4 Ń c L. ke = 5 k 4 . k = = 5 h 5 i ‘ =
+Penidenscue = Precinct * Pradze U. SERA! | SLIK IL" 4 RE & we (60)
+K : 4 . » 3 k + 4 jej | * R “4 * ą = E 3 = E 4
+5 . 4 5 = * Ą 1 m >. 2 = € c =
+" > 5 % HE, 4 5 : 4 : >
+przy czym, w przedziale czasii [. ; JA LE a Ję" Ł ‘ JB.
+E 4 k. = ie a le
+
+Onropztor i  Wewnelrzna teniperatura robocza w Sari e akanóycjorowanej cieplnie ztew poprzednim prze-
+dziale czasu (t— At), określona zgodnie 26.5.5. 3, w “CG, >
+
+w przypadku wielu przyległych do siebie stref kondycjonowanych dkodcdielak, są ważone AR!
+ze współczynnikiem dystrybucji dla przenoszenia ciepła między w kondycjonowaną cieplnie ztcj a spoą
+niekondycjonowaną cieplnie ZtU, Fzresznym. jak określono w 6. 4. 5. 4; 83. | |
+
+współczynnik dostosowania dla przylegej sry niekondycjonowane} iefirie ztu, W miesiacu m,
+jak określono w 6.4.5. 4, | l
+0; -" temperatura środowiska zewnętrznego, uzyskana z odpowiedniej normy EPB moduł M1- 13, w°C;
+
+ee: 4 współczynnik ograniczenia zakładanej temperatury w strefie niekondycjonowanej cieplnie, uzyskany
+zgodnie z TablicąA 16 (szablon normatywny) z informacyjnymi wartościami domyślnyrni w Tablicy B 16;
+
+2, dient  $uMaAWEWNĘtZNYCHI słonecznych w zysków ciepła w strefe niekondycjonowanej cieplnie ztu, w W,
+
+84 Zgoine z art: $ tet © ustawy z dees 12 wrzesnia 2002 r. o normale (Dz. U. hu 160 paz 1389 z pózn. zm] Polska Normy 14 oromone
+preven sużornki m jsk utazry Fiersrko=_m autorskoe peeve mejątkra= dą mech przystugują Pońskkemu Komselawi Normy scy nemu (PHL
+
+bite) shoe pefkonalizztw Meow Od? ie tebe pee bers Ja NmLĘGAAsATy in Looe ZM
+
+
+
+
+=== STRONA 14 ===
+
+aw * | J "m =" ee ee ee ee date żawi 7? was war | chloe / Mu 2081
+
+< MMO /--> Ea
+
+EN ISO 52016-1:2017
+
+Śmydyzrane  WEWNĘtrZNE zyski ciepła w Strefie niekondycjonowanej cieplnie ztu, jak określono w E 3 w Załącz-
+niku E, w w,
+
+Pydakrymcz Zyski od słońca w Strefie mekondycjonowanej cieplnie ztu, jak określono w E.3 w Załączniku E, w W.
+ERIE suma współczynników przenoszenia ciepla między strefą niekondycjonowaną cieplnie ztu, a przy-
+
+ległą stretą(-ami) kondycjonowaną cieplnie | środowiskiem zewnętrznym dla mięsiąca m, określona
+zgodnie ze Wzorem (3), w W/K
+
+UWAGA 1 Dia uproszczenia nie wprowadza się rozróżnienia WY temperaturą powietrza a temperatura roboczą
+w strefie niekondycjonowanej ciepinie
+
+UWAGA 2 — Uzasadnienie maksymalnej wartości opisano wISO/TR 52016-2""),
+
+6.5.10 Współczynnik przenoszenia ciepła przez weojacię: feriperating powletrza nawiewanego
+i zawartość wilgoci
+
+6.5.10.1 Współczynnik przenoszenia ciepła przez wentylację a hx!
+
+r SLA Hp
+Współczynnik przenoszenia ciepła prick wentylację. dla przepływu powierza ik Hye.ix, Nalezy określić dla każdej
+godziny, edy, z ORO wzorem. - ee
+
+przy czym, dla przedziału czasu t Peaks: AK %,
+
+Hi: współczynnik przenoszenia ciepła dla rze powietrza wentylacyjnego k w WK;
+
+p,°¢, _ objętościowa pojemność cieplna powietrza, jak określono w 6 3 6; w sie? K), .
+
+* "dua strumień powietrza, k, zgodnie z odpowiednią: normą (normami) EPB moduł M55, w mis.
+
+UWAGA 1 Wszystkie istotne przepływy powietrza w eh, takie jak spowodowane wentylacją mechaniczną, pasywną
+
+wentylacją kanałową (wentylacja grawitacyjna), infiltracją powietrza. przepływ PAC do py GK I otwarcie
+WAGES ESSE estar EG Ge ik ki 5 4,
+
+Like = Loo = LĄ = 3 i z = Ma
+4 2S 1% A + iS : 3
+> qi =
+
+La W przypadku przepływu powietrza, ke „dów wentylacji, w tym infiracji pówieliza,. z dodykole Wydano:
+wanej cieplnie Złu, w przypadku zastosowania | Metody 2 (wewnętrzna strefa | niekondycjonowana cieplnie, ztuf)
+- podanej w 6.4.5, współczynnik przenoszenia 41 przez wentylacie, Hai ac określić dla CE! godziny, a
+
+z0odnie z nastębującymwzoteiy.. Ś* RE" SURE 4 * k y 1 ‘SA 548 4
+i . adu = F | = a 5 | ży, a % hi, 3 1 M 4; 1 " x z k EE = = Ę
+| = % b = a ‘4 3 JE, R) ‘ = a 4 7 3 32 A >.
+Peat = B ven ALS Brascc ': ‘lies % 8 ? ite 5 r ‘h & 4 | : * % ś 4 & z 8 2 4 1. )
+z sk =" "ZĘ eS ma. 5 RU 3 M Se Lie -Ę 8 ż WJ % -) 1 6 SS= 0% 3 :
+‘K %* % ę al w x = L= x
+x " t EH
+| JE. visholez rine goiśonana d dla sty niekondycjon onowan anej cieplnie ztu, dla miesiąca m, określony
+zgodnie Z 6464, VLELeES VES a a VAN BRAY
+EE 4 a 4 = Ą AL i e, 3 % u 4. ka 5 -
+| = s BĘ x ę = 4 4 % a > Ł
+wraz Z innymi zmiegnymi zadekiarowanymi w poprzednim FE a: | * 3 z; 3
+k k 4
+
+UWAGA2 W przypadku zewnętrznej (jak BRRR WE. 4 5 4) stresy niekondycjonowanej ciepinie wpłwiemperatury. |
+przyległej strefy ripe ty de. SEP lwzględniany poprzez re strumienia |PoweUra mojego.
+
+C5102; Temperatura powietrza nawiewanego eS ee : 1 żĘ
+
+KURIE Ę
+
+=
+
+> e = % a
+k R ą 4 ę
+
+Temperatura przepływu powietrza nawiewanego elementu kw przedziale czasu t, CR jest równa:
+
+- dla wentylacji, w tym infiltracji powietrza ¢ zewnąfrz. wartość temperatury środowiska a zewnętrznego, Q.5
+uzyskanej z odpowiedniej normy EPB moduł M1-13, |
+
+= W przypadku przepływu powietrza, k, dla wentylacji, w tym intitracji powietrza, bz ipcayteghes zewnętrznej
+
+(jak zdefimowana w 6.4. 5.1) strefy niekondycjonowanej cieplnie: temperaturze strefy niekondycjonowanej
+cieplnie, 6,4, x... określonej zgodnie z 6.5.9; |
+
+Zgodne z at £ um O ustawy z drag | 2 mrzeżnia 2002r. pnosmaczeji [Dz U. hr 166 poz 1353 z późn. zm.) Bplzeja Narmy sa c*romtee 85
+Pore uforhm jek wory Herache. s sutteskie prawa majafkov= do mech rysują I Gales korśsełowi Nremaig acy Penne |P* Mi
+kióry słośniie pareonalzocą płków Olać (ha Zaberpectenta cited Nardi qr sages abe ri
+
+
+
+
+=== STRONA 15 ===
+
+EN ISO 62016-1:2017
+
+— Wprzypadku elementu systemu wentylacji o temperaturze zasilania innej niż temperatura powietrza ze-
+wnętrznego: Gopi Należy uzyskać z odpowiednich norm EPB moduł M5-6.
+
+UWAGA 3 Dołyczy to na przykład podgrzewania wstępnego lub chłodzenia wstępnego, odzysku ciepła (z uwzglednie-
+niem obejścia lub ochrony przed szmnieniem). ale także na przykład powietrza zewnętrznego ogrzewanego przez Ciepło
+
+nad. z wentytatorów lilub przez straty ciepia do lub z kanałów powietrznych przed osiągnięciem rozważanej strety
+cieplne:
+
+Nie dotyczy to ogrzewania ani chłodzenia powietrzem, w którym temperatura nawiewu jest w pelni regulowana
+poprzez temperaturę wewnętrzną (brak podgrzewania wslepnego powietrza, ale ogrzewanie powietrzem)
+
+UWAGA 4 Uzasadnienie podano w ISO/TR 52016-2|.
+
+8.6.10.3 Przenoszenie ciepła do przyległych przestrzeni kondycjonowanych cieplnie
+
+Jeżeli przyległa przestrzeń kondycjonowana cieplnie jest strefą cieplną ocenianego obiektu i wybrana jest opcja
+obkczania jak dla stref sprzężonych cieplne, zastosowanie mają zasady obliczania określone w Załączniku D.
+W innych przypadkach: strumień powietrza z przyległej przestrzeni jest pomijany. ”
+
+6.5.11 Pojemność cieplna środowiska wewnętrznego strefy cieplnej . ie
+
+UWAGA1 Z punktu widzenia ogólnej dokładności wartość wewnętrznej pojemności cieplnej strefy może być przyblizana:
+dopuszczalna jest niepewność względna dziesięciokrotnie wyższa niż w przypadku przenoszenia ciepła.
+
+fo a
+
+Pojemność cieplna środowiska wewnętrznego strefy kondycjonowanej cieplnie ztc jest określona jako:
+
+MĘLIYLA;ZTE Kmsintza; re E Pasięsse
+
+FA, "R a | t
+
+przy czym, dla strefy kondycjonowanej cieplnie ze 5
+
+-
+
+Umievaize / Pojemność ciepina środowiska wewnętrznego strefy, w JK; |
+Kmintaese powierzchniowa pojemność cieplna powietrza i mebli w strefie, jak określono w Tablicy A1 [A (sza-
+blon normatywny), wraz z informacyjną wartością w Tablicy B.17, w J mK); %
+
+As. pole powierzchni uzytkowej podłogi strefy, Określ NĄ? 643 win? VELBEREE
+* E s. © A ‘ BL" a "SL. 1 | ee =
+
+st Je a, ę | 0 A SE A A : i % AE : =
+UWAGA2 Powierzchniowa pojemność cieplna przegród wewnętrznych w strefie jest brana pod osobno (patrz także
+6.5.6 — 6.5.8), aczkolwiek części, które można uznać za bezpośrednio Gosiepne, bez oporu ciepinego, można uwzględnić
+
+w jednostkowej pojemności cieplnej powietrza I mebli, zwiększając len Czynnik. 4 i x A a
+6.5.12 Wewnętrzne zyskiciepla © | 54 NTERAAŁ A! A KRZ YBZY a
+: £ Wy 7 M LIW 2 a Bd > " 1% : 3 a „NE : - 8
+= 4 % AF) 4 Ą x e b 4 Ą h > - i e 4 = | z :
+6.5.12.1 Całkowite wewnętrzne zyski ciepła w strefie kondycjonowanej cieplnie
+: 4 * q s 4 Ą > ł q Ę fl F Ę a " > 3 = 1
+A = = = a " k-" 1 ; i SE z . 4) , ie e Z 7 p s 2 > 7 3
+W przypadku strefy kondycjonowanej cieplnie ztc zyski ciepła z.wewnętrznych źródeł ciepla, ©, W W,
+oblicza się za pomocą wzoru ls 4 Leu uke ree a ue j
+= " = w a q 1 4 B Ć % r 7 =
+
+Natomiast w przypadku przyległych wewnętrznych stref niekondycjonowanych cieplnie (patrz 6.4.5):
+
+*
+
+Pineztcit = intidiriztc;t * >) (1 ee F tecteahy dotiiwdzy | 8 LE 3 (55)
+
+przy czym, dla przedziału czasu t
+
+ne wewnętrzne zyski ciepła w strefie kondycjonowanej cieplne ztc/strefie niekondycjonowanej
+cieplnie ztu, jak określono w 6.5.12.2, w W; |
+
+ŚR współczynnik dostosowania dla strefy niekondycjonowanej cieplnie ztu, dla miesiąca m, jak
+określono w 6.4.5.4:
+86 Zgodne 2 art 3 ust © ustawy z dma 12 września 002 r. o noemafracji (Dz U. Mi 169 poz. 1183 z późn. om.) Poise Normy są chronioce
+
+ve uposkm pak utwory Merscb= waw rine pew nająiizee= ig ech Pity 4 Pane Hormet-t-an Nee Sc scyne my) (Tay
+
+Nery nee fare abt mee Clow Oak ifm Laberieecrenis (Dal DaLĘLTArEWA pr Logo alt beats
+
+
+
+
+=== STRONA 16 ===
+
+100% Jima
+
+5 EN ISO 52016-1:2017
+rórzztyzm współczynnik dystrybucji zysków w strefie ni |
+da ekondycjonowane cieplnie zt etrof
+kondycjonowanej cieplnie zte dla miesiąca m, jak określono w 6 45 4. ety « Lux
+UWAGA EP SO/TR 52016.511 Mae
+spia brie bie pat a sareaecet dation się z oai w procedurach obliczania dotyczących przenoszenia
+i zewnętrznych) stref Niekondycjonowanych depini, | | © Pm ciepła od słońca ca ob YPoW (wewmetrznych
+
+6.5.12.2 Wewnętrzne żródła zysków ciepła w strefie cieplnej
+
+Dia każdej strefy kondycjonowanej i niekond
+ciepła z wewnętrznych źródeł ciepła w strefi
+
+ycjonowanej cieplnie zt i dla każdego przedziału czasu t zyski
+PreodnenW W, są obliczane ze wzoru:
+
+e, niezależnie od tego, czy są, czy nie są regulowane cieplnie,
+
+d inudirzzz ;t (Gacoezt *dingazzej + Vine:
+
+)- Ause:zr (66)
+
+Liat * Tinewasarie " Sint HVAC:2z;e ! Gintproczesa
+
+Przy czym, dla strefy cieplnej zt w przedziale czasu t ah 4 |
+
+Fintoczes jednostkowe wewnętrzne strumienie ciepła spowodowane ciepłem metabolicznym użytkowników
+jak określono w odpowiedniej normy EPB moduł M1-6, w W/m?
+
+Dintsacee® jednostkowe wewnętrzne Strumienie ciepła spowodowane ciepłem rozpraszanym z urządzeń, jak
+określono w adpowiedniej normy EPB moduł M1-6, w Wim?
+
+O mule jednostkowe wewnętrzne strumienie ciepła spowodowane odzyskiwalnymi stratami ciepła z oświe-
+tlenia, jak określono w odpowiedniej normy EPB moduł M9-1 w Wimż
+
+dinewasze: jednostkowe wewnętrzne strumienie ciepłą spowodowane stratami cie
+
+unsvacze: — jednostkowe wewnętrzne strumienie ciepła spowodowane od:
+
+ości właściwe dla tego systemu,
+
+Gintproezyr _ Jednostkowe wewnętrzne strumienie ciepła spowodowane odzyskiw
+
+_ łających procesów lub od dóbr, jak określono w odpowiedniej normie =PB moduł M1-6, w W/ m2:
+
+"Ak
+
+alnymi stratami ciepła z dzia-
+
+Asoc: pole powierzchni użytkowej podłogi strefy, jak określono w 6.4.3,wm.
+ą 1 a 5 F a 4 pa || 3 ; : a x Ę | Uk. a 4 3 4 z = 5 - ą
+
+Zasady obliczania w odniesieniu do odzyskiwalnych Strat ciepła opisana w ISO 52000-1:2017, 81.3 Wni- -
+
+niejszym dokumencie uwzględniono tylko ciepło odzyskiwalne w budynku,
+» L „SIEC W (RE ś +: 5 = 1
+
+anie (już założone) odzyskane
+w systemie lub podsystemie. PE JT RZA JETEŻ |
+
+UWAGA 1 więcej szczegółów podano w ISOFTR 52016-2"" 1 ił PAYEE |
+UWAGA 2 Źródło zimna, usuwające ciepło z budynku (strety), należy traktować Jako Źródło o wartości ujemnej.
+6.6.13 Zyski ciepła odsłońca SIREELARĘ
+
+Ls
+
+6.5.13.1 Całkowite zyski ciepła od słońca w strefie kondycjonowanej cieplnie
+
+Dla każdej strefy kondycjonowanej cieplnie zte bezpośrednie zyski ciepła od słońca, ©... W W, oblicza się
+Z poniższego wzoru: ; RR . |
+
+ęb
+
+aal];rte £
+
+| SKRRARA: (67)
+
+natomiast w przypadku Metody 2 (wewnętrzna strefa niekondycjonowana) z 6 4 5 do jednej lub większe licz
+przyległych stref niekondycjonowanych cieplnie
+
+, LS Ust 0 ustawy z Ores 1 mzężna ZN r. o no"maczacji [Dz U. KH" 16% poz. 19842 piźn. zm j Holsge Nor y 34 Sromore 8
+Joe = aft ELU a a + ę- r RZ w RT kona rne Ph
+
+SLĄCSE jee Wry Visrackhe, & BU ref is [TW atk mę DO Pet) ZłZY MI oe Ne stint Ko wy
+p swe” b s :
+
+
+
+
+=== STRONA 17 ===
+
+iu) a= Ju
+
+EN ISO 62016-1:2017
+
+yin
+
+Gzot:ztc:t z. Gokdinzte;t 4 2) [fa 7 ae *F, ZICzZCU  Doolytiarase | (58)
+ztu=l
+
+przy czym, dla strefy cieplnej ztc, w przedziale czasu t
+
+D.oicerme/emnt bezpośrednie zyski od słońca w strefie kondycjonowanej cieplnie ztc/strefie iekondycjnowanej
+cieplnie ztu, jak określono w 6,5,13.2, w W,
+
+Oven współczynnik dostosowania dla przyległej strefy ztu I POCOO dePpę, dla miesia-
+ca m, jak określono w 6. 4 5 4). |
+
+współczynnik dystrybucji zysków kiępla w strefie ztu nekońdróchowadki ciepinie przypisany
+
+F cate
+
+do przyległej ey kondycjorowanej cjepioli zło a miesiąca m, jak pisestono w 64.5.4.
+UWAGA Patrz uwaga w 6.5.12.1. SR PER ELATAEL ES ou va 6 | |
+6.6.13.2 Źródła zysków ciepła od słońca w strefie cepinej A e K | ry ty 3).
+
+7% Ę %
+Bezpośrednie zyski ciepła od słońca APRA) do strefy, sumowane dla wszystkich przezroczystych elemen-
+tow ube (zwanych PE oknami), wi = ac q win WW stoły. ccc Res
+
+Peo dinatzt * RADNY (aż 9 Latawce Fogg yh ba (- Few “)). KICK 4669
+i ĘĄ. STEELERS W: AY LĄ a |
+przy czym, dla srey cieplnej zt, w przedziale czasu t BRS © u 4
+© odirztć bezpośrednie zyski ciepła od słońca do u zsumowan oknach wi, w prze-
+| _ dziale czasuttwW, RAZA 4 Ly: : 4 | Sates" A LES 5 | |
+doi: | : cały wipókzynnik przenikania energi in słońca przezroczystej części okna wi jak określono.
+Tey WE2S TAL ELE EL EVLA AAA |
+Z BEDĘE pole powierzchni okna wi, jak seb Weivinbeticke przenkania ciepła w 6 6 5.8, Nba wprzy =.
+| padku wystających Komponenti lez) zastosowat pole powierzchni zy CELE ELSA
+Lepdineewee  Natezenie bezpośredniego promieniowania, slonecznego (2 wyłączeniem obszaru okołosłonecz. + es
+(|< nego) na okno wi, 6 kącie b» ib adw kę: eae ey alt ; 1
+EPB moduł M1-13,wW/mę |... A 14343
+
+Inctditaeuce natężenie promieniowania i oleczkch rozproszonego (zu iw PA boat! i olaidęinócz:
+nego) na okno wi, o kącie nachylenia Bui! i | kącie orientacji Yor uzyskane pa Sb Parma
+EPB moduł M1-13, WWI m; NTT RKKŁKA 11 333 |
+
+J
+
+Foobawege  WSpółczynnik ródykcji : zacienienia b da RRAA AAA ych okna. Wi, w przedziale czasu ic
+obliczony ra a Be rodzajów elementów cudow RE 1 normatywnym Załączniku FE
+
+k
+
+Fa ułamek pola powierzchni ramy okna wi, 'stosunek rz rzutu pola powierzchni ramy do całkowitego
+S| rzutu eda pawierzchni oszklonego aenejniokęa wą ik określono we " ei
+
+Bui kąt qSchnenia okna wi (od poziomu, _ mierzony do 96), uzyskany z danych geomeycznych
+R - elementu konstrukcyjnego, w stopniach, k \, a 43 RE! | | ‘
+
+ee kat orientacji okna wi, uzyskany zdanych geometrycznych kdnitctucyhejo w kupniach
+
+(wyrażony jako geografi czny kąt azymutu rzutu poziomego nachylonej Ręsterzcyninomanch
+Ę SrOWNIĘ. kąt z południa, na wschód dodatni, na zachód ujemny). fs :
+
+UWAGA 1 w szypśdh! przezroczystych elementów budowlanych obliczenie współczynnika pircnkinii enengi Sło-
+necznej jest uproszczone. Całkowily wspóźczynnik przenikania energii słonecznej, gz... (przenikanie bezpośredniego
+promieniowania słonecznego plus pochłansanie | efekt (wielokrotnego) odbicia w samym przezroczystym elemencie 1 innych |
+warstwach elementu) przybliza się jako całkowite przenikanie bezpośrednio przez okno do strefy cieplnej. W związku z tym
+
+nie można uwzględniać żadnych dodatkowych elementów absorbujących ani odbgających światło. |
+
+żę Zgodne z art $ umi © ustawy z Ones (2 wrzeżrea 2002 r_ o nezmajeacj (Dz U. N 108 pez 1163 z późn. zr.) Polswe Normy są owroniowe
+fire) GROT M jA LTE y Mersche a nuosrskie ptawya mazgtkowae Cie nech przystgą 1 Posoem 4 homestowi Sige wała sy nem Puk
+
+Wea) ata parkolał Se płk ów otal fee taberpeecteila żal DaLĘ ae rym ofc" afr
+
+
+
+=== STRONA 18 ===
+
+= ps & } whom 14
+
+EN ISO 52016-1:2017
+
+UWAGA 2  Współczymnik redukcji zacienienia podano w funkcji czasu (. Można to jednak uprościć, przyjmując współ
+czynmk stały w czasie, np. wartości miesięczne lub sezonowe
+
+UWAGA3 „Zewnętrzne przeszkody dia elementu przezroczystego” to przeszkody znajdujące się w pobliżu, takie jak
+
+gzymsy lub przyległe części budynku. Odlegle przeszkody można również uwzględnić, w zależności od wyboru dokonanego
+z tego względu zgodnie z Załącznikiem F.
+
+Bezpośrednie zyski ciepła od słońca w strefie niekondycjonowanej cieplnie Kk, Pom dor, w W,określono w E.3
+6.6.13.3 Promieniowanie cieplne do niebosktonu
+(Dodatkowe) promieniowanie cieplne do nieboskłonu oblicza się jako’
+
+Parnetie = Fite Preat: Bose | 5 | rę (70)
+przy czym, dla każdego elementu eli w każdym przedziale czasu ¢
+
+Pune _ dodatkowe promieniowanie cieplne do niebosktonu Z clement w M Wim?
+
+Fzkyes Współczynnik konfiguracji elementu do niebosklonu, uzyskany zTabicyA 18. Informacyjne wartości
+domyślne podano w Tablicy B.18; | Ku
+1 GH współczynnik przenoszenia ciepła przez promieniowanie dla powierzch zewnętrznej, jak określono
+| jako ine w 6.5.8 dla współczynnika przenikania ciepła, w Wim? K),
+
+AB ine średnia różnica między pozoma temperatura nieboskłonu a temperaturą Bowitrzz, uzyskana z Ta-
+blicy A.19. Informacyjne Paroc. domyślne podano w Tablicy B. 19, w K
+
+4 | A
+
+6.5.14 Zawartość wilgoci 1 ulajońe obciążenie et
+6.5.14.1 Obciążenie nawilżaniem i KRD
+
+_6.5.14.1.1 Procedura obliczania jA Th | i
+Obciążenie wigocią do nawilzania, AMY 4% w kgis. hióztędpa do ERAS minimalnej nastawy WROCIC
+
+_ w strefie kondycjonowanej ciepinie ztc, określa się na podstawie wzoru: Le ay
+
+‘5 i R. . A I | ę | !
+
+du F=
+
+TA k 2 3 h 4 I A LS ; A 5 5 * Ls: , JE Ę * t
+Gay Miszcz = “dla ave (semester - ramps) | Glntztcyt 3 oe Z : =
+Gl (lack | : "Kata ES
+MEL WIĘSYYJE (Psetminsee;t intyazztch-1],
+; : z SL . Hee: 8 RE OS Lie 3 =
+0 x ATAK KELKKĘ
+oraz: Gwikkmini= max (Gosia Ą ee ae A 4% NA AALARANRI
+> “ Ę Ją % k 3 4 Jk =
+Obciazenie wilgocią > odwiżania. Ge: FORA w w ks, niezbędne do utrzymania maksymalnej nastawy wilgat-
+ności, określa się na podstawie wzoru SE A: | 4 ik sh tite.
+3 M Se. 5° * a Ua 4 a 41 ‘k M M kt
+ŚDHUdztcje ° Za: Wskst ° (Boczna Kasopk: „)]: F Gine;eit ~ 35 way"
+| Pa: inbjaizte 115% JĄ JE ) EGTR
+| —bszzte;t 7 i At’ (Ga Pingazzte;t=1 i"
+ee Goh = MAX (Gyan o) | 8.3. Ą BR.
+
+Ę
+
+przy czym, dla strefy kondycjonowanej cieplnie zt, w przedziale c: czasu 5.
+
+Gtldiztst obciążenie wilgocią (dostarczanie) do nawilżania niezbędne do utrzymania minimalnej nastawy
+wilgoci, w kg/s,
+
+obciążenie wilgocią (usuwannie) (wartość = 0)z odwilżania niezbędne da utrzymania maksymalnej
+nastawy wilgoci, w kg/s;
+
+Gynuildzztat
+
+sosne Z ar. © ust. 6 ustawy z dny |2 arześria 2002 r. o poems! (Dz U. Nu 103 poz IBS z późn. zm | Polskie Nanny są GPron 89
+29 : aa - ~~
+prawem aiierskm jek ivory Meradbe. @ autorshoe peeves majątkowe do rech pray stuguyy Po cere: Komestowi Moemaic acy rere ae
+
+bidey sicsuje pereonab:eee płżów Ol a2 inte rabezaciwia piw aut dneteony ie hope etesn
+
+
+
+
+=== STRONA 19 ===
+
+m < MDD 22> Ba
+
+EN ISO 62016-1:2017
+Ds gęstość powietrza, jak określono w 6.3 6, w kg/ m”;
+Tyx+ objętościowe strumienie wszystkich elementów przepływu powietrza k „wchodzących do strefy,
+
+jak określono w odpowiedniej normie (normach) EPB moduł M5-5, w m/s;
+Xzepminzter _ MiNIMAlNA nastawa zawartości wilgoci, jak określono w 6.5.14.1.2, w kg/kg suchego powietrza,
+Xsepmansisr _ Maksymalna nastawa zawartości wilgoci, jak określono w 6.5.14.1.2, w kg/kg suchego powietrza,
+
+K<ciplyi zawartość wilgoci we wszystkich elementach przepływu powietrza k wchodzących do strefy, jak
+określono w 6.5.14.1.3, w kg/kg suchego powietrza, w niniejszym wzorze do określenia obcią-
+żenia (odwilżaniem)nawilżaniem: zakłada się, że przepływ powietrza nawiewariego wentylacją
+mechaniczną ma zawarość wilgoci powietrza zewnęlrznego: Xaupimechit = Xe: zast
+
+Gatt wilgoć wytwarzana w strefie, jak określono na podstawie R RCK: w odpowiedniej normie EPB
+moduł M1-6, w kg/s; B' 5 .GELES U 4
+
+Giaat pochłanianie wilgoci Gesthst dodatnia) lub uezdipcja (wartość ujemmnajówi materiałach w strefie,
+uzyskana yti! z Kort Rz CY z leant yaa wyborem w Tablicy B.20),
+
+w kgis,- "R
+- SB
+
+V ntsairee objętość powietrza wewnętrznego w strefie, wm, te 4.03!
+Xenamrjoa © | zawartość wilgoci w powietrzu wewnętrznym w. strefie w poprzednim przedział czasu (¢ = At),
+
+| w kg/kg suchego powietrza, | (2% PERSE EL AN X a |
+Ate 8% długość przedziału czasu f, ws.ż 1 5 4 k 2 * XX ł +" a
+
+a
+
+i c
+CE
+
+Obciążenie wilgocią do nawilżania lub = odwizania można przekszacie w utajone obciązenie cieplne yte" i
+peta ee rea RS SEEM EGLER ER ce IKER L
+
+2 5. > Fs Ń 4 z : A > . f : 1 4 p : A R JA 3 . 1 < 4
+
+przy czym, dla stety kondóycjónówanej KIA czasu A „| aS a: JAN 3
+Puvadzese : utajone obciążenie cieplne do nawalżania w przedziale czasu t, w kgis" yeh |) PLR EVES VES.
+W lk 3 4 $ 4 z AL
+Opuuidzcze * utajone obciążenie cieplne do odwniżania (wartość 0) w prze BĘ asi w kos. KĘ
+A | owe ciepło parowania ody. jak określono w 6.3. 6, w Jiką. u 483 % 1%
+i LF U ik % 4, R ją 4 4 % :
+
+6.6.14.1.2 Minimalna i maksymalna nastawa zawartości wilgoci ILRER 1
+
+Ę . : | OE oe th ‘* 1 4 => s 4 6 A
+
+a
+
+ae
+or
+
+wr
+
+=
+
+5”
+uk
+*
+
+Minimalna nastawa zawartość wigoci dia strefy zte w przedziale czasu wynosi :
+JL a v = 7 % 7 A ‘ 4 = a
+
+4 z Prosser. a Ee A 13% a. 7 JE Sek
+: 100 .Psatiintztcze |  RALKEKKELKEĘSJE 24,
+
+Ksetymin.ztczt = 0,622 - z zę | RELRZERĘEKE (75): |.
+
+ż = 8 3 & 8 3 3: Ek i=. JE
+4 Patan ~ Pinset es | "Bonk PURSES RERA SY
+
+Maksymalna nastawa zawartości "o dla uray JAk: | czasu £ wynosi ) %
+
+Je r ę i, i = k R
+= ‘ : 4 AY 4 4 / = 2 2 a a =
+
+s — s ' = — =f U > 1.
+
+4 1 7 \ Ę £ 2 Ę =. . Ę a > A
+
+Xsetsmaxcztcit = 0,622 x
+
+„JE _ PiotysetiDHU;t \
+= 5 | P atm 100 ' Psatiintztcit
+
+nz 2 Qds acd krajowy: Błąd w oryginale EN. Powdnno być. VW
+™) Qdsyłacz krajowy” Błąd w oryginale EN. Powinno być: „W
+
+50 Zgodne z an. Gust 0 ustawy z dra 12 września ZWZ r. o noma zacji (Dz U. M 0 poz 1389 z późn zm |Fa (złe Normy 14 OPranowe
+przem ssak jek utwory Merarke = autorshie prawa maysthowe co mech przysługują Paskcem Koraetsw kona acyjn=mu IPRS
+
+kiłry ża ip peSadfuiżacw póź ow fal RASA Ta Buprareuciy M k | ELI
+
+
+
+
+=== STRONA 20 ===
+
+Cl < GRR 22> SERBA
+
+EN ISO 52016-1:2017
+
+przy czym, dla strefy kondycjonowanej cieplnie zte, w przedziale czasu t
+
+ SAWIEŃ minimalna nastawa zawartości wilgoci, w kg/kg suchego powietrza;
+| ee maksymalna nastawa zawartości wilgoci, w kg/kg suchego powietrza;
+
+PumrserkUszye Nastawa wilgotności względnej do nawilżania, dla strefy, jak określono w odpowiedniej normie
+EPB moduł M1-6, w %;
+
+PmecerDRliszyt Nastawa wilgotności względnej do odvalzania ek określono w odpowiedniej normie EPB moduł
+M1-6, w %;
+
+Pm ciśnienie atmosferyczne, jak określono w 6.3.6, w Pa. (dh
+Giśnienie nasycenia pary wodnej w powietrzu strefy wynosi
+
+ee wziać UL : aa l | „*
+
+| ile (77)
+
+Psat: sintzec:t 7 611, ax
+
+Omazeez temperatura powietrza w strefie, w przedziale c czasu, id AJ
+
+4. 7 | *
+6.5.14.1.3 Zawartość wilgoci w przepływie powietrza nawiewanego |
+W przypadku wentylacji, w tym iofracj powietrza z zewnątrz, zawartość wilgoci w elemencie przepływu
+powietrza k, Xa;sup x, JESt wartością zawartości. wilgoci w środowisku zewnętrznym, Kavos TA zgodnie
+z odpowiednią norma EPB moduł M1-13. iY PUVA LUV
+W przypadku wentylacji, w tym infiltracji powietrza, z przyległej przestrzeni kowietziej zakłada się, że Za-
+
+wartość wilgoci w elemencie przepływu powietrza I k,: Kaszpk, jest równa zawartości wilgoci w powietrzu tej strefy
+w poprzednim przedziale « czasu (b= Be: x; ą ¥ "A RA A Ak Sy | .
+
+W przypadku elementu systemu wentyacyjnego 2 powetrzem ajm niż deziokokóeó powielrze zewnętrz:
+ne, zawartość wilgoci w elemencie powietrza k, Macka należy uzyskać Zz crane normy Rom), EPB,
+
+moduł M5-6. + GN AWAVALL AAAS NE =
+UWAGA - Śdejtnje b fyi: w kady oljcirzi z bydle pohytachikgdych vie! an’ hb dżekżinonóipoziowie
+centralnym, w celu See’ 2 eh ewer w rozpatrywanej stęeię Serine, na ki PER w6.5.14.2.
+
+4
+
+pie"
+
+=
+[a u":
+=
+
+3
+
+Al
+
+6.5.14.2 Centralne nawilżanielodwilżanie. LA A 41 1 PUAREALS
+é VAWALVALAAAAAS i
+
+Jeżeli obciążenie nawilżaniem lub odwiżaniem ma być pokryte przez przepływ powietrza nawiewanego wenty-
+
+lacją mechaniczną, mipitnalną | a maksymalną wymaganą zawartość wilgoci OPEL meen? oblicza
+
+się jako: | 8 : ie > | AR is a
+
+"a
+
+EJ , z ‘ Ę, : w Pe q § om
+4, 4 t Ga IB R ' +54 & SO i ‘ !
+Xaisu „MUsreqzzte; t = Tae; e rT Lk Bake Z i
+< ję » | 3 p : | Ą 5 | Ie L " i z :
+a E i 4 s > 3 2 3
+KC si ERRRERLE TESTER
+TA sup; DIW reg; ztejt = Wazeżt ~~ 1's a & = BRE! "R
+
+Pa’ Qimecht | EEL Gbea T.
+
+przy czym, dla strefy kondycjonowanej cieplnie zb, i w przedziale czasu t
+
+Xe supiHU/DHUrregutar ~~ WYMagana zawartość wilgaci dla centralnego (odwilzania) nawilżania powietrza nawie-
+| © wanego mechanicznie k do strefy, w kg/kg suchego powietrza,
+
+Ty,mechikt objętościowy strumień nawiewanego mechanicznie przepływu powietrza k do strefy, jak
+724 określona w odpowiedniej normie (narmach) EPB moduł M5-5, w m/s,
+
+oraz z innymi zmiennymi Zadeklarowanymi w poprzednich wzorach.
+
+godnie z an. ust 5 ustawy z dróa 12 września 2002 r. 6 noemiiracgiiDz. U. Kr 165 poz 1380 zpóźn zw.| FqizkipNommy są wonore 31
+p» rze jek utwory Mersche. a s3iżorske przewa majątkowe Gp tech przysugiją Poszeny Kometstow Norze acynemz (PWN
+
+ldżry aiokuw pańmonakzszy (mui Oar ii Peles jo oi4 Sted nwiĘrziiaTy kupóma sm
+
+
+
+
+=== STRONA 21 ===
+
+EN ISO 62016-1:2017
+
+Dane te są wprowadzane do odpowiednich norm EPB moduł M6-5 i M7-5. To, czy system kondycjonowania
+powietrza może zapewnić wymaganą zawartość wilgoci, należy określić w tych normach systemu.
+
+UWAGA — W przeciwieństwie do procedur jawnego ogrzewania i chłodzenia, w których jako moc wejściową podano
+maksymaing dostępną moc ogrzewania I chłodzenia, nie można tego obliczyć bezpośrednio z niniejszego dokumentu, ze
+względu na różnorodność możliwych systemów.
+
+Odpowiednie normy EPB moduł M6-5 i M7-5, w przypadku centralnego (odwilżania) nawilżania, powinny okre-
+ślać dane wyjściowe, które stają sie danymi wejściowymi do niniejszego dokumentu, w postaci rzeczywistej
+zawartości wilgoci w powietrzu nawiewanym mechanicznie, Kisup: cane W KO/KG suchego powietrza
+
+Wynikowa określona dla systemu, zawartość wed w strefie z ztw KC przedziale.czaśu t jest równa
+
+Sle 16) at }* „a imaztć dci ,
+Pa A; kąt Tapupk; Ge intzzłe; t abs złe it At 4 nts, ztcjł =1
+
+Ajncazzte;t = = U = RTZ — (20)
+‘Biles SA Pa | Intaizte (© WP |
+va
+
+przy czym, dla strefy kondycjonowranej cieplnej zt, w przedziale czasu Ą
+
+FARBĘ wynikowa rzeczywista określona dla systemu zawartość ć wód w stefe (da centralnego adwil-
+! ania), w kgłkg suchego, powietrza, ee | 4
+
+ALA. zawartość wilgoci wszystkich elementów UN powietrza k dehodzicjch ko Neto, r,
+| > określono w 6.5.14.1.3, w kg/kg suchego powietrza, 2 wentylacją mechaniczną w tym wzorze:
+Naugzznnchi je = Nasujk cz rzeczywista, określona dla: systemu wentylacji, zawartość wilgoci w powietrzu
+nawiewanym pachenicznie kora należy uzyskać z KGK norm BEA moduł M6-5 | i M7-5,
+
+wraz z innymi zmiennymi zadeklarowanymi w say a | M KĘ 4 j
+Wynikowe, określone dia systemu, obciążenie wilgoci 000 nawitzania, lub z z odwania jest równe: a 54%
+
+| Grot =P Toe Gate’ ad ‘ ż ‘ % NAGE (en
+
+=
+Fr
+
+ła”
+»
+
+M"
+w
+w
+c
+Ww
+NN
+(De eń
+„45
+25
+"ag
+TR al
+
+Ea RZREREKZEKRAKEK |: i AA
+Gonos mat (“Gryomncast 0) Leh A AN VE ERERERELER EELS EEG RUGS
+przy czym, dla strefy kondycjonowane} cieplnie zte w przedzie czasu t „A | 4
+Guustasscrect właściwe dia systemu obciążenie wigocią do nawilża (oslarczanie) w Vikas AAS W
+właściwe dla systemu obciążenie wilg ocą z z odwizama (buka (wartość = 2 0), w gis)
+
+a
+
+Gos sdirziztze
+: SSAA
+U4 ę 3 a * 4 "JE 45 AR
+wraz z innymi zmiennymi zadelrowanymi w poprzednich wzorach. KRYK : i, ot 21
+Przekształcenie p na właściwe dla systemu utajone obciążenie cieplne (nawiżania lub odwalzaia) | oN KLR A LĄ |
+* E & i * 2 * \4 | te 3 L > - 5 | ję
+h . . 8 ' | | s Ą s, j We 1 « |
+W AE Lidke i " a" + I i iL , 5 jl R: 6 4 e. 65)
+
+przy cym, dla strefy kondycjonowane cieplnie ztc, w przedziale Czasu t
+
+O mc utajone obciążenie cieplne do nawilżania właściwe dla systemu, w w kgls 1;
+
+— ZZ NE
+
+“) Odsyłacz krajowy” Błąd w agile EN. Powdnno obyć W
+
+52 Pr an. 5 ust. 5 ustawy z dra 12 mzeżnia 2002 r. o noamalzacji (De U. Ke 165. poz 1388 z późn, zm.) Posie Narty 33 SProniore
+Pee) awm | uło ry Meracke. 6 autor "he pres mejatkocze co nich pr yztuzują Pa <oeny Korret=tow Normaćz acy ner (PMS
+kóry slocuja parńorulzzcję póków Olać View zakazy acrefa - Sra Nm Ura cease ty in kopów air
+
+KOZIE OKNIE ZU asa Raz ank nau zda nad RAZA JAD AERAŹ
+
+
+
+=== STRONA 22 ===
+
+EN ISO 52016-1:2017
+
+Powder  Utajone obciążenie cieplne do odwilzania właściwe dla systemu (wartość 2 0), w kgłs*
+
+h utajone ciepło parowania wody, jak określono w 6.3.6, w J/kg.
+
+we
+
+6.5.14.3 Zawartość wilgoci w strefie clepinej, lokalne odwilżanie lub nawilżanie lub jego brak
+
+Zawartość wilgoci w Strefie zt w przypadku ta (odwilania) nawilżania lub jego braku w przedziale
+czasu Cyest równa:
+
+| NZABRKE | Ay Vinteacze
+D(a: dysk * Xocsup ki 1) * (Gnuyonysste * Gintzzt;t Gabe SS aE | | FloGaatcie"!
+Kintzajztest = ——- “ih ' RET 4 “1 re Vi nw ag z
+Ll "gy us) Fa” „ dnizazzte "ĘĄ,
+przy czym, dla TY kondycjonowanej cieplnie ztc, w" n przedziale czasu rę %
+X nkaitat - wynikowa zawartość wilgoci w strefie w przypadku lokalnego (odwiiżania) nawilżania lub jego
+- braku w przedziale czasu £, W kgikg suchega powietrza, |
+Arspkr '  , Zawartość wilgoci we wszystkich elementach. przepływu polled kichotokóch do strefy, jak
+Sa określono w 6.5.14.1. 3, w kgłkg suchego bank z wentylacją MECHANICZNĄ w tym wzorze.
+j \
+
+, Mamę | Xe zawartość wiigoci w powlietrzu zewnętrznym, ; a %
+
+RBRKKĄ | rzeczywista, właściwa dla systemu wantylacji zawartość wilgoci powietrza nawiewanego me-
+chanicznie, którą należy uzyskać z odpowiednich norm mS YererTiO Wy ene moduł M6-5 i M7- 5
+el dostępna), wos; 14 4 LR *' 1 |
+i URE SKA
+"wraz z innymi zmiennymi zadeklarowanymi w Poprzednich wzorach.
+
+% R „A ha R =, 3 = : =
+
+ń ie: i 2 .
+Wpizypźdkui SN systemu (odwilzania) nah iżania, zawartość wigoci w stefe zte cles rzeczywistą zawano- 4
+ścią wilgoci obliczoną bez systeńmi: = a Leake Lae Lk Ss aes |
+
+ji I © SŁ | 4% 2 Z + =
+
+6.5.1 5 Obliczanie kluczowych danyh ai] z godzinowych danych wy ściowych
+
+x, Si) 4 ik = 1% 5, AB
+A 3 . - W
+Ve » * e : k 3 % 4 A . © E :
+
+6.5.15.1 Miesięczne współczynniki wykorzystania 4 BA A ę JĄ SARENEERERAEGKE
+W celu scharakteryzowania + ida: obliczania, Abgize hopie dane’ miesięczne okchłać są na
+podstawie godzinówych. danych wejściowych zapotrzebowania, na energię do. ogrzewania i chłodzenia. Te
+charakterystyki stosuje się w raportach (patrz 7.1.2.2.1). Te dane są istotne w szybkim zrozumieniu głównych —
+procesów wpływających & na obliczenia oraz o środek do „uzyskania współczynników korekcji I dostosowania hie
+
+|
+
+—
+m"
+i
+
+4
+
+wtecłk wy <ZUGUER ę* TESUARR LRA RA KI .GĄ Ę
+$ KA JE"
+Miesięczny wspolezynic wykorzystania zysków ciepla dla set ciepirej ztci miesiąca m, UZ oblicza
+sięjako ' gą ©. KKEDRERAKKLAKIKEKRĘŁ
+© Quehe:ztcim = k Gites PTL eC PTET LEED & GBS et A
+P Qi gniztejm 5 18 3 4 2 le ee ee JE JA |
+Miesięczny współczynnik wykorzystania strat ciepła Nou „oblicza a się jako: JR FU 1 pa ja
+a A = Śiztc HL 3%: sesh >
+C sztłczm —~ R R |. |Ę 5 Ł Ę LB 16
+UWAGA1 Wyprowadzenie wyjaśniono w ISO/TR 52016-2-2017, Załącznik KI"!
+"sl Odsytacz krajowy” Błąd w oryginale EN. Powinno być „W”
+zgodne z an 9 ust © ustawy z dra 12 mrzeżria A00Ż r. 0 noema cacy (Dz U. he 166 poz 13532 późn zm.| Poskie Nommy są oorońnose 33
+
+pears? autor risk utywony bterache a miozrałoe przewa majstkow= do rach przy stacy | usicemy Komiąstowa Nam | 8 snem (PKM)
+
+kiśsy cię =m pjwtofimizsca pików OfAL Fra Zabezgzeczwiia of Ged IMIĘ ia etic M Loge tele)
+
+eens see ne
+
+
+
+=== STRONA 23 ===
+
+wheres CA YY AA w FF Fa Pe Owe 84282 LA Wet te eS AAA AAA 5 re Bt erases - wel asic: 7 ae eet ee” ates micz ol herent bere kee Cees zmia oe wasi
+pic ypownw cez <ikod sów G J J sal
+a
+
+O < 0 /22> WBA
+
+EN ISO 562016-1:2017
+
+Wartości Oy cherie OTAŻ Qpjogeztem OtrZYMUJE SIĘ zgodnIE Z procedurami dla metody miesięcznej. Konwencja
+znaków dla potrzeb chłodzenia w powyższym wzorze: znak dodatni
+
+Stosunek bilansu cieplnego ogrzewania odpowiedniego do chłodzenia, V/czegm Wynika Z wartOŚCI Qy/cgereem
+OFaZ Qzjc.mzt:m (Patrz 6.6.10)
+
+UWAGA 2 Umożliwia to wykreślenie krzywych wykorzystania zysków i strat dla konkreinego przypadku obóczania.
+Przykłady podano w raporcie technicznym ISOVTR 52016-211.
+
+6.5.15.2 Miesięczne niedowymiarowanie systemu, przegrzanie | niedogrzanie
+
+6.5.15.2.1 Niedowymiarowanle systemu ogrzewania
+
+W uzasadnionych przypadkach roczną wielkość niedowymiarowania systemu ogrzewania strefy cieplnej ztc,
+
+| wartości progowej i, Qyyutkresaztam Oblicza sie jako skumulowaną różnicę obliczonego obciążenia ogrzewania
+
+przy nieograniczonej mocy grzewczej i obliczenie PaPa MZeWCZEJO przy nieograniczonej *) mocy grzew-
+czej w określonym NEC czasut 5.
+
+< : 4 = | k
+Quitichres,i:etezan = 9 001 x Z (ica 7 Wacha) LKS WY" | (87)
+z sumą dla (tie przedziału czasu zt We ciagu roku, „dla którego stosuje ś się nasiępujące warunki:
+! set. 3 ! |
+przy czym, 1, dia strefy kondycjonowanej ciepinie zte 1 Th ; SK
+
+Qumtżresiztean _TOCZNA wartość hieddwinristobahidis syste ogrzewania dla 3 wartości progowe i, tz ‘|
+- "symbolem zastępczym progowego obciążenia Punidshreci, w kWh, :
+
+Giscykd allen rzesz : obciazenie ogrzewania lub chłodzenia z. nieograniczoną FĘ grzewczą i chodniczą w prze-
+
+dziale czasutwW; Ve hah BTRZKSI RR
+Pucidiimene : obciążenie ogrzewania tub chiodzerha aż ograniczoną mocą grzewczą chłodniczą w przedziale
+sz czasu ¢, w W, : A. 1
+
+\ "W J- E 3 „dia
+
+Pitas! | wartość progowa i i= = sq; Zi. s 490 zliczania róznicy, w w; z areca wartości ey ee
+
+tory zapewnia właściwą dyskryminację, na przykład: Dy
+5 dthress = Xe MAX(Pricidistimaerce). WW, -
+gdzie max(Pyc43; phimizct) 10: e ymalpectciążenie © chłodnicze | sw agi tęku oraz = Ch.
+
+- oznacza zakres ulamków:ę” 54%
+Ę R 3 : Ik & 5 I H- a Z
+! e x gl 3 RZ * % = 5 = 5 = 5
+| 5 M TA ALTER NE 5
+zę 0, 0,05, 0,10, 0,15, 0,20 dla i= 1, 2, 3,4, PKAKYAKĘZKĘZZE SA
+6.5.15.2 54 UL. ‘A : k % = 4 a x 4 REKE
+22 Niedowymiarowanie systemu chłodzenia LEX LESLARR ERE LAY
+tą ‘ A he it 4 % SĄ 4 % % SE Ę
+
+w uzasadnionych przypadkach roczną wielkość niedowymiarowania systemu chłodzenia strefy. ect ees ztc,
+
+i wartości progowej i, Quceiives izecom ' oblicza : Się jako skumulowana r IKE «
+óżnicę oblicz :
+go przy nieograniczonej mocyschłodniczej i i obliczentu obsiążenia 2 onego obciążenia prone ze-
+
+ALTER czt. eee Le cplecicaede przy „Rieograniczo nej mocy, *
+Cucihness:ztesan RU 000 Z (Ocun - Pca, | LEAL \ ALG EE
+ATS kazdego przedziału czasu r | w ciagu roku, dla args stosuje się naiępujące wa warunki: i
+(Oy Oycunimnu) SAH RALEDARGREEERG REO EEG WA
+Przy czym, dla strefy kondycjonowanej cieplnie zte. | 14 4 A a" ‘ Lib SSE
+
+Ę = : | = ię =
+
+Quethresistien - TOCZNA wartość niedo ow :
+reiz wymiarowania systemu chłodzenia dla war 8 JL AR.
+do: ŚŚ symbolem zastępczym progowego obciążenia Pucia aj w can progowe| i, gdzie i jest
+
+= Odzyłacz krajowy. Błąd w oryginale EN Pow
+| Odsyłacz krajowy. Błąd w oryginale EN Pow
+
+34
+
+nno być „ograniczonej
+nno być „grzewcze”
+
+Zgodne z art $ us: B ustawy z dny (2 wrzeżrsg
+
+Peer sutorsk m jak ut 2002 r. D mec "ace! (Dz U N 153 roz. 136
+
+| En
+Mary Merache B sutorskie preva ma ża TZ późn zm) Glan Mory 13 Wrens
+SĘ 74% Po sinermy Kamżęłowi Ko-mańzae
+
+eed i ii z tac fates Wy ‘lie ko busts zńiae
+
+kuiżey s iui bell teeth | =. (bli Diaz (EG Faber peer er ka gaj et +,
+
+KO +
+
+
+
+
+=== STRONA 24 ===
+
+1UU'0 SRA
+
+EN 150 52016-1:2017
+
+Gycjdnkne=+ — ObCIĄŻENIE grzewcze lub chłodnicze z nieograniczoną mocą grzewczą i chłodniczą w przedziale
+czasu £, w W,
+
+Oyrjdimsz —  ObciążenąIE grzewcze lub chłodnicze z ograniczoną mocą grzewczą i chłodniczą w przedziale
+czasu ¢ w W,
+
+Pyoiithresa wartość progowa i (i = 1, 2, :..) do zliczania różnicy, w W, z zakresem wartości Bycjdrhrezi KtOTY
+zapewnia właściwą dyskryminację. na przykład: dodaj: = =X, min(Gycjieimztet), W W, gdzie
+pea salim,snere) dęrttyzi obciążenie chłodnicze w ciąqu roku i gdzie X,oznacza zakres
+
+ulam
+X, = '0, 0,05, 0.10, 0,15, 0,20, dia t= 1, 2, 3, 4.
+UWAGA 1 Obciążenie grzewcze lub chłodnicze, , Oucidaree: ma znak umowny: WWE dodatni, chłodzenie ujemny.
+
+UWAGA2 Wielkość niedowymiarowania ogrzewaniałchłodzenia dla, strefy ciepinej ‘ute określana jest również przez
+zakumulowaną liczbę stopniogodzin PO RA wk hi! ris Aa i założonej temperatury (_prze-
+grzanie”), jak opisano poniżej. LĘ 1
+
+UWAGA 3 ARCE: każdy (nny) rozkład częsonościn można wyprowadzić zwartości godzinowych dla miesiąca lub
+
+6.5.16.2.3 Niedogrzanie VE REEELEREER EES. Y % !
+_ Skumulowana liczba ślobriozódin poniżej s Zakiżópij temperatury( niedogrzane) e stref Gepines zt, dia
+wartości progoweej i, Topishretizzcani obliczana hes jako: 1: % [Ls e
+“Toast n Z (owa ię “Bs opie), | (91)
+Zz sumą dla a każdego przedziału c czasu e w ciągu pu dia = stosuje się następujące warunki:
+odzie, dia wota LĄ 4 ŁĄR 4 eh ea 4h eu
+
+Tużresi seca 1 roczna skumulowana iczba gtopniogodzin f poniżej założonej temperatury ua wartości progo- 8 Ye
+k wej i i, gdzie i i jest symbolem zastępczym progowej kC toe tian „WK LĄ:
+PAL 3% wewnętrzna temperatura robocza, jak określono 856 w Ch, ‘A SEER L
+
+> wewnętrzna wartość nastawy dia empeiaiutroboczejda ogrzewania, określona w6 5 5 1, we;
+
++ (
+
+E
+
+2
+
+‘AO vtitheesi | 4. wartość progowa (C= 1 24, de zliczania różnicy temperatury, WK Ly „3
+
+SKRKAKKA
+
+z zakresem wantości: dp JE = 6, 1, 2, 4, dla £ =4, 2 a 4, lub inny żakies wartości Adm jeśli zapeumia |
+
+: &
+
+_ to lepsze rozróżnienie ayskryminacji ARK ik a‘ 4 REKI: :
+
+z SZ. ALTA. „BE a) | A * Ś % 5 ? A NE L. Ę = |Ę
+Dla godzin bez radaky ogrzewania (godziny bez uzytkowników bez (nastawy temperatury) nastawę nalezy
+ustawić na —999 °C. a ae ł ALE ES ę A REKA | +
+W przypadku braku ogrzewania (w ogóle brak nastawy ogrzewania), obliczenie nalezy wykonać dla stale
+" nastawy ogzewatha Omoseziiute = 20 °C. 4% 4% 3.8 4 45 3 %
+
++ 4 86. "PE 34
+
+i § A 5 U ". ŁA AL , BM
+
+Opgonainie dokladniejsze wartości niedog rzania, przegrzania można wyznaczyć zastępując wartość piogową
+zero SZĄ, wartości progowych: 0, +1,+2,..K o | . ‘
+
+6.5.15.2.4 Przegrzanie | | 1%) | |
+
+Rona skumulowana liczba stopniogodzin Powyżej Saltżónej emperatur (przegrzanie )dla strefy cieplnej ztc,
+Toterenan, ODliczana jest jako:
+
+Tonszte:an x V CARES - Orntsset:Cizxte:t ) , (93)
+Łk |
+
+Zgozne 2 ant. śust.B uztywy z Graz 12 wześnii 2002 r. o nomazacji [Dz U. Ne 165 poz 198 z późn. zw] =olskig Nany 54 Głramior e 35
+pzwem mr m jee utwory Merarke s siutorzkie pimgra majstkovże chy i ech crypts Posgeny Komżetow No ustr scy nen (PIK
+
+klówy Sioa pe paikOfialzac = plkÓóre Ofaż now Zał zowC Peli FfiaJ ŃaLĘSAWYTyMA kofożme lian
+
+
+

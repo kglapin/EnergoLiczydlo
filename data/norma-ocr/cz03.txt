@@ -1,0 +1,2130 @@
+
+=== STRONA 01 ===
+
+EN ISO 62016-1:2017
+
+6.3.7 Dane wejściowe z Załącznika A (Załącznik B)
+
+W Załączniku A podano szablon normatywny dla wyborów w odniesieniach, metodach i danych wejściowych
+Domyślne wybory informacyjne w odniesieniach, metodach i danych wejściowych podano w Załączniku B,
+z odniesieniem do szablonu z Załącznika A.
+
+Wszystkie te wybory i dane wejściowe są niezbędne do zastosowania niniejszego dokumentu
+
+6.4 Podział ocenianego obiektu na strefy
+6.4.1 Postanowienia ogólne
+
+Przegląd wszystkich odpowiednich terminów i podstawowych zasad podziału na strefy, w tym stref cieplnych
+i obszarów usługowych, znajduje się w ISO 52000-1:2017, Rozdziały 3, 91 10.
+
+Do obliczeń zgodnie z niniejszym dokumentem, oceniany obiekt (budynek lub część budynku) traktuje się
+albo jako pojedynczą strefę cieplną, albo podzieli się na więcej niż jedną strefę papą Procedury grupowania
+i różnicowania na strefy cieplne podano w 6.4.2.
+
+Zasady podziału na strefy w odniesieniu do zapotrzebowania na ciepłą wodę użytkową i techniczne systemy budyn-
+ku związane z obszarami usług podano w odpowiednich normach yć da: "bd EPB w modułach od M3 do M9.
+
+Podział na strefy cieplne może bi dey sa dostosowania w przypadki obliczania obcrążenia PORNO
+patrz 6.4 2.13. |
+
+UWAGA Wymagany podział na strefy do obliczania obciążenia projektowego nie może być taki sam jak do obliczania
+zapolrzebowania na energie. Wielokrolne zastosowanie sirukiury danych wejściowych może jednak wpłynąć na podział na
+strefy, np. poprzez zastosowanie dokładniejszej strefy (pomieszczenie po pomieszczeniu) do obliczania zapotrzebowania
+na energię, co umożinwia obliczenie obciążenia na URO FrVeT danych wejściowych.
+
+*
+i |
+
+Rozmiar każdej strefy ciepinćj (użytkowe pole powiezchn boslogii i objętość pownetiza) określono w 8 43.
+1h
+
+W 6.4.4 opisano zasady przydziału ilości cepa wymiienianego WY, strefą ores a systemem: związanym
+z obszarem usługowym. TEDE Kok ca BEE
+
+TER | 4 ką. f5
+Bilans cieplny przyległych stref niekondycjaqowanych Labia | Zz BS bicie się w uproszczony sposób,
+patrz 6.4.5. Istnieją dwie metody, w zależności od lego, czy POCZ shat kena seo 8 obliczono na we-
+wnętrznej przegrodzie, czy na Zour, konstrukcji, | |
+
+k ę | |
+
+Jeżeli strefa riekodycjonowaniaj ciępinie ma duży koni: na i bobine l obliczenia, można ja uwzględnić w obli-
+czeniach jako strefę kondycjonowaną cieplnie o zerowej mocy „ogrzewania | chłodzenia, Prowadzi to do do-
+kładniejszej oceny wpływu A niękondycjonowanej GERE YA t 4 2 3 4%
+
+Ostatecznie decyduje się, czy strefy kondycjonowane cieplnie są za zos sprzężeniem Lobkiywi czy bez
+sprzężenia. Patrz 6.4.7. “4 ai MANI | i NINA
+
+6.4.2 Procedury podziału na stety ciepine ii + A 1 | i
+
+4
+i Gy wh
+f \ ¢ \ M
+
+6.4.2.4 Postanowienia ogólne | | Hy : ak | RAR
+
+i i TE ESTE
+
+Procedury pódźżly na strefy w. niniejszym dokumencie są podan ane w niniejszym | rozdziale i | obejmują zasady
+
+określania. stref tęryyii Zasady, te są zgodne z. „ogólnymi procedurami OPADY w ISO 52000-1:2017,
+Rozdział f0ry Pehl TAA RR ł ł
+
+HG MANN
+
+. M SZK R R
+
+h
+
+Do obliczeń zgodnie z niniejszym FERRER ASS barton obieki (budynek lub część budynku) traktuje się alba
+spo Polcdyncza re ciepina, albo parr sie na Mace niż jedną TE cieplną.
+
+48 ! Zgos ne z at. $ um 6 ustawy z da 12 wit mia 2002 r. o nosmalcacji [Dz U. Nr 165 poz 13582  piźn. zm | Polgioe Narmy są ctronare
+p merem ańzróm jsk utwary Meracke. 8 sutoeshie piwa me athowe de rich przysie gą Poskerw Komsztetrwa Nor "maski cynema (PRN)
+kżej siesuja fafkolaiżacj płn diaz nów Zabaipwczea prad Oizuę Facaneatry@ Lopacsia em
+
+
+
+
+=== STRONA 02 ===
+
+TA pz AL IW Peer series
+
+Cc 7 Fem fy wees
+ma DS FP peut (a pete eee KOTÓW ia? a ey
+
+sel pozwala wybrać altematywn
+
+Wyróżnia się następujące kroki:
+
+1. Dla każdej przestrzeni określa się kategorię przestrzeni,
+
+uwzględniając ogólne procedury oceny energe-
+tycznych właściwości użytkowych według NO 92000-1:2017, Rozdział 9. ;
+
+W przypadku dużych otworów między przestrzeniami przestrzenie są łączone w jedną strefę cieplną.
+
+4. Strefa cieplna dzieli się w laki sposób, że zawiera ona tylko siberian które mają ten sam udział kom-
+binacji odpowiednich usług. TF |
+
+9. Przyległe strefy kond
+
+ycjonowane cieplnie można łączyć, zen ap węrunki użytkowania są takie same
+lub podobne. b) PI i x
+
+6. W przypadku obliczeń właściwych dla Selec (patrz 6.5.4 1 i 66. 4 1) strefa cieplna może wymagać
+
+podziału, ze względu na zasady (jeśli istnieją) w odpowiednich, normach Syslemu, co ma na celu pewną
+jednorodność systemu lub podsystemu w strefie cieplnej. 2 ’ 4 2)
+
+1. Strefę cieplną dzieli się w taki sposób, aby strefa cieplna sław pewnym stopniu jednorodna pod względem
+bilansu cieplnego. Kryteria są bardziej rygorystyczne, jeśli występuje żlstriyrh
+
+8 Przyległe strefy niekondycjonowane cieplnie można bąchyć
+
+(ARE
+
+2, Mala strefę cieplną można (ponownie) POAFAŃ z przyległa sel cieplną, sh ma ten sam zestaw usług,
+
+ale inne warunki użytkowania.
+
+| |
+Fe,
+
+10. Bardzo mata strefę cieplną można (ponowtie) Połączyć z rele set cepiną nawet R ma ona inny
+zestaw usług, A: is rails RAE
+
+UWAGA 2 Bardziej szczegółowe objaśnienie i dbania: znajduj sę iSO 5201621
+APR 54 | 14
+
+W każdym kroku dozwolony jest wybór metody aneoetyure
+
++
+|
+
+M |
+EROEENES opisano w 6.4 4 2 12.
+4! BR HT: ako
+6.4.2.2. Podział na strefy, krok 1: Ocena kategori Pen | BARD
+a! 14 MINI
+Dla ary przestrzeni okceśla sę atone przestrzeni łeriyttni EP kde
+
+1.4
+
+yr
+|
+
+ee
+{
+
+h
+i
+4
+
+REG ATE FEET
+
+n li ' H ]
+: | 6 DF i
+
+zawarte\ w 180 52000. 2017,
+
+t i 4 ||
+p J. § f
+Ba i 144 1) l i k . © +
+if Li
+
+MU |
+
+w iiewnych BAD cieplnie ida | można, la ania ede 20 mają a takie
+same warunki użytkowania pr przyległe przestrzenie seasictenel cep, a Daas POETĄ
+
+oe
+PRZYKLAD Poddasze, schody atrium i garaż. Patrz obszeme omen if Sohn
+
+Wybór, czy te Z EE me wa runki wi krwcjć
+
+kondycjonowane, cieplnie przestrzenie, może mieć bardzo ny w "A w tt Właściwości
+
+a
+ZG —
+SE
+SĘ
+S=T=kn2
+Z=E
+OOOO WGA Rt
+
+sę
+SĄ
+
+rurę
+Fe
+
+= s:
+OE — ge
+Rasa Żyj
+
+j
+KE
+
+Sr zee,
+oi
+a "Ears
+
+4 i i id i ji if ł l i i i qi ee j j
+Również wybór, czy wielkość 4 ci przestrzeni, na ZAD! Hed pawierzchni dayton OE AES referencyjne
+
+pole powierzchni. lub objętość referencyjna, jest uwzględniony pent budynku, może mieć bardzo PY
+wpływ na wskaźnik energetycznych właściwości użytkowych | Fi || PERAJI!
+
+if IIF tf | i | i if ie j } i fi | | Bi ł J | 4 j
+UWAGA 1_ Konieczna jest ASY mięsa Pona wyni GINNY i niektóce konsekwencje tych wyborów
+przedstawiono w ISOM R 52000 20. I Pegee reece ee oeaceeeeeaarens
+
+4 ;
+' ff | A: | i H ń if M Ue | Hg j
+i * | | 4 | | i b i j || it j k |
+
+Wo [ i | JH JI i f l Ą |
+
+Taki wybór I może również zależeć od krajowej infrastruktury prawnej adv budowanej
+
+| * i || i i |
+| | J 4 J ,
+ee
+
+|
+
+Zgocne zan.f un O ustawy z dróa 12 urześria 2002 r. 0 norma zag (Dz. U. Ke 160 poz. 1350 z późn. om.) "ozkie Mommy są orroreeeje 43
+a p — J = a_a M - ! 3 i j : a 8 A : A 2 J : PC" i
+przen <darskim |sk uwag Misrarke w sub skse pmr” majstkowae cp ree prey og) @slorny . oT ż=towi ho AEG STY NAT | "
+IP ESTE"! LJ) dk == ; i=
+ld ey Goku ferconakżazje pików ofr rw Zabatpcwciwiiia eel NaiĘrA WA kópona BR
+
+
+
+
+=== STRONA 03 ===
+
+© S30 < Gee Ga
+
+Mk ©
+
+EN ISO 62016-1:2017
+
+Nie można wybrać na podstawie konstrukcji, która stanowi główną barierę cieplną: wewnętrznej lub zewnętrznej
+konstrukcji przestrzeni niekondycjonowanej cieplnie
+
+sM
+
+UWAGA 2 — Decyzja oparta wyłącznie na lych danych fizycznych nie jest oczywista, szczególnie w przypadku infiltracji
+powietrza, oszkienia, mostków cieplnych ifub obszarów na parterze. szczegółowa OCENa właściwości przenikania ciepła
+| wentylacji może być trudna I nieefektywna
+
+W przypadku niektórych typów przestrzeni może być prawnie obowiązkowe uwzględnienie ich w obudowie
+cieplnej (np. sypialnia) lub (w przypadku innych typów pomieszczeń) poza obudową cieplną (np. qaraż lub
+schowek na benzynę)
+
+Przestrzenie, klóre zawsze należy uważać za niekondycjonowane ciepinie
+
+przestrzenie o dużej wentylacji (takie jak garaż samochodowy, parking wewnętrzny), Przestrzeń o dużej wen
+
+B
+
+tytacji definiuje sie jako przestrzeń o stałej wydajności wentylacyjnej wynoszącej co najmniej o dm*/s na m”
+użytkowego pola powierzchni podłogi tej przestrzeni, ofaz
+
+_ duże przestrzenie z otworem na powietrze zewnętrzne. Duży otwór w przestrzeni na powietrze zewnętrz-
+
+ne definiuje się jako jeden lub więcej otworów stalych o łącznej powierzchni co najmniej 0,003 m? na m”
+użytkowego pola powierzchni podłogi tej przestrzeni.
+
+6.4.2.3 Podzial na strefy, krok 2: Grupowanie zgodnie z kategorią przestrzeni
+
+Kategoria przestrzeni charakteryzuje się określonym zestawem warunków użytkowania. Dlatego początkowo wszyst-
+kie przyległe pomieszczenia należące do tej samej kategoni przestrzeni są Zgrupowanie w jednej strefie cieplnej
+
+Niekondycjonowane cieplnie przestrzenie przyległe do przestrzeniami kondycjonowanych cieplnie są z reg uły
+modelowane w uproszczony sposób, patrz 6,45, Jeśli jednak slrela niekondycjonowana cieplnie ma duży
+wpływ na ogólne obliczenia, można ją uznać za strefę kondycjonowaną cieplnie (z zerową mocą ogrzewania
+
+i chłodzenia).
+
+Zakłada się, że niekondycjonowane cieplnie przestrzenie, Które są całkowicie otoczone innymi przestrzeniami
+wewnątrz obudowy cieplnej, należą do tej samej Kategoni, Co przestrzeń przyległa. W przypadku więcej niz
+jednej przyległej kategorii wybiera się kategorię o największym polu powierzchni podłogi
+
+6.4.2.4 Podział na strefy, krok 3: Grupowanie w przypadku dużych otworów pomiędzy
+przestrzeniami | |
+
+W przypadku stałych dużych otworów między dwema przestrzeniami, przestrzenie są łączone w jedną strefę
+cieplną. Drzwi, które prawdopodobnie będą często otwarte, są uważane za stałe, duże olwory Duży otwór
+w przestrzeni do przestrzeni lub przestrzeni wewnątrz obudowy cieplnej defmiuje się jako jeden lub więcej
+
+stalych otworów o łącznym polu powierzchni co najmniej 0, 003 m? nam? użylkowego pola powierzchni podłogi
+tej przestrzeni. KIARENINACEP
+
+Jeśli warunki cieplne użytkowania różnią się między przestrzeniami, ODO wiązują najbardziej rygorystyczne
+warunki, chyba że w tym przypadku mają zastosowanie uproszczenia z Kroku 9 lub Kroku 10. |
+
+Cieplne warunki użytkowania sq w tym względzie minimalnymi i maksymalnymi nasta wieniami temperatury i/lub
+wilgotności oraz okresem (okresami) nastawien, takimi jak liczba godzin na dzień oraz dni na tydzien.
+
+UWAGA  Wiecej wyjaśnień i uzasadnien, palrz ISO/TR 52016-21)
+
+64.25 Podzial na strefy, krok 4; Podział w celu uzyskania takiej samej kombinacji usług
+
+Strefe cieplną podzieli się w taki sposób, że zawiera tylko przestrzenie, które biorą udział w tej samej kombinacji
+odpowiednich usług: tylko ogrzewanie, tylko chłodzenie, chłodzenie i odwiłzanie lub ogrzewanie plus chłodzenie itp.
+Można sprawdzić, czy uproszczenia podane w Kroku 9 lub Kroku 10 mają zastosowanie.
+
+UWAGA | Jeśli zasada „zakładanego systemu” zgodnie 2 1S0 52000-1.2017, Tablica A. 19, Tablica B, 19 jest przestrzega-
+na zarówno w przypadku ogrzewania, jak i chłodzenia, Krok ten jest zbędny, ponieważ w takim przypadku zakłada SIĘ, ZE
+
+usług, które małą spełnić wymagane warunka użytkowania dla danej kategomi przestrzeni Są ODECE W kazdym przypadku
+ywiaśnienia patrz ISO/TR 520 (5-2!
+
+50
+
+
+
+
+=== STRONA 04 ===
+
+m < MD 22»
+
+EN 150 52016-1:2017
+
+6.4.2.6 Podział na strefy, krok 5: Dalsze grupowanie zgodnie z podobnymi cieplnymi warunkami
+użytkowania
+
+Jeśli warunki uproszczenia zgodnie z Krokiem 9 lub zgodnie z Krokiem 10 są spełnione, to te uproszczenia są
+stosowane w pierwszej kolejności.
+
+UWAGA _ Ponieważ łatwiej je sprawdzić.
+W przeciwnym razie zastosowanie mają eee zasady:
+
+Cieplne warunki użytkowania są zdefiniowane jako minimalne | maksymalne nastawienia temperatury iNub
+wilgotności oraz okres (okresy) ustameń, lakie jek liczba godzin na dzień oraz dni na tydzień
+
+Przyległe strefy kondycjonowane ciepinie można ays jeśli cieplne warunki yta Sq takie same
+
+Przylegle strefy kondycjonowane cieplnie można również łączyć, jeżek cieplnie warunka użytkowania są podobne,
+co uważa się za przypadek, jeżeli spełnione są nasiępujące warunki. Eh
+
+— występuje różnica w nastawieniach temperatury ogrzewania i (jeśli dótyczy) jest mniejsza niż 4 K, a różnica
+
+w nastawieniach minimalnej i i maksymalnej wilgotności (ri dotyczy) jest mniejsza niż 0,2 ka/kg (suchego
+powietrza), oraz i p są
+Ra,
+
+— codzienne okresy pracy nie Gżckj SIĘ więcej niż 0 trzy godziny,
+
+UWAGA  Ostatni warunek oznaczana peepee. że grupowanie nie jest dozwolone. ry jedna strefa cieplna jest używana
+w weekend, a druga nie. pes |; i i |
+
+W takim przypadku obowiązują średnie ważone 447993 uŚfunkóW cieplnych. Ważenie | bywa się zgodnie
+z zasadami podziału podanymi w 150 52000-1 dla podziałki stref SPY ży
+
+Przyległe strefy kondycjonowane cieplnie można FRED. łączyć, jeżeli reguła m ma zastosowanie do uśredniania
+przestrzennego wartości zadanej dla PYRA pięszkalnych, a opisano w 6. Le 6. kj |
+
+6.4.2. 7 Podział na strefy, krok 6: Podl zonie  okrślonymi właściwościami systemu
+w przypadku obliczeń aścijch. dia eed RARER SEES słoika SE lcwiośd systemu ogrze-
+wania, chłodzenia, wentylacji lub odwilżaniafnawiiżania), strefa cieplna może wymagać podziału ze względu
+na zasady (jeśli takie istnieją) w ię ac norach systemowych, Price Pe celu Rena OPP
+
+systemu lub podsystemu w strefie cieplnej. . eee ea ears fi 0509051
+SIĘ | eee etaa AMI
+„a ‘ i a W
+
+Jeśli warunki uproszczenia |zgodnie : z Krokiem g lub b zgodnie z Krokiem 10 są spełnione, to ote uproszczenia są
+stosowane w pierwszej YO, I HY ‘ | rf ZIE 4 j | i f | i | ea gif |
+BZ . = "IB JAD” pij 7 >
+UWĄGA Ponieważ lie je sprawdzić. Pe i f Rene |
+W przeciwnym razie zastosowanie mają nasiępujące zaś asady: Cee eeGaretaer
+
+bi it a 3 ‘ i " | = i it
+Ą Ę Y f j a 74 i ,
+
+Procedury dla jłego kroku należy znależć w i dapdojadnich normach systemowych w | modułach EPB od M3-1
+doM7-1. © MALINA FF i
+
+JA ; ZPRRIPA, A [Ę
+Je
+
+Heal eee
+If RE a
+
+6.4.2.8 Podziat na fang krok T. (Dalszy) podział w celu uzyskania wystarczającej jednorodności
+
+w równowadze cieplnej  EAIIFAELSNIIEĆ uj | ig ;
+: IF is p ję Ą hi if a 4! it ri
+
+Strefe cieplną należy podzielić w taki hed) (aby strefa cieplna była w pewnym dopded BALES pod wzgle-
+dem bilansu cieplnego. Kryteria są bardziej rygorystyczne, jeśli występuję chłodzenie. i
+
+UWAGA 1 Patrz wyjaśnienia | uzasadnienia w ISOTR 2016-2") j |
+
+Jesh warunki uproszczenia zgodnie z Krokiem 9 lub zgodnie z krokiem 10 są epeinione: to te uproszczenia są
+stosowane w pierwszej kolejności. /
+
+UWAGA 2 Poniewaz łatwiej je sprawdzić.
+
+Zgośne z wt Sum B ustawy z dra 12 września 2000 r. o ne mazaqgi (Dz LL Ne 108 pac. 1088 z późn. zn. | Paste Nomw są araniowi 51
+przwam aiytorsk m jak ut ry kterache. s puto shoe pies majątkowe fo rh przys uc, Moses Korotetowi harealy cyjne (Fish
+kiówy deenje partonalzacis ę ów ola? inte raberpectenia pied r auctamdtiony Lopowe ken
+
+eee
+
+
+
+=== STRONA 05 ===
+
+3 Przy stety nekonóyjonowae cieplnie można t 3 jedną stele makordyjonowan cieplne
+
+- Witakim przypadku obowiązują warunki cieplne u użytkowania przyległej st ciepnej. eS 3 R
+
+EN ISO 62016-1:2017
+
+W przeciwnym razie zastosowanie mają następujące zasady:
+
+Dla każdego z poniższych kryteriów brane są pod uwagę dwie różne sekcje strefy cieplnej, obejmujące każda
+co najmniej 25 % użytkowego pola powierzchni podłogi rozważanej strefy
+
+Wykonanie szczegółowych obliczeń w celu oceny, czy kryteria te są spełnione, przyniosłoby skutki przecwne
+do zamierzonych Dlatego wystarczy z grubsza oszacować właściwości wymienione poniżej jako kryteria
+
+Strefę cieping należy podzielić, jeżeli:
+
+— Szacuje się, że między dwiema sekcjami średnie miesięczne zyski wewnętrzne (w tym odzyskiwalne straty
+systemu) plus zyski od słońca w reprezentatywnym chłodnym miesiącu różnią się więcej niż trzykrotnie. Nie
+dotyczy to sytuacji, gdy srednia wartość wynosi poniżej 15 W na m? użytkowego rę powierzchni podłogi
+
+UWAGA 3 Patz wyjaśnienia I uzasadnienia w 1GOTR 52016-2!1. a
+Ponadto, jeżeli obliczanie obejmuje obliiztnie zapotrzebowania na chłodzenie lb obciążenia, lub obliczanie
+temperatury wewnętrznej, strelę cieplną należy podzielić, jeżeli |. ć R
+
+he if 7
+
+= Szacuje się, że miedzy dwiema sekcjami wewnętrzna efektywna pojemność Gepina (metoda miesięczna)
+lub średnia ważona powierzchniowo pojemność cieplna konstrukcji ( toda godzinowa) różni się o więcej
+niż dwie kłasy zgodnie 2 Tablicą 21 w66. 9, ene S SZŁA » P
+
+— szacuje się, że między dwiema sekcjami śródrię Lista zyski wevmelzne, w tym odzyskiwalne straty
+systemu, plus zyski od słońca w reprezentatywnym ciepłym miesiącu różnią się więcej niż trzykrotnie. Nie
+
+dołyczy to sytuacji, gdy średnia wartość wynosi poniżej 30 W nan ae oS REC podłogi.
+uneasy Wyjaśnienia i uzasadnienia dz” ISOM R 520162" & ., 4
+
+Se IZ-2 |E- |
+
+a
+
+| 6 4. 2.10 Podziat na strefy, krok 9: Uproszezeni w przypadku małych stref cieplnych ‘ k j = \ % 4 4 5 5
+
+Wa. "Wwa lie
+Re 54 5 % 4
+
+= | =
+
+| Strefe cieplną można (ponownie) połączyć zpolieba : strefą Geplna’ jeśli ma tę samą kombinację usług (pabz 4 5% 4
+
+_ Krok 4), ale różne warunki cieplne użytkowania (porównaj: Krok 5) lub różne właściwości bilansu cieplnego =
+
+_ (porównaj Krok 7), pod warunkiem że ma powierzchnię użytkową mniejszą niż 5% ckowiego u użylkowego
+
+Stee STEER, VR be i 4 ‘ KĘ % ees ł VER RRR RS
+© Sh A SĘ R * | UL 8 IE s. EE
+
+LAR AGES
+
+ję. JE W
+
+64211 Podział na strefy, krok 10: Urosz przypada ao maya sgh 31333
+Strefę cieplną można (ponownie) połączyć z przyległą seta cie cieplną, nawet jeśli r ma inną kombinację usług
+
+3 4.
+-_ (porównaj Krok 4), pod warunkiem że ma ee aa vą mniej ą niż 1% całkowitego RT 4%
+pola powierzchni podłogi ocenianego obiektu. A k ‘ ‘ a XX — o> - 543
+
+W takim pszypóńkii stosuje się połączenie uslug i warunków cieplnych 33.3 przyległej pasaż ore — > 2%;
+w przypadku więcej niż jednej przyległej strefy cieplnej połączenie usług | Mu owcienych uzytkowan 4.3
+przyjmuje się z Przylegiej strefy o MAT. PPOR" as" KAR rdziej RE warunkach +. .
+uzytkowania. 6 3 k 5 KE = =" ĘT 3%
+j i ee SRE SE 4%
+
+82 4 4 + \ a 4 i
+W każdym kroku: opisanym powyżej 2.2. jest wybór sk alternatywnej. w TablicyA.3 iho szablon *
+normatywny do wyboru alternatywnych metod i danych v 0 wę z informacyjnymi wyborami dy
+| danymi wejściowymi z Tablicy B3 Ę | ę A
+
+UWAGA Alternatywna metoda może również polegać na zmianie ofiare] s 5 . 8. Ę
+
+52 = AM p ust 0 ustawy z dny 12 arzeżnia 20 m PEDIEE "R łe 38: ia 4 KART sac hk
+a = = peserem zuńorskm jax utwory bterschoe a siforsk= prawa majatkzae co rec. h przystuz 7A Pałacem (lot wielwi Normadesofinen z a
+
+-6.4.2.12 Metoda alternatywna
+
+ir
+
+p
+
+
+
+
+=== STRONA 06 ===
+
+UJ,
+
+Strefy cieplne obliczeń obciążenia chłod (
+planowanego proj ZENia powinno wspierać wymiarowani
+elementów emisji w fle cieplnej lub powtarzalnym projekci .
+
+do poziomu Wyposażenia
+
+UWAGA
+
+Wyjaśnienie | uzasadnienie patrz ISO/TR 32016-2-201710 w 6421
+
+6.4.3 Rozmiar stref cieplnych i obudowy cieplnej
+
+Użytkowe
+
+Pole powierzchni podłogi
+każdej jej
+
+każdej strefy cieplnej, A
+przestrzeni, jak określo:
+
+usesr JEST równe sumie użytkowych pół
+na w ISO 52000-1.
+
+powierzchni
+
+Objętość pawietrza w
+
+każdej strefie cieplnej, Vintase JEST równa sumie objętości
+strzeni, jak określono w ISO 52000-1
+
+powietrza w każdej jej prze-
+W.
+
+6.4.5 Przylegte strefy niekondycjonowane cieplnie : v
+
+Rozróżnia się dwa typy stref niekondycior fi
+
+Z uwagi na ocenę właściwości przenikania ciepła
+i odpowiedniego dostosowania przenoszenia ciepła | z
+
+ciepinie
+- Zewnętrzna strefa nieko
+
+lowan: rodę wewnętrzną traktuje się jako granicę
+— _ Wewnętrzna strefa niekondycjonowana cieplnie (etu). przegrodę zewnętrzną takuje się jako granicę
+przenikania ciepła Lg as Fe eT eae PAE
+
+| 5 5 5 4 \ bg j
+> ¥. 2 3 =
+
+UWAGA 1 Patrz lustracja na Rysunku 1. Bardziej szczegółowy
+
+stref ndycjonowa nych ciepiniej,
+ciepła 0 dla malego chia W Przypadku Gwóch typów (zewnętrznych | dow idomi zje joł PERL
+iczania godzi Fak miesięcznego, podańo w ISON i |
+zarówno dla metody obliczania godzinowego BREERSKUŃ
+ay if > ear = Sik. BE”
+zs PoE A : "JEM BD FEE.
+es ie ee ee REEREA!
+= E' re =, | ie th E t
+j & = E s ; p 5 Ą
+7 E EJ ER iy re 22.8 §
+= i g. = 5 | i E
+é "Ea re
+E |E
+EE is
+
+Peet M zy = „m [ Lae * | dm rw Pa | on a | ii | . J uu | PDA. > 2" = ~ = = 53
+= = , - = - - | m *. sh i NTTT Lp | 4 e
+5 ld, J l R
+«
+
+przegląd różnic | podobieństw wtraktowaniu przenoszenia
+
+Ly
+
+SKU
+
+
+
+
+=== STRONA 07 ===
+
+EN ISO 62016-1:2017
+
+a)
+
+Objaśnienia | ee rę!
+a) Zewnętrzna strefa niekondycjonowana ciepinie (ztue) | ie „64
+b) Wewnętrzna strefa niekondycjonowana Gepinie (Ztul) eek
+
+TĄ
+
+Rysunek 1 — Strefy zewnętrzne i wewnętrzne niekondycjonowane dopisię! oi
+
+ae (= a
+
+Zewnetrzna strefa niekondycjonowana cieplnie, ztue, jest yet don.
+
+wewnętrzna strefa niekondycjonowana cieplnie, ztui, ma zastosowanie w sytuacjach, gdy
+
+a = ji
+
+- - właściwości cieplne i geometnę zewnętrznych | sieniedtów | konstrukcyjnych można określić dokładniej niż |
+właściwości wewnętrznych elementów konstrukcyjnych, oraz, RERZRERORAKEAA
+
+- zyski wewnętrzne i od słońca w przyległej przestrzeni nie są dominujące. i \ A i ; ‘
+
+UWAGA2 — W związku z tym, typ strefy weuriętrznej niekondycjonowanej | iepnie nie nadaje się ao przestrzeni nasło-
+necznionych ani przedsionków. Wyjaśnienie, palrz ISC/TR 52016-2 U fe ee ag DRA: RA NR
+Jeżeli zastosowano typ strefy niekondycjonowanej cieplnie, należy zadbać « D to, b) nie uwzględniać rozmiaru.
+strefy niekondycjonowanej cieplnie w rozmiarze odniesienia ilub użytkowym polu powierzchni 2% ym
+
+gjonowanej cieplnie przestrzeni, 0 ile nie jest to wyraźnie : wskazane. REA (a BE 4
+
+ye | lę
+
+3 iF blk "ję 4 i kk 7 i i, §
+W Tablicy A.4 podano szablon. normatywny dla opcji | wartości, z informacyjnym wyborem domyślnymi i wańto-
+ściami w Tablicy B.4. A eae ee | 20 oe , ' 3 i s | Z
+7 R. z, ję VW ZE. i t & L=
+eee moze mięć wpływ na a ocenę ępowierzchmi obudowy cepine zgodnie z odpowiednią normą EPB w module 1
+=} é fF Oe £ ee ‘ f ‘ ‘ M i 4 3 |
+6.4.5.2 Procedury obliczania rerr eR Bae a's j | ‘ 4 ‘ 4 i ‘ i
+
+EJ r = 7
+1 i: Ę ‘
+
+współczynnik dostosowania jest kóniczny: aby uwzględnić wpływ strefy RANSANE deplnia, Arzyłe. |
+głej do strefy kandycjonowanej cieplnie. W przypadku więcej niż wi strefy kondycjonowanej cieplnie istnieje
+również potrzeba współczynnika podziału | ó RERRERBE 4 ;
+
+Podano różne metody, aby uwzględnić wpływ strefy niekondycjonowane} cieplnie na przenoszenie ciepła pi przez |
+
+przenikanie i wentylację oraz zyski. read BEE: 7
+
+Ę
+
+Alternatywnie mogą być dostępne wartości domyślne współczynnika dostosowania i rozkładu, jak opisano
+w 6.4:5.5. |
+
+i : E is
+Procedury obliczania współczynnika dostosowania i rozkładu podano w 6.4 5.4.
+
+54 Zgoznie z am Sus! dustawyz deus 12 wrzeżnia Z0GZ r. o nzenzzacdi (Dz. U. IN 150poz 1353 z późn. zm.) Polsko a Nome Są ono
+pozwem sutcrsiean jak utventy kieracie. 5 siużorske press majstkaw= co nh przy gą Poskemu Komsetewi hore aiz acyjnem: rr +”
+aóy stosuje peńorńakzace półów oat noe Laberge renis cited (mur aaa yM kocona kami
+
+
+
+
+=== STRONA 08 ===
+
+Y HH | si | E a PE Ts | sd 4544 p uraża Te Akk 1 pz Ww AWAA — au WwAOEA
+
+EN ISO 52016-1:2017
+
+Procedury obliczania zysków ciepła w strefach niekondycjonowanych cieplnie z zyskami wewnętrznymi lub od
+słońca podano w E.3 w Załączniku E.
+
+6.4.5.3 Temperatura obliczona w przyległej strefie niekondycjonowane] clepinie jako zmienna
+wyjściowa
+
+cieplnie jest potrzebna jako zmienna wyjściowa, np. do oceny strat
+
+Temperatura w strefie mekondycjonowanej
+rybucji (rury i kanały) znajdujących się
+
+ciepła z generatorów ciepła lub zimna, systemów magazynowania i dyst
+w niekondycjonowanej cieplnie przestrzeni lub przestrzeniach.
+
+UWAGA 1 Dla uproszczenia nie rozróżnia SIĘ temperatury powietrza i temperatury roboczej
+
+W przypadku metody obliczania godzinowego:
+
+Godzinową temperaturę w typie zewnętrznym (jak zdefiniowano w 6.4.5.1) niekonpdycjonowanej cieplnie stre-
+fy k, Bpu zy, W *C, podano w 6.5.9. Temperatura obejmuje wpływ wewnętrznych zysków ciepła i od słońca (na
+
+przykład w przypadku przestrzeni słonecznej lub atrium).
+
+Godzinowa temperatura w typie wewnętrznym (jak zdefiniowano nb 45,1) strefy k, kę, W *C, jest równa
+temperaturze roboczej przyległej strefy kondycjonowanej cieplnie J, Binzopsnejim jak określono w 6.5.5. Tempe-
+śli istnieją) są przypisywane do przyległych
+
+ratura wyklucza wpływ zysków wewnętrznych lub od słońca. Te (jes!
+stref (strefy) kondycjonowanych cieplnie.  — af nie |
+
+W przypadku metody obliczania miesięcznego.
+
+Średnia miesięczna temperatura w zewnętrznej lub wewnętrznej strefie niekondycjonowanej cieplnie K, Osram:
+w °C, jest określona przez. j , sp
+Bude Gm = Be:ozm t buki” (BalcH/Gejm Oem) (
+
+przy czym dla każdego miesiąca m oe |
+współczynnik dostosowania dia przyległej strefy niekondycjonowanej ciepl
+jak określono w6.4.5.4, | | . EE]
+
+nie K, w miesiącu m,
+
+b ztu.lon
+
+tiemperalura obliczania przyległej strefy niekondycjonowanej ciepinie Jee ogrzewanialchiodzen! i
+
+O mieH/Cztesm w”
+|EHICEEET"" iak określono w 6.6.11, w °C;
+
+! Bd | Lo march cieplnie temperatury sa ważone zgodnie >
+padk ległych do siebie stref kondycjonowanych cieplnie. ho pł a vs bid:
+w pry olkiem podziski dla przenoszenia ciepła między strefą kondycjonowaną cieplnie ztcj a streją 3
+kondycjonowaną cieplnie K, Faces jem jak określono w 6.4.5.4, SESeesagae +
+j nętrznego, uzyskana z odpowiedniej
+
+6. średnia miesięczna (powi
+ś normy EPB zgodnie z mo
+
+etrza) temperatura środowiska zew
+dułem M1-13,WOC.I > 0 CF Peek Ge yh
+2 l stów wewnefrzkychlubodsłońca Te (esi
+ekondycjonowanej cieplnie wyklucza wpływ zycia I SĘ (eter
+ne do przyległych strefkondycjonoway © Ns
+JE | MY WIE EU Liod iścigwą nie mozna
+stującej tę temperaturę jek daną EE a |
+owej wykorzy” enia, temperature dla trybu ogrzewania PTT
+
+Temperatura strefy oF
+istnieją) Są przypisywe
+
+Jeżeli w odpowiedniej normie system
+
+>nieni nia I dA.
+- ozróżfiienia między trybem ogrzewa!" am Na OG i cnictizenie:
+oazy dożyć Eo miesiąc, zgodnie Z zapotrzebowaniem ne ogrzewanie | ry a"
+6.4.5.4 Współczynnik dostosowania i rozkładu | aa | SZEREG: yaw
+“ie TER et dostosowania dla strefy niekon”y"
+W przypadku metody obliczania godzinowego i miesięcznego współzy e dosiosode FF 2 !
+j ocowanej cieplnie w miesiącu m, brzuiam, JEST okresio Me | 7
+| E (2)
+b ed Hztwze:m |
+oe H zruztotym | x
+ge Norm 5a capone
+
+U. Nr 102 pa 1357 z późn zm) Pols
+Karżelzwi No
+
+3 zacji (Dz mała scyppee FAM
+
+e = reps wrr] ALL a
+y z Ores ix el zeżnia 200 zase 49 ch przys le [| rene t=!
+
+sav ml
+work prawa msg ef ht odry n Lope weil
+
+mocne z art Sus Ou
+
+pore apa m j
+: pańońakżac e F
+
+y Olać ee zbaz osci Uś przed heute:
+UF ! ©
+
+
+
+
+=== STRONA 09 ===
+
+EN ISO 62016-1:2017
+
+Hztwitotym nę > (Budka) t Haru:e:m (3)
+j
+
+współczynnik podziału w przypadku wielu przyległych do siebie stref kondycjonowanych cieplnie jest określony
+przez:
+
+Jeżeli więcej niż jedna przylegająca strefa kondycjonowana cieplnie w miesiącu, ztc j:
+
+H
+
+F zte /zzłu;pr
+
+i;ztujm — (4)
+zte.;ztu;,m > (Here): siti: 4) | |
+
+Jeżeli tylko jedna przylegająca strefa kondycjonowana cieplnie ztc:
+
+przy czym: PORESZIANA LIŚCI r Wsą
+Frertuim — Współczynnik podziału przenoszenia cepa między strefą ondyjporaną cieplnie i przyległą strefą
+cieplną ztu dla miesiąca m;
+
+Dzczzm współczynnik dostosowania dla strefy niekondycjonowanej ciępinie przylegiej ztu dla miesiąca m,
+
+a współczynnik przenoszenia ciepła między strefą nie żonowaną cieplnie ztu a środowiskiem
+zewnętrznym dla miesiąca m, określony zgodnie z ISO 13789: 2017, 7.5, (określenie H,.) w WIK;
+iy! | |
+Hruteua | SUMA współczynników przenoszenia ciepła między strefa niekondycjonowaną cieplnie ztu, przyległą
+strefą kondycjonowaną cieplnie i środowiskiem zewnętrznym dla miesiąca m, w WIK, i
+
+onie współczynnik przenoszenia ciepła między strefą kondycjonowaną cieplnie ztoj a strefą niekondy-
+w way | cieplnie ztu dla piesca m Pheer eee Iso 13789 2017, 15. cers Aa) |
+
+ztej - wskaźnik dla każdej hg kondycjońowanej cieplnie prey do strefy riekondyonowane}
+ciepinie ztu. EB” Z) 3 p
+
+UWAGA 1 Procedura obliczania współczynnika dostosowania jest równa procediwże ZISO 13789 2017, 7. 5, ale została
+
+rozszerzona o możliwość wiełu przyłegłych stref kondycjonawanych cieplnie. Wartości będą zwykle stałe w ciągu roku.
+
+ale w niektórych przypadkach wartości mogą być zmienne I wtedy można wprowadzić | wartości miesięczne (ecm) th
+
+dopracowane obliczenia zwykle nie sa uzasadnione, WaTYY: |aiiatT ABE ae |
+6 a it | Ld M UE } |
+
+Według Tablicy A 5 (szablon normatywny), z informacyjnym wyborem domyślnym w Tablicy B 5, istnieie moż- i Re 1
+
+lnvosé powiązania wartości współczynnika przenoszenia ciepła przez wentylację przez przegrodę zewnętrzną BAŁEĘ!
+
+(Hone lem) Z WartOŚCIĄ współczynnika. przenoszenia ciepła przez przenikanie (H żem, dla strefy niekondycjo- RARE
+
+nowanej cieplnie k, ZEE co | daje FADRENNY, wzór, zastępujący wzór w ISO 13789: 2017, [A = ae | j Eee EL
+SW [e (E W 4 SR ; S42 6% bh »
+
+przy czym dla strefy nekcycjonawinej cieplnie k, w miesiącu m,. kę § ź ję si | anes :
+3 nA
+at ir współczynnik. przenoszenia ciepła między wa niekondycjonowaną cieplnie a środowiskiem Ze KI
+
+H.: = wepticzy nik przenoszenia ciepła przez. przenikanie Rely strefą niekondycjonowaną cieplnie
+4 a środowiskiem zewnętrznym, określony zgodnie 21801 3788: 2017, 7.5 (określenie H,.) w wę.
+
+CE współczynnik wyrażający domyślny dzęd wentyłacji we współczynniku przenoszenia ciepła | przez.
+przegrodę zewnętrzną, jak ozejoe w Tablicy A 5 zo normatywny), z iomacyę wartością
+
+- domysina w Tablicy B.5. | * ,
+
+UWAGA 2  Szybkosé wentylacji przez przegrodę SEJF na [est często znacznie większa niz szybkość wentylacji przez ©
+przegrodę wewnętrzną. Patrz wyjaśnienie w ISOTTR 52016-21,
+
+EGĘ
+
+z
+>
+=
+
+Alternatywnie mogą obowiązywać wartości domyślne 6.4.5.5,
+
+6 Zgodne z at 3 ust. 8 ustawy z Gra 12 września S02 r Om "nara (Oz. U. hi 169 faz. 13E0 zpóźn. zm.) Polskos Nomy są stronona
+
+parem ua ie IK A sutorsbie preva majatkowe Go tech przystagują Posen Ki - mietowi (some menor (PAN)
+
+katy s! cme jztkonalzscw pion uta: rem tebarpeacietas Cried ) MAE A emery M | kopeswatiem
+
+
+
+
+=== STRONA 10 ===
+
+EN ISO 52016-1:2017
+6.4.5.5 Domyślne wartości współczynników dostosowania i rozkładu
+
+Wartości domyślne ws
+
+ynnika podziału, Picteted t a MOŻNA Za-
+A typu lub wielkości przyległej przestrzeni niekondycjono-
+
+| „zi yinymi wartościami dorm ślm
+w 6.4.5.1. it
+
+mo Jablicy A 6 (szablon normatywny) podano, którą z opcji można zastosować, a informacyjny wybór domyślny
+podano w Tablicy B.6. | EERE ee ees + eth
+
+7.
+Mig
+a2
+
+Gdy budynek mieszkalny lub jednostkę budynku oblicza się jako pojedynczą strefę, zt.
+temperatura nasta
+
+wy dla całego budynku lub jednostki budynku obliczona jako pojedyncza strefa ztc jest równa
+temperaturze nastawy dla przestrzeni w pełni kondycjonawanej cieplnie. |
+
+| i 5
+: i 3 = Ę AGO w i
+Dla metody obliczania godzinowego i miesięcznego:
+
+Gdy budynek mieszkalny lub jednostkę budynku oblicza się Jako pojedynczą strefę, złe 23351
+dostosowana temperatura nastawy dla całego budynku lub jednostki budynku obliczona jako pojedyncza
+strefa ztc jest równa temperaturze nastawy dla przestrzeni w pełni kondycjonówanych cieplnie, zmniejszonej
+
+6
+L 40
+
+UE OE:
+AE" sk &
+
+i | Ę (rod faosp) «(Ff możisp "H.ezpoeztem * (Ointsertiste - 8, )
+APintset-H-zte-m g z i
+
+Cam
+
+WE > =
+
+=F A I BR PM «Ja. JB 8 0 R (A „IE „JE ee le (E
+
+przy czym dla budynku lub jednostki budynku jako pojedynczej ię ac. se Se ek AA KI
+z , “= E = z ; a ‘é [| if a ir Ve 5 | } mk h iy 5, Aj * ; Ę ; = 4 |
+
+By ee jestwspółczynnikiem przenoszenia ciepła przez WT W iwentylację w miesiącu m,wWifm* K),
+określonym zgodnie z: ' Ee ee a a aes | !
+
+oraz = - JA Ą Ę Ę ę | 5 E e re |
+Ayre Całkowity współczynnik przenoszenia oe przez przenikanie, w WYK;
+Hynusom Całkowity współczynnik przenoszenia zera przez wentylację, w W/K,
+A 4 = x 5 a: (3 | Ł RE
+A>... pole powierzchni użytkowe podłogi, jak określono w 643w m, wae
+bf, przyjęty (stały) bezwymiarowy ułamek czasu, w którym umiarkowanie kondycjonowana cieplnie
+= it
+
+część (średnio) pracuje na umiarkowanym poziomie komfortu zamiast na pełnym poziomie kamfor-
+
+lu, jak określono w Tablicy A.6 (szablon normatywny), z inform acyjną wartością domyślną podaną
+w Tablicy B.6; |
+
+= ad ) a 4 " wa Ove os uż 1-1 DTR 74% one
+
+57
+
+i p f (ome tho BET narrę ir u h
+; - Ty e p |»; «| rjężm > fer rzy 4 Posey Ke = j
+pm suńorszgn |E4 utwory Fierachae. a UŁ aprowejnaj wa | mą ma acy w
+który stow pafkOTalZzEu pików oar
+
+ra zalierwwcrwma ile hwuSTań MA GF Alia
+
+IF" z: wg (6-6 R ) HVE SEER ESEE i
+Fa | |modzp 4 Hyespeczztejm 4 H kt *
+7 2 i 4 ę > 4 ; ie
+
+
+
+
+=== STRONA 11 ===
+
+EN ISO 62016-1:2017
+
+| arm przyjęty (staly) bezwymiarowy ułamek przestrzenny umiar kowanie kondycjonowanej cieplnie czę-
+ści budynku, o wartości podanej w Tablicy A.6 (szablon normatywny), z informacyjną wartością
+domyślną podaną w Tablicy B.6;
+
+Hęatspoe  PrZYJĘTY (stały) ogólny wewnętrzny współczynnik przeńikania ciepła na m? powierzchni użytkowej
+
+w Witm?-K), o wartości podanej w Tablicy A.6 (szablon normatywny), z informacyjną wartością
+domyślną podaną w Tablicy B.6;
+
+temperatura nastawy dla w pelni kondycjonowanej cieplnie przestrzeni lub kondycjonowanych
+cieplnie przestrzeni, określona zgodnie z6. 5. 5 (metoda godzinowa) lub 6.6.11 Cae miesiecz-
+
+na), w °C;
+
+: i; ate
+
+Own średnia miesięczna temperatura powietrza zewnętrznego, uzyskana z odpowiedniej normy EPB
+
+zgodnie z modułem M1-13, w "Ge. | |
+UWAGA1 Ustalone wartości prowadzą do zgrubnego przybliżenia. Paliz wyjaśnienia i pry w „ISO'TR 52016-2'!
+
+W przypadku chłodzenia przyjmuje się, że temperatura nastawy całego budynku lub jednostki budynku obli-
+czona jako pojedyncza strefa zie jest równa temperaturze nastawy dla przestrzeni kondycjonowanych cieplnie
+
+5 g
+UWAGA 2 W przypad crodzenia jesto podejście Zachowacze. COON
+<I rzęż! AU
+Dla metódy obliczania godzinowego I miesięcznego: eae d ¢ | z.
+
+5 a
+
+Obliczanie w różnych strefach niesprzężonych cieplnie. w tej PA WIZRTA wymiana cepa przez przeni-
+kanie ciepła i wentylację oraz cyrkulację powietrza między strefami jest pomijana. se
+
+UWAGA 3 Wewnetrzne sprzężenie cieplne przez pea i Nocna powa je zwykle (znacznie)
+
+większe niż zewnętrzne ae af oe F Ka
+
+r Ko ) | ASESA:
+Tylko dla metody obliczania godzinowego: ri MI ? ip | Ve a Beet nee it BRBR3%
+Gdy budynek mieszkalny oblicza się jako dwie ib dcej: stref AAAA A cieplnie | róże 647i | Załącznik HLL KELES
+strefa (strefy) calkowicie kondycjonowana cieplnie i i strefa (strefy) częściowo kondycjonowana cieplnie. Nastaa ©
+- wy temperatury w strefach pF 3-3 kondycjonowanych cieplnie należy rtotiwttwy EEKKĘZE A
+normy EPB zgodnie z modułem M1-6. . eee ee EEE gł jA ‘ NK: a ee ee he M
+6.4.7 strtyspragone ub nesprzężoe cieplnie 3 34 : M | ‘ 14 | WEZ: 4 SUKRZEKKLSZIAŁ
+
+E i il LARA MRRBRE EER ERS SSO
+Ę u rs
+Obliczenia w przypadku wielu set kondyejonowanych cieplnie | można wrforac ze „sprzężeniem cieplnym SAAR
+pomiędzy nimi lub bez ego * PAR; ) SEER ES 4
+
+KAARRKKASE
+
+| 4 a |. 4 l GRZE cS EET
+Wybór podano w Tablicy A7 (szablon normatywny) |) Tablicy B. 7 forma jny bt amis | ‘ss oo
+4 Pike ee eR SS ‘oa 4S 30
+Domysine cinrakieryatyeorzezenia cieplnego (przenikanie dzo | wentylacjałcyrkulacja Rege) podano RA
+w Tablicy A.8 (szablon normatywny) i 1 Tablicy B. 8 (informacyjne wielkości i wartości domyślne). SA
+KUKKERIA ERE
+Obliczenia wielostrefowe z interakcjami między strefami NNIAAA więcej i często arbitralnych da-| tk eS.
+- mych wejściowych (dotyczących właściwości przenikania ciepła oraz kierunku i wielkości przepływu powietrza) 844
+i mogą prowadzić do innych komplikacji technicznych i ea a które zwiększają niepewność jakości — r
+
+5- EF
+
+wyników. Dlatego korzyści mogą być mniejsze niż wady. AE KARE R SKA. ę
+
+SAAT
+
+>
+
+UWAGA ~ Przykłady komplikacji podano wiSOrTR 2016-2" RA STAR. Sh
+Zasady obliczania stref ee te cieplnie podano w Załączniku D. | SKRA. ę ASIA
+Ę ź = i i 1 id h
+
+58 Zgodne z art 2 ust. 5 ustawy z draz (2 wrzeżnia 20020. o nosmyzacji [Dz U. Me 10% por. 1389 z późn z | eds KIE Mony są shorn
+
+, E | psem ayserdom jak utwory kierache. 8 autorshoe przes mapyhoae do ch przysta ZŁE soem Korżetowi | pen (Pr bs
+
+kiej stosuja peńrohałżażę pików Olać ite raberpeecienis prz ad aloupianica pr bape a i
+
+
+
+=== STRONA 12 ===
+
+"ky
+
+vu» sza 61 e
+
+EN ISO 52016-1:2017
+6.5 Procedury obliczania godzinowego
+
+6.5.1 Zasada
+
+Podstawowe zasady opisano w 5.2.1.
+
+Temperaturę wewnętrzną strefy cieplnej budynku oblicza się co godzinę za pomocą układu równań nieustalonej
+wymiany ciepła między środowiskiem zewnętrznym i wewnętrznym przez nieprzezroczyste i przezroczyste
+elementy ograniczające obudowy strefy. Równania są rozwiązywane w postaci macierzowej Wynik obliczania
+
+fo temperatura każdego elementu, w tym powietrza wewnętrznego i (jeśli występuje) zapotrzebowania na
+ogrzewanie lub chłodzenie.
+
+Każdy element konstrukcyjny (np. podłoga, okno, Ściana) jest modelowany jako sena kilku węzłów: nieprzezro-
+czyste elementy podzielone są na 4 warstwy z 5 węzłami. Okna i drzwi nie są podzielone na osobne warstwy
+i mają 2 węzły. Liczba równań : opisujących PY budynku wynosi zatem: 5 * liczba elementów nieprzezro-
+czystych + 2 x liczba okien i drzwi. :
+
+Metoda godzinowa obejmuje t trzy obszary zastosowania:
+a) obliczenie zapotrzebowania na energie, BR: |
+
+b) obliczenie temperatury wewnętrznej: oraz
+
+c) obliczenie projektowej macy cieplnej ogrzewania | chłodzeńja..
+
+W przypadku niektórych zastosowań układ równań powinien, być rozwiązany kilka razy w danym przedziale
+czasu. Dlatego dla ers ee ge określono „procedurę, która daje wymagane wyniki.
+
+6.5.2 Odpowiedni przedział czasu i okres obiczani . |
+Procedury obliczania opisane w65 są PoS dia godzinawego przedziału czasu.
+
+Okresem obliczania jest cały rok, z wyjątkiem zastosowania metody. do szczytowych Waktości temperatury
+wewnętrznej obciążeń projektowych, oe oblicza się w KO ee we okresie.
+
+Obliczenia zapośrzenowania | na energię właściwego dla systemu: \ i lk j ‘ 4 i
+
+Długości sezonów ogrzewania, chłodzenia |howalżania'owizinia<ąOkróślónaj przez czas pracy odpowiednich | 33%
+systemów technicznych. Należy to uwzględnić w obliczeniach dla określonego systemu. Modą a one różnić się
+
+od czasu wynikającego z podstawowego obliczenia zapotrzebowania na energię. Bae
+
+UWAGA 1 Długość Sezonu może być krótsza niż w obliczeniu zapotrzebowania na energię, co oliewóduje zapotrzebowanie
+
+na energię poza sezonem, lub oce być dłuższa, PO niepotrzebne straty i ee le
+
+W przypadku oar ance Aiaści okresu, który należy uwzględnić w obliczeniach „ograniczenia ay stoso- .fh
+
+oce wizygkie EazztiyHirOBOREFO, | i ‘ h KO i a: |. ;
+
+=
+
+Ograniczenia te należy uwzględnić W odpwiegjnich normach systemowych, Kodulk EPB M2-1 do. M74, - £
+
+obliczaniu wykorzystania energii w systemie. Wybór takich ograniczeń znajduje się w paaóRZA (szablon
+
+normatywny) | Załączniku B (informacyjne wartości RE w tych KKA: a
+
+UWAGA ? Ograniczenia te mogą wynikać np.z przepisów krajowych lub po A.
+
+=! E aj
+
+6.5.3 Założenia i określone warunki _' SERETUARE aL ea
+5 = =a ' Ą : a £ E
+
+Dla wszystkich obszarów zastosowania przyjęto następujące podstawowe założenia:
+
+Takie same założenia jak w ISO 5201715 1 3 2088 | ?
+— temperatura powietrza jest jednolita w całym pomieszczeniu lub strefie, M
+
+— rózne powierzchnie elementów pomieszczenia lub strefy są izotermiczne,
+
+: Ł i
+Zgodne z art. $ ust. O ustawy 2 draa |Z wrzesnia 2012 r. o nosmalzacji (Dz. U. Nr Ite piz Ws p ain. I m )Posio Nammy zą cron "e 53
+pment autor m jak utwory kiezachie. 8 autarsk= prawa rugethores do rech przyskozują Poser Karós stow hore etary nem (PICK
+
+hae | AJ fet EOfulLec jw gara tat ft Zakaz pwd FI) NWiIEIAĆCH tp BS Ralf a! U
+
+F
+
+
+
+
+=== STRONA 13 ===
+
+punktowej wych) mostków cieplnych
+inktowe) mostki cieplne « | }
+
+wnętrznego i zewnętrznego; 04 "ezPoSrednio sprzęzone Nene 2 temperaturą powietrza we
+
+-—__ przestrzenie Powietrzne w elementach ot
+ob Sie i
+
+dwie izotermiczne i równoległe powiedzchaja t traktuje się jako warstwy Powietrza ograniczone przez
+~ Pamija się wpływ PRE | |
+
+py da sę Pojemności Cieplnej w różnych płaszczyznach oszklonego elementu
+~ gęstość strumienia ciepła spowodo | Orórnianim
+
+wan © promieniowaniem k otkofal
+
+płaszczyznę oszklonego elementu traktuje sie jako składnik źródła 1 porą Psorbowanym przez idą
+
+Dodatkowo tem
+
+z ©ęwęż r tworzących elementy strefy. cieplnej są niezależne od czasu, ale
+sare <a SIĘ zmiennych właściwości elementów regulowanych: np ruchome osłony przeciwsłoneczne,
+- zewnętrzne STOdowisko Promieniowania (bez nieboskłonu) ma temperature powietrza zewnętrznego;
+— przestrzenny rozkład promieniowania słonecznego w pomieszczeniu jest równomierny |] niezależny od
+— [rozkład masy w każdej konstrukcji jest uproszczony, |. |
+> : Le 4 BEEN 8 A 5% 466 5 el LYLE ELEY
+— właściwości słoneczne okien nie są zależne od kąta padania promieniowania słonecznego; zakłada się, że 4
+całkowite przenikanie energii słonecznej jest bezpośrednim przenikaniem do strefy; oraz
+— średnią temperaturę promieniowania oblicza się jako ważaną powierzchniowo. średnią temperatury we-
+"nętrznych powierzchni każdego komponentu. JAA AA I KR RA LISZT I TAKTY KEK
+Założenia przejęte z ISO 13789 (EPB moduł M2-5.1) i związane normy EPB zgodnie z modułem EPB M2-5:
+JE JE JE 1... | FIN 3 1-3 7" Ub ci 5 i ee LS sz 5 AB A
+— współczynniki przenoszenia ciepła przez konwekcję na powierzchni zewnętrznej zależą od prędkości i KANYE
+runku wiatru, ale są uważane za niezmienne wczasię, i | 8 LA Lek ee EE |
+—_ współczynniki przenoszenia ciepła przez konwekcję na powierzchni wewnętrznej zależą od kierunku prze-
+u ciepła i są uważane za niezmienne w czasie, PIER 1 , 4 eae es ck be eS
+— współczynniki przenoszenia ciepła przez promieniowanie długofalowe na zewnętrznych Fez. +h
+elementów pomieszczenia do powietrza zewnętrznego uważa SIĘ za niezmienne w czasie, SE LERG oy
+~ wybór wymiarów zastosowanych do określenia przepływu ciepła przez przenikanie ciepła (wymiary we.
+
+lary rzne | lary we zne) określa się w kontekście no
+he, wymiary zewnętrzne lub ogólne wymiary wewnętrzne) określa się w " orm EPB |
+M2-5 i należy go zadkówć przez całą ocenę EPB. Wybór wymiarów do określania A p mi lęg le
+przenikanie ciepta moze różnić się od wyboru wymiarów dla metryki przestrzeni lub strefy, takiej jak p
+
+wierzchnia użytkowa podłogi. W tym drugim przypadku może być konieczne uwzględnienie innych kryteriów. ń
+
+UWAGA Na przykład: w wielu krajach części podłogi są wyłączone Z powierzchni użytkowej, nP, jess sufit "9 pirezy rie
+określona minimalna wysokość (np. 1.5 m). a *
+
+Zapotrzebowanie na energię do wstępnego podgrzewania lub mine wedłiałw wok ks
+| i inej ylat awiewnym) nie jest uwzględnione w tej r ie (a
+NA acyjnej lub w wentylatorze n 1 - - : dnione
+ee p st Re sz zapoliżeb wasi na energię do ogrzewania i chłodzenia), ale jest uwzglę
+k Siowiednich normach EPB w ramach modułu M5-6.
+
+m EPB moduł |
+
+
+
+
+=== STRONA 14 ===
+
+I
+
+EN 150 52016-1:2017
+6.5.4 Procedura obliczania
+
+6.6.41 Zastosowanie: Obliczanie obciążeń podstawowych I zapotrzebowania oraz obciążeń
+właściwych dla systemu I zapotrzebowania
+
+istnieją dwa obliczenia: obciążeń podstawowych i zapotrzebowania oraz obciążeń właściwych dla systemu
+i Zapolrzebowania
+
+Obciążenia podstawowe i zapotrzebowanie:
+Obliczanie obciążeń i zapotrzebowania bez wpływu określonego wyboru technicznych systemów budynku.
+
+Odpowiedne rozdziały normy EPB moduł M2-4 określają, które przepisy są wyłączone
+
+PRZYKŁAD — Często jednostkę odzysku ciepła z systemu wentytacji uwzględnia się w podstawowych obliczeniach za-
+potrzebowania na ciepło, aby uniknąć poważnych błędów obiiczeń i sprzeczności z założeniami związanymi z wyborem
+urządzenia do OdZYSN ciepla. |
+
+Podstawowe obliczenie zapotrzebowania na energię obejmują sytuację, w której zakłada się standardowe
+warunki środawiska wewnętrznego dla danej kategorii przestrzeni, które wymagają systemu ogrzewania ilub
+
+chłodzenia, podczas gdy rzeczywisty system nie istnieje lub jest Oieziąwymiarowany: w takim przypadku obii-
+czane jest podstawowe zapotrzebowanie na energię |
+
+UWAGA1 W zależności od wyborów dokonanych w normach zipolniaącicń dane wejściowe. do obliczania, moze być
+wymagana iteracja. Patrz także kroki obliczania określone WISD PO :
+
+4
+
+Obciążenia i i zapotrzebowanie właściwe dla systemu: "
+„| 8 kJ :
+
+Możliwe powtórzenie obiiczeń(obliczeń) z powodu interakcji podstawowych obliczeń, z określonymi charakte-
+
+~ rystykami I określoną regulacją technicznych systemów beómiać
+
+UWAGA 2 Ponownie, w zależności od wyborów. dokonanych w normach redni dane wejóowe do obliczeń,
+maze być wymagana dalsza iteracja Patrz także Gio obliczania określone wISO 52000-1.
+
+SI Z
+
+%
+= Mk
+
+Mozliwe s następujące wpływy system li SKA 4 i PTTL LR EERES
+
+- ograniczona moc ogrzewania lub chłodzena tylko metoda godzinowa, dobe wejściowe wymagane w 6 5 5.2,
+
+= określona wartość części komek układu tooo ii chłodzenia; dane wejściowe WE
+
+w8682 ; | 23 s SUUKERE
+
+>
+
+- odzyskiwalne straty ciepa; dane wejściowe wymagane w 8 8122, 2 3 * , * A ’
+— dostosowanie nastaw | temperatury (wartość i harmonogram), dane ejlzidć wymagane w 6 5. 5 fark
+- ograniczenie sezonu ogrzewania lub chłodzenia do obiczeń dane wejściowe wymagane w6. 5. 4 2i A 5.4.3,
+
+— brak systemu ogrzewania lub chłodzenia: brak właściwych dla sjstemi obiczeń lub obliczeń: zfi ikcyjnym
+systemem ogrzewania lub chłodzenia, zgodnie z zasadą wybraną w ISO 52000-1: 2017, Tablica AQ ng
+blon normatywny) i | Tablica B.9 (informacyjny wybór domyślny), ‘ 5 A fe
+
+- W fe Tee ogrzewania lub chłodzenia: FETT wymaga w wymienionych wyżej |
+ZEE ee OLE ER :
+
+Ę iz
+
+a ,
+— w przypadku braku ogrzewania lub chłodzenia. dane wejściowe wymagane w v6 5 a2.
+wpływ systemu na systemy nawiżanałodwizana, patrz 6 5. 14. Ł E _ę 3
+
+= Ę
+
+- NE
+
+W obliczeniach właściwych dla systemu zostanie zapisane, w jakim stopniu w wymaganych okreżach komiór.
+lu, temperatura nie osiągnęła nastawy ogrzewania lub chłodzenia. To ostatnie jest potrzebne do zapewnienia
+
+równych szans. Z tego powodu niedogrzanie | przegrzanie rejestruje się R dane wyjściowe na poziomie
+miesięcznym, patrz 6.5.15.2.
+
+2
+r = #
+
+Zgodne z art Ś ust. 6 ustawy zadna |2 urzezrsa 202 r o noamaczqi (Dz U NW 1060 paz. 13642 późn zw | Puzkge Newry ta cronore 61
+prawem sutcrsken jak yliaory Merach=_ s zytoesk= prawa majątkowa go tech przy suguą Pozosmu Koaetowi Noemsic acy nemu (Ph w
+klry stów. js parnatalzace phir Ota? inw Rebatpeecre la prz w UC areiawyy m kojec wia ih
+
+
+
+
+=== STRONA 15 ===
+
+EN ISO 62016-1:2017
+
+UWAGA3 = Wprzypadku niedowymiarowanego lub nieistniejącego systemu ogrzewania lub chłodzenia nie ma możliwo-
+ści porównania energetycznych właściwości użytkowych z innymi budynkami, można by temu zaradzić poprzez w yraźnie
+ostrzeżenie lub karę. Patrz wyjaśnienia i przykłady w ISO/TR 52016-2"!
+
+6.5.4.2 Zapotrzebowanie na energię do (jawnego) ogrzewania I chłodzenia
+
+Ostrzeżenie: w indeksie dolnym nie ma jeszcze rozróżnienia między obliczeniem „energii podstawowej”
+a „właściwymi dla systemu” obciążeniami i zapotrzebowaniem.
+
+Miesięczne zapotrzebowanie na energię do ogrzewania/chłodzenia w strefie kondycjonowanej cieplnie, złe,
+oblicza się jako sumę godzinowych obciążeń grzewczych/chłodniczych:
+
+QH/Cindiztcym = 0,001 x X(Ouycidzie “Ath, ' | (9)
+przy czym dla strefy kondycjonowanej ciepinie, z 2tc |
+Qicndrecm _ Zapotrzebowanie na ogrzewanielchladzenie w strefie, w miesiącach m, w kWh,
+
+Pujcidrec: Obciążenie grzewczelchłodnicze w strefie w przedziale czasu £, jak określono w 6.5.5, w W,
+
+At, długość przedziału czasu t, wh; At, = 1 dla przedziału godzinowego.
+Em, * Ę
+Roczne zapotrzebowanie na energię do ogrzewanialchłodzenia oblicza *: pko sumę zapotrzebowania mie-
+sięcznego: ; : bof i : ś M. A |.
+U /Cjndyztezan p i Ż Onycjndzzte;m EE | <= % wh Eh ee | (10)
+przy czym
+
+Ou/cndrecan roczne zapotrzebowanie na a energię 42) agizewanialchlodzenia w w strefie, w kWh;
+
+ Qwyandueom zapotrzebowanie na energię do ogrzewaniajchiodzenia w strefie, w miesiącach m, w RAA
+
+Ą
+
+Zapotrzebowanie na energię właściwe dla „systemu: ‘ BUG 1d | | 8.3
+
+& t A) ; u t 4 a: he
+a =a k Ę
+
+Do obliczenia zapotrzebowania na a energię dat ogrzewania i chłodzenia właściwego dla ieee moga jobowia
+zywać ograniczenia, pk Sprajo WÓD, 2, dotyczące dhigości; sezonu ogrzewania lub chłodzenia. . 3
+
+4 , i k 1 5 = =) > “4
+re M A ;
+4 LF R" L, . Lb mF
+
+6.5.4.3 Ussone zapotrzebowanie na energię do (odwiżania nawiżania AE, * eee
+
+i a
+
+s 5
+
+KĘ * * LeeR SAL REORES =
+
+Ostrzezenie: wlanekala dolnym nie ma jeszcze rozróżnienia między obl iczeniem „energii podstawowej”
+
+a „właściwymi dla systemu” RyBżeniami ciep nai ao Ak k' | 8 FR bk
+ae
+
+Miesięczne utajone zapotrzebowanie na energię do (odwizaniajnawiżania W sieją kondycjonowanej cieplnie, zte,
+
+oblicza się jako sumę godzaowych Chie przewczyczyadocniówyc : x LEZA
+0,001 dy SL ERRLV ERA SIRF
+Ou poadzicz ki xe). noma ty TR NA O. 4 NRB A „JE € (11). 8 KTM
+przy czym dla strefy kondycjonowanej cieplnie, zte: JEM A: LECLVARES ARES
+= Z Ve = i = 4 Ę = | 4 - SE
+Qiu/DHUzd:zm zapotrzebowanie na (odwiianiejnawiZanie w strefie w | miesiącu m, w kWh, - |." JA
+
+Duu/DiWAdiret et (odwilżaniem)nawiżaniem w strefie, w przedziale czasu L Jak określono w 6. 5 14,
+w - UE a
+
+=
+
+At: długość przedziału czasu t wh; AG = 1 dia przedział acting dl SAGES
+
+se
+reg
+
+a 2
+
+62 CZNIE Z art. } ust D ustywy 2 dnz (2 września ZOE ro Nema CIA (Dz UL Ne 160 pss, 1388 1 z późn. z zn | Po sae Normy ną "ronog '
+jem sick rn jek utwory bierache @ autores pire mejztknewe fp tech prz zystugagą | pa ów t mijał mai Me ma cacy (Pet
+
+Miry siEżujeę pokOfuiZzca plków OZ wie Zaborów da Eile i ieee tdi Mm Loser win
+
+bi
+
+
+
+
+=== STRONA 16 ===
+
+fin
+
+CO < EBD /--> Ga
+
+EN 150 52016-1:2017
+
+Roczne zapotrzebowanie na energię utajoną do (odwilżania) nawilżania oblicza się jako sumę zapotrzebowania
+miesięcznego:
+
+CHU/DHU;ndzzt jan ~ » HU/DHU;nd;zt;m
+m
+
+(12)
+przy czym
+
+Qiuu/DHUndztas  TOCZNE zapotrzebowanie na energię do (odwilżaniajnawilżania w strefie, w kWh,
+
+Quu/owundztm Zapotrzebowanie do (odwilżania) nawilzania w strefie, w miesiącu m, w kWh
+
+Zapotrzebowanie na energię określone dla systemu:
+
+Do obliczenia zapotrzebowania systemu na energię potrzebną do (odwilzanta) nawilżania mogą obowiązywać
+ograniczenia, jak opisana w 6.5.2, w zależności od długości sezonu.
+
+6.5.4.4 Zastosowanie: obliczenie temperatury wewnętrznej
+
+W przypadku obliczania temperatury wedwiętiziiej w celu oceny przegrzania w letnich warunkach projekto-
+wych, założenia i warunki szczególne są takie same, jak w przypadku obliczeniowego obciążenia chłodniczego
+podanego w 6.5.4.5, ale warunki związane z systemem są pomijane
+
+W przypadku zerowej mocy grzewczej lub chłodniczej temperatury bówietrznaj należy obliczać zgodnie z 6.5.5.3,
+przyjmując. Ocz | 0, przez ustawienie 2 a smalneę 7 TKE i chłodzącej w strefie ztc na zero:
+
+=
+
+iS —
+4 ia
+
+OH;max;ztc = PCmax;ztc = 0. | a
+W celu oceny temperatury wewnętrznej wetandandongieh warunkach „ARAAAA (jak w przypadku obliczania
+
+zapotrzebowania na energię do ogrzewania i chłodzenia) obliczenia należy wykonać zgodnie z obliczeniem
+
+zapotrzebowania na energię do gotzewaniji i chłodzenia podanym w 6. 5.4.2, przy zerowej mocy grzewczej
+
+| oe ey | JR fi BO a
+
+6.6.4.6 Zastosowanie: Obliczanie projektowego obciążenia grzewczego lub chłodniczego |
+
+R” a 1
+
+6.5.4.5.1 Postanowienia ogólne. 4 LER LLeR EL
+
++
+
+Strefy ciepine stosowane | w obliczeniach projektowego obciążenia grzewiczego 4 lib chłodniczego stala się na
+podstawie projektu systemu. Obliczenie projektowego obciążenia powinno wspierać dobór urządzeń. Wiele
+
+elementów i urządzeń dostawy energii w strefie cieplnej lub powtarzalnym Emerh Poe doj może _
+nie wymagać podziału na strefy do poziomu wyposażenia. tees ss 4
+
+al 3 ie 4 © 3
+UWAGA Wymagany podział na strefy może różnić się od podziaki na strefy do obliczenia a zapotrzebowania na enertie
+
+Obliczenia projeklu EU mogą na RZ imago” skupienią się na GRRY wapotszego PAC,
+if ;
+6,5.4.5.2 Obliczenie projektowego jawnego obciążenia grzewczego strefy ciepinej 2
+| Ę 3 |
+Obliczenia (rocznego) projeklowego obciążenia cieplnego sitetyiciepinej ‘dokonbie sie poprzez obliczenie
+zapotrzebowania na energię zpodnłe z 6.5.4. 2, ae pa zc aj Bone warunicami Beaty cones waruńkamę
+działania. =
+
+f A 5 i |. £ A 3 =
+om = | i 5 + e 3 RATE
+Projektowe jawne obciążenie grzewcze strefy cieplnej wynosi | | Ą
+Py -id-des:ztcian cj | (Pyidzztez | Ę 3. a "R . R ’ (13)
+
+[ra
+
+przy czym
+Oylidesztuzm _ projektowe jawne obciążenie grzewcze w strefie kondycjonowanej cieplnie ztc, w W,
+Oysdztez (jawne) obciążenie grzewcze w strefie w przedziale czasu t, obliczone zgodnie z 6.5.5, w W.
+
+Ę w
+Zgośne z at $ ust © ustawy £ dees 12 urzeżria 2002 r. o naamaitacgiiDz U. Wr NGS poz 1357 z późn. zm | Pose Nomy Ją o*roliore 63
+Pomme sutcrsicm jsk twory Merache. a nutoeske prawe majatoare do nch przystają Posey Kersetcwa comets scyjnemu (PHS).
+kióży kk jk pt falzsze aun Olać siem zabecgóecpefia zii=i nwiełańei A (15 kogo sk wit,
+
+
+
+
+=== STRONA 17 ===
+
+= Dostępna moc systemu jest nieograniczona; wymagane dane wejściowe w 6.5.5. ye
+
+kd AVY ru = ww 4
+
+EN ISO 62016-1:2017
+
+Warunki klimatyczne:
+
+Dane klimatyczne wykorzystane do obliczenia projektowego obciążenia grzewczego powinny być ciągiem
+wartości godzinowych, jak opisano w ISO 15927-4, przez okres n dni zgodnie z ISO 15927-5, o następujących
+właściwościach:
+
+— Srednia temperatura powietrza zewnętrznego w sekwencji powinna być równa zewnętrznej temperaturze
+projektowej zgodnie z EN 12831-1,
+
+— _ Minimalna godzinowa wartość temperatury powietrza zewnętrznego to minimalna godzinowa temperatura
+o średnim okresie powrotu wynoszącym 1 rok (np. występująca średnio 20 razy w ciągu 20 lat)
+
+Okres inicjalizacji składa się z jednego lub więcej powtórzeń okresu cyklicznego, tak aby okres inicjacji trwał
+co najmniej 14 dni
+
+UWAGA  (z15052017-1) SZARA okres obliczania jest poprzedzony okresem inicjalizacji, który jest wystarczająco
+długi, aby wpływ temperatury arnt węzła na Rowan ewes znikomy, gdy zę się faktyczny okres obliczania.
+
+Ę
+
+Warunki użytkowania: 23444 ię Ec bEear ( .
+
+Do obliczenia projektowego bts cit grzewczego, ARAB i wewnętrzne yeh należy uzyskać z odpowied-
+niej normy EPB moduł M1-6, jak w przypadku obliczania zapotrzebowania | na energię, Zyski wewnętrzne będą
+pomniejszone o czynnik fic, W celu określenia zgodnie z szablonem normatywnym podanym w Tablicy A 9
+Wybory domyślne pea w Tablicy B. 9. | e. ) |
+
+w przypadku obiczefiia podstawowego projektowego jawnego obciążenia g grzewczego strefy cieplnej
+słosuje Sie nastepujace warunki operacyjne: ER 4
+
+% = (e .
+
+= System: dziala w sposób ciągły, wymagane | dane. wejściowe i w6.5.5. 1,
+
+Dostawa ciepła jest czysp konwekcyjna: face. = 4 (orhmagane in wejściowe w 6. 5G. 2
+
+4 >
+‘Do obliczenia projektowego jawnego obciążenia grzewczego właściwego dla systemu dla stety cieplnej |
+mają zastosowanie następujące warunki działania > ARERR EALEALRR ALE 4
+— System może działać w sposób przerywaj, w wymagane dane wejściowe w655 1, ERA 4!
+x i fe
+- Dostępna moc systemu może być ograniczona do zamierzonej wartości projektowej, wymagane dane 44
+wejściowe w 6.5.5.2, i 6 REKA A. Ss (443 i i 41 JES A: ACH hy
+— Czesc konwekcyjną action Roa wybera się zgodni Ę zamierzonym: typem systemu 5 A t (wyma.
+f Gane dane wóżciówew 66.0275 = ZR X i 4 , 3 1% % Se Sk & Ń
+* h Ę * A Ę z = = ię 3
+6.5.4.5.3 Obliczenie prjektowego jawnego obciążenia grzewczego podsystemu AR. i » ł
+| SEM AL (
+(Roczne) piŚjekiowie jaume obciążenie a podsystemu ss wynosi: 5 ae A L%% ERA LEGS
+: : | 3 „| Ł Ę - >| ę a ; . = x a ie
+6 3 Se & ze . \g Ł R 4 4 k Ś “=. © Ę
+Piilddes:ssan = MAX u(Sfeut) AKĘDRKĘJZĘĄ: 01149
+ae zic "BE" DEE A. a zę Ę
+Fycym APR SEARS RZOSKRKAEA RET ROSIN
+a (roczne) projektowe | jawne obciążenie grzewcze w podsystemie ss, WW, a R
+
+Leal
+
+Di,, ldcatce Jawne obciążenie grzewcze w MŁ cieplnej ztew przedziale czasu. t obkczone zgodnie 6 5 5,
+
+Ę
+
+UWAGA Jest to maksimum nałożonych ro wszystkich stret toepinych. anie suma a maksimów i |
+
+ć jej sziekośóść tylko część strefy cieplnej, zastosowanie e mają zasady przypisania podane w ISO 52000- 1
+
+t=
+
+pa
+
+| R
+64 : Zgośne z am $ ust © ustawy z dra 12 m”zeznia MGs r. o normaeag) [Dz L Ne 167 poz. 183 z pin zmj Als we Nonny są honoree
+
+fle mytorscen [ak utwory Merachee s suńetkia prawa mayethowe ce ch przysuj ung Pasisem Katrsakowi NEAT sry NET [PxQ
+kilo simu parmonsi zac póków O12 inte ŁalikZzewczari4 crite Neustarebionym kopa” ist
+
+ę
+
+
+
+
+=== STRONA 18 ===
+
+Ordzdes;ztezn = max (dy iłdyztc; 1)
+
+(15)
+przy czym
+Polska mn (roczne) projektowe jawne obciążenie chłodnicze w strefie kondycjonowanej cieplnie ztc, w W.
+Posie (jawne) obciążenie chłodnicze w strefie w przedziale czasu t, obliczone zgodnie z 6.5.5 ww
+
+W przypadku obliczenia pod
+
+stawowego jawnego obciążenia chtodniczes o strefy ciepinej obowiązują na-
+stępujące warunki działania: © | go strefy cieplnej obowiązują na
+
+System działa w sposób ciągły: wymagane dane wejściowe w 6.5.5.1,
+Dostępna moc systemu jest nieograniczona, wymagane dane wejściowe w 6.5.5.2,
+- Odprowadzanie Cobia jest czysto konwekcyjne: A (wymagane dane wejściowe w 6.5 6.2).
+
+i:
+
+Do obliczenia:; jawnego obciążenia chłodniczego właściwego « dla systemu dla strefy cieplnej mają zasto-
+
+sowanie naslepujace warunki działania. 4.
+
+cae a ść
+| 2
+
+System działa w sposób przerywany, wymagane dene wejściowe w 6. 55.1,
+
+| = 2 Dostepna moc vray mać jest ograniczona do RRT wartości GR wymagane dane
+
+Warunki klimatyczne:
+
+| (Z ISO 5201 7-1) zk, oles „obliczania
+
+Gz
+"*
+
+— Część nEEERE usuwanego o ciepła dobie się zgodnie z zamierzonym typem układu: Jacne 5 1 (wyma-
+Srirseceuh bens 3 \ 4 SZA
+2 al
+
+| a! Oe
+: ae A
+ki || " 3 m : : : „A | A >
+
+Dane klimatyczne wykorzystane « do. ponds prjektowego obegzenia a cloner należy obiczyć i przed-
+stawić zgodnie z ISO 15927-2, * Ę R: i AR
+
+i | Ń = ; j ik Aa A i kę :
+EJ 2 s ' Ę ; 1 > NE” >, be
+
+Okres inicjalizacji składa a z: eng ub więcej | powtczeń dotad cykicznego, tak aby oktes inicjalizacji
+trwał co najmniej 14 dni 34.7 oo ee NK 4% 8 11 LUKA
+
+poprzedza się okresem ink cjalizacji, który zk itt asia |
+długi, aby wpływ temperatur god. wa na Kawy: obliczeń był ieee Zh, gdy eK sig Ek
+
+okres obliczania. =" h Ą HL 1.43% 5 3
+
+j s 4 eee 3 3 32 4% ę 4 R RISIA:
+Warunki użytkowania: 2% 5 4 i 4 ‘ i KK 45 4 A 24% ESTERA
+Nastawy i zyski wewnętrzne należy przyjmować ak do obliczania zapotrzebowania na energie, z wątkiem
+
+Jeżeli 5 "ZR ABRAA boa obliczeń jenergi z zastosowano  wepłiczynak ednoczesności nie e należy
+ich stosować do obliczania | obciążenia priekjowecę | ę 5 a ULERY i
+
+UWAGA2 Oznacza to. ze dzienne profile wykorzystania przestrzeni są soon bezpośrednio, bez Satetnd współ-
+czynnika redukcji. A ę O ŁR „dych m ię” nies: EPB mogul M1. -6 W odpowiedniej formie.
+
+5 = Ss
+R ;
+: =
+
+—
+
+* a .
+cern wi ur 0 aw ke ee a Onc nk Jogi 3 Uhr 18 poz z pón ae 3ą onrcnone 65
+bie p bia pwr = 7 Lesz £ dbó ów Gaz ifs 7 żeetrui | aknadsudliwach ye a. BRA
+
+
+
+
+=== STRONA 19 ===
+
+EN ISO 62016-1:2017
+6.5.4.5.5 Ob.liczenie projektowego jawnego obciążenia chłodniczego podsystemu
+
+(Raczne) projektowe jawne obciążenie chłodnicze podsystemu ss wynosi.
+
+De, ldrdesssssan 7 wę: > (we kdizte:t ) (16)
+- ztc ‘ £ b | |
+
+przy czym |
+Polddesznan (TOCZNE) projektowe jawne obciążenie chłodnicze (wartość 2 0) w podsystemie 55,w W;
+
+Doldztst jawne obciążenie chłodnicze w. strefie kandycjonowanej Ti zteń w w przędziale czasu f£, ob-
+liczone zgodnie z6. 5. 5, w w. Lb i 4 AK
+
+UWAGA Jest to maksimum nałożonych Profil wszytkich st set ercepnych, a nie suma ARA
+
+Ty k u "
+
+Jeżeli podsystem obejmuje tyko część sety cieplnej, z zastosowanie mają, zasady przypisania podane
+wiSOS2Q00A. ETE PEEL TT LCN M
+
+6.5.4.5.6 Projektowe warunki dostawy powietrza do nawiżania naw
+
+Obliczenia (rocznego) piojektowego obciążenia wilgocią do (odwiż oniużania i projektowego JAAN
+obciążenia cieplnego strefy cieplnej dokonuje się przez obliczenie obci żenia (YA RH A a zgodnie
+: 6:5. 14, ale z paninión manna corey pow poner, i $ A |
+
+3.
+
+|
+= i 4 | | |
++" LIE a oe U Eh as (
+7 ; sj 5 + dE 2 (3 ‘ | lis 5 h i
+Ę Ą b a » L j 4 i = = i 4 1 e - | A L. ie, a -* 1,4 u
+
+Ay
+
+, ' 4 |
+i Ta" Ł z 1, ii z = $ i 4 L + he f
+’ z = = 5 4 + (AL % E ie d c | "ed 4 U
+ą 3 = | M - 3 = : 4 He 3 |= z ic]
+L 2 Ne = fe Kt .
+ji 7 rd | = :
+p i | |= ,
+
+(Roczne) projektowe obciąeni wigocią do nawiżania a wynosi , SEK! M M + i LLG
+
+=
+
+e | Ga esata hy
+
+=
+
+= = Ę
+
+<= p € s Ey
+A = L z * q k 2 „| & j Ie, EE E a le ik
+2.9 | 3 1 h ee = a = % i le, A A "7 hte
+| (Roczny ) projektowy s strumień masy RDNNA wynosi LhULES e ULERENSTLERRAR TALS
+SeCeeCEREES Os VAAL
+
+one desztean * = max (Saud cit’
+
+y
+
+ni
+
+= = 3 = =
+
+Oydzdesztczm » mt
+
+A |Projektowe fem s utajone (W awa
+A : ae: ARALNA
+
+FT: gł
+
+ERA
+
+NR LIE A "
+© Bpundses W max ŻAKA | A ik Ng 5
+przy czym aa strefy kondycjonowanej cieplnie zte 8 Ą ay % + +} a: te kt 554%
+Ę Ne 4 eo
+: Gysusdstes an «r oczne) projektowe obciążenie wilgocią do nawidzania (e sta (ezoną) porzebne do utrzymania ‘
+
+4 ee minimalnej noty wacnocz, w kos; SZKSYK » ™ Ś.
+U |
+| Cotas idler (roczne) projektowe ódciążeniń wiyodją z kdzki (usuwana) potrzebne do utrzymania
+
+: » maksymalnej nastawy RR w kgłs, b A | kę .* i
+Guysdiceee obciążenie wilgocią donawiżania kicsląrczonąjpolrzebna do n ko minimalnej nastawy
+Ą = rilgotnate w przędziałe czasu t, jak określona W 65. M 1 1, w kgłs, Ą
+Ę :3 A" a‘. * \
+
+„E 8 4 - k IE e. | 1 5 0
+Ę Zgosne z art > ust © ustawy I deep 12 urzeznia 2002 r. 0 no mead (Dz. U. Nr 157 poz 1353 z pózn m] EN
+
+e
+AE
+Ji
+
+=
+
+P 2
+
+[l
+
+=
+=
+
+Ty SĄ SPrUTŁOCE |
+
+
+
+=== STRONA 20 ===
+
+Z < D> WBO
+
+EN ISO 52016-1:2017
+
+obciążenie wilgocią z odvalzania (usuwaną) potrzebne do utrzymania maksymalnej naslawy
+wilgotności w przedziale czasu t, jak określona w 6.5.14.1.1, w kg/s
+
+© nik doe-encen utajone (roczne) obciążenie cieplne do navalzama, w W,
+© aadderzriaz  Ulajone (roczne) obciążenie cieplne do odwmlżania, w W,
+Paid utajone obciążenie cieplne do nawilżania w przedziale czasu t, jak określono w 6.5.14.1.1,
+w VV
+bkuddzer utajone obciążenie cieplne do odwilżania w przedziale czasu ©, jak określono w 6.5.14.1.1
+ww
+
+(Roczne) projektowe obciążenie wilgocią do (odwilżaniajnawilżania można przekształcić w ZwIększe! We i zmniej-
+szenie zawartości wilgoci w powietrzu nawiewanym Za pomocą wentylacji mechanicznej w po orównaniu Z Zawar-
+
+tością wilgoci w powietrzu zewnętrznym, Ar azpstt/pAUdddezizcan, ZJOOME Z odpowiednimi wzorami w 6.5. 14.2
+fy,
+Huzld;zte;( a
+Ay =(x W] E' a (21
+AX sup:tf Ukldeś;ztcjati ~ (Xasuptt Usreqizte;t Maen } ARE 4
+Ay = (x |= 4 śOpHUJldza 114.88 (22)
+a,supiDHUJdydcs:ztczan Rane Fa su prDHU,rcq:zic;!
+
+lą. dy; mech;k;t
+z przedziałem czasu t, w którym występuje projektowe obciążenie nawilzania lub odwilżania.
+Warunki klimatyczne:
+
+Projektowe warunki powietrza nawiewanego do nawilżania i odwilżania należy obliczać na podstawie utajonego
+obciążenia cieplnego zgodnie z 6.5.14, w projec warunkach SC ych.
+
+Projektowe warunki klimatyczne powinny zawierać minimalna/maksymalna godzinową wartość zawartości
+wilgoci w powietrzu zewnętrznym, mającą średni okres | powrotu wynoszący 1 rok (np. występująca średnio
+20 razy w ciągu 20 lat).
+
+6.5.6 Obliczanie (jawnych) obciążeń grzewczych l chłodniczych oraz temperatur |
+6.6.6.1 femperatura nas aw, |
+
+Wewnęlrzną temperaturę nastawy ogrzewania AR oilsóh + ichłodze NIA, Ooeeencertres W każdej strefie kondycjo-
+nowanej cieplnej zte, w przedziale czasu ¢ należy określić na podstawie godzinowej według odpowiednich norm
+EPB moduł M1-6, z uwzględnieniem kalegoni przestrzeni (określonej w ISO. 52000-1) oraz uwzględnieniem
+również możliwego obniżenia pork w nocy rę W Ciągu dnia, weekendy lub inne okresowe przerwy lub
+
+ustawione okresy pool;
+
+4
+
+W niektórych budynkach takich jak szkoły ókreży niedbetności W sezonie e grzewczym lub chłodniczym, takie
+jak np. okres wakacyjn Y prowadzą do zmniejszenia zapolrzebowa nia energi do ogrzewania lub chłodzenie
+przestrzen. o ? eae aes:
+
+] 4]
+5
+
+Jeżeli regula dołyczy przestrzennego i usredniania watts zada ney lem per alury dla budynków mieszkalnych
+jak opisano w 6.4.6, wartość zadaną temperalury ogrzewania należy odpowiednio doslosować,
+
+| z Ą
+
+Zapotrzebowanie na ene dla określonego E ystem U
+Do obliczenia zapotrzebowania na energię do ogrzewania i chłodzenia da określonego systemu, dostosowanie
+wartości oraz okresu (okresów) (takich jak liczba godzin dziennie i dni w tygodniu) nastaw v temperatury może
+mieć zastosowanie, w zależności od określonych charakterystyk odpowiedniego technicznego systemu budynku
+uzyskane z odpowiednich norm EPB moduły od M3-1 do M7-1
+
+| — PT Te: m ii hig ) | lara malig je | RZA i j thn, is 4 przysięgi Mak TE | rsa Ai 0774 ay! - [- .
+
+I], pz Sz, Dei Wihisiiet a Pave | a | | W Lal lee la Z] zł Pit! FT, fa4 Trex s iefń
+
+
+
+
+=== STRONA 21 ===
+
+<n GBA
+
+EN ISO 62016-1:2017
+
+6.5.5.2 Jawne obciążenie grzewcze i chłodnicze
+
+Dia każdej godziny i każdej strefy rzeczywistą wewnętrzną temperaturę roboczą 6,,,.ecpzr:ę OTAZ rZECZYWISIE
+obciążenie grzewcze lub chłodnicze, Qycyd:ra+, Oblicza się, stosując następujące kroki procedury:
+
+Krok 1: Sprawdzić, czy potrzebne jest chłodzenie lub ogrzewanie
+Przyjąć Pucaiere = 0 I obliczyć wewnętrzną temperaturę roboczą Ojnpopizty: ZJOdNIE Z 6.5.5.3,
+
+przy czym, dla strefy kondycjonowanej cieplnie zte i przedziału czasu t
+
+Pricctdutct obciążenie grzewcze lub chłodnicze, w W,
+Omtopstat wewnętrzna temperatura robocza, w"C.
+
+Oznaczyć wynikową wartość Śinzoprztat jako Omoopńsznć ay |
+„EEE wewnętrzna temperatura robocza, wees hit Me
+
+PIECE wewnętrzna temperatura robocza w warunkach swobodnych, w °C:
+
+| zapisać wszystkie obliczone lemperatury węzłów eko punkt wyjścia do Oba następnego przedziału czasu:
+
++ ME
+Śplielstwij-1 = Śpłełie s%; IRE A LDL LS"
+przy PŁK dla strefy ciepine} zt, i przedziału czasu va" | 233 p 1
+E T- » wt Lue S* :
+WESA s temperatura powietrza wewnętrznego, wee AEG aERe So
+. Onrząze(t*1).1 : wartość wewnętrznej temperatury powietréa z Poprzedniego przedział czasu dla OSAD
+| czasu (£ + At), wc; s 5 % a" ! 8!
+Ona 2 3 temperatura węzła pl element budynku el wc; RĘKŁRKĘKALAKA
+| ene - wartość temperatury węzła pe elementu |budynku eli w poprzednim przedziale Czas w pre.
+=. | Pega he BY ¥ ee Wk SS Se - i
+; : a R z : | ak 4 ą 5 LA 5 $ M | E Ę 4 4
+Ojciec =0 czę ;Ą U PELLERLAERERERREREREEREES ES
+| a é jt * > y - 0$- A A z i dk k EE: X 3 4% >, * sh. 1%
+8 =6 FD EALETERALALELERERERERS EELS TES
+latsopraczzge innoperae 8 4 eULERLLRRLARELY . Ę
+przy czym, da siły kondyconowane cienie zt przedziały czasu £, A 5 3 4% WĘKKEKA TAA
+ODycidret obliczane obciążenie cieplne grzewcze lub codzi, x% % k 1% 4 + © sg 4,
+ARMIĘ A SX BS
+% %
+O zapisy zeczywysta wewnętrzna temperatura robocza, w, % 1% A 4% AKĘRRER HK
+| SŁ TZ R TE RA JE LE &
+Onropioznt Pozn agerępój ka robocza dla warunków wobętych wyć Ą +3, 3 . ;
+
+my,
+
+kef
+
+’ i
+. REJEEM „wewnętrzna nastawa temperatury roboczej dla pękaj gescnawia 5. BA, w «c: Ę
+Osace ! Miewmętrzna nastawa temperatury roboczej dla chlodzenia, okieślona we. 55 A. w ag
+
+i przejść do kroku 5. | E MIKE A i 3 %* 5 R 4. + 2%.
+Jeśli mie: zastosować krok 2. ER RERCA % Su 8 ; 5
+; : 5 = 3 i é ż 1 z
+E | ; ; c =
+68 Zgoine z at Bust 6 ustawy z dries 12 urzeżnia 2002 o no amaiczacji (Dz Uk: 108 pe 2 Tabi zpó M RW I a BH
+
+Peewee ainorskmn jek utwory berackee = pitgrzkie przefa maj słkowe 9 meh przyst » 254 Pańskyem wi Korżetowi Nar sais ye (Pe
+Mury LH p fenónaitsze ¢ bow Oraz in rabarowczwiia Sed Guz rame ryr | Bałam |
+
+
+
+
+=== STRONA 22 ===
+
+EN ISO 52016-1:2017
+
+Krok 2: Ustalić, czy ma zastosowanie nastawa temperatury ogrzewania lub chłodzenia, i obliczyć obciążenie
+grzewcze lub chłodnicze.
+
+Jeżeli Gint;op;0;ztcjt > Blnt;set;C;ztejt, przyjąć Olnt;op;set;ztc;t = Blnt;set;C;ztc;t (25)
+
+Jezeh O wopitaect 4 UjmrzetHiztoti przyjąć O anogowńtcit = O mtisebietesć
+
+przy czym, dla strefy kondycjonowanej cieplnie ztc i przedziału czasu t
+
+LEE RA temperatura robocza w warunkach swobodnych, w °C,
+
+O jmsepuezaec  WyMagana wewniętrzna nastawa temperatury roboczej, w *C,
+
+O miar zet wewnętrzna nastawa temperatury roboczej dla ogrzewania, określona w 6.5.5.1, w *C;
+
+PRZREEWE wewnętrzna nastawa temperatury roboczej. dla RET O określona w6.5.5.1, w °C.
+
+Obliczyć wewnętrzną temiperaturg roboczą 8. letoflisżje „zgodnie z6.5.5. 8 przyja Decent = Pucuppenztć
+
+ey
+- jeżeli dostępna jest maksymalna moc £ ogrzewania l lub chodżęna LI
+OHCjupper;ztczć = OHC; avail;ztcjt ; *' ‘ av ‘ | sę * z ‘ | (26)
+
+TW przeciwnym razie: Douga = = 10 x Ate 8" ią 3
+Oznaczyć wynikową wartość Omg jako aż M
+
+- przy czym, dla strefy kondycjonowanej ciepinie ztc i przedziału czasu t ac
+: Dycidzter obciążenie grzewcze lub chłodiczej w W.
+
+Ducyupperrznz górna wartość obciążenia grzewczego, ww, JR s
+i A norze i wewnętrzna temperatura robocza, w ich |. * a: ~*~ a: LA BRNA 4
+Grccrcuppesect wewnętrzna lemperairabocza u uzyskana dia gómej wartości obciążenia grzewczego, w re,
+Aue | _użylkowe pole powierzchni podłogi stel, określone w 6 43, wm | SZKERKK
+ODE Oem. 29 POMOCĄ Wzór Ł 5-083 Ka a 3 1% te ct ee Ce eo Ee"
+"ALE" lk" | ik k 4 48 8 3 LE S = ‘
+b... _ a WR (Goniaperztt 7 z dobor) : 1% % A + 3 3 a = ‘
+Hdtunatex 4 = Pcp EPULESEAR OE EES OES CUS
+ESEE (Pint piupperzztest 7 Peroni) 4 GŁKKĘRIENAKKNA:
+przy czym, dia sry Chronic ciepinie ztci przedziału czat 3 4% Ą „44 i
+
+Ducidunizet RAJESRABA grzewcze lub RANA dla | osiągnięcia wymaganej nastawy tem-
+
+ha. E. Ki
+j peratury, w W, 2% KIER A X) an RASEG LE
+f= ‘aA ks
+Parker Ę górna i wartość obciążenia grzewczego lub chłodniczego, ww SPEIĘRER
+R k x ;
+Craig | wymagana wewnętrzna nastawa temperatury robocze wstrefe ztewprzedzial czasu tw (e,
+O swe osa:rzet temperatura robocza w warunkach te ta wc; fs LESS
+e 7 Rd EE" wewnętrzna temperatura robocza uzyskana dla gomego obciazenia grzewczego lub b chłodni-
+a, czego, w °C. 3 k u. * k
+Te k : A Ę : ‘ ‘. ‘ E a Ę
+r a ; a = ; = » ka
+E Ę Ę ; iE
+‘ Zgodne z art. Biust. 6 ustawy z dry 12 urzeżnia 2002 r. o noenatmacji (Dz U. Ne 100 poz. 1386 z późn. z Polskie Nany są c” ranone |. 53
+
+przem aitorzkm jek utwory ftersche, a autzesloę prawa majatkowe do rech przyskiguyą Po seu Kam stom horeczzyj [Pi
+kóry stósuja paonalzażję pików Oraż ino 2 abexpeccenas przed n wuja a eS [7 | kopia a M
+
+
+
+
+=== STRONA 23 ===
+
+EN ISO 62016-1:2017
+
+Krok 3: Sprawdzić, czy dostępna moc chłodzenia lub ogrzewania jest wystarczająca:
+
+Jeżeli Byc Idunyrże ZAWIEFA się pomiędzy Oy avail reve OF AZ © zawiłe
+
+Pyoident sr Pyołdnratnt
+
+8
+
+(28)
+
+inkopacm: — Oreo the: steje
+
+przy czym, dla strefy kondycjonowanej cieplnie ztc i przedziału czasu t
+
+Pycidamane nieograniczone obciazenie grzewcze lub chłodnicze dla osiągnięcia wymaganej nastawy tem-
+
+perałury, w W,
+
+Purmo maksymalna dostępna móc grzewcza w przedziale czasu t, jak określono w odpowiednich
+
+do obliczenia zapo
+czenia maksymalnej dostępnej mocy grzewczej,
+
+normach EPB moduł M3-1, w Mż
+
+rzebowania na energię dla określonego systemu mogą pig hs szczególne ograni-
+
+Qamiknot maksymalna dostępna moc chłodzenia w przedziale czasu £ waiting <=), jak określono w od-
+powiednich normach EPB moduł M4-1,wW, Ę Ae
+
+do obliczenia zapotrzebowania na energie dla określonego Aa ÓW obowiązywać szczególne ograni-
+
+czemia maksymalnej dostępnej mocy chłodzenia;
+
+M Ve
+
+Oyqkiun=ny — hieograniczone obciążenie grzewcze lub chłodnicze do osiągnięcia wymaganej nastawy tem-
+peratury, ww; | i a : :
+
+8
+
+a : d rzeczywista wewnętrzna temperatura robocza, w wc;
+Gincopnee | wymagana CPU nastawa temperatury roboczej, w wee.
+
+* JKTE
+1 zapisać wszystk obiczone temperatury węzłów jako punkt w wyjścia do obliczenia następnego przedział Czasu,
+= : z i o ę E = ¥ p = ć : j . j : i 5 A a ś ; j 1 | ę A 5 | 5: A « z i =
+| = - I & ; KĘ ią > U Ak kl 5 A ee kM |e 73
+Ćplieli(cen 175 Opad = Le SU ERDELARSLLES AVES
+przy czym SEREDEPE eee ee St he Se" See Eh eS :
+(tak samo jekw Kroku 1) - 5. g. PS SL eS LS ALE ŁĘKA!
+iprzejśćdokroku5s | 0. 2. a ee eh AREN
+Jeśli nie: zastosować krok4. . © ‘ee LEAS RRR ER YL EES
+AEK M. RADKAKKALA i ;
+Krok 4: Obliczyć temperaturę wewnętrzną, jeśli dostępna moc ogrzewania lub chłodzenia jest niewystarczająca.
+Jeżeli Oc EA jest dodaln, to Przyjąć Gyiągzoe = 41! X ) % te & & 60
+Jeżeli Oyciżznzcz jes ujemny, to przyjąć Poise * Pein 3 1% 4% SIE:
+=
+
+Obliczyć wemiiicżha temperaturę roboczą Ouropzeeha podstawie Anika? Kroku 23 w którym maksymalna n moc
+ogrzewają lub chłodzenia jest stosowana ao goma wartość I mocy.
+
+przy czym, dla strefy cieplnej ztc i przedziału czasu t
+
+(tak samo jak w Kroku 3)
+
+70
+
+= e = L= A Na “s = j a ń
+8 int;opyźteze = Cccsernabrie i 1 a ! R (3 1)
+
+i”
+
+=
+j
+
+Zgodne z art, 5 um. © ustawy 2 dny 12 wczeżna 2002 r. o nosnajeagi (Dz U. Ni 167 poz. 1350 z póżn. zw] Poise Nonny sa owonose
+prawem cuter m jak utizzry Meracke. a auto she przys majatkowe» do neti przysuzują f axbemu Kormestow hormarzacy meme (PHN
+kióóy sio peroraliace ków ol al fire Lubeczewczwii fiol GUSTA W kopów ia
+
+
+
+
+=== STRONA 24 ===
+
+Em zał SLR WASZA maced MOE REA aaa cies on ZJ
+
+EN 150 52016-1:2017
+i zapisać wszystkie obliczone temperatury węzłów jako punkt wyjścia do obliczenia następnego przedziału czasu.
+(32)
+
+Oi stacstes(t+1)-1 = maszt
+Opwetn(ew1)-1 2 Oplude
+przy czym
+
+(tak samo jak w Kroku 1)
+UWAGA = Wtakim przypadku nastawa temperatury nie jest oda,
+
+Krok 6: Obliczanie rzeczywistego obciążenia enetgią do ogrzewania i chłodzenia jane wynik obliczeń:
+
+Jeżeli dis jest dodatnie, rzeczywiste (ae) obciążenie grzewcze i chłodnicze dla danej godziny jest
+
+©. o BESULERCO REECE LEGER W. byc '
+Qa —.= my | * = AO i
+0, 50 | ft z. A Lee UR ESS TL ES S74 ee
+Jeżeli BEAR: jest ujemne, rzeczywiste (ane obeiazenie orzóycza i i chłodnicze dla danej godziny jest
+oe OE OTAEESREKRLĘGSZĘŁ KĘ: = : NA
+ery = Pretec SZARĄ " A (34)
+ię: przy czym, SPOIWA SKRA WAY ALAS Ah
+
+ie Die ie BA rzeczywiste (jawne) KAM Qeże jest dodatnie) lub b chlodnicze jez jest ujem.
+IID ŁPYM ULLA! RURERARKK KA LE
+
+A.
+
+e Doe 5 © jreedzywisje obciszenią zagtze, ww 1 ik Rae SER EREBE DOG i.
+| oe = Pouiieess 5. GERE RAS giez ae wi 4% +k KERALA
+= - = = x. th % A] dy A A 3 a = =
+
+Bohectcosine są altematywne 0 je dla tej techniki rozwiązania, pod warunkiem ŁĄ do weryfikacji metody.
+_ zastosowano rad wa 2 lesan odchylenia od wyników odniesienia. k 1.45%"
+
+is 8 % >» 1 $ Ma
+Tablica A. 10 zawiera szablon Da AR wybow Korte zalecand tect k lub technikami sear te
+POWODY CLK +3 4 4  URĘKKKSRKE +s.
+
+LZE okres Ca póprzkiz o ced inicjaliżacji obliczeń, który jest wystarczająco dug, aby wpływ
+wartości temperatury każdego węzła na początku obliczeń | był nieznaczny, ady zaczyna się faktyczny okres _
+obliczania. Okres inicjalizacji powinien obejmować co najmniej dwa tygodnie poprzedzające faktyczny okres |
+obliczania. Tak więc w przypadku rocznych obliczeń, począwszy od 1 stycznia, ee et być poprze- ch 4
+dzone co fajmniej okresem od 18 do 31 PPN: 1 MORA - O
+
+%. : = KO ES ee LER ES ea | Seu &
+
+w : JE A JE JEM IG Eg © i .%3 > 4 ią *
+w Zależności ad skody dókoranych w BARN koduniayci date Uejłtiówe do odeń może być
+
+wymagana iteracja. Fatrzęakże etapy abies okresione w Iso. 52000-1: BON, 11. zi 11. ae 2.
+
+2
+‘ i = = E Ę k A (= (=
+E Z £ z iz (2 i= Ę
+= 5 Ę ie iz R
+a. 7 4 A & | e iż
+= Pe = & =] ie 5
+Zgodne z an. 3 ust. 5 usławy z dry |2 mrzeżnia 2002 r. o no"maizacji (Dz. U. Ne 168 poz. 1288 z późn. zm ) SOEkiE Normy żą: =n none 71
+
+fate sutorsz m jak utwory Herąche, « autorskie punra mejstkowe Go meth przywug Pią Pozkienu Ko see se eae | (PL
+kióóy się ja patkolulzaćm phe oad ine Laberpettenia pred © iu atena ry m Łoza arn
+
+= 3
+U
+
+
+

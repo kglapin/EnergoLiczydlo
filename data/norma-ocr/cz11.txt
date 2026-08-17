@@ -1,0 +1,1156 @@
+
+=== STRONA 01 ===
+
+oe eae i awe ow a aercat vet reese jedn ds "Oe Fra ee a ee TOO ee ee Ge erin wi Bo ET ae! "e i th ot ee 17 " ma” ” Tir a: mech W ai aoe "a win. Gf Lee Te | udawać | ee Mm m @
+
+Cl < GD 22> GBA
+
+EN ISO 62016-T-
+
+Procedury obliczania godzinowego:
+
+Wybór liczby segmentów, N,pzegn, Ofaz tego, CZY rozmiary SegmentOw (wskazany przez granice kąta azymutu
+Khobremaci) 54 Stale czy zmienne, podano w Tablicy 4.26 (szablon), z informacyjnym wyborem domyślnym
+podanym w Tablicy B.26.
+
+W przypadku stosunkowo małej liczby segmentów, takich jak 8, zaleca się wybrane stałej szerokości (360/8 = 45°)
+i zastosowanie tej samej dyskretyzacji orientacji zacienionego obiektu.
+
+Procedury obliczania miesięcznego:
+
+Wybór ograniczony do Nypzggm = 8 Z ustalonymi kątami 45°.
+UWAGA — W przypadku miesięcznego podziału czasu dokładniejsza dyskretyzacja nie zwiększa Gokladności całkomiej
+
+Procedury obliczania godzinowego i miesięcznego: | | | 1 |
+
+|
+
+Dla każdego segmentu osobno przyjmuje SIĘ jednakową wysokość. odległość. woiyntdy nad segmentem.
+
+| W zależności od przeszkody zacieniającej Uesh występuje), p, w każdym seghence i zbierane są następujące
+| właściwości FP Ha | r, pl
+
+Hover: — WySOKoŚĆ przeszkody zacieniającej r od poziomu grfku, uzyskana zgodnie z lokalną sytuacją,
+
+w m, a.
+
+| ee
+
+Ly chstp: POZIOMA odległość między zacienionym obiektem ka przeszkodą zacieniajaca Ff, zyskama zgodnie
+z lokalną sytuacją, w m. | ! A! ba py
+
+Jeśli występują gzymsy, dla każdego gzymsu (jeżeli winda, 7. w tym samym segmence, cow PORY
+
+przeszkód, zbierane sq następujące właściwości. ! tte) |
+
+Hung najniższa wysokość gzymsu tea q, od poziomu gruntu, uzyskana zgodnie z lokalną
+
+4
+
+sytuacją. w m; Pes)
+
+Loran odległość pozioma między zacienionym| obiektem ka gzymsem zacieniającym q uzyskana ałżygi
+z lokalną sytuacją, w m. | REA |
+
+a 5 i ' HW
+
+Odległość pozioma może być odległością do Boni (w odda! SdEOCA przeszkód) lub odległością do
+
+(środka) zacienionej powierzchni, w przypadku piasseioe pdłegłych lub przeszkód Giirritk Zz oknem (pa-
+
+rapety okienne, pilastry boczne, gzymsy). , PEC ee ERE IRRRRE RRRBAE
+
+Różnica między przeszkodami i pacts polega na tym, że przeszkody kończą się r na pewnej wysokości nad
+poziomem gruntu, podczas 47 gzyms zaczyna Się na Serr wysokości pad SERYSTE PW |
+
+‘| i
+
+F3.4 Sprawdzenie, czy BPO POWETEPTWIe i duje ię w polu widzenia |
+bezpośredniej wiązki słonecznej BREAK BR 443]
+
+LEE 2
+
+F3.4.1 Procedury obliczania godzinowego KERRESKE l Hi i Hi REBEER
+W przypadku gdy zacieniona powierzchnia k znajduje się poza polem widzenia bezpośredniej wiązki dnia niej,
+zacienienie jest całkowite (całkowite per poe Pree abirztortowi słoneczne litrze = 0):
+
+NOAREBB.
+
+jeśli —90 > (y;.: — Pzate) 7 +90 lub jeśli -90 = (5, — Oz.) = had ffl | 5 i BR | | !
+przy czym dla każdej zacienionej powierzchni ki w każdym przedziale czasu 6) |
+
+Pa det  BbeZwymiarowy współczynnik redukcji bezpośredniego zacienienia dla zacienionej powierzchni;
+
+134 Zgodne z an. Sus. ustawy z dre |Z erzeżrea 2002 r. p nosnatzacji (Oz. U. Ks 163 póz. 1350 z późn, zm) Aojskie Normy zą amramoce
+
+pzm Sutorsk m | ex utveory Vierachie, s iforzkie pres msjałkowee > reth Frzysupną Paspeny Komestona Mea awyneru (PKW
+
+hilóy «toz aibofałżać m plow Bind ine Zabi peered Pila Mauss aay p im LO peor ae ist
+3 ; r E
+
+
+
+
+=== STRONA 02 ===
+
+= L7/
+
+EN 150 52016-1:2017
+A+ kąt wysokości słonecznej, jak określono w odpowiedniej normie EPB moduł M1-13, w stopmach,
+
+Polic kąt azymutu słonecznego, na godzię, jak określono w odpowiedniej normie EPB moduli M1-13,
+
+w stopniach (umowme w niniejszym dokumencie. kąt z południa, na wschód dodatni, na zachód
+ujemny),
+
+By kąt pochylenia powierzchmi zacienionej (mierzony od paziomu do góry), uzyskany z danych geome-
+trycznych elementu konstruke yjnego w stopniach,
+
+Ve kąt azymulu słonecznego powierzchni żacienionej, uzyskany z danych geometrycznych elementu
+konstrukcyjnego, w stopniach (wyrażony jako geograficzny kal azymutu Zulu poziomego nachylonej
+powierzchni normalnej; umownie: yi z południa, na wschód dodatni, na zachód ujemny)
+
+W takim przypadku, dla danego przedzie czasu, j, obliczenia zacienienia są zakończone
+W przeciwnym razie należy przejść di FA. 5i FA. 6. Peat hae „AP
+
+F.3.4.2 Procedury obliczania miesięcznego i eee eee ray ie h gi
+
+W procedurach obliczania miesięcznego ocientacja dadedinnedd obiektu jest zaokraglana do 45 stopni, dzięki
+czemu widok na zewnaltz obiektu obejmuje cztery ae. jek: Ppiązano r na yi! FA. |
+
+Rysunek F.3 — - Procedury obliczania miesięcznego: podział li linii horyzontu n na 8 segmentów.
+z4 KRY w widoku na WINA zacienionego o obiektu | i
+
+E35 Obliczanie Indywidualnych ścieżek er || ae ; | i POPRELE
+l ee BR. i ie ie i p
+Yt on ae ee BEREKEEB: H
+F.3.5.1 Proste wnęki, gzymsy i pilastry boczne PERSE EE Bł ERE
+F.3.5.1.1 Procedufy obliczania godzinowego. agai MECERER i}
+Patrz Rysunek FA w F3 3.1. POPP CRPERERRSCOERE EE OBEE:
+
+Ta metoda dotyezy gzymsów (okien) o nieskończonej dtugościi lub innych geonietrycznie podobnych obiektów
+zacieniających (takich jak balkony). | | |
+
+Wysokość cienia rzucanego przez każdy gzyms q na fasadzie kw przedziale czasu t jest określona przez:
+
+Dy :ovhiq | tan (soli: )
+
+Ny-ovhcase + 3 i] Ly żovh:4 | (F.4)
+COS Poop: Ik
+ZIgoine z an. 5 ust. 6 ustawy z dra 12 wrzesrea 2002 r. oncom a zacji (Dz. U. Ne 193 poz 1300 z późn, zm] Rose Normy zą conor 198
+
+prawem SUSAN [BA LTTE Fierachie. » niroskie prawn majstkowse > eon przyr Pots igang) Ksmdełcńi Noraekr ae prem (FN
+
+Móły stow je paiecfialtać w płkÓw Orac imme Lebekioncreiils pri Medias ar <ziiy ró KDE w MIT
+
+
+
+
+=== STRONA 03 ===
+
+EN 150 52016-1:2017
+Gzymsy:
+
+Ta metoda dotyczy gzymsów (okien) o nieskończonej długości lub innych geometrycznie podobnych obiektów
+zacieniających (takich jak balkony).
+
+Wysokość cienia rzucanego przez każdy gzyms q na element fasady K w miesiącu m jest określona przez
+
+(4, +8): ESauth | (ów - -6) IP Lioving | (F.7a)
+
+f
+|
+
+vw hpep ita k
+in (A, + Ba: Csauth ' (4-4 m)): Fi zkżową Pog: mit
+
+JEŻER: | bym 50! | | Hponam FIOLI
+
+Jeżeli hk;ovh,qim > Hic hkovh, „qm = Hk
+
+UWAGA 1 Wzór opiera się na korelacjach high yeaniyth z zastosowaniem szczęgółie metody obliczania zacienienia
+
+promieniowania słonecznego, patrz ISOTRS20162 |) | wył
+TETAS ELT BOAT
+PALA ML RAJ |
+Pi szorhsą 4 or M aż P>. ikiowh: 2 eeUerE tape Nek [| | i (F.7b)
+i | 1 l
+
+humnąm wysokość cienia gzymsu qt na element fasady kwi miesiącu r m, w m,
+b ih GP | )
+A, - wysokość elementu fasady k, jak określono F 3. 3. 1, w m,
+
+sh
+
+Ding głębokość gzymsu q na elemencie fasady kk, jak określono w F 3 J. 1. w m;
+
+5 4
+
+Lęsnę Pionowa odległość między krawędzią elementu fasady ka gzymsem 14, kę określono wF.3.3.1, w m;
+
+Ch współczynnik korygujący dia półki południowej: Hy: (44 gi i KEPRRR
+Sn deklinacja słoneczna dla miesiąca m, _uzyskana z Tablicy. 20 w 16 3 6, w stopniach,
+Cocco RER BODEER
+
+eee ne
+
+Pw szerokość geograńczna stacji meleorologiczrej określona w odpowiedniej n normie EPB moduł M1-13,
+w stopniach. |) it aaed MUM RED!
+
+4 ho ol og Bd
+Wartości współczynników: rorelacj A1, B1, A2 i B2 dia różnych orientacji podano w Tac A. 37 (szablon).
+z informacyjnymi wore domyślnymi wtrióbnetiowii z, 46. R 14 14499394
+Pilastry boczne: s KRERE | re 4 | 4 i li 4 i | 1483 |
+
+Termin pilastry | boczne obejmie wnęki okien, stale elementy okien lub fasad. oraz inne części body (takie
+jak ściany), jeśli ma zastosowanie. RRRDRRERA |
+
+5 I
+
+Niniejsza metoda dotyczy pilastrów bocznych o nieskończonej wysokości lub innych geometrycznie podobnych
+obiektów zacieniających (takich jak ściany). WER
+
+Szerokość cienia rzucanego przez oba pilastry boczne na element fasady k w miesiącu m jest określana przez:
+
+Węzfinzm ~ 1-W,- {1 +|(A, + By ' Csouth ' (Ów 7 Św)):
+
+| (F.8)
+» |. - * — le ‘ 1 |
+Pik flnsze + (A; + B2 C South (Py Om ) P:k;fns $ F.k;fnsis }
+
+Zgodnie z art 5 ust © ustawy z draa 12 urześnia S002 r. omemacaeji (Uz U Ks 186 pac. 1336 z późn. Se.) Poisigs Nory sq oronore 137
+
+przem sutcrsk m pak utwory Merachie, 5 BUG robe prz niejstkrae do me) przyruę gą Pi dalpary Komśełow Kormacacy nera (136%
+
+klóży viosuja falikofakczeżw GDÓW Gar ia zalaczowczenia £iżsd (au arena Ty Loona M
+
+
+
+
+=== STRONA 04 ===
+
+EN ISO 52016-1:2017
+
+Jeżeli ~ Wyąsm * O: WhAinm — 0
+Jeżeli Wheaim > Wi Wrenn 5 W
+przy czym
+p i D, Vins is
+Lk fins \s W oraz
+hk SJ
+(F.9)
+Ż;kfins;s
+Wy
+
+W Tablicy F.1 podano w przybliżeniu szerokość cienia rzucanego przez pilastry z obu stron.
+
+Tablica F.1 — Szerokość enia Purnia przez Play z obu stron
+
+Wx,nalim = 0.5 Wyqn.m
+
+ge | RJ IE ECO TOI" IK —
+
+Wendin — U |
+
+Więńniim = Wfinim
+
+Węgalim = 0,25 W; n.e
+
+Wesabe 30, Ik. | Węin m
+
+UWAGA2 Te oddzielne wartości są niezbędne do abliczania swa komach wi obiektów a (patrz
+
+F.3.6.2). | wan Bae 0100 REEEE
+
+Wiefina=m szerokość cienia  pilastra po. prawej stronie r na elemencie fasady k w miesiącu m, w m,
+Whee km szerokość cienia pilastra po Frowol stronie JA na elemencie fasady kw miesiącu Mm, w m;
+W; | szerokość elementu fasady k, jak określono | w 1.3.3 1, wm m; Bete
+
+Ditarr, Drau  ghebokosci pilastrów bocznych, jak określono \ w Fa: 3. 4, „wn m, | i} | Mi
+Liętne, Lita)  . odległości od pilastów bocznych, jak określono w Fa. 3. 1, w m; |
+
+LA 4 a
+
+Czpuch, Om Py  tEN sam współczynniki kąty jak dla poprzednich w wzorów (dla orymsu)
+
+lu
+
+Wartości współczynników korelacji Al, B1, AŻ i B2 dla rożnych arienta s podano w Tabicy A 47 (édablon),
+a informacyjne wybory domysine podana w Vien B. Ar | Be BR BĘ |
+
+> | iJ i i ee aa '
+; ) | RB fl fi
+4 M | 5) i} Wa Q | l
+
+Wnękę można traktować jako Różana gzymsu pilastrów bocznych.
+UWAGAS Do uzyskania bardziej precyzyjnego wyniku opracowano osobne wspóźczynniki kojeacji Nie zapewniają one
+
+jednak różnicy między wysokością a szerokością rzucanego Gienia, co Ke) iatrinth: do obliczenia zacenienia kombxnacji
+różnych obiektów zacieniających (patrz F.3.6.2).
+
+F.3.5.2 Inne obiekty zacieniające; bardziej szczegółowa metoda
+
+F.3.5.2.1 —« Procedury obliczania godzinowego
+
+Patrz Rysunek F.2 w F.3.3.2.
+
+198 igocne z an. Ż ust, 3 ustawy z Ora fe mresria 200% r. Once eng (De. U Ke 190 por. 136] e pcen zm | Foistie Normy sądowa
+
+pozarem autami ete tates Trent wa Mmaężikiwa Ue tech przywłycają Po shies Komdtatów Note ale acyiners [PRN
+
+
+
+=== STRONA 05 ===
+
+EN 150 52016-1:2017
+
+Przeszkody:
+
+Dla każdej przeszkody p w segmencie i, która odpowiada azymutowi słońca, ©... wysokość zacienienia na
+zacienionym obiekcie k określa się za pomocą następującego wzoru.
+
+hy sobstpa © MaX| O; Hosa ps | Hoy 7 Ci sabstpit + tan (eta, )| (F.10)
+
+gdzie dla każdej zacienionej powierzchni ki w każdym przedziale czasu t
+
+Tie sideline wysokość cienia od przeszkody pw segmencie i na zacienionej powierzchni kę w przypadku pochy-
+lenia: rzut pionowy, vi m; | |
+
+UB
+
+Ha wysokość podstawy zacienionej powierzchni k, jak określono wF3 3, 2, w m;
+
+Homes  wysokosé przeszkody zacieniającej p w segmencie i. jak określono w F 3. 3, 2, w m,
+(
+Lęstp: Odległość w poziomie między zacienioną powierzchnią ka przeszkodą zacieniającą pw segmencie I,
+jak określono w F.3.3.2, w m, ae | (Ad
+
+4% PS
+
+Wax kął WP słońca, okteślony w odpomedniejn normie ERB modu MI 13, w stopniach
+
+Jeżeli pionowy przekrój: zacienionego oblekiy nie e jest stały, do oceny atu przyjmuje się pionowy przekrój
+
+na środku obiektu. | * k LALA NAA ES yh) i is LI
+
+Dla PASAMI qzymsu g w segmencie, który odpowiada, azymutowi słońca, Pests ip wysakos¢ zacienienia na za-
+cienionym obiekcie k jest określana za pomera parte acego wzoru. BR |
+
+ht = max [0; Hy + Hou - Hosa + Hop s sna o al MNA (F.11)
+
+" hh A 5 U M
+
+UM
+
+gdzie dla każdej zacienionej powierzchni ki I w każdym przedło czasu e RE |
+
+p Q ll 4 " i h kę
+
+| onąz wysokość cienia od gzymsu ą na Zacienionej j powierzchni k; w przypadku pochylenia rzut pionowy, w m;
+Hoge Najniższa wysokość gzymsli ą w segmencie i, Jak oltestono w w F. 3. 32, w m;
+
+| | Ę
+p H 11 ‘| tę F. t łą
+
+Linki odległość w poziomie między zacienioną powierzchnią k
+
+hae a |gzymsem: zacieniającym qw «segmencie i,
+jak określono w F-3.3.2, w m, ESR:
+
+WREN Lidl: R: Wid!
+U 1. i i i 4 I GBZERERE RE
+i gdzie inne zmienne sata zane jak dla poprzedniego wzoru. + 14 (| i | PRESS
+F3.5.2.2 Procedury obliczania miesięcznego RPRERSSRE 11
+Patrz Rysunek F.2 w Fa. 2 | BECERREEL EOE EE | Deke | RE
+
+Procedura obliczania jest podobna jak w przypadku metody bodzińowe), ala z dstalbiwii Sbómerkarni, z mie-
+
+sięczną średnią wysokością słońca iwspółczynnikiem thai dia A sektora, które zależą od irziadzy
+geograficznej, orientacji i okresu | reeeyy lub PETA kę: |
+
+y | i 4 "
+
+Przeszkody:
+
+Dla każdej przeszkody p w segmencie i (i = 1, 2, 3, 4) wysokość zacienienia na zacienionym obiekcie kokreśla
+się Za pomocą następującego wzoru
+
+= , , ,
+Ny .obstzpim > (Wobstani MR RAR RAY (F.12)
+rel
+fgotne z an. 2 ust. Sustewy z dee 12 emcee 26Q2r noowacazi (Oz U Mr 155 poe 1103 r pien zm) Polske Normy 29 Sroreice 199
+
+avert!) GOAL jak UlWOrY Kimi ache & autora pide Majehives Oo recii GrZyvlu3u 4 Polen KEG Malo Mint alt Zn ar (Pa
+ł i y Y i x
+
+MO SEKE PROnsliote ple Ora? ints ZZ6CZrZicenG ered NKUIWWATTN kop cera tan
+
+O a oases
+
+
+
+=== STRONA 06 ===
+
+EN ISO 52016-1:2017
+
+przy czym
+
+Dy obst punii = MaX | O:Motstysi | Hot i | Ly Jobst pył tan (Catan )| (F.13)
+
+przy czym dla każdej zaciermonej powierzchni ki każdego miesiąca m
+
+habe _ WySsOkoŚć cienia od przeszkody p na zacienionej powierzchni k, w przypadku pochylenia: rzut
+pionowy, w m;
+
+Wotcnneć współczynnik wagowy dla segmentu i, dla miesiąca m, w zależności od szerokości geograficz-
+nej położenia i onentacji zacienionego obiektu, uzyskany z Tablicy A.48 (szablon normatywny)
+
+z informacyjnymi wartościarm kopeinynm, w / Tablicy E. 48, suma współczyniników ważenia dla
+4 segmentów wynosi 1 lub 0; RKA l |
+
+|
+i i
+
+Aootetummne  WYSOKOSC cienia od przeszkody p w v segmencie I na zacienionej powierzchni kw przypadku po-
+
+chylenia: rzut pionowy, wm, ALL 4 4
+Ho wysokość podstawy zacienione powierzchni k, jak określono wha? w m,
+keer wysokość przeszkody zacieniającej p w segmencie i, jak określono wF. 3. 3 2, w, m;
+|
+
+Ey ohst pi odległość w poziomie między zacienioną powierzchnią oi zacieniającą p w segmen-
+cie f, jak określono w F.3.3.2, WET EEL ha)
+
+|
+
+Cokes ŚTEdNI Miesięczny kąt wysokości REAR dla miesiaca NĄ Wzależności ba Uułokidzi geograficznej
+położenia i orientacji zacienionego obiektu i numeru segmentu i, uzyskany z Tablicy A. 48 (szablon
+normatywny) z informacyjnymi wartościami WY w Tablicy B.48, w stopniach. |
+
+UWAGA. _ Zazwyczaj wartości ietecznę będą M it TN miesięcy, w sezonie
+
+Dla każdego gzymsu q w segmencie i= 1, 2, a; z rm zacjeriehialn na | zacienionym obiekcie x określa
+l 4 „EW |
+
+się za pomocą następującego wzoru: (1 M 4 U | + ę MA LA
+I | R A 4 lh | | i) l» MAYA k MESE" ABER: i,
+M. MUN eon ke Oh DB : ; - | -
+hy. wip. - Ż (erwin cmd” shea mt, site ‘ieee ee R! 1 1 i WURRDT ERS EEE LEE (F 14)
+hy. zavhsązhyzi = Max (0; Hy + Hos 7 Ha „ązt F Lema “tan Mot vont) | REGREC RCS EEE (F.15)
+przy czym dla każdej zacienionej powierzchni ki w każdym przedział css t 13 RE
+"| (KE i i h | 4, ‘ 44 i BER: ; u JE
+Ni | i 144
+fee tees te wysokość cienia. od edia q na a zacienionej Powierzchni, kę W przypadku pochylenia rzut
+pionowy, WO | | | KRUK AI 4" 1441 Lt
+: . | ' Ay 5 ; a u , 4 ie i ji i . ,
+nip He
+Meorcpim  ) WYSOKOŚĆ cienia od gzymsu ą w segmencie i na zacienionej powierzchni K, w przypadku po-
+chylenia: rzut pionowy, w m, | Baas | | | Lg |: HE |
+Hum: wysokość gzymsu p w segmencie i, jak określono w Fa 3. 2, w. m;
+, (W i l I ) ) - |
+Laon | odległość w poziomie między zacienioną powierzchnią ki I gzymsem a w r segmencie i, jak
+
+określono w F.3.3.2, w m,
+
+| | "
+
+| gdzie inne zmienne są takie same jak dla poprzedniego WZOFU.
+
+7)  Odsytacz krajowy. Błąd w orygnale EN. Powinno być: „miesiąca m”.
+">. Odsyłacz krajowy. Błąd w oryginale EN. Powinno być: „h, oh on"
+
+po “00s yłacz krajowy. Błąd w oryginale EN. Powinno być Alig ovtuaiahi
+* Odsyłacz krajowy. Błąd w oryginale EN. Powinno być: „q”.
+
+200 iqożne z ań. Sus Sustewy r dwa ©2 wrresna 2002 r p narnsw gcz (De U! he 160 pee, 1306 z poen zn | Tusk e Normy 94 compare
+pam aiROrŃsA M jak utuGry Warachiw, a auc bhi plama małatkowa do feel pizystącają Puke Komsałowi Ko mallee ty Meectns (Ph
+
+Mary sok PeSondizpan płd OM int c zadizpaczaena erzej riguccrn My KOWOWIC ZM
+
+nam
+
+
+
+
+=== STRONA 07 ===
+
+zóm A)
+
+«a eee
+
+eo
+
+NB ee ee Med ee ee SM Wek CREEL Be Voully VUSWIEZY TC SU OTIĘ poprzez WCISNLEC ig przyciski
+
+EN 150 52016-1:2017
+
+F3.6 Obliczanie współczynnika redukcji zacienienia dla bezpośredniego promieniowania
+słonecznego
+
+F.3.6.1 — Procedury obliczania godzinowego
+
+Wysokość cienia na zacienionej powierzchni k od wszystkich przeszkód P, Misobene JEST wartością najmększą
+ze wszystkich, przy maksymalnej wysokości zacienionego obiektu
+
+Neobste = min(Hy;max, (Krovs.pz )) | (F.16)
+
+Wysokość cienia na zacienionej powierzchni k od wszystkich gzymsów Qq, hs: jest wartością największą ze
+wszystkich, przy maksymalnej wysokości ZARENONEGO obiektu
+
+hęovh;t = Min (H, i MAX (h, zovhzqit f | iat
+
+Wysokość pozostałego nasłonecznionego obszani na zacienionej powierzchni k od wszystkich przeszkód p
+i wszystkich gzymsów q jest równa: | |
+
+Szerokość cienia na zacienionej powierzchni kod wszystkich pls rów po prawej stronie T„Whanrz jest wartością
+największą ze wszystkich, przy maksymalnej wrytiy. JARED obiektu:
+
+if
+
+Wk.finr:t 3 min (W max, (Wisner) bi Le d ins j i } f ji h F JAR | 8. (F-19)
+
+||
+
+Szerokość cienia na zacienionej powierzchni k od wszystkich płźstrów po lewej stronie l, hi di: jest wartością
+największą ze bias cot, przy aspudanne szerokości WokY obiektu: STY.
+
+Szerokość pozostalego nesłoneLznion aji obszaru na zacienionej. powierzchni kod wszystkich pilastrów po
+prawej stronie ri wszystkich pilastrów po lewej stronie I toy równa: SPPY, ted dd:
+
+Weecunct = . max (0; n (nica ŁA nak: ) " Ff) HI] ff j 11141114 (F.21)
+
+współczynnik redukcji zacienienia promieniowania BRSPERCEEM dia PRREPEA gzymsów ! pilastrów bocz-
+nych dla zacienionej powierzchni kw przedziale czasu E jest etree bee wee ty wzorem:
+
+Fstedieskt = yy BAONU ANIA MIAJ 454 KE22)
+
+przy czym
+
+F.narkr  bEzZWyMIarowYy współczynnik redukcji zacienienia promieniowania bezpośredniego zacienionej
+powierzchni k dla wszystkich obiektów zacieniających w przedziale czasu t;
+
+H, oznacza (zrzutowaną pionowo) wysokość zacienionej powierzchni, jak określono w FI. 3.1 lub
+F.3.3.2, w m,
+W, oznacza szerokość zacienionej powierzchni, jak określono w F.3.3.1 lub w F.3.3.2, w m.
+
+K
+
+UWAGA _ Wprzypadku pochylonej powierzchni zacienionej wartość (F/,W7;) nie może być zastąpiona powierzchnią obiektu.
+
+Zgocnie z art. 9 ust. © ustawy z dra 12 mrześria 26 r. o noeriatzacji (Dz. U. Nr 163 poz. 1380 z późn: zn.| FoskKe Nom 13 Yroniona 201
+
+przwem aużorsk m jek utwory fierzchoe a sito prawn msjetkno= z rech Przy Paanern komósłowi hkarmairscy nerw Paw
+
+«lwy a eis | feted (a ee e paóńw Olaż fete Faliml poate e (eee! ee La i ea pm Blo perry he
+
+
+
+
+=== STRONA 08 ===
+
+ania godzinowego, Z indeksem £ (W każdym
+
+(dla każdcmł | miesiąca).
+
+przypadku procedur oblicza
+
+i
+
+redniego i i rozproszonego.
+
+eniowania bezpo
+ania słofecznego
+
+roszonego promieniow
+
+w niniejszej T
+
+współczynnik zacieni
+redukcji zacienienia pr fii
+
+He! konk uracji dd RESAES u. Można ZIE
+pbk 9 naslepme obliczając współczynniki
+
+adku tej metod naleź obliczyć Wz
+w przypadku ej Y ry k WIO Aw F22.2,4
+
+kilka segmentów, Nsh:sezm ja
+
+lac linię horyzontu na
+konfiguracji dla nieboskłonu dla każdego sagen? os 9, Zante wo
+nad segmentem. | MEGENATA fk if ty i i LE | é f 4 |
+Całkowite natężenie promieniowania pozpośredniepo (bezpośrednie + róż ozproszone, hoosoneczne) Lie
+szone w nieboskłonie, rozproszone hor oryzontu oraz TTT odbite W) niu og wszystkich 21 de nalezy
+obliczać zgodnie z odpowiednią normą EPB moduł MET | His REPDTDIZEZ. |
+Na podstawie tych informacji oblicza § się następujące v warci. PIĄ ff f f EOER:
+
+k „ółczynnika konfi-
+
+a) Natężenie rozproszonego promieniowania | słonecznego w MAPKE na „4 podstawe wsp
+guracji powierzchni elementu I nieboskłonu z warg wata paleta eee |
+
+mnażony przez natężenie pronóciiopz i p rozp
+
+b) Natężenie rozproszonego promieni
+budynku | wzniesieniem nad horyzontem zgodnie. z melodyką dl ot 'opowego. |
+dul Mt "ep. tap konfiguracji
+
+proszonego nieboskionu zgodnie z KAŻE!
+JE
+
+będzie mnożony rozproszonego: i rf f, Seep bez?
+c) Dopetnienie współczynnika kon czyn powiększający natężenia
+
+odbijanego promieniowania słonecznego. IE | 1.5 PERRY
+ISO/TR dk jaki omówiono af PELE Technicznym.
+
+UWAGA Pelny zestaw wzorów tej metody podano w
+szczegółowa metoda jest dokładniejsza tylka wtedy, uwzględni się całkowite natężenie ie promieniowania słonecznego na
+powierzchniach przeszkód i wartość wspóźczynnika odbicia PoRAWENICW PE a PIĘTY v2) ŻE 7 mogą
+
+być nawet lustrzane w przypadku żre |) fasad).
+
+2 d teat 7 )= ś ,
+i 1 7 a we 7 ystawy i raz 17 wiTeSrńtB TĄŻ r | nea
+W rai A rere zac iii w BAW r.ż s tą j
+pl Ww hes tie Peed 103 rp ar zm | Polske Nz
+Ń ie Normy say CM mase
+
+
+
+
+=== STRONA 09 ===
+
+EN ISO 52016-1:2017
+
+Załącznik G
+(normatywny)
+
+Dynamiczne przezroczyste elementy budowlane
+
+G.1 Postanowienia ogólne ert EEE ff Cz
+
+W niniejszym załączniku podano procedury obliczania zapotrzebowania na energię, Śbcigzenia i temperatury
+wewnętrznej w przypadku zastosowania Pynamicznych Pipęzpoczysłyg elementów i budynku.
+
+Dynamiczne przezroczyste elehiehty budynku to elementy 6 wółciwóśliach cieplnych ub słonecznych i/lub
+wizualnych, które zmieniają SIĘ w zależności od kakiwi brzegowych, pasywnłajub w eee regulacji.
+
+UWAGA Przykiady podano na Rysunku G.1 WAIAEKATI NA A rh
+
+BODIAJ
+żę z
+
+c".
+
+Objaśnienia yi : RATE PPE fi 411
+A przykład elementu fasady z ruchomymi żałuzjami i otworami wentaczjnymi | |
+B przykład przełączanego przeszkienia
+
+C przykład żaluzji izolujących cieplnie
+D przykład przeszkienta zmtegrowanego z fotowoltadką
+
+Rysunek G.1 = Przykłady dynamicznych elementów przezroczystych
+
+W przypadku przenikania światła dziennego, przenikanie światła widzialnego stanowi dane wejściowe dla
+odpowiednich norm EPB moduł M9 dotyczących oświetlenia i syslemów oświetleniowych
+
+W przypadku wentylacji przez dynamiczny element budynku, związany z nią przepływ powietrza nawiewanego
+lub wywiewanego jest związany z odpowiednimi normami EPB moduł M5 dotyczącymi wentylacji 1 systemów
+wentylacyjnych, towarzyszące dodatkowe dostarczanie lub usuwanie ciepła przez cyrkulację powietrza lub
+wentylację przez dynamiczny element budynku jest uwzględniane w efektywnej wartości współczynnika U
+i wartości współczynnika g.
+
+Zgoćne z an. 5 ust. 6 ustawy z dra 12 urzesnia 2002 r. o naemacac (Dz U, Ne 109 poz. VIED z pażn. zm.) Psion Hommy są owonona 203
+preeem RK M | wwo ry Mararkie_ 4 siwrogrstie prawa Thay ath Kp eae D> With Piry sayy rosgemm Kkimietowa Harmali « if ih
+
+koty thats pe pafańlialcacy PSU Lat ae «li « Taber paecźwi s Piied (ieee pm ŁOpoCAi ait tuli
+
+
+
+=== STRONA 10 ===
+
+EN ISO 52016-1:2017
+
+G.2 Procedury
+
+G.2.1 Właściwości dynamiczne
+
+Główne właściwości dynamicznego elementu k ‘aged. odpowiednie do obliczania, z różnymi wartościami
+dla każdego stanu i, to:
+
+—  Ugynky, Współczynnik przenikania ciepła, wwifmćK);. | 4 PUT ee. 8
+
+= days Całkowity współczynnik przenikania energii słonecznej here Ff | i ||
++. | Twbdnukł. współczynnik przenikania energi sopecznej, AAEFOZAEE ‘4 a Ę
+= Tymdymikai współczynnik przenikania wizualnego. rhe ere y r ETL. (, k bo
+
+Własciwości te mogą być zmienne pasywnie lub mogą yć aktywnie requiowate, jako funkcja ZY
+
+warunków brzegowych WS ML.
+
+UWAGA 1 Przykłady zmiennch pasywnych: naturalnie KASADE. pustka powietrzńaj oszklenie termochromatyczne
+
+Przykłady aktywnej requlacji: otwierane otwory wentylacyjne, mechaniczna pra Pa, ee 49495 PE
+weneckich, ruchome zaluzje bub rożety (gora/dol). |
+
+Argumentem(-ami) za wprowadzeniem regulacji może być jedna pa nastę przesłanek lub ich kombinacja:
+
+— izolacja cieplna w celu zmniejszenia strat ciepła aint? 4r Pe JE FP
+
+— _ zapobieganie olśnieniu iflub zwiększony komfort wizualny, | #) sp head j PRE) f, eeese
+R ‘ |
+— _ wykorzystanie światła dziennego da poprawy komfortu wojeiengo dub ż zmniejszenia | sztucznego odwietlenia:
+
+die | i id iF | i p fr j
+— _ ochrona przeciwsłoneczna, w celu uniknięcia przegrzania bub zmniejszenia zapotrzebowania r na reż a:
+do chłodzenia przestrzeni. RAA i i j i f é ff ff j j i |
+
+s Na JU 4 ;
+
+Mowy Pa %
+
+. = 4 1
+
+UWAGA 2 — Wybrana liczba stanów dyskretnych zażyć od ARE wiedzi Sct dokainością obliczeń Zz ed sów
+a niepewnością procesu fizycznego i niepewnością w praktyce z drugiej. Skrajne jest stosowanie tylko jednego dyskretnego
+stanu przez cały rok, co jest powszechną praktyką, na przykład w zakresie całkowitej przepuszczalności energii słonecznej
+w przypadku okna z opuszczonymi żaluzjami, gdzie naturalny obieg powietrza wzdłuż żaluzji jest w rzeczywistości funkcją
+pekaestlone żaluzji i przyległych szyb (ta z kole. funkcją natężenia promieniowania wirówi: Fpperay ołoczenia
+
+Właściwości te w każdym stanie i a. uzyskać z ISO 10077-1, Iso 15099, Iso 10292, ISO 9050 lub.
+ISO 52022-3 (lub patrz Pozycje 1-5 w Tablicy C.1). i |
+
+Rodzaj warunków brzegowych zależy od rodzaju wyrobu | sposobu REE BE EEEE UMM brzegowe to:
+— sezon; | | |
+
+— czas wschodu i zachodu słońca;
+
+— okres użytkowania,
+
+—  (emperatura robocza w pomieszczeniu,
+
+- temperatura powietrza zewnętrznego,
+
+— prędkość iMub kierunek wiatru,
+
+— natężenie promieniowania słonecznego na przezroczystym elemencie;
+
+— intensywność światła dziennego na przezroczystym elemencie;
+
+— kat padania promieniowania słonecznego (wysokość i azymut)
+
+204 égomne zat Sus Sustaewy £ OMB 1/ EUTENWEM ( OG? r ona ascji (LIE LA he Us poz J r pórn Emi” nati Normy JĄ Sari or E
+
+e asuf! aus a) | ak stwory Death a aU kbs piawa naqatków ca EXD MOER | LE palu FOR wik Koraaiówi Koreslizty bana (PN
+
+ry siezije parzonakzzeą pików Craz ING [ADOT Pecan Fred NELĘMA MUAY KOPOWAŃICM
+
+
+
+
+=== STRONA 11 ===
+
+v przypadku nmiepoprawiiego WYSWittlallld Wesel Normy, Asy Odswiezyc strone La ae WCISNICCIC PIZYCISKU
+
+pore? suforzę m pak utwory Herecha a nitorakoe prawa risgałkowoa cs tach przy” ug, Te "ren Morwell Mriesośzr arcy: (FW)
+
+ae © Cl 4 SED 22> CE
+
+EN 150 52016-1:2017
+
+Funkcje te mogą być typu włącz/wyłącz z dolnymi lub górnymi granicami lub obejmować na przykład histerezę,
+opóźnienie czasu lub minimalny czas trwania.
+
+UWAGAS Naprzykład w przypadku systemu regulacji w celu uniknięcia oścylacji (np kontrola pracy żaluzji wgorehw dół)
+tub w przypadku wyrobu pasywnego: jako właściwość wewnętrzna (np. oszkienie termochromatyczne ). |
+
+W wielu przypadkach funkcje są kombinacją co najmniej dwóch warunków wit oo
+
+Rodzaj sterowania może być ręczny, silnikowy z ręcznym sterowaniem lub silnikowy z automatycznym stero-
+waniem. |
+
+is
+
+Opcję stanowią bardziej złiżone funkcje lub onbinakjć póżriych warunków brzegowych np. przewidujące
+algorytmy ilub połączone z kontrola HVAC i oświetlenia. k
+
+UWAGA 4  Patrznp. 5.21 Załącznik RÓW D wot Te mpact of imovaove nfegrated BACS hinetons (examples)
+
+EN 15232-1 (patrz M10-1) | SE i Ev
+
+W przypadku zintegrowanych modułów fotowoltaicznych m może występować imśrakcja między mocą elektryczną
+a właściwościami ciepinymi lub opłycznymi Pea eb A | sf j.
+
+G.2.2 Wpływ na sbliczwia zapotrzebowania na energię, obciążenia lub temperatury
+G.2.2.1 Metoda obliczania godzinowego i (atstiwsstitsits | |
+G.2211 Procedura ogólna hee OR A I ij if 144 |
+
+W przypadku metody godzinowej obliczania zapótzebdokkia na energię do ogrzewania i chłodzenia, obciaze-
+nia grzewczego lub chłodniczego, lub temperatury wewnętrznej, ydy pracy są wyprowadzane texiewe
+z warunków brzegowych dla każdej godziny, RZ BECP ELEC L OL Cee
+
+W przypadku zapobiegania olśnieniu przedział obliczania godzinowego jest zbył duży, z zalęca SIĘ, aby w za-
+kładanej strategii regulacji unikać zbyt optymistycznego scenariusza. i i } FOREFECZE
+
+' | , | |
+j 4 j
+
+G.2.2.1.2 Oknoz ruchomą żaluzją lub urządzeniem zacieniającym
+
+Zgodnie z zasadami automatyzacji i Koritiól budynku opisanymi w adpowiedniejlnz normie EPB modut M10-1 wy-
+różnia się następujące motywacje do sterowania ruchomymi żaluzjami i osłonami przeciwsłonecznymi (roletami):
+
+— _ Motywacja do regulowania okiennice izolacja cieplna i/lub ochrona przed włamaniem
+
+— Motywacje do regulowania rolet ochrona przed promieniowaniem słonecznym, w celu eh przegrzania
+i olśnienia | |
+
+Rozróżnia się cztery poziomy regulacji.
+0. Obsługa ręczna: oszczędność energii i komfort zależy tylko od zachowania użytkowników.
+
+1. Praca zmotoryzowana z ręcznym sterowaniem: Najczęściej stosowana tylko dla łatwiejszej obsługi ręcznej
+(wspomaganej przez silnik), oszczędność energii i komfort zależy tylko od zachowania użytkowników.
+
+2. Praca zmotoryzowana z automatycznym sterowaniem: Automatycznie sterowana praca w celu zmniejszenia
+zapotrzebowania na energię
+
+3. Połączone sterowanie oświetleniem/roletami/systemami HVAC: W celu optymalizacji wykorzystania energii
+w HVAC, rolet i oświetleniu w pomieszczeniach użytkowanych i nieużytkowanych.
+
+W zależności od paziomu regulacji (poziomy ad 0 do 3 powyżej) działanie przyjęte w obliczeniach zależy od
+warunków klimatycznych, warunków użytkowania i przyjętego (standardowego) zachowania użytkowników
+Warunki użytkowania określono dla każdego typu przestrzeni w odpowiedniej normie EPB moduł M1-6.
+
+Zgodne z art. © ust. 6 ustawy z ma 12 wrzesnia GZ r. p nosa zacji [Dz VU. Hr 168 pot. 1382 2 pózn, zw. | Polskie Nonmms są Srrowore 205
+
+pO SUR M EX Ly Merahe. 5 niforskoe [iBT nejętkowie By pect prysugują Fo seen Komóełomi Noemi M y.m=fr LE%,
+
+me (eel z4 FT. Ee tl) 84d leit Boel fee = 458 [wet -J1M]|
+
+
+
+
+=== STRONA 12 ===
+
+V prIzYpPAGRU MCPOprawieeo WYSWIELADMA UESCI MOMMY, DTOSLINIy ap aber r he SUONE poprzez WCISNIECIC przyciski
+
+prewem siftcrstirn jak wta ry Hararjae m seer g tg He Tej afhen ra» (ip rach Grey stp | nakiermy Pires tetra Hair aryn era (Pe
+
+ao ©  (M9O < WED: Ga
+
+EN ISO 62016-1:2017
+
+Zaluzje działają przede wszystkim w nocy, kiedy nie ma zapotrzebowania na światło dzienne i kontakt wizualny.
+W przypadku żaluzji typowe warunki stosowania przedstawione w niniejszym dokumencie to:
+
+— czas wschodu i zachodu słońca,
+— okres użytkowania,
+
+— temperatura powietrza zewnętrznego 4 | i.
+
+Urządzenia zacieniające działają głównie w godzinach o dużej mtensywności promieniowania dofielziego
+
+W przypadku żaluzji słonecznych DPYTE krarank słosowania w tym dokumencie bo; ej JĄ
+— SEZON, | | | KLAPY LEEPAPA
+— okres użytkowania, (eee uae BET ZAGEL L=
+l ; j t d | | | a f 4 A
+d all } z : i
+— temperatura robocza w pomieszczeniu, - i 4 ' ę
+— _ natężenie promieniowania słonecznego na preeroray ztym PPT | PR. }
+| Fe |
+W przypadku regulacji poziomu 3 warunki dzialania są bardziej złożone. » f »
+
+W przypadku żaluzji ruchomych Wwitidry domyślne podano w ty A ża (szabon normatywny), a wartości
+
+informacyjne w Tablicy B.23. | FERIE ne ay j ró |. FE
+
+W przypadku ruchomych urządzeń pizeciwałonecznkchi wybory | gomyśe p podano w, Taby A. 24 (szablon
+normatywny), a wartości informacyjne w Tablicy B, 24. ELIA. BP | eee 4 j fi iy |
+
+G.2.2.2 _ Metoda obliczeń miesięcznych BE 4 | 4 ‘ i i i PF ri i J p i | j H
+
+G.2.224 Procedura ogólna MU 115431 , 7 ? | EEE. | | | i Hit ff if i di
+
+hf
+|
+
+W przypadku metody obliczeń miesięcznych śrytyj działania nie mogą Kye wyprowadzone EEE ES. z wa-
+runków brzegowych, z wyjątkiem iiieryciy gdy zany właściwość] występują w okresach WSTZEŻI,
+
+4 ie f bi a
+lub sezonowych. ore eee eer errr
+4 ' u a MASKE
+b ‘ | j ' | U & ¢ 3 z
+| . | dt aj dg RAJ dd ada A 2 2 3
+' ; } id | i A 7 iW JE" if 4 F
+1 [ | AAA KE M, r. de & WF a
+! ' ; | ' SAI. # ję ir Fe # if f * | |
+F ' I li lh } 1 1 4 I W f i? 7 - 2
+oO = ‘ : „| [ 4 l z | | 4 Ź Z
+s ( | ; 7.) ' i |
+ous 6 J a : 8 4 i | | dd 3
+
+Jeżeli przyjęte warunki brzegowe, które określają stany dynamicznego elementu I przedróczjsienó, są Z Gór
+znane, jak na przykład użytkowanie pomieszczenia, ‘temperatura zewnętrzna lub natężenie promieniowania
+słonecznego i natężenie światła dziennego, jak opisano w G.2.2. 1 dla metody godzinowej, wówczas aprok-
+symacją pierwszego rzędu obliczania jest wstępne obliczenie średniej ware danej właściwości, uzyskane
+
+z sumy wszystkich przedziałów czasu (godzin) miesiąca At.
+
+2 a J AO nc ect |
+
+U dynikom * TTE ZBYT | g PEOTYJ (G.1)
+ent FD (APacer) i ZER |
+r
+
+DĄ dys A sole
+
+wid | ! :
+Śdyn:k;m | Tt (G.2)
+sol;t
+t
+3 ( Tzolidynikyminn " lsolzt )
+r
+sol;dyn;K;m I
+spolzt
+I
+206 Zoom z ań. $ ust. © ustawy z da | 2 mrzebróg 02 r. o normazac (Dz u Nr 156 paz. 1383 z późn. za. Polskie Normy sq FMORONĘ
+PEM! RAS | M Poly kieracie. u suorskoe pray mestkore TH) np Oy sug Pe Morr Honvdietowt Narmadz poy nein (74%
+
+klóry saw pete labia ROW Olać lel Zabacpacwia ot ded © GLI are ieoi iy ń kopować main
+
+
+
+
+=== STRONA 13 ===
+
+CI SEE) (22> GM c |
+
+EN ISO 52016-1:2017
+
+NY (Gandrnkicki E +.) i
+
+Tvisjdynzk;m g a An
+
+ż |:
+
+przy czym
+
+J ESSE średnia miesięczna wartość U z różnymi wartościami U, w różnych stanach i, w WAm*-K);
+
+mean średnia miesięczna wartość g O różnych wartościach gi M4 różnych stanach ay
+
+T E
+
+solmyma Średnią miesięczna wartość T,, „a różnych wartościach Toa w różnych: eT LĄ
+
+Trismmn  $fednia Miesięczna wartość Ten 0 różnych wartościach Tes w różnych stanach lk
+
+fs AO przybliżenie różnicy temperatur "wewnątrz | ina zewnątrz, w K przy tej różnicy temperatur temperatura
+wewnętrzna jest nastawą temperatury, a ile jest to wykonalne i możliwe, z uwzględnieniem okresów
+przerw, alba wartość średnia miesięczna, albo i inna wartość w akresch przerw (patrz 6.5.9),
+UWAGA 1 — Zmniejszona temperatura nastawy w czasie przerw nye nie jest dobrym przybliżeniem, poe tempe-
+ratura wewnętrzna prawie nigdy nie osiąga dolnej granicy.
+
+ KPAŁA całkowile (bezpośrednie + rozproszone) natężenie głapieńowzna ses na przezroczysty
+element, w W/m; rita ae i (4 TAI PE
+
+Bo. catkowite natężenie światła ziemnego na przezroczystym elemencie, M tic f
+
+At, przedział czasu, wh, KEESEESP i | | } } RP. | BE Ę i
+
+I i indeks dla różnych stanów, które mogą? zmieniać. się By eee r zależności od jednego lub
+
+większej liczby warunków PrZeQÓWYCH, jak określono w G 2 Li
+
+i I 4 x |
+
+Zarówno całkowite natężenie promieniowania Śiżznego, jaki I całkowe fener światła dziednógo zależą
+od orientacji I kąta pochylenia elistttów 6 elementu oraz od przeszkód eee EER pergee
+
+Ja Gl W -M oe
+
+W następnym kroku można dodać współczynniki kocsicyjne! “uwzaledniajac efekty WADREE wynikające
+z bezwładności budynku i/lub z powodu dynamicznych interakcji z innymi procesami fizycznymi. Współczynniki
+
+korekcyjne można wyprowadzić przez porównanie wyników obliczania godzinowego zgodnie z G.2.1 wykona-
+nych dla seri reprezentatywnych przypadków. IRE F
+
+UWAGA2 Zé względu na różnice Kiimatyczne, w eksploatacji | użytkowaniu by przypadki te, a pm samym
+współczynniki korekcyjne, są zazwyczaj określane na poziomie krajowym.
+
+W przypadku ruchomych żaluzji i ruchomych urządzeń przeciwsłonecznych wybory domyślne podano w Tabli-
+cy A.44 (szablon normatywny), a wartości informacyjne w Tablicy B A. |
+
+Metoda B: |
+
+Jeżeli istotne przyjęte warunki brzegowe określające stany elementu przezroczystego. hie są z góry znane,
+ponieważ na przykład zależą od zapotrzebowania na energię do ogrzewania lub chłodzenia, metoda miesięczna
+nie jest odpowiednia.
+
+Zasadniczo przybliżenie można uzyskać przez:
+
+Krok 1
+
+wybranie jednego ze stanów do określenia wartości właściwości
+
+Krok 2
+
+Podobnie jak w kroku 2 metody A.
+
+Zaoćdnie z an. $ ust. © ustawy z dra 12 września 2092 r. omemacagi (Dz U, he 194 pcz 1793 2 pózn, St.) Pose Nonmy są Fronore 207
+ony = ‘hae i udilaii "| f 4h
+weM HOT M je utwory Herache s mitarztie piwa reje atkorwee cp fh Cie yep a? Geloemz Komesiow Mori i! a il
+
+kiddy situps perko rite a pam GOAL rów Z abéticet-tefial S()ac? Dwu ańńcu pm NUgoSoi af) be ity
+
+
+
+=== STRONA 14 ===
+
+EN ISO 52016-1:2017
+G.2.2.2.2 Okno z ruchomą żaluzją lub wadzenie ochrony przeciwsłonecznej
+
+Jeżeli okno jest połączone z żaluzją, średnia miesięczna efektywna wartość U cna WI, Uw, dla miesiąca m,
+jest wyrażona przez Kas | | |
+
+(
+
+Um =(1 - fw) U, +faa" U cki | ed l | ER A | ‘ ; (G.5)
+
+przy czym RAPORT AC TEPC RTT EEE BEY hey
+wm całkowita efektywna średnia miesięczna wartość współczynnika przenikania DEE oszkienia,
+
+k> współczynnik przenikania ciepła okna ody zaluzja nie jestuzywana, uzyskany z ISO i 3780 w Wi(m* K);
+
+U wyssha współczynnik przenikania ciepła kombinacji okna i i żaluzji, gdy FT. jest używana ozyskany
+z ISO 13789, w Wim? K), | | 37 RO
+finewih | Wazony (zalezny od klimatu i pory toku) Ulalnek d czasu Gżytkowania zaluzii, np. jako funkeja godzin
+dnia i nocy, z uwzględnieniem średniej różnicy temperatury wewnątrz | | na zewnątrz (w tym wpływ.
+obniżonej temperatury w nocy), uzyskany z Had A.44 Yrisi pPrzatywny), wraz z  informacyj-
+nymi wartościami Gosmystny w pany B. 14, i |
+
+Jeżeli przeszklenie jest połączone z rhóhomym urządzeniem. zacieniającym, 'średni miesięczny efektywny
+
+całkowity współczynnik przenikania soe słonecznej przez oszkloną część okna i wi, „Sam dla pipes m,
+jest określony przez | | RETE AW
+
+|"
+
+Śgiwim . | STEAM miesięczny efektywny całkowity wopółczyfnik przenikania energi sonecznej przeszklenia,
+
+<
+14
+l
+
+przy czym Hit : | WadRARAPRODZRAPEZE
+
+4
+
+Seti całkowity współczynnik przenikania energii słonecznej przeszklenia, gdy n nie jest s stosowane zacie-
+nienie, uzyskana zgodnie z ISO 9050 (lub patrz Punkt 3 w Tablicy wa he REFEF
+
+‘ eee
+REREFA ;
+
+Geisha: Całkowity współczynnik przenikania energii słonecznej przeszklenia i i zacienienia, gdy stosowane
+jest zacienianie, uzyskany zgodnie z ISO 92022-3; eee a eee eS if PRE
+
+| ABA ważony ułamek czasu przy stosowaniu zacienienia, np. jako funkcja LEER ER patlaigcego promie-
+mowania słonecznego (a zatem zależnego od klimatu, pory roku i orientacji), uzyskanego z Tablicy
+A.44 (szablon normatywny), z informacyjnymi wartościami bióstiy Poędnyci w JOE, B 44.
+
+UWAGA Może to dotyczyć również markiz.
+
+. r 3 = 4 p.” zly z m w m. Ru Fuze
+208 podnerań Suet 5 ustawy z dria 1? erresreg OO? r Gr emia (LE i) Rec Tips poc NG zj gh zm | Preszje Nave y 34 Gooner
+
+ih
+
+pw : n bak uiwórty bed act osb pita rh h 2 Tech i lubią Fuki et | re my it (PRN
+
+
+
+
+=== STRONA 15 ===
+
+a  £ - "RE UB Teen ee Gg] ee Oe eee. M saa tr Saws ARR Y s | aa 44221814 y (euro wy LI “yt SUC pupil ŁEZ, WCISNIĘCIĘ przycisk
+
+OH O < GEM :-> GH
+
+208 «godne zart Dust zustewy £ dra 1? erresras DP) r oo ne ‘erm! (ile U Ne 180 ner VIR r omen rm | Fnialgei tira sa cero ew
+prawu marek m jak utwofy Merackie a awyrchig piwa nuęątkowa bo wel) arrynugną Pogoni Kordatów Na esdlir ano (PM
+który Sauls portoratrxą półów oraz inte zabocpéecrenis erzed nieucravesiortes kopa zńłem
+
+EN ISO 52016-1:2017
+
+Bibliografia
+
+[1]  ISO/TR52016-2:2017, Energy performance of buildings — Energy needs for heating and cdoling, internal
+
+temperatures and sensible and latent heat loads — PA 2. Explanation and Pr of io 52016-7
+and ISO 52017-1 | | | |
+
+[2] RASA 13790.2008, Energy performance of ódddnyśi = Calculation of energy use for space heating and
+ing | | | | |
+
+| 4 | | lp je
+hs? p
+
+[3] ISO 13791.2012, Thermal oeormaricai of teattinas £ Calculation of intemal temperatures of a room in
+summer without mechanical cooling — | GORAraJ criteria and validation procedures .
+
+jig
+
+[4] ISO 13792:2012, Thermal performance of bdicinyść Caloulation of interial temperatures of a room in
+summer without mechanical cooling — pened methods | | gl | rb) |
+
+[5] CEN/TS 16628, Energy Performance of Buildings - Basic po the set of EPB standards
+gi f., Fe
+[6] CEN/TS 16629, Energy Performance of Buildings - — -Detated WT rules for the set of EPB standards
+[7] ISO/TR 52000-2, Energy performance of buléings AR EPB assessment — - Par 2 Explanation
+and justification of ISO 52000-1 Fr 6 "EE JF ,
+[8] ANSVASHRAE standard 140, Standard Method of "Test tę te Evaluation of jBukiną Energy Analysis
+Computer Programs, 2014 REI | dy IF fered tts |
+
+ja = ' | - i 9 Al i Fr
+} eT ee al "EE u
+|. ). rf e ‘ P. f | J Nig
+
+"MAIF i M
+
+[9] EN 14351-1, Windows and dodat! Product staridard fh BEESES PACEPRORSE Part1: Windows and
+extemal pedestnan doorsets without resistance ta fire and/or smoke leakage charectedstics
+Ff i if £ PJ h f
+
+[10] ISO/TR 52019-2, Energy performance of buildings — tran rednia, of busing components
+and building elements — Part 2: Explanation and justification PAfdq 14. / Wł jftaffi fi.
+
+y : 18 4g of j r 4 re E :
+if fp : : JI ie 4 p if
+
+[11] ISO 6946, Building components and q buy elements — Thermal resistance and thermal transmittance
+_ Calculation methods
+
+p> afd e ' ' 8 ' | EJ f u MIE 4 * ss i £
+w 3 2) R ; p j | IF ge ; f iP ee B.
+
+[12] ISO 13370, Thermal performance of buildings — Heat transfer via the ground Calculation methods |
+
+[13] ISO 13786:2017, Thermal performance of building components - Dynamic t thermal characteristics - Cal-
+culation methods Są RE AAAA PISNSTIĄ NI
+
+[14] I5052010-1:2017, Energy ona: of PAINCIE External climatic conditions — „Part 1: Ćdutersión
+of climatre data for. energy calculations | '
+
+[15] 1S052017-1, Energ y performance of buildings — Sensible and latent heat loads and internal temperatures
+— Part 1: Generic calculation procedures | REY fr,
+
+[16] ISO 52022-3, Energy performance of buildings — Thermal, solar and da light FELEEES, of building com-
+ponents and elements — Part 3: Detailed calculation method of the solar and daylight characteristics for
+solar protection devices combined with glazing
+
+[17] |SO 9488, Solar energy — Vocabulary
+
+
+
