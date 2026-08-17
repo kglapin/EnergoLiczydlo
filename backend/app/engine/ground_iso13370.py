@@ -167,7 +167,7 @@ def _element_settings(
     settings: GroundISO13370Settings,
     element_id: str,
 ) -> GroundElementSettings:
-    return settings.elements.get(element_id, GroundElementSettings())
+    return settings.elements.get(element_id, GroundElementSettings.model_construct())
 
 
 def _perimeter_from_geometry(element: OpaqueElement) -> float | None:
