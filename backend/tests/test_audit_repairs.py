@@ -61,9 +61,14 @@ def _project(
     design_rooms: list[DesignRoom] | None = None,
 ) -> BuildingProject:
     element_kwargs = dict(wall_kwargs or {})
+    resolved_metadata = (
+        metadata
+        if metadata is not None
+        else {"normative": {"hourly_iso52016": {"enabled": True}}}
+    )
     return BuildingProject(
         project_name="Naprawy audytu",
-        metadata=metadata or {},
+        metadata=resolved_metadata,
         general=GeneralInfo(
             building_name="Budynek testowy",
             building_type="residential",
@@ -222,7 +227,7 @@ def test_heat_recovery_accepts_actual_extract_temperature() -> None:
     assert result.supply_temperature_c[0] == pytest.approx(25.2)
 
 
-def test_legacy_hourly_year_warms_up_to_periodic_state(
+def test_repaired_hourly_year_reaches_steady_4380_kwh(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     project = _project(wall_area=25.0, wall_u=1.0)
@@ -233,7 +238,7 @@ def test_legacy_hourly_year_warms_up_to_periodic_state(
     assert heating_kwh == pytest.approx(4380.0, rel=1e-7)
 
 
-def test_legacy_1000w_constant_loss_aggregates_to_8760kwh(
+def test_repaired_1000w_constant_loss_aggregates_to_8760kwh(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     project = _project(wall_area=50.0, wall_u=1.0)
