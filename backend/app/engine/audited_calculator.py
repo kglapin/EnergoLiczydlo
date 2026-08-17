@@ -1,0 +1,1 @@
+"""Audited calculation entry point."""
