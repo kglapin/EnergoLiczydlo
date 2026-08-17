@@ -17,7 +17,7 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any, cast
+from typing import Any, TypeAlias, cast
 
 import numpy as np
 from numpy.typing import NDArray
@@ -25,7 +25,7 @@ from numpy.typing import NDArray
 from app.engine.envelope import adjacent_temperature
 from app.schemas.models import AdjacentSpaceType, OpaqueElement, ThermalBridgeConfig
 
-FloatArray = NDArray[np.float64]
+FloatArray: TypeAlias = NDArray[np.float64]
 
 SECONDS_PER_HOUR = 3600.0
 DEFAULT_AREAL_HEAT_CAPACITY_KJ_M2K = 165.0
