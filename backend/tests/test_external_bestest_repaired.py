@@ -29,9 +29,21 @@ CASE_600_WIDTH_M = 6.0
 CASE_600_HEIGHT_M = 2.7
 CASE_600_WINDOW_AREA_M2 = 12.0
 CASE_600_FLOOR_AREA_M2 = CASE_600_LENGTH_M * CASE_600_WIDTH_M
+CASE_600_VOLUME_M3 = CASE_600_FLOOR_AREA_M2 * CASE_600_HEIGHT_M
 CASE_600_LONG_WALL_M2 = CASE_600_LENGTH_M * CASE_600_HEIGHT_M
 CASE_600_SHORT_WALL_M2 = CASE_600_WIDTH_M * CASE_600_HEIGHT_M
 CASE_600_SOUTH_OPAQUE_M2 = CASE_600_LONG_WALL_M2 - CASE_600_WINDOW_AREA_M2
+
+# Case600FF forms infiltration mass flow from the prescribed 0.414 h⁻¹ volume
+# flow and actual room-air density. The 0.414/0.5 ratio is the altitude density
+# correction relative to the 1.2 kg/m³ sea-level convention used by the
+# benchmark translation. Use the same density for the room-air thermal state
+# rather than the generic ISO 52016 furniture-capacity fallback.
+CASE_600_AIR_DENSITY_KG_M3 = (0.414 / 0.5) * 1.2
+CASE_600_AIR_CP_J_KG_K = 1006.0
+CASE_600_AIR_HEAT_CAPACITY_J_K = (
+    CASE_600_VOLUME_M3 * CASE_600_AIR_DENSITY_KG_M3 * CASE_600_AIR_CP_J_KG_K
+)
 
 # The detailed 2007 reference uses the physical Win600 double glazing. The
 # application schema intentionally abstracts glazing to U + g, therefore the
@@ -257,10 +269,9 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         bridges=ThermalBridgeConfig(),
         zone_id="bestest",
         # LBNL Case600FF defines 0.5 air changes per hour at sea-level volume
-        # and multiplies by the actual room-air density. The constant below is
-        # the documented altitude-equivalent heat-transfer coefficient used by
-        # the benchmark translation.
-        h_ve=0.414 * 129.6 * 1200.0 / 3600.0,
+        # and multiplies by actual room-air density. This constant heat-transfer
+        # coefficient is the documented altitude-equivalent translation.
+        h_ve=0.414 * CASE_600_VOLUME_M3 * 1200.0 / 3600.0,
         t_e=climate["T_e"].to_numpy(dtype=float),
         phi_int=np.full(8760, 200.0),
         phi_sol_transparent=np.asarray(transparent_solar, dtype=float),
@@ -268,6 +279,8 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         t_set_heating=20.0,
         t_set_cooling=27.0,
         internal_convective_fraction=0.4,
+        air_furniture_heat_capacity_j_k=CASE_600_AIR_HEAT_CAPACITY_J_K,
+        floor_area_m2=CASE_600_FLOOR_AREA_M2,
         require_explicit_construction_nodes=True,
         max_warmup_cycles=30,
         warmup_tolerance_k=0.01,
