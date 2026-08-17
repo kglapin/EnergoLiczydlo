@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { usePathname, useRouter } from "next/navigation"
-import { ChevronLeft } from "lucide-react"
+import { ChevronLeft, Settings2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -18,6 +18,7 @@ const routeMap: Record<string, { label: string; parent?: string }> = {
   "/": { label: "Strona główna" },
   "/building": { label: "Nowa analiza", parent: "/" },
   "/results": { label: "Wyniki", parent: "/building" },
+  "/normative": { label: "Ustawienia normatywne", parent: "/building" },
 }
 
 export function AppBreadcrumb() {
@@ -37,7 +38,7 @@ export function AppBreadcrumb() {
   const canGoBack = pathname !== "/"
 
   return (
-    <header className="container mx-auto py-4 px-4">
+    <header className="container mx-auto px-4 py-4">
       <div className="flex items-center gap-4">
         {canGoBack ? (
           <Button
@@ -47,7 +48,7 @@ export function AppBreadcrumb() {
             onClick={() => router.back()}
             className="shrink-0"
           >
-            <ChevronLeft className="h-4 w-4 mr-1" />
+            <ChevronLeft className="mr-1 h-4 w-4" />
             Wstecz
           </Button>
         ) : null}
@@ -67,6 +68,14 @@ export function AppBreadcrumb() {
             ))}
           </BreadcrumbList>
         </Breadcrumb>
+        {pathname !== "/normative" ? (
+          <Button variant="outline" size="sm" asChild className="ml-auto shrink-0">
+            <a href="/normative">
+              <Settings2 className="mr-2 h-4 w-4" />
+              Ustawienia normatywne
+            </a>
+          </Button>
+        ) : null}
       </div>
     </header>
   )
