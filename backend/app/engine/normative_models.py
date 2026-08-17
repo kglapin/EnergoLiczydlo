@@ -77,6 +77,7 @@ class HeatRecoverySettings(BaseModel):
 
     enabled: bool = False
     certificate_mode: bool = False
+    performance_source: str | None = None
     efficiency_curve: list[RecoveryEfficiencyPoint] = Field(default_factory=list)
     summer_bypass_enabled: bool = False
     bypass_min_outdoor_c: float | None = None
@@ -92,6 +93,11 @@ class HeatRecoverySettings(BaseModel):
     def validate_controls(self) -> HeatRecoverySettings:
         if not self.enabled:
             return self
+        if self.certificate_mode and not (self.performance_source or "").strip():
+            raise ValueError(
+                "Certificate-grade heat recovery requires performance_source "
+                "(manufacturer/test documentation reference)"
+            )
         if self.summer_bypass_enabled:
             if self.bypass_min_outdoor_c is None or self.bypass_max_outdoor_c is None:
                 raise ValueError(
