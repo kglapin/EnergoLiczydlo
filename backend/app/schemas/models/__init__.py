@@ -59,7 +59,7 @@ class OpaqueElement(_legacy.OpaqueElement):
     ground_virtual_resistance_m2k_w: float | None = Field(None, gt=0.0)
 
     @model_validator(mode="after")
-    def validate_iso52016_surface_inputs(self) -> OpaqueElement:
+    def validate_iso52016_surface_inputs(self) -> "OpaqueElement":
         caps = self.thermal_node_capacities_kj_m2k
         resistances = self.thermal_node_resistances_m2k_w
         if (caps is None) != (resistances is None):
@@ -109,12 +109,15 @@ class DesignRoom(_legacy.BaseModel):
 class BuildingProject(_legacy.BuildingProject):
     """Project schema extended without breaking historical JSON payloads."""
 
-    opaque_elements: list[OpaqueElement]
-    transparent_elements: list[TransparentElement]
+    # The legacy schema allowed projects to be created before envelope elements
+    # were entered. Preserve that behaviour while narrowing the item types to
+    # the audited subclasses used by the detailed solver.
+    opaque_elements: list[OpaqueElement] = Field(default_factory=list)
+    transparent_elements: list[TransparentElement] = Field(default_factory=list)
     design_rooms: list[DesignRoom] = Field(default_factory=list)
 
     @model_validator(mode="after")
-    def validate_design_rooms(self) -> BuildingProject:
+    def validate_design_rooms(self) -> "BuildingProject":
         zone_ids = {zone.id for zone in self.zones}
         room_ids: set[str] = set()
         room_area_by_zone: dict[str, float] = {}
