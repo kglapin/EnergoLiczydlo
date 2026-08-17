@@ -28,8 +28,8 @@ tests/test_post_repair_audit.py::test_manual_16_room_design_load_one_wall_is_100
 tests/test_post_repair_audit.py::test_manual_17_monthly_january_transmission_is_372kwh PASSED
 tests/test_post_repair_audit.py::test_edge_zero_ventilation_and_zero_gains_are_finite PASSED
 tests/test_post_repair_audit.py::test_edge_negative_ventilation_is_rejected PASSED
-tests/test_post_repair_audit.py::test_three_day_new_solver_energy_balance_closes_hour_by_hour POST_REPAIR_3DAY_BALANCE_W= {'winter': 4.547473508864641e-12, 'transition': 6.650680006714538e-12, 'summer': 83.87848439305253}
-FAILED
+tests/test_post_repair_audit.py::test_three_day_new_solver_energy_balance_closes_hour_by_hour POST_REPAIR_3DAY_BALANCE_W= {'winter': 4.547473508864641e-12, 'transition': 6.650680006714538e-12, 'summer': 1.014655026665423e-11}
+PASSED
 tests/test_post_repair_audit.py::test_hourly_and_monthly_match_constant_reference_and_units POST_REPAIR_ENGINE_CROSSCHECK= {'hourly_kwh': 4379.999999999997, 'monthly_kwh': 4380.0, 'manual_kwh': 4380.0, 'relative_difference': 6.229415765568002e-16}
 PASSED
 tests/test_post_repair_audit.py::test_unit_conversion_constant_1000w_for_year_is_8760kwh PASSED
@@ -37,56 +37,4 @@ tests/test_post_repair_audit.py::test_each_opaque_construction_has_its_own_five_
 tests/test_post_repair_audit.py::test_heat_recovery_is_not_double_counted_and_uses_correct_sign PASSED
 tests/test_post_repair_audit.py::test_cooling_energy_need_is_nonnegative PASSED
 
-=================================== FAILURES ===================================
-_________ test_three_day_new_solver_energy_balance_closes_hour_by_hour _________
-
-    def test_three_day_new_solver_energy_balance_closes_hour_by_hour() -> None:
-        wall = _explicit_wall()
-        outdoor = np.concatenate(
-            [np.full(24, -10.0), np.full(24, 10.0), np.full(24, 32.0)]
-        )
-        h_ve = np.full(72, 60.0)
-        phi_int = np.full(72, 200.0)
-        solution = solve_zone_iso52016(
-            opaque_elements=[wall],
-            transparent_elements=[],
-            bridges=ThermalBridgeConfig(),
-            zone_id="z1",
-            h_ve=h_ve,
-            t_e=outdoor,
-            t_supply=outdoor,
-            phi_int=phi_int,
-            phi_sol_transparent=np.zeros(72),
-            opaque_solar_absorbed_w_by_element={"wall": np.zeros(72)},
-            t_set_heating=20.0,
-            t_set_cooling=26.0,
-            require_explicit_construction_nodes=True,
-        )
-        capacities = np.asarray([40.0] * 5) * 25.0 * 1000.0
-        nodes = solution.construction_node_temperatures["wall"]
-        previous = np.vstack([np.full((1, 5), 20.0), nodes[:-1]])
-        storage_w = np.sum(capacities * (nodes - previous), axis=1) / 3600.0
-        ventilation_loss = h_ve * (solution.t_air - outdoor)
-        hvac = solution.q_heating - solution.q_cooling
-        residual = storage_w - (
-            phi_int + hvac - solution.q_transmission - ventilation_loss
-        )
-        day_max = {
-            "winter": float(np.max(np.abs(residual[:24]))),
-            "transition": float(np.max(np.abs(residual[24:48]))),
-            "summer": float(np.max(np.abs(residual[48:]))),
-        }
-        print("POST_REPAIR_3DAY_BALANCE_W=", day_max)
->       assert max(day_max.values()) < 1e-7
-E       AssertionError: assert 83.87848439305253 < 1e-07
-E        +  where 83.87848439305253 = max(dict_values([4.547473508864641e-12, 6.650680006714538e-12, 83.87848439305253]))
-E        +    where dict_values([4.547473508864641e-12, 6.650680006714538e-12, 83.87848439305253]) = <built-in method values of dict object at 0x7fc42272e940>()
-E        +      where <built-in method values of dict object at 0x7fc42272e940> = {'winter': 4.547473508864641e-12, 'transition': 6.650680006714538e-12, 'summer': 83.87848439305253}.values
-
-tests/test_post_repair_audit.py:468: AssertionError
-=========================== short test summary info ============================
-FAILED tests/test_post_repair_audit.py::test_three_day_new_solver_energy_balance_closes_hour_by_hour - AssertionError: assert 83.87848439305253 < 1e-07
- +  where 83.87848439305253 = max(dict_values([4.547473508864641e-12, 6.650680006714538e-12, 83.87848439305253]))
- +    where dict_values([4.547473508864641e-12, 6.650680006714538e-12, 83.87848439305253]) = <built-in method values of dict object at 0x7fc42272e940>()
- +      where <built-in method values of dict object at 0x7fc42272e940> = {'winter': 4.547473508864641e-12, 'transition': 6.650680006714538e-12, 'summer': 83.87848439305253}.values
-========================= 1 failed, 24 passed in 2.32s =========================
+============================== 25 passed in 2.51s ==============================

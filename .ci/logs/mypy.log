@@ -1,9 +1,1 @@
-app/engine/iso52016_monthly.py:39: error: Returning Any from function declared to return "ndarray[Any, dtype[Any]]"  [no-any-return]
-app/engine/iso52016_monthly.py:45: error: Returning Any from function declared to return "ndarray[Any, dtype[Any]]"  [no-any-return]
-app/engine/iso52016_monthly.py:60: error: Returning Any from function declared to return "ndarray[Any, dtype[Any]]"  [no-any-return]
-app/engine/iso52016_monthly.py:75: error: Returning Any from function declared to return "ndarray[Any, dtype[Any]]"  [no-any-return]
-app/engine/iso52016_monthly.py:84: error: Returning Any from function declared to return "ndarray[Any, dtype[Any]]"  [no-any-return]
-app/engine/iso52016_design_load.py:50: error: Returning Any from function declared to return "ndarray[Any, dtype[Any]]"  [no-any-return]
-app/engine/iso52016_design_load.py:133: error: Need type annotation for "extract_base"  [var-annotated]
-app/engine/iso52016_design_load.py:191: error: Need type annotation for "zeros"  [var-annotated]
-Found 8 errors in 2 files (checked 4 source files)
+Success: no issues found in 4 source files

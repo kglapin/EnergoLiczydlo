@@ -24,29 +24,6 @@ tests/test_audit_repairs.py::test_project_schema_has_room_level_design_model PAS
 tests/test_audit_repairs.py::test_room_level_design_load_matches_manual_wall_case PASSED [ 81%]
 tests/test_audit_repairs.py::test_design_load_certificate_mode_rejects_missing_rooms PASSED [ 87%]
 tests/test_audit_repairs.py::test_detailed_hourly_solver_has_five_nodes_per_construction_and_closes_steady_year PASSED [ 93%]
-tests/test_audit_repairs.py::test_detailed_hourly_certificate_mode_rejects_inferred_construction FAILED [100%]
+tests/test_audit_repairs.py::test_detailed_hourly_certificate_mode_rejects_inferred_construction PASSED [100%]
 
-=================================== FAILURES ===================================
-_____ test_detailed_hourly_certificate_mode_rejects_inferred_construction ______
-
-    def test_detailed_hourly_certificate_mode_rejects_inferred_construction() -> None:
-        wall = OpaqueElement(
-            id="wall",
-            name="Ściana",
-            zone_id="z1",
-            area=25.0,
-            u_value=1.0,
-            areal_heat_capacity=200.0,
-            mass_distribution_class="distributed",
-        )
->       with pytest.raises(ValueError, match="explicit five-node"):
-E       AssertionError: Regex pattern did not match.
-E         Expected regex: 'explicit five-node'
-E         Actual message: 'Explicit five-node construction data are required: provide thermal_node_capacities_kj_m2k and thermal_node_resistances_m2k_w for every opaque element in the zone.'
-
-tests/test_audit_repairs.py:397: AssertionError
-=========================== short test summary info ============================
-FAILED tests/test_audit_repairs.py::test_detailed_hourly_certificate_mode_rejects_inferred_construction - AssertionError: Regex pattern did not match.
-  Expected regex: 'explicit five-node'
-  Actual message: 'Explicit five-node construction data are required: provide thermal_node_capacities_kj_m2k and thermal_node_resistances_m2k_w for every opaque element in the zone.'
-========================= 1 failed, 15 passed in 3.56s =========================
+============================== 16 passed in 3.98s ==============================
