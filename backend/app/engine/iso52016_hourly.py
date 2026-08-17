@@ -483,7 +483,6 @@ def _cycle(
     previous: FloatArray,
 ) -> tuple[ISO52016ZoneSolution, FloatArray]:
     n = len(t_supply)
-    size = prepared.matrix.shape[0]
     outputs = [_arr(np.zeros(n)) for _ in range(10)]
     t_air, t_mrt, t_op, t_mass, t_mass_mean, q_h, q_c, q_tr, unmet_h, unmet_c = outputs
     opaque_history = {path.element.id: _arr(np.empty((n, 5))) for path in prepared.opaque}

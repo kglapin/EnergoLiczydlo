@@ -29,6 +29,8 @@ for _name in dir(_legacy):
 
 AdjacentSpaceType = _legacy.AdjacentSpaceType
 
+AdjacentSpaceType = _legacy.AdjacentSpaceType
+
 MassDistributionClass = Literal[
     "internal", "external", "middle", "distributed", "internal_external"
 ]
