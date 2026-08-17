@@ -63,6 +63,9 @@ def test_formal_monthly_result_replaces_primary_indicators_but_preserves_hourly_
         official_bip_climate_data=True,
         monthly_outdoor_temperature_c=[0.0] * 12,
         heating_useful_override_kwh_by_zone={zone.id: [10.0] * 12},
+        useful_energy_override_evidence_by_zone={
+            zone.id: "verified external monthly calculation; sha256=test"
+        },
         internal_gain_density_w_m2_by_zone={zone.id: 0.0},
     )
     settings = NormativeSettings.model_construct(
