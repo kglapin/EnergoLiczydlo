@@ -32,6 +32,11 @@ CASE_600_FLOOR_AREA_M2 = CASE_600_LENGTH_M * CASE_600_WIDTH_M
 CASE_600_LONG_WALL_M2 = CASE_600_LENGTH_M * CASE_600_HEIGHT_M
 CASE_600_SHORT_WALL_M2 = CASE_600_WIDTH_M * CASE_600_HEIGHT_M
 CASE_600_SOUTH_OPAQUE_M2 = CASE_600_LONG_WALL_M2 - CASE_600_WINDOW_AREA_M2
+# LBNL's ISO 13790 implementation of the ASHRAE 140-2007 Case 600 uses
+# Uwin ~= 2.984 W/(m²K) and an integrated solar gain factor g = 0.789.
+# The layer-derived U-value below is 2.987 W/(m²K), so the same reference
+# glazing is represented here with g=0.789 rather than an arbitrary 0.68.
+CASE_600_WINDOW_G_VALUE = 0.789
 
 WALL_LAYERS_OUTSIDE_TO_INSIDE: tuple[Layer, ...] = (
     (0.009, 0.140, 900.0, 530.0),
@@ -223,7 +228,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             orientation_azimuth=180.0,
             area=CASE_600_WINDOW_AREA_M2 / 2.0,
             u_value=window_u,
-            g_value=0.68,
+            g_value=CASE_600_WINDOW_G_VALUE,
             frame_factor=0.0,
         ),
         TransparentElement(
@@ -233,7 +238,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             orientation_azimuth=180.0,
             area=CASE_600_WINDOW_AREA_M2 / 2.0,
             u_value=window_u,
-            g_value=0.68,
+            g_value=CASE_600_WINDOW_G_VALUE,
             frame_factor=0.0,
         ),
     ]
@@ -263,8 +268,8 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         transparent_elements=transparent,
         bridges=ThermalBridgeConfig(),
         zone_id="bestest",
-        # Published LBL detailed Case 600 uses 0.414 ACH at the test altitude,
-        # corresponding to 0.5 ACH at sea level.
+        # The ASHRAE 140-2007 simplified reference translation uses the
+        # altitude-adjusted 0.414 h⁻¹ value for the Denver test weather.
         h_ve=0.414 * 129.6 * 1200.0 / 3600.0,
         t_e=climate["T_e"].to_numpy(dtype=float),
         phi_int=np.full(8760, 200.0),
