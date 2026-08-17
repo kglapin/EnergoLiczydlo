@@ -30,9 +30,7 @@ def _solve(*, absorbed_solar_w: float):
         t_e=np.zeros(8760, dtype=float),
         phi_int=np.zeros(8760, dtype=float),
         phi_sol_transparent=np.zeros(8760, dtype=float),
-        opaque_solar_absorbed_w_by_element={
-            "wall": np.full(8760, absorbed_solar_w, dtype=float)
-        },
+        opaque_solar_absorbed_w_by_element={"wall": np.full(8760, absorbed_solar_w, dtype=float)},
         t_set_heating=20.0,
         t_set_cooling=None,
         require_explicit_construction_nodes=True,
