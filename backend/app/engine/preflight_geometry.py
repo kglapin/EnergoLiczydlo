@@ -227,7 +227,7 @@ def geometry_checks(project: BuildingProject) -> list[ComplianceCheck]:
         wall_heights = [
             float(element.height)
             for element in vertical_external
-            if getattr(element, "height", None) is not None
+            if element.height is not None
         ]
         if wall_heights:
             mean_wall_height = sum(wall_heights) / len(wall_heights)
