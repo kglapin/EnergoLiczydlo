@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from collections.abc import Sequence
 
 import numpy as np
 import pytest
@@ -18,7 +19,67 @@ from app.schemas.models import (
 )
 from tests.test_external_bestest import CASE_600_REFERENCE, _download_bestest_weather
 
-BESTEST_600_DIRECT_IAM = (1.0, -0.189, 0.644, -0.596)
+Layer = tuple[float, float, float, float]  # thickness, conductivity, cp, density
+
+WALL_LAYERS_OUTSIDE_TO_INSIDE: tuple[Layer, ...] = (
+    (0.009, 0.140, 900.0, 530.0),
+    (0.066, 0.040, 840.0, 12.0),
+    (0.012, 0.160, 840.0, 950.0),
+)
+ROOF_LAYERS_OUTSIDE_TO_INSIDE: tuple[Layer, ...] = (
+    (0.019, 0.140, 900.0, 530.0),
+    (0.1118, 0.040, 840.0, 12.0),
+    (0.010, 0.160, 840.0, 950.0),
+)
+FLOOR_LAYERS_BOUNDARY_TO_INSIDE: tuple[Layer, ...] = (
+    (1.003, 0.040, 0.0, 0.0),
+    (0.025, 0.140, 1200.0, 650.0),
+)
+
+
+def _five_node_construction(
+    layers_outside_to_inside: Sequence[Layer],
+    *,
+    r_si: float,
+    r_se: float,
+) -> tuple[list[float], list[float]]:
+    """Map published material layers to five finite-volume nodes.
+
+    The construction is partitioned into five equal intervals in thermal-
+    resistance coordinates. Nodal heat capacity is integrated from the actual
+    materials over each interval. Six path resistances connect the indoor film,
+    five node centres and the external/boundary film, preserving total R and C.
+    """
+    layers_inside_to_outside = list(reversed(layers_outside_to_inside))
+    layer_r = [thickness / conductivity for thickness, conductivity, _, _ in layers_inside_to_outside]
+    layer_c = [
+        thickness * specific_heat * density / 1000.0
+        for thickness, _, specific_heat, density in layers_inside_to_outside
+    ]
+    material_r = sum(layer_r)
+    bin_r = material_r / 5.0
+
+    ranges: list[tuple[float, float, float]] = []
+    position = 0.0
+    for resistance, capacity in zip(layer_r, layer_c, strict=True):
+        ranges.append((position, position + resistance, capacity))
+        position += resistance
+
+    capacities: list[float] = []
+    for node in range(5):
+        start = node * bin_r
+        end = (node + 1) * bin_r
+        capacity = 0.0
+        for layer_start, layer_end, layer_capacity in ranges:
+            overlap = max(0.0, min(end, layer_end) - max(start, layer_start))
+            if overlap > 0.0 and layer_end > layer_start:
+                capacity += layer_capacity * overlap / (layer_end - layer_start)
+        # Zero-capacity insulation is physically valid; a tiny numerical floor
+        # keeps compatibility with schemas that require strictly positive nodes.
+        capacities.append(max(capacity, 1e-9))
+
+    resistances = [r_si + 0.5 * bin_r, *([bin_r] * 4), r_se + 0.5 * bin_r]
+    return capacities, resistances
 
 
 @pytest.mark.skipif(
@@ -37,19 +98,28 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
     floor_u = 1.0 / (25.075 + 0.025 / 0.14 + 0.17 + 0.04)
     window_u = 1.0 / (2.0 * 0.003175 / 1.06 + 0.1588 + 0.13 + 0.04)
 
-    # BESTEST low-mass record: 51,289.8 J/(m² floor K) over 48 m² floor.
-    # Distribute the same total capacity across the opaque test envelope. This
-    # preserves the published building heat capacity while the repaired solver
-    # assigns it to individual constructions instead of one zone-wide lump.
-    opaque_area = 16.2 + 16.2 + 9.6 + 16.2 + 48.0 + 48.0
-    total_capacity_j_k = 51289.8 * 48.0
-    areal_capacity_kj_m2k = total_capacity_j_k / opaque_area / 1000.0
+    wall_nodes = _five_node_construction(
+        WALL_LAYERS_OUTSIDE_TO_INSIDE,
+        r_si=0.13,
+        r_se=0.04,
+    )
+    roof_nodes = _five_node_construction(
+        ROOF_LAYERS_OUTSIDE_TO_INSIDE,
+        r_si=0.10,
+        r_se=0.04,
+    )
+    floor_nodes = _five_node_construction(
+        FLOOR_LAYERS_BOUNDARY_TO_INSIDE,
+        r_si=0.17,
+        r_se=0.04,
+    )
 
     def opaque(
         element_id: str,
         name: str,
         area: float,
         u_value: float,
+        nodes: tuple[list[float], list[float]],
         *,
         azimuth: float = 0.0,
         inclination: float = 90.0,
@@ -57,6 +127,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         adjacent: AdjacentSpaceType = AdjacentSpaceType.OUTDOOR,
         adjacent_temperature: float | None = None,
     ) -> OpaqueElement:
+        capacities, resistances = nodes
         return OpaqueElement(
             id=element_id,
             name=name,
@@ -69,20 +140,21 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             solar_absorptance=0.6,
             adjacent_space_type=adjacent,
             adjacent_temperature=adjacent_temperature,
-            areal_heat_capacity=areal_capacity_kj_m2k,
-            mass_distribution_class="distributed",
+            thermal_node_capacities_kj_m2k=capacities,
+            thermal_node_resistances_m2k_w=resistances,
         )
 
     opaque_elements = [
-        opaque("east", "East", 16.2, wall_u, azimuth=90.0),
-        opaque("north", "North", 16.2, wall_u, azimuth=0.0),
-        opaque("south", "South", 9.6, wall_u, azimuth=180.0),
-        opaque("west", "West", 16.2, wall_u, azimuth=270.0),
+        opaque("east", "East", 16.2, wall_u, wall_nodes, azimuth=90.0),
+        opaque("north", "North", 16.2, wall_u, wall_nodes, azimuth=0.0),
+        opaque("south", "South", 9.6, wall_u, wall_nodes, azimuth=180.0),
+        opaque("west", "West", 16.2, wall_u, wall_nodes, azimuth=270.0),
         opaque(
             "roof",
             "Roof",
             48.0,
             roof_u,
+            roof_nodes,
             inclination=0.0,
             element_type="roof",
         ),
@@ -91,6 +163,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             "Ground floor",
             48.0,
             floor_u,
+            floor_nodes,
             inclination=180.0,
             element_type="ground_floor",
             adjacent=AdjacentSpaceType.CONSTANT_TEMPERATURE,
@@ -105,7 +178,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             orientation_azimuth=180.0,
             area=6.0,
             u_value=window_u,
-            g_value=0.769,
+            g_value=0.68,
             frame_factor=0.0,
         ),
         TransparentElement(
@@ -115,20 +188,13 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             orientation_azimuth=180.0,
             area=6.0,
             u_value=window_u,
-            g_value=0.769,
+            g_value=0.68,
             frame_factor=0.0,
         ),
     ]
 
     transparent_solar = sum(
-        (
-            solar_gains_transparent(
-                element,
-                climate,
-                direct_incidence_coefficients=BESTEST_600_DIRECT_IAM,
-            )
-            for element in transparent
-        ),
+        (solar_gains_transparent(element, climate) for element in transparent),
         np.zeros(8760, dtype=float),
     )
     opaque_solar: dict[str, np.ndarray] = {}
@@ -152,7 +218,9 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         transparent_elements=transparent,
         bridges=ThermalBridgeConfig(),
         zone_id="bestest",
-        h_ve=0.5 * 129.6 * 1200.0 / 3600.0,
+        # Published LBL detailed Case 600 uses 0.414 ACH at the test altitude,
+        # corresponding to 0.5 ACH at sea level.
+        h_ve=0.414 * 129.6 * 1200.0 / 3600.0,
         t_e=climate["T_e"].to_numpy(dtype=float),
         phi_int=np.full(8760, 200.0),
         phi_sol_transparent=np.asarray(transparent_solar, dtype=float),
@@ -160,6 +228,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         t_set_heating=20.0,
         t_set_cooling=27.0,
         internal_convective_fraction=0.4,
+        require_explicit_construction_nodes=True,
         max_warmup_cycles=30,
         warmup_tolerance_k=0.01,
     )
