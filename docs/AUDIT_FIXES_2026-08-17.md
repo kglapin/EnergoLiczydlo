@@ -37,7 +37,7 @@ Raport audytowy wskazuje, gdy:
 
 ### Udział OZE
 
-`Uoze` uwzględnia obecnie wszystkie obsługiwane odnawialne nośniki energii końcowej:
+`Uoze` uwzględnia wszystkie obsługiwane odnawialne nośniki energii końcowej:
 
 - biomass,
 - biogas,
@@ -51,30 +51,102 @@ Raport audytowy wskazuje, gdy:
 Wyniki zawierają osobne informacje/ostrzeżenia audytowe dotyczące m.in.:
 
 - wartości wejściowych wentylacji i infiltracji,
-- współczynnika energii pierwotnej energii elektrycznej,
-- uproszczonego modelu gruntu,
-- stałej sprawności odzysku ciepła,
-- sposobu wyznaczania diagnostycznej mocy szczytowej.
+- współczynnika energii pierwotnej,
+- pochodzenia danych `wi` w trybie formalnym,
+- modelu gruntu,
+- modelu odzysku ciepła,
+- sposobu wyznaczania diagnostycznej i projektowej mocy cieplnej.
 
 Frontend odróżnia `INFO`, `UWAGA`, `OK` i rzeczywiste niezaliczone kontrole.
 
-## Ograniczenia, których nie wolno ukrywać
+## Elementy uzupełnione w normatywnym modelu godzinowym v2
 
 ### Grunt
 
-Obecny silnik nadal nie implementuje pełnego PN-EN ISO 13370. Używa okresowego modelu temperatury gruntu opisanego w `METHODOLOGY.md`. Pełna implementacja wymaga dodatkowych danych geometrycznych i normowych (m.in. parametrów równoważnej płyty/perymetru) i powinna zostać wdrożona jako osobny model zamiast zgadywania brakujących wartości.
+Dodano osobny moduł `ground_iso13370.py`.
+
+Dla podłogi na gruncie wykorzystuje on geometrię `A/P`, parametry cieplne gruntu,
+opór warstw podłogi i grubość ściany zewnętrznej do wyznaczenia stacjonarnego
+współczynnika przenikania. Do solvera 8760 h dołączany jest indywidualny profil
+okresowej granicy gruntowej dla każdej przegrody.
+
+Tryb formalny nie generuje arbitralnych współczynników okresowych. Wymaga jawnej
+pary `periodic_amplitude_ratio` i `phase_shift_days` pochodzącej ze zweryfikowanej
+procedury dynamicznej. Dostępny poza trybem formalnym model jednowymiarowej fali
+cieplnej jest oznaczany jako diagnostyczny.
 
 ### Rekuperacja
 
-Sprawność odzysku jest obecnie stałą wartością sezonową. Nie ma pełnego modelu bypassu letniego, oszraniania ani krzywych producenta. Silnik raportuje to jawnie jako ograniczenie.
+Dodano szczegółowy model godzinowy rekuperacji:
+
+- pełny fizyczny strumień wentylacyjny pozostaje w `Hve`,
+- odzysk zmienia godzinową temperaturę nawiewu,
+- można podać krzywą sprawności urządzenia,
+- działa bypass letni,
+- działa detekcja ryzyka szronienia,
+- dostępne są strategie preheater / redukcja odzysku / wyłączenie odzysku,
+- energia elektryczna nagrzewnicy wstępnej zwiększa `Ek`, `Ep` i emisję CO2,
+- jedna centralna nagrzewnica nie jest mnożona przez liczbę stref.
+
+Tryb formalny wymaga źródła charakterystyki urządzenia. Przy aktywnej ochronie
+przeciwzamrożeniowej wymaga również jawnej wilgotności powietrza wywiewanego.
 
 ### Moc projektowa
 
-`design_heating_power_kw` pozostaje maksimum strat z godzin wybranego TMY. Interfejs nie nazywa już tej wartości formalnym „doborem mocy źródła”. Pełne obciążenie projektowe wymaga osobnej temperatury obliczeniowej i procedury projektowej.
+Dodano osobny `design_load.py`, który nie korzysta z minimum TMY i nie używa
+COP/sprawności generatora do wyznaczania mocy budynku.
+
+Projektowe obciążenie cieplne korzysta z:
+
+- jawnej projektowej temperatury zewnętrznej,
+- własnych temperatur projektowych dla przestrzeni nieogrzewanych,
+- własnych temperatur projektowych dla przegród do gruntu,
+- strat przez mostki,
+- wentylacji i szczegółowej rekuperacji,
+- opcjonalnej jawnej mocy ponownego nagrzania.
+
+Wynik projektowy jest raportowany osobno od rocznego bilansu. `Eu`, `Ek` i `Ep`
+nadal wynikają z modelu godzinowego 8760 h.
+
+### Ślad prawny i źródłowy
+
+Dodano `legal.certificate_mode`. Tryb formalny wymaga:
+
+- daty obliczenia,
+- źródła metodologii,
+- źródła danych klimatycznych,
+- źródła współczynnika `wi` dla każdego używanego nośnika.
+
+Dzięki temu wartości tabelaryczne, dane dostawcy i dane urządzeń nie są
+nierozróżnialnymi liczbami w jednym formularzu.
+
+## Granice, których nadal nie wolno ukrywać
+
+### Pełny tekst norm
+
+Repozytorium nie zawiera chronionej pełnej treści norm PKN/ISO. Tam, gdzie
+formalna procedura dynamiczna wymaga współczynników, których nie da się
+bezpiecznie odtworzyć z publicznego zakresu normy, aplikacja wymaga ich jawnego
+podania wraz ze źródłem. Nie należy na tej podstawie twierdzić, że kod sam w
+sobie dowodzi zgodności każdej klauzuli normy.
+
+### Wilgotność
+
+Model frost protection korzysta z jawnej wilgotności względnej powietrza
+wywiewanego i punktu rosy. Nie jest to pełny model bilansu masowego wilgoci w
+budynku. Pełny bilans wymagałby dodatkowych danych o emisji wilgoci, sorpcji,
+nawilżaniu i osuszaniu, których silnik nie zgaduje.
+
+### Klimat
+
+Tryb formalny wymaga zapisania źródła danych klimatycznych. Sam identyfikator
+stacji lub obecność pliku TMY nie oznacza automatycznie, że zestaw jest właściwy
+dla danego celu i daty sporządzenia charakterystyki.
 
 ## Testy regresyjne
 
-`backend/tests/test_audited_preflight.py` sprawdza m.in.:
+`backend/tests/test_audited_preflight.py` i
+`backend/tests/test_normative_extensions.py` sprawdzają m.in.:
 
 - odejmowanie okna od ściany brutto,
 - zmianę Htr dokładnie o `Uw - Uwall` przy +1 m² okna,
@@ -83,5 +155,13 @@ Sprawność odzysku jest obecnie stałą wartością sezonową. Nie ma pełnego 
 - jawne rozwiązanie niejednoznaczności przez `metadata.opening_hosts`,
 - ostrzeżenia dla modelu `Af=150 m²`, dach/podłoga=90 m² i tylko N/S,
 - pierwszeństwo `height × width` przed ręcznym `area`,
-- ostrzeżenia o brakującej klasyfikacji instalacji, stratach zasobnika i mostkach,
-- poprawny udział wszystkich obsługiwanych nośników odnawialnych w `Uoze`.
+- udział wszystkich obsługiwanych nośników odnawialnych w `Uoze`,
+- charakterystyczny wymiar gruntu `B'=2A/P`,
+- monotoniczność izolacji podłogi i `U`,
+- parę współczynników okresowych gruntu,
+- analityczne przypadki odzysku, bypassu i preheatera,
+- zachowanie fizycznego strumienia wentylacyjnego,
+- brak mnożenia preheatera przez liczbę stref,
+- niezależność obciążenia projektowego od COP,
+- wymóg jawnej temperatury projektowej gruntu,
+- wymogi śladu źródłowego trybu formalnego.
