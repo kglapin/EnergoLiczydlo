@@ -1,18 +1,16 @@
-"""Extended normative settings for the repaired calculation runtime.
+"""Normative settings for the audited calculation runtime.
 
-This package keeps backwards compatibility with the historical
-``normative_models.py`` module while adding explicit controls for the detailed
-hourly construction-node calculation and evidence for externally supplied
-monthly useful-energy values.
+ISO 52016 analysis and the legally prescribed Polish certificate calculation
+remain separate layers. Strict ISO mode fails closed when inputs delegated to
+other EPB modules have not been supplied with the project.
 """
-
 from __future__ import annotations
 
 import importlib.util
 import sys
 from pathlib import Path
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 from app.schemas.models import BuildingProject
 
@@ -24,62 +22,115 @@ if _spec is None or _spec.loader is None:  # pragma: no cover
 _legacy = importlib.util.module_from_spec(_spec)
 sys.modules[_LEGACY_NAME] = _legacy
 _spec.loader.exec_module(_legacy)
-
 for _name in dir(_legacy):
     if not _name.startswith("__"):
         globals()[_name] = getattr(_legacy, _name)
 
 
 class HourlyISO52016Settings(BaseModel):
-    """Controls the detailed per-construction hourly nodal calculation.
-
-    Direct low-level core calls keep this solver opt-in for regression and
-    legacy comparisons. The public audited calculation path selects it by
-    default unless a project explicitly sets ``enabled``. ``certificate_mode``
-    is stricter and requires explicit five-node construction data.
-    """
-
     enabled: bool = False
     certificate_mode: bool = False
+    strict_conformance: bool = False
+    # Fractions are explicit model choices. Defaults reproduce the verification
+    # convention used by the ISO 52016 validation cases; strict projects may
+    # override them with the values applicable to their EPB input source.
+    internal_convective_fraction: float = Field(0.40, ge=0.0, le=1.0)
+    solar_convective_fraction: float = Field(0.10, ge=0.0, le=1.0)
+    hvac_convective_fraction: float = Field(1.00, ge=0.0, le=1.0)
+    operative_air_weight: float = Field(0.50, ge=0.0, le=1.0)
+    air_furniture_heat_capacity_kj_m2k_by_zone: dict[str, float] = Field(default_factory=dict)
+    sky_temperature_difference_k: float | None = Field(None, ge=0.0)
+    solar_radiant_distribution_by_zone: dict[str, dict[str, float]] = Field(default_factory=dict)
+    max_heating_power_w_by_zone: dict[str, float] = Field(default_factory=dict)
+    max_cooling_power_w_by_zone: dict[str, float] = Field(default_factory=dict)
     max_warmup_cycles: int = Field(20, ge=2, le=100)
     warmup_tolerance_k: float = Field(0.01, gt=0.0, le=1.0)
 
+    @model_validator(mode="after")
+    def validate_detailed_inputs(self) -> "HourlyISO52016Settings":
+        for mapping_name, mapping in (
+            ("air_furniture_heat_capacity_kj_m2k_by_zone", self.air_furniture_heat_capacity_kj_m2k_by_zone),
+            ("max_heating_power_w_by_zone", self.max_heating_power_w_by_zone),
+            ("max_cooling_power_w_by_zone", self.max_cooling_power_w_by_zone),
+        ):
+            if any(value < 0.0 for value in mapping.values()):
+                raise ValueError(f"{mapping_name} values must be non-negative")
+        for zone_id, distribution in self.solar_radiant_distribution_by_zone.items():
+            if any(value < 0.0 for value in distribution.values()):
+                raise ValueError(f"solar radiant factors for '{zone_id}' must be non-negative")
+            if distribution and abs(sum(distribution.values()) - 1.0) > 1e-6:
+                raise ValueError(f"solar radiant factors for '{zone_id}' must sum to 1.0")
+        if self.certificate_mode:
+            self.strict_conformance = True
+        if self.strict_conformance and self.sky_temperature_difference_k is None:
+            raise ValueError(
+                "Strict ISO 52016 mode requires sky_temperature_difference_k from the "
+                "applicable EPB/national input"
+            )
+        return self
+
+
+class MoistureISO52016Settings(BaseModel):
+    """Clause 6.5.14 moisture-balance inputs."""
+    enabled: bool = False
+    strict_conformance: bool = False
+    latent_heat_vaporization_j_kg: float = Field(2_500_000.0, gt=0.0)
+    moisture_generation_kg_s_by_zone: dict[str, float] = Field(default_factory=dict)
+    moisture_buffer_kg_s_by_zone: dict[str, float] = Field(default_factory=dict)
+
+    @model_validator(mode="after")
+    def validate_moisture_sources(self) -> "MoistureISO52016Settings":
+        if any(value < 0.0 for value in self.moisture_generation_kg_s_by_zone.values()):
+            raise ValueError("moisture generation values must be non-negative")
+        return self
+
+
+class MonthlyISO52016Settings(BaseModel):
+    """Clause 6.6 calculation choices; kept separate from the Polish certificate."""
+    enabled: bool = False
+    strict_conformance: bool = False
+    heating_reference_parameter_a0: float | None = Field(None, gt=0.0)
+    heating_reference_time_constant_h: float | None = Field(None, gt=0.0)
+    cooling_reference_parameter_a0: float | None = Field(None, gt=0.0)
+    cooling_reference_time_constant_h: float | None = Field(None, gt=0.0)
+
+    @model_validator(mode="after")
+    def require_reference_parameters(self) -> "MonthlyISO52016Settings":
+        if self.enabled and self.strict_conformance:
+            required = (
+                self.heating_reference_parameter_a0,
+                self.heating_reference_time_constant_h,
+                self.cooling_reference_parameter_a0,
+                self.cooling_reference_time_constant_h,
+            )
+            if any(value is None for value in required):
+                raise ValueError(
+                    "Strict ISO 52016 monthly mode requires the reference parameters "
+                    "selected from the applicable Annex-A/national choices"
+                )
+        return self
+
 
 class PolishCertificateMonthlySettings(_legacy.PolishCertificateMonthlySettings):
-    """Monthly certificate inputs plus evidence for external overrides."""
-
     useful_energy_override_evidence_by_zone: dict[str, str] = Field(default_factory=dict)
 
     def unverified_override_zones(self) -> list[str]:
-        override_zones = set(self.heating_useful_override_kwh_by_zone) | set(
-            self.cooling_useful_override_kwh_by_zone
-        )
+        override_zones = set(self.heating_useful_override_kwh_by_zone) | set(self.cooling_useful_override_kwh_by_zone)
         return sorted(
-            zone
-            for zone in override_zones
+            zone for zone in override_zones
             if not str(self.useful_energy_override_evidence_by_zone.get(zone, "")).strip()
         )
 
 
 class NormativeSettings(_legacy.NormativeSettings):
-    ground: _legacy.GroundISO13370Settings = Field(
-        default_factory=_legacy.GroundISO13370Settings
-    )
-    heat_recovery: _legacy.HeatRecoverySettings = Field(
-        default_factory=_legacy.HeatRecoverySettings
-    )
-    design_conditions: _legacy.DesignConditionsSettings = Field(
-        default_factory=_legacy.DesignConditionsSettings
-    )
-    polish_certificate: PolishCertificateMonthlySettings = Field(
-        default_factory=PolishCertificateMonthlySettings
-    )
-    legal: _legacy.LegalProvenanceSettings = Field(
-        default_factory=_legacy.LegalProvenanceSettings
-    )
-    hourly_iso52016: HourlyISO52016Settings = Field(
-        default_factory=HourlyISO52016Settings
-    )
+    ground: _legacy.GroundISO13370Settings = Field(default_factory=_legacy.GroundISO13370Settings)
+    heat_recovery: _legacy.HeatRecoverySettings = Field(default_factory=_legacy.HeatRecoverySettings)
+    design_conditions: _legacy.DesignConditionsSettings = Field(default_factory=_legacy.DesignConditionsSettings)
+    polish_certificate: PolishCertificateMonthlySettings = Field(default_factory=PolishCertificateMonthlySettings)
+    legal: _legacy.LegalProvenanceSettings = Field(default_factory=_legacy.LegalProvenanceSettings)
+    hourly_iso52016: HourlyISO52016Settings = Field(default_factory=HourlyISO52016Settings)
+    moisture_iso52016: MoistureISO52016Settings = Field(default_factory=MoistureISO52016Settings)
+    monthly_iso52016: MonthlyISO52016Settings = Field(default_factory=MonthlyISO52016Settings)
 
     def __getattribute__(self, name: str):
         if name == "legal":
@@ -89,10 +140,8 @@ class NormativeSettings(_legacy.NormativeSettings):
                 missing = certificate.unverified_override_zones()
                 if missing:
                     raise ValueError(
-                        "Formal certificate mode rejects unverified useful-energy "
-                        "override values. Provide "
-                        "useful_energy_override_evidence_by_zone for: "
-                        + ", ".join(missing)
+                        "Formal certificate mode rejects unverified useful-energy override values. "
+                        "Provide useful_energy_override_evidence_by_zone for: " + ", ".join(missing)
                     )
             return legal
         return super().__getattribute__(name)
