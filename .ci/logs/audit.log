@@ -49,4 +49,4 @@ tests/test_audit_repairs.py:397: AssertionError
 FAILED tests/test_audit_repairs.py::test_detailed_hourly_certificate_mode_rejects_inferred_construction - AssertionError: Regex pattern did not match.
   Expected regex: 'explicit five-node'
   Actual message: 'Explicit five-node construction data are required: provide thermal_node_capacities_kj_m2k and thermal_node_resistances_m2k_w for every opaque element in the zone.'
-========================= 1 failed, 15 passed in 3.53s =========================
+========================= 1 failed, 15 passed in 3.56s =========================

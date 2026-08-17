@@ -65,8 +65,8 @@ _________ test_three_day_new_solver_energy_balance_closes_hour_by_hour _________
 >       assert max(day_max.values()) < 1e-7
 E       AssertionError: assert 83.87848439305253 < 1e-07
 E        +  where 83.87848439305253 = max(dict_values([4.547473508864641e-12, 6.650680006714538e-12, 83.87848439305253]))
-E        +    where dict_values([4.547473508864641e-12, 6.650680006714538e-12, 83.87848439305253]) = <built-in method values of dict object at 0x7f8c139ffe00>()
-E        +      where <built-in method values of dict object at 0x7f8c139ffe00> = {'winter': 4.547473508864641e-12, 'transition': 6.650680006714538e-12, 'summer': 83.87848439305253}.values
+E        +    where dict_values([4.547473508864641e-12, 6.650680006714538e-12, 83.87848439305253]) = <built-in method values of dict object at 0x7f2520e70580>()
+E        +      where <built-in method values of dict object at 0x7f2520e70580> = {'winter': 4.547473508864641e-12, 'transition': 6.650680006714538e-12, 'summer': 83.87848439305253}.values
 
 tests/test_post_repair_audit.py:468: AssertionError
 ----------------------------- Captured stdout call -----------------------------
@@ -128,6 +128,6 @@ FAILED tests/test_audit_repairs.py::test_detailed_hourly_certificate_mode_reject
   Actual message: 'Explicit five-node construction data are required: provide thermal_node_capacities_kj_m2k and thermal_node_resistances_m2k_w for every opaque element in the zone.'
 FAILED tests/test_post_repair_audit.py::test_three_day_new_solver_energy_balance_closes_hour_by_hour - AssertionError: assert 83.87848439305253 < 1e-07
  +  where 83.87848439305253 = max(dict_values([4.547473508864641e-12, 6.650680006714538e-12, 83.87848439305253]))
- +    where dict_values([4.547473508864641e-12, 6.650680006714538e-12, 83.87848439305253]) = <built-in method values of dict object at 0x7f8c139ffe00>()
- +      where <built-in method values of dict object at 0x7f8c139ffe00> = {'winter': 4.547473508864641e-12, 'transition': 6.650680006714538e-12, 'summer': 83.87848439305253}.values
-2 failed, 363 passed, 2 skipped in 75.08s (0:01:15)
+ +    where dict_values([4.547473508864641e-12, 6.650680006714538e-12, 83.87848439305253]) = <built-in method values of dict object at 0x7f2520e70580>()
+ +      where <built-in method values of dict object at 0x7f2520e70580> = {'winter': 4.547473508864641e-12, 'transition': 6.650680006714538e-12, 'summer': 83.87848439305253}.values
+2 failed, 363 passed, 2 skipped in 75.38s (0:01:15)

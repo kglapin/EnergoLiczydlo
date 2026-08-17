@@ -80,13 +80,13 @@ _________ test_three_day_new_solver_energy_balance_closes_hour_by_hour _________
 >       assert max(day_max.values()) < 1e-7
 E       AssertionError: assert 83.87848439305253 < 1e-07
 E        +  where 83.87848439305253 = max(dict_values([4.547473508864641e-12, 6.650680006714538e-12, 83.87848439305253]))
-E        +    where dict_values([4.547473508864641e-12, 6.650680006714538e-12, 83.87848439305253]) = <built-in method values of dict object at 0x7efe4432aec0>()
-E        +      where <built-in method values of dict object at 0x7efe4432aec0> = {'winter': 4.547473508864641e-12, 'transition': 6.650680006714538e-12, 'summer': 83.87848439305253}.values
+E        +    where dict_values([4.547473508864641e-12, 6.650680006714538e-12, 83.87848439305253]) = <built-in method values of dict object at 0x7fc42272e940>()
+E        +      where <built-in method values of dict object at 0x7fc42272e940> = {'winter': 4.547473508864641e-12, 'transition': 6.650680006714538e-12, 'summer': 83.87848439305253}.values
 
 tests/test_post_repair_audit.py:468: AssertionError
 =========================== short test summary info ============================
 FAILED tests/test_post_repair_audit.py::test_three_day_new_solver_energy_balance_closes_hour_by_hour - AssertionError: assert 83.87848439305253 < 1e-07
  +  where 83.87848439305253 = max(dict_values([4.547473508864641e-12, 6.650680006714538e-12, 83.87848439305253]))
- +    where dict_values([4.547473508864641e-12, 6.650680006714538e-12, 83.87848439305253]) = <built-in method values of dict object at 0x7efe4432aec0>()
- +      where <built-in method values of dict object at 0x7efe4432aec0> = {'winter': 4.547473508864641e-12, 'transition': 6.650680006714538e-12, 'summer': 83.87848439305253}.values
-========================= 1 failed, 24 passed in 2.31s =========================
+ +    where dict_values([4.547473508864641e-12, 6.650680006714538e-12, 83.87848439305253]) = <built-in method values of dict object at 0x7fc42272e940>()
+ +      where <built-in method values of dict object at 0x7fc42272e940> = {'winter': 4.547473508864641e-12, 'transition': 6.650680006714538e-12, 'summer': 83.87848439305253}.values
+========================= 1 failed, 24 passed in 2.32s =========================
