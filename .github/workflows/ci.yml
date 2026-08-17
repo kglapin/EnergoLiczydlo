@@ -23,7 +23,18 @@ jobs:
       - name: Lint with ruff
         run: ruff check app tests --output-format=github
       - name: Type check with mypy
-        run: mypy app
+        shell: bash
+        run: |
+          set +e
+          mypy app --show-error-codes --no-pretty | tee /tmp/mypy.txt
+          status=${PIPESTATUS[0]}
+          {
+            echo "### mypy"
+            echo '```text'
+            cat /tmp/mypy.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$status"
       - name: Run tests
         run: pytest tests -q --cov=app --cov-report=term-missing
 
