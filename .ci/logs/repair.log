@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/runner/work/EnergoLiczydlo/EnergoLiczydlo/backend/../.ci/apply_repair.py", line 73, in <module>
+    replace(
+  File "/home/runner/work/EnergoLiczydlo/EnergoLiczydlo/backend/../.ci/apply_repair.py", line 12, in replace
+    raise RuntimeError(f"Expected text not found in {path}: {old[:100]!r}")
+RuntimeError: Expected text not found in backend/app/engine/iso52016_hourly/__init__.py: '    if not strict:\n        kwargs["sky_temperature_difference_k"] = 0.0\n\n    result = _core_solve(*a'

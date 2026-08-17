@@ -15,129 +15,18 @@ tests/test_audit_repairs.py::test_iso13370_equivalent_thickness_includes_rse PAS
 tests/test_audit_repairs.py::test_iso13370_slab_formula_uses_correct_branch_after_rse_fix PASSED [ 25%]
 tests/test_audit_repairs.py::test_heat_recovery_hot_hour_uses_cooling_extract_reference PASSED [ 31%]
 tests/test_audit_repairs.py::test_heat_recovery_accepts_actual_extract_temperature PASSED [ 37%]
-tests/test_audit_repairs.py::test_repaired_hourly_year_reaches_steady_4380_kwh FAILED [ 43%]
-tests/test_audit_repairs.py::test_repaired_1000w_constant_loss_aggregates_to_8760kwh FAILED [ 50%]
-tests/test_audit_repairs.py::test_hourly_and_polish_monthly_match_steady_reference FAILED [ 56%]
+tests/test_audit_repairs.py::test_repaired_hourly_year_reaches_steady_4380_kwh PASSED [ 43%]
+tests/test_audit_repairs.py::test_repaired_1000w_constant_loss_aggregates_to_8760kwh PASSED [ 50%]
+tests/test_audit_repairs.py::test_hourly_and_polish_monthly_match_steady_reference PASSED [ 56%]
 tests/test_audit_repairs.py::test_formal_mode_rejects_unverified_useful_energy_override PASSED [ 62%]
 tests/test_audit_repairs.py::test_verified_monthly_override_is_allowed PASSED [ 68%]
 tests/test_audit_repairs.py::test_project_schema_has_room_level_design_model PASSED [ 75%]
 tests/test_audit_repairs.py::test_room_level_design_load_matches_manual_wall_case PASSED [ 81%]
 tests/test_audit_repairs.py::test_design_load_certificate_mode_rejects_missing_rooms PASSED [ 87%]
-tests/test_audit_repairs.py::test_detailed_hourly_solver_has_five_nodes_per_construction_and_closes_steady_year FAILED [ 93%]
+tests/test_audit_repairs.py::test_detailed_hourly_solver_has_five_nodes_per_construction_and_closes_steady_year PASSED [ 93%]
 tests/test_audit_repairs.py::test_detailed_hourly_certificate_mode_rejects_inferred_construction FAILED [100%]
 
 =================================== FAILURES ===================================
-______________ test_repaired_hourly_year_reaches_steady_4380_kwh _______________
-
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb3b9e4b1d0>
-
-    def test_repaired_hourly_year_reaches_steady_4380_kwh(
-        monkeypatch: pytest.MonkeyPatch,
-    ) -> None:
-        project = _project(wall_area=25.0, wall_u=1.0)
-        climate = _constant_climate(0.0)
-        monkeypatch.setattr(core_calculator, "_load_climate", lambda _project: climate)
-        result = core_calculator.calculate_building_energy(project)
-        heating_kwh = result.annual_indicators.heating_kwh_m2_year * 100.0
->       assert heating_kwh == pytest.approx(4380.0, rel=1e-7)
-E       assert 3528.1933256616826 == 4380.0 ± 4.4e-04
-E         
-E         comparison failed
-E         Obtained: 3528.1933256616826
-E         Expected: 4380.0 ± 4.4e-04
-
-tests/test_audit_repairs.py:238: AssertionError
-___________ test_repaired_1000w_constant_loss_aggregates_to_8760kwh ____________
-
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb3b9e4b950>
-
-    def test_repaired_1000w_constant_loss_aggregates_to_8760kwh(
-        monkeypatch: pytest.MonkeyPatch,
-    ) -> None:
-        project = _project(wall_area=50.0, wall_u=1.0)
-        climate = _constant_climate(0.0)
-        monkeypatch.setattr(core_calculator, "_load_climate", lambda _project: climate)
-        result = core_calculator.calculate_building_energy(project)
->       assert sum(month.heating_kwh for month in result.monthly) == pytest.approx(
-            8760.0,
-            rel=1e-7,
-        )
-E       assert 7056.386651323361 == 8760.0 ± 8.8e-04
-E         
-E         comparison failed
-E         Obtained: 7056.386651323361
-E         Expected: 8760.0 ± 8.8e-04
-
-tests/test_audit_repairs.py:248: AssertionError
-____________ test_hourly_and_polish_monthly_match_steady_reference _____________
-
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb3ba013390>
-
-    def test_hourly_and_polish_monthly_match_steady_reference(
-        monkeypatch: pytest.MonkeyPatch,
-    ) -> None:
-        project = _project(wall_area=25.0, wall_u=1.0)
-        climate = _constant_climate(0.0)
-        monkeypatch.setattr(core_calculator, "_load_climate", lambda _project: climate)
-        hourly = core_calculator.calculate_building_energy(project)
-        monthly = calculate_polish_monthly_certificate(
-            project,
-            PolishCertificateMonthlySettings(
-                enabled=True,
-                official_bip_climate_data=True,
-                monthly_outdoor_temperature_c=[0.0] * 12,
-                heating_internal_temperature_c_by_zone={"z1": [20.0] * 12},
-                heating_gain_utilization_by_zone={"z1": [1.0] * 12},
-                internal_gain_density_w_m2_by_zone={"z1": 0.0},
-            ),
-        )
-        hourly_kwh = hourly.annual_indicators.heating_kwh_m2_year * 100.0
->       assert hourly_kwh == pytest.approx(4380.0, rel=1e-7)
-E       assert 3528.1933256616826 == 4380.0 ± 4.4e-04
-E         
-E         comparison failed
-E         Obtained: 3528.1933256616826
-E         Expected: 4380.0 ± 4.4e-04
-
-tests/test_audit_repairs.py:273: AssertionError
-_ test_detailed_hourly_solver_has_five_nodes_per_construction_and_closes_steady_year _
-
-    def test_detailed_hourly_solver_has_five_nodes_per_construction_and_closes_steady_year() -> None:
-        wall = OpaqueElement(
-            id="wall",
-            name="Ściana",
-            zone_id="z1",
-            area=25.0,
-            u_value=1.0,
-            solar_absorptance=0.0,
-            thermal_node_capacities_kj_m2k=[40.0, 40.0, 40.0, 40.0, 40.0],
-            thermal_node_resistances_m2k_w=[0.13, 0.2075, 0.2075, 0.2075, 0.2075, 0.04],
-        )
-        solution = solve_zone_iso52016(
-            opaque_elements=[wall],
-            transparent_elements=[],
-            bridges=ThermalBridgeConfig(),
-            zone_id="z1",
-            h_ve=0.0,
-            t_e=np.zeros(8760),
-            phi_int=np.zeros(8760),
-            phi_sol_transparent=np.zeros(8760),
-            opaque_solar_absorbed_w_by_element={"wall": np.zeros(8760)},
-            t_set_heating=20.0,
-            t_set_cooling=None,
-            require_explicit_construction_nodes=True,
-            warmup_tolerance_k=0.001,
-        )
-        assert solution.construction_node_temperatures["wall"].shape == (8760, 5)
-        assert solution.used_inferred_construction is False
->       assert solution.q_heating.sum() / 1000.0 == pytest.approx(4380.0, rel=1e-4)
-E       assert np.float64(3528.193325661678) == 4380.0 ± 0.438
-E         
-E         comparison failed
-E         Obtained: 3528.193325661678
-E         Expected: 4380.0 ± 0.438
-
-tests/test_audit_repairs.py:382: AssertionError
 _____ test_detailed_hourly_certificate_mode_rejects_inferred_construction ______
 
     def test_detailed_hourly_certificate_mode_rejects_inferred_construction() -> None:
@@ -157,27 +46,7 @@ E         Actual message: 'Explicit five-node construction data are required: pr
 
 tests/test_audit_repairs.py:397: AssertionError
 =========================== short test summary info ============================
-FAILED tests/test_audit_repairs.py::test_repaired_hourly_year_reaches_steady_4380_kwh - assert 3528.1933256616826 == 4380.0 ± 4.4e-04
-  
-  comparison failed
-  Obtained: 3528.1933256616826
-  Expected: 4380.0 ± 4.4e-04
-FAILED tests/test_audit_repairs.py::test_repaired_1000w_constant_loss_aggregates_to_8760kwh - assert 7056.386651323361 == 8760.0 ± 8.8e-04
-  
-  comparison failed
-  Obtained: 7056.386651323361
-  Expected: 8760.0 ± 8.8e-04
-FAILED tests/test_audit_repairs.py::test_hourly_and_polish_monthly_match_steady_reference - assert 3528.1933256616826 == 4380.0 ± 4.4e-04
-  
-  comparison failed
-  Obtained: 3528.1933256616826
-  Expected: 4380.0 ± 4.4e-04
-FAILED tests/test_audit_repairs.py::test_detailed_hourly_solver_has_five_nodes_per_construction_and_closes_steady_year - assert np.float64(3528.193325661678) == 4380.0 ± 0.438
-  
-  comparison failed
-  Obtained: 3528.193325661678
-  Expected: 4380.0 ± 0.438
 FAILED tests/test_audit_repairs.py::test_detailed_hourly_certificate_mode_rejects_inferred_construction - AssertionError: Regex pattern did not match.
   Expected regex: 'explicit five-node'
   Actual message: 'Explicit five-node construction data are required: provide thermal_node_capacities_kj_m2k and thermal_node_resistances_m2k_w for every opaque element in the zone.'
-========================= 5 failed, 11 passed in 4.04s =========================
+========================= 1 failed, 15 passed in 3.53s =========================
