@@ -1,7 +1,5 @@
 """Primary energy and CO2 emission calculations per Polish methodology."""
 
-from __future__ import annotations
-
 from app.schemas.models import PrimaryEnergyFactors
 
 
