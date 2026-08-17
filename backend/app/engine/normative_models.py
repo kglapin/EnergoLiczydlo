@@ -26,6 +26,14 @@ class GroundElementSettings(BaseModel):
     phase_shift_days: float | None = Field(None, ge=0.0, le=365.0)
     diagnostic_effective_depth_m: float | None = Field(None, gt=0.0)
 
+    @model_validator(mode="after")
+    def require_complete_periodic_pair(self) -> GroundElementSettings:
+        if (self.periodic_amplitude_ratio is None) != (self.phase_shift_days is None):
+            raise ValueError(
+                "periodic_amplitude_ratio and phase_shift_days must be supplied together"
+            )
+        return self
+
 
 class GroundISO13370Settings(BaseModel):
     """Ground heat-transfer settings.
@@ -129,6 +137,9 @@ class DesignConditionsSettings(BaseModel):
     source: str | None = None
     heat_up_power_by_zone_w: dict[str, float] = Field(default_factory=dict)
     unheated_adjacent_temperature_by_element_c: dict[str, float] = Field(
+        default_factory=dict
+    )
+    ground_adjacent_temperature_by_element_c: dict[str, float] = Field(
         default_factory=dict
     )
 
