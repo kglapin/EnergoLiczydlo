@@ -43,7 +43,10 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "W", "UP", "B", "C4", "SIM"]
-ignore = ["N803", "N806"]  # Allow uppercase physical-quantity names (T_e, Q_H, H_tr, etc.)
+# E501 is intentionally left to Ruff's formatter; it can preserve long URLs,
+# messages and comments that the formatter cannot safely wrap. C408 is a
+# non-semantic literal-style preference and is not a quality gate for tests.
+ignore = ["N803", "N806", "E501", "C408"]
 
 [tool.ruff.lint.per-file-ignores]
 # Compatibility packages intentionally load the historical sibling module
