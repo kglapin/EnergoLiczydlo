@@ -27,13 +27,47 @@ for _name in dir(_legacy):
         globals()[_name] = getattr(_legacy, _name)
 
 
+class GroundElementSettings(_legacy.GroundElementSettings):
+    """ISO 13370/13789 outputs consumed by ISO 52016 clause 6.5.8.2."""
+    virtual_ground_resistance_m2k_w: float | None = Field(None, gt=0.0)
+    virtual_ground_temperature_c_by_month: list[float] | None = None
+    fixed_soil_layer_capacity_kj_m2k: float | None = Field(None, ge=0.0)
+
+    @model_validator(mode="after")
+    def validate_virtual_ground_boundary(self) -> "GroundElementSettings":
+        if (
+            self.virtual_ground_temperature_c_by_month is not None
+            and len(self.virtual_ground_temperature_c_by_month) != 12
+        ):
+            raise ValueError("virtual_ground_temperature_c_by_month must contain 12 values")
+        return self
+
+
+class GroundISO13370Settings(_legacy.GroundISO13370Settings):
+    elements: dict[str, GroundElementSettings] = Field(default_factory=dict)
+
+    @model_validator(mode="after")
+    def require_iso52016_ground_outputs(self) -> "GroundISO13370Settings":
+        if self.enabled and self.certificate_mode:
+            incomplete = [
+                element_id
+                for element_id, item in self.elements.items()
+                if item.virtual_ground_resistance_m2k_w is None
+                or item.virtual_ground_temperature_c_by_month is None
+            ]
+            if incomplete:
+                raise ValueError(
+                    "Certificate-grade ISO 52016 ground integration requires virtual "
+                    "ground resistance and 12 monthly virtual temperatures for: "
+                    + ", ".join(sorted(incomplete))
+                )
+        return self
+
+
 class HourlyISO52016Settings(BaseModel):
     enabled: bool = False
     certificate_mode: bool = False
     strict_conformance: bool = False
-    # Fractions are explicit model choices. Defaults reproduce the verification
-    # convention used by the ISO 52016 validation cases; strict projects may
-    # override them with the values applicable to their EPB input source.
     internal_convective_fraction: float = Field(0.40, ge=0.0, le=1.0)
     solar_convective_fraction: float = Field(0.10, ge=0.0, le=1.0)
     hvac_convective_fraction: float = Field(1.00, ge=0.0, le=1.0)
@@ -123,7 +157,7 @@ class PolishCertificateMonthlySettings(_legacy.PolishCertificateMonthlySettings)
 
 
 class NormativeSettings(_legacy.NormativeSettings):
-    ground: _legacy.GroundISO13370Settings = Field(default_factory=_legacy.GroundISO13370Settings)
+    ground: GroundISO13370Settings = Field(default_factory=GroundISO13370Settings)
     heat_recovery: _legacy.HeatRecoverySettings = Field(default_factory=_legacy.HeatRecoverySettings)
     design_conditions: _legacy.DesignConditionsSettings = Field(default_factory=_legacy.DesignConditionsSettings)
     polish_certificate: PolishCertificateMonthlySettings = Field(default_factory=PolishCertificateMonthlySettings)
@@ -156,4 +190,6 @@ def load_normative_settings(project: BuildingProject) -> NormativeSettings:
     return NormativeSettings.model_validate(raw)
 
 
+GroundElementSettings.model_rebuild()
+GroundISO13370Settings.model_rebuild()
 NormativeSettings.model_rebuild()
