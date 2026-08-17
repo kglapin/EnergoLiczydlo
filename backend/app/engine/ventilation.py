@@ -256,15 +256,20 @@ def ventilation_effective_supply_temperature(
     external = _as_hourly_flow(external_flow, len(outdoor))
 
     if detailed is not None:
+        total_area = building_floor_area if building_floor_area else zone.floor_area
+        capacity_fraction = zone.floor_area / total_area if total_area > 0.0 else 0.0
         recovery = heat_recovery_state(
             ventilation,
             zone,
             outdoor,
             mechanical,
             operation_profile=None,
+            capacity_fraction=capacity_fraction,
         )
         mechanical_supply = recovery.supply_temperature_c
     else:
+        if ventilation.supply_temperature is None:
+            raise RuntimeError("Explicit supply temperature disappeared during evaluation")
         mechanical_supply = np.full(
             len(outdoor), float(ventilation.supply_temperature), dtype=float
         )
