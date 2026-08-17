@@ -198,12 +198,10 @@ class LegalProvenanceSettings(BaseModel):
 class NormativeSettings(BaseModel):
     """Advanced calculation settings read from ``metadata.normative``."""
 
-    ground: GroundISO13370Settings = Field(default_factory=GroundISO13370Settings)
-    heat_recovery: HeatRecoverySettings = Field(default_factory=HeatRecoverySettings)
-    design_conditions: DesignConditionsSettings = Field(
-        default_factory=DesignConditionsSettings
-    )
-    legal: LegalProvenanceSettings = Field(default_factory=LegalProvenanceSettings)
+    ground: GroundISO13370Settings = GroundISO13370Settings.model_construct()
+    heat_recovery: HeatRecoverySettings = HeatRecoverySettings.model_construct()
+    design_conditions: DesignConditionsSettings = DesignConditionsSettings.model_construct()
+    legal: LegalProvenanceSettings = LegalProvenanceSettings.model_construct()
 
 
 def load_normative_settings(project: BuildingProject) -> NormativeSettings:
