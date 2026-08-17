@@ -43,6 +43,7 @@ export interface NormativeSettings {
     source?: string
     heat_up_power_by_zone_w: Record<string, number>
     unheated_adjacent_temperature_by_element_c: Record<string, number>
+    ground_adjacent_temperature_by_element_c: Record<string, number>
   }
   legal: {
     certificate_mode: boolean
@@ -74,6 +75,7 @@ export const defaultNormativeSettings: NormativeSettings = {
     certificate_mode: false,
     heat_up_power_by_zone_w: {},
     unheated_adjacent_temperature_by_element_c: {},
+    ground_adjacent_temperature_by_element_c: {},
   },
   legal: {
     certificate_mode: false,
@@ -116,6 +118,11 @@ function mergeSettings(value: unknown): NormativeSettings {
         design.unheated_adjacent_temperature_by_element_c,
       )
         ? design.unheated_adjacent_temperature_by_element_c as Record<string, number>
+        : {},
+      ground_adjacent_temperature_by_element_c: isRecord(
+        design.ground_adjacent_temperature_by_element_c,
+      )
+        ? design.ground_adjacent_temperature_by_element_c as Record<string, number>
         : {},
     },
     legal: {
