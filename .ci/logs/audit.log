@@ -29,7 +29,7 @@ tests/test_audit_repairs.py::test_detailed_hourly_certificate_mode_rejects_infer
 =================================== FAILURES ===================================
 ______________ test_repaired_hourly_year_reaches_steady_4380_kwh _______________
 
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f61e982bd10>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb3b9e4b1d0>
 
     def test_repaired_hourly_year_reaches_steady_4380_kwh(
         monkeypatch: pytest.MonkeyPatch,
@@ -49,7 +49,7 @@ E         Expected: 4380.0 ± 4.4e-04
 tests/test_audit_repairs.py:238: AssertionError
 ___________ test_repaired_1000w_constant_loss_aggregates_to_8760kwh ____________
 
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f61ebf71890>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb3b9e4b950>
 
     def test_repaired_1000w_constant_loss_aggregates_to_8760kwh(
         monkeypatch: pytest.MonkeyPatch,
@@ -71,7 +71,7 @@ E         Expected: 8760.0 ± 8.8e-04
 tests/test_audit_repairs.py:248: AssertionError
 ____________ test_hourly_and_polish_monthly_match_steady_reference _____________
 
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f61e9ab4a90>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb3ba013390>
 
     def test_hourly_and_polish_monthly_match_steady_reference(
         monkeypatch: pytest.MonkeyPatch,
@@ -180,4 +180,4 @@ FAILED tests/test_audit_repairs.py::test_detailed_hourly_solver_has_five_nodes_p
 FAILED tests/test_audit_repairs.py::test_detailed_hourly_certificate_mode_rejects_inferred_construction - AssertionError: Regex pattern did not match.
   Expected regex: 'explicit five-node'
   Actual message: 'Explicit five-node construction data are required: provide thermal_node_capacities_kj_m2k and thermal_node_resistances_m2k_w for every opaque element in the zone.'
-========================= 5 failed, 11 passed in 3.64s =========================
+========================= 5 failed, 11 passed in 4.04s =========================

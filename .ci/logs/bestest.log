@@ -190,4 +190,4 @@ tests/test_external_bestest_repaired.py:248: AssertionError
 =========================== short test summary info ============================
 FAILED tests/test_external_bestest_repaired.py::test_repaired_solver_bestest_case_600_is_inside_published_reference_band - AssertionError: ('annual_heating_kwh', 5722.516743044783, 4296.0, 5709.0)
 assert 5722.516743044783 <= 5709.0
-============================== 1 failed in 2.45s ===============================
+============================== 1 failed in 5.91s ===============================

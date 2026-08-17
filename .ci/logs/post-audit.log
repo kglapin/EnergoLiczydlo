@@ -87,8 +87,8 @@ _________ test_three_day_new_solver_energy_balance_closes_hour_by_hour _________
 >       assert max(day_max.values()) < 1e-7
 E       AssertionError: assert 125.0568867790007 < 1e-07
 E        +  where 125.0568867790007 = max(dict_values([5.172751116333529e-12, 5.5706550483591855e-12, 125.0568867790007]))
-E        +    where dict_values([5.172751116333529e-12, 5.5706550483591855e-12, 125.0568867790007]) = <built-in method values of dict object at 0x7f14bdb666c0>()
-E        +      where <built-in method values of dict object at 0x7f14bdb666c0> = {'winter': 5.172751116333529e-12, 'transition': 5.5706550483591855e-12, 'summer': 125.0568867790007}.values
+E        +    where dict_values([5.172751116333529e-12, 5.5706550483591855e-12, 125.0568867790007]) = <built-in method values of dict object at 0x7f73e38966c0>()
+E        +      where <built-in method values of dict object at 0x7f73e38966c0> = {'winter': 5.172751116333529e-12, 'transition': 5.5706550483591855e-12, 'summer': 125.0568867790007}.values
 
 tests/test_post_repair_audit.py:468: AssertionError
 __________ test_hourly_and_monthly_match_constant_reference_and_units __________
@@ -173,8 +173,8 @@ tests/test_post_repair_audit.py:539: AssertionError
 FAILED tests/test_post_repair_audit.py::test_edge_negative_ventilation_is_rejected - Failed: DID NOT RAISE ValueError
 FAILED tests/test_post_repair_audit.py::test_three_day_new_solver_energy_balance_closes_hour_by_hour - AssertionError: assert 125.0568867790007 < 1e-07
  +  where 125.0568867790007 = max(dict_values([5.172751116333529e-12, 5.5706550483591855e-12, 125.0568867790007]))
- +    where dict_values([5.172751116333529e-12, 5.5706550483591855e-12, 125.0568867790007]) = <built-in method values of dict object at 0x7f14bdb666c0>()
- +      where <built-in method values of dict object at 0x7f14bdb666c0> = {'winter': 5.172751116333529e-12, 'transition': 5.5706550483591855e-12, 'summer': 125.0568867790007}.values
+ +    where dict_values([5.172751116333529e-12, 5.5706550483591855e-12, 125.0568867790007]) = <built-in method values of dict object at 0x7f73e38966c0>()
+ +      where <built-in method values of dict object at 0x7f73e38966c0> = {'winter': 5.172751116333529e-12, 'transition': 5.5706550483591855e-12, 'summer': 125.0568867790007}.values
 FAILED tests/test_post_repair_audit.py::test_hourly_and_monthly_match_constant_reference_and_units - assert 3528.193325661678 == 4380.0 ± 0.438
   
   comparison failed
@@ -185,4 +185,4 @@ FAILED tests/test_post_repair_audit.py::test_unit_conversion_constant_1000w_for_
   comparison failed
   Obtained: 7056.386651323356
   Expected: 8760.0 ± 0.876
-========================= 4 failed, 21 passed in 2.32s =========================
+========================= 4 failed, 21 passed in 2.56s =========================

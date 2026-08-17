@@ -28,4 +28,4 @@ tests/test_iso52016_design_load.py::test_strict_design_load_requires_weather_pro
 tests/test_iso52016_design_load.py::test_heating_design_weather_mean_must_match_design_temperature PASSED [ 94%]
 tests/test_iso52016_design_load.py::test_design_load_initializes_for_at_least_fourteen_days PASSED [100%]
 
-============================== 18 passed in 1.66s ==============================
+============================== 18 passed in 1.73s ==============================
