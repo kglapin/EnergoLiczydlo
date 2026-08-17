@@ -29,16 +29,6 @@ for _name in dir(_legacy):
 
 AdjacentSpaceType = _legacy.AdjacentSpaceType
 
-AdjacentSpaceType = _legacy.AdjacentSpaceType
-
-AdjacentSpaceType = _legacy.AdjacentSpaceType
-
-AdjacentSpaceType = _legacy.AdjacentSpaceType
-
-AdjacentSpaceType = _legacy.AdjacentSpaceType
-
-AdjacentSpaceType = _legacy.AdjacentSpaceType
-
 MassDistributionClass = Literal[
     "internal", "external", "middle", "distributed", "internal_external"
 ]
@@ -69,157 +59,88 @@ class OpaqueElement(_legacy.OpaqueElement):
     ground_virtual_resistance_m2k_w: float | None = Field(None, gt=0.0)
 
     @model_validator(mode="after")
-    def validate_hourly_construction_data(self) -> OpaqueElement:
-        capacities = self.thermal_node_capacities_kj_m2k
+    def validate_iso52016_surface_inputs(self) -> "OpaqueElement":
+        caps = self.thermal_node_capacities_kj_m2k
         resistances = self.thermal_node_resistances_m2k_w
-        if capacities is not None:
-            if len(capacities) != 5:
+        if (caps is None) != (resistances is None):
+            raise ValueError(
+                "thermal_node_capacities_kj_m2k and thermal_node_resistances_m2k_w "
+                "must be provided together"
+            )
+        if caps is not None and resistances is not None:
+            if len(caps) != 5:
                 raise ValueError("thermal_node_capacities_kj_m2k must contain exactly 5 values")
-            if any(value < 0.0 for value in capacities) or sum(capacities) <= 0.0:
-                raise ValueError("thermal node capacities must be non-negative with positive total")
-        if resistances is not None:
             if len(resistances) not in {4, 6}:
                 raise ValueError(
-                    "thermal_node_resistances_m2k_w must contain 4 core values or 6 legacy values"
+                    "thermal_node_resistances_m2k_w must contain 4 core values; "
+                    "the historical 6-value surface-inclusive representation is accepted "
+                    "only for compatibility"
                 )
+            if any(value <= 0.0 for value in caps):
+                raise ValueError("thermal node capacities must be > 0")
             if any(value <= 0.0 for value in resistances):
-                raise ValueError("thermal node resistances must be strictly positive")
-            if len(resistances) == 6:
-                expected = 1.0 / float(self.u_value)
-                actual = float(sum(resistances))
-                if not isclose(actual, expected, rel_tol=0.05, abs_tol=0.01):
-                    raise ValueError(
-                        "Legacy six-resistance data must reproduce 1/U within 5%; "
-                        f"got sum(R)={actual:.4f}, 1/U={expected:.4f}"
-                    )
-        if self.areal_heat_capacity is not None and self.mass_distribution_class is None:
-            raise ValueError(
-                "mass_distribution_class is required when areal_heat_capacity is supplied"
-            )
+                raise ValueError("thermal node resistances must be > 0")
         return self
 
 
 class TransparentElement(_legacy.TransparentElement):
-    """Transparent element represented by two zero-capacity surface nodes."""
+    """Transparent element with explicit linearised surface-film data."""
 
     h_ci_w_m2k: float | None = Field(None, ge=0.0)
     h_ri_w_m2k: float | None = Field(None, ge=0.0)
     h_ce_w_m2k: float | None = Field(None, ge=0.0)
     h_re_w_m2k: float | None = Field(None, ge=0.0)
-    core_thermal_resistance_m2k_w: float | None = Field(None, gt=0.0)
     sky_view_factor: float | None = Field(None, ge=0.0, le=1.0)
 
 
-class ThermalZone(_legacy.ThermalZone):
-    """Thermal zone with optional inputs delegated by ISO 52016 to EPB modules."""
-
-    air_furniture_heat_capacity_kj_m2k: float | None = Field(None, gt=0.0)
-    operative_air_weight: float | None = Field(None, ge=0.0, le=1.0)
-    relative_humidity_min: float | None = Field(None, ge=0.0, le=1.0)
-    relative_humidity_max: float | None = Field(None, ge=0.0, le=1.0)
-    moisture_generation_kg_s: float | None = Field(None, ge=0.0)
-
-    @model_validator(mode="after")
-    def validate_humidity_band(self) -> ThermalZone:
-        if (
-            self.relative_humidity_min is not None
-            and self.relative_humidity_max is not None
-            and self.relative_humidity_min > self.relative_humidity_max
-        ):
-            raise ValueError("relative_humidity_min cannot exceed relative_humidity_max")
-        return self
-
-
-class LinearThermalBridge(_legacy.LinearThermalBridge):
-    adjacent_space_type: AdjacentSpaceType | None = None
-    adjacent_temperature: float | None = None
-
-
-class PointThermalBridge(_legacy.PointThermalBridge):
-    element_id: str | None = None
-    adjacent_space_type: AdjacentSpaceType | None = None
-    adjacent_temperature: float | None = None
-
-
-class ThermalBridgeConfig(_legacy.ThermalBridgeConfig):
-    linear_bridges: list[LinearThermalBridge] = Field(default_factory=list)
-    point_bridges: list[PointThermalBridge] = Field(default_factory=list)
-
-
 class DesignRoom(_legacy.BaseModel):
-    id: str = Field(..., min_length=1)
+    """Room-level inputs needed by the EN 12831 design-load path."""
+
+    id: str
     name: str
-    zone_id: str = Field(..., min_length=1)
-    floor_area: float = Field(..., gt=0.0)
-    volume: float = Field(..., gt=0.0)
-    design_temperature_c: float | None = None
-    ventilation_airflow_m3h: float | None = Field(None, ge=0.0)
-    infiltration_rate_1h: float | None = Field(None, ge=0.0)
-    opaque_element_ids: list[str] = Field(default_factory=list)
-    transparent_element_ids: list[str] = Field(default_factory=list)
-    linear_bridge_ids: list[str] = Field(default_factory=list)
-    point_bridge_ids: list[str] = Field(default_factory=list)
+    zone_id: str
+    floor_area: float = Field(gt=0.0)
+    volume: float = Field(gt=0.0)
+    design_internal_temperature: float
+    design_ventilation_airflow_m3_h: float = Field(ge=0.0)
+    heat_up_power_density_w_m2: float = Field(0.0, ge=0.0)
 
 
 class BuildingProject(_legacy.BuildingProject):
-    opaque_building_elements: list[OpaqueElement]
-    transparent_building_elements: list[TransparentElement]
-    thermal_zones: list[ThermalZone]
-    thermal_bridges: ThermalBridgeConfig = Field(default_factory=ThermalBridgeConfig)
+    """Project schema extended without breaking historical JSON payloads."""
+
+    opaque_elements: list[OpaqueElement]
+    transparent_elements: list[TransparentElement]
     design_rooms: list[DesignRoom] = Field(default_factory=list)
 
     @model_validator(mode="after")
-    def validate_design_rooms(self) -> BuildingProject:
-        if not self.design_rooms:
-            return self
-        zones = {zone.id: zone for zone in self.thermal_zones}
-        room_ids = [room.id for room in self.design_rooms]
-        if len(room_ids) != len(set(room_ids)):
-            raise ValueError("Design room IDs must be unique")
-        unknown = sorted({room.zone_id for room in self.design_rooms} - set(zones))
-        if unknown:
-            raise ValueError(
-                "Unknown thermal zone referenced by design room: " + ", ".join(unknown)
-            )
-        known_sets = {
-            "opaque_element_ids": {item.id for item in self.opaque_building_elements},
-            "transparent_element_ids": {item.id for item in self.transparent_building_elements},
-            "linear_bridge_ids": {item.id for item in self.thermal_bridges.linear_bridges},
-            "point_bridge_ids": {item.id for item in self.thermal_bridges.point_bridges},
-        }
-        used: dict[str, str] = {}
+    def validate_design_rooms(self) -> "BuildingProject":
+        zone_ids = {zone.id for zone in self.zones}
+        room_ids: set[str] = set()
+        room_area_by_zone: dict[str, float] = {}
+        room_volume_by_zone: dict[str, float] = {}
         for room in self.design_rooms:
-            for field_name, known in known_sets.items():
-                values = getattr(room, field_name)
-                missing = sorted(set(values) - known)
-                if missing:
-                    raise ValueError(
-                        f"Design room '{room.id}' has unknown {field_name}: " + ", ".join(missing)
-                    )
-                for value in values:
-                    key = f"{field_name}:{value}"
-                    if key in used and used[key] != room.id:
-                        raise ValueError(
-                            f"Envelope item '{value}' is assigned to more than one design room"
-                        )
-                    used[key] = room.id
-        for zone_id, zone in zones.items():
-            rooms = [room for room in self.design_rooms if room.zone_id == zone_id]
-            if not rooms:
+            if room.id in room_ids:
+                raise ValueError(f"Duplicate design room id: {room.id}")
+            room_ids.add(room.id)
+            if room.zone_id not in zone_ids:
+                raise ValueError(f"Design room {room.id} references unknown zone {room.zone_id}")
+            room_area_by_zone[room.zone_id] = room_area_by_zone.get(room.zone_id, 0.0) + room.floor_area
+            room_volume_by_zone[room.zone_id] = (
+                room_volume_by_zone.get(room.zone_id, 0.0) + room.volume
+            )
+
+        for zone in self.zones:
+            if zone.id not in room_area_by_zone:
                 continue
-            area = sum(room.floor_area for room in rooms)
-            volume = sum(room.volume for room in rooms)
-            if not isclose(area, zone.floor_area, rel_tol=1e-6, abs_tol=0.01):
+            if not isclose(room_area_by_zone[zone.id], zone.floor_area, rel_tol=0.02, abs_tol=0.1):
                 raise ValueError(
-                    f"Design-room floor areas in zone '{zone_id}' must sum to zone floor area"
+                    f"Design-room floor areas for zone {zone.id} must sum to the zone floor area "
+                    f"within 2%; got {room_area_by_zone[zone.id]:.3f} vs {zone.floor_area:.3f} m²"
                 )
-            if not isclose(volume, zone.volume, rel_tol=1e-6, abs_tol=0.01):
-                raise ValueError(f"Design-room volumes in zone '{zone_id}' must sum to zone volume")
+            if not isclose(room_volume_by_zone[zone.id], zone.volume, rel_tol=0.02, abs_tol=0.1):
+                raise ValueError(
+                    f"Design-room volumes for zone {zone.id} must sum to the zone volume within 2%; "
+                    f"got {room_volume_by_zone[zone.id]:.3f} vs {zone.volume:.3f} m³"
+                )
         return self
-
-
-OpaqueElement.model_rebuild()
-TransparentElement.model_rebuild()
-ThermalZone.model_rebuild()
-ThermalBridgeConfig.model_rebuild()
-BuildingProject.model_rebuild()
