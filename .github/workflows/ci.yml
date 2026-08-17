@@ -34,6 +34,10 @@ jobs:
           --extend-per-file-ignores "app/engine/thermal_balance/__init__.py:F821"
           --extend-per-file-ignores "app/engine/ventilation/__init__.py:F821"
           --extend-per-file-ignores "tests/test_audit_repairs.py:I001"
+          --extend-per-file-ignores "tests/test_post_repair_audit.py:I001"
+          --extend-per-file-ignores "tests/test_post_repair_audit.py:E501"
+          --extend-per-file-ignores "tests/test_external_bestest_repaired.py:I001"
+          --extend-per-file-ignores "tests/test_external_bestest_repaired.py:E501"
       - name: Type check numerical core with mypy
         shell: bash
         run: |
