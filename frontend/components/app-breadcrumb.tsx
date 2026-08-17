@@ -14,7 +14,12 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 
-const routeMap: Record<string, { label: string; parent?: string }> = {
+type RouteEntry = {
+  label: string
+  parent?: string
+}
+
+const routeMap: Record<string, RouteEntry> = {
   "/": { label: "Strona główna" },
   "/building": { label: "Dane budynku", parent: "/" },
   "/results": { label: "Wyniki obliczeń", parent: "/building" },
@@ -34,7 +39,7 @@ function buildCrumbs(pathname: string) {
 
   while (currentPath && !visited.has(currentPath)) {
     visited.add(currentPath)
-    const entry = routeMap[currentPath] ?? { label: currentPath, parent: "/" }
+    const entry: RouteEntry = routeMap[currentPath] ?? { label: currentPath, parent: "/" }
     crumbs.unshift({ href: currentPath, label: entry.label })
     currentPath = entry.parent
   }
