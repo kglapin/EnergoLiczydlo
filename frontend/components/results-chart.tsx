@@ -46,7 +46,7 @@ export function ResultsChart({ data }: ResultsChartProps) {
     name: monthLabels[item.month - 1],
     Ogrzewanie: item.heating_kwh,
     Chłodzenie: item.cooling_kwh,
-    "C.W.U.": item.dhw_kwh,
+    "Przygotowanie ciepłej wody użytkowej": item.dhw_kwh,
   }))
 
   return (
@@ -54,12 +54,12 @@ export function ResultsChart({ data }: ResultsChartProps) {
       <BarChart data={chartData}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
-        <YAxis label={{ value: "kWh/mies.", angle: -90, position: "insideLeft" }} />
+        <YAxis label={{ value: "Energia [kWh/miesiąc]", angle: -90, position: "insideLeft" }} />
         <Tooltip />
         <Legend />
         <Bar dataKey="Ogrzewanie" stackId="a" fill="#ef4444" />
         <Bar dataKey="Chłodzenie" stackId="a" fill="#3b82f6" />
-        <Bar dataKey="C.W.U." stackId="a" fill="#22c55e" />
+        <Bar dataKey="Przygotowanie ciepłej wody użytkowej" stackId="a" fill="#22c55e" />
       </BarChart>
     </ResponsiveContainer>
   )
