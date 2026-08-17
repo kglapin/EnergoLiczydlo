@@ -15,7 +15,13 @@ from math import exp, log, pi, sqrt
 import numpy as np
 
 from app.engine.normative_models import GroundElementSettings, GroundISO13370Settings
-from app.schemas.models import AdjacentSpaceType, BuildingProject, ComplianceCheck, ElementType
+from app.schemas.models import (
+    AdjacentSpaceType,
+    BuildingProject,
+    ComplianceCheck,
+    ElementType,
+    OpaqueElement,
+)
 
 R_SI_FLOOR_DOWN_M2K_W = 0.17
 HOURS_PER_YEAR = 8760.0
@@ -164,12 +170,37 @@ def _element_settings(
     return settings.elements.get(element_id, GroundElementSettings())
 
 
-def _perimeter_from_geometry(element: object) -> float | None:
-    height = getattr(element, "height", None)
-    width = getattr(element, "width", None)
-    if height is None or width is None:
+def _perimeter_from_geometry(element: OpaqueElement) -> float | None:
+    if element.height is None or element.width is None:
         return None
-    return 2.0 * (float(height) + float(width))
+    return 2.0 * (float(element.height) + float(element.width))
+
+
+def _required_material_values(
+    settings: GroundISO13370Settings,
+) -> tuple[float, float, float, float]:
+    values = (
+        settings.soil_conductivity_w_mk,
+        settings.soil_density_kg_m3,
+        settings.soil_specific_heat_j_kgk,
+        settings.external_wall_thickness_m,
+    )
+    if any(value is None for value in values):
+        raise ValueError("Enabled ISO 13370 ground model is missing material properties")
+    conductivity, density, specific_heat, wall_thickness = values
+    if (
+        conductivity is None
+        or density is None
+        or specific_heat is None
+        or wall_thickness is None
+    ):
+        raise RuntimeError("Ground material input narrowing failed")
+    return (
+        float(conductivity),
+        float(density),
+        float(specific_heat),
+        float(wall_thickness),
+    )
 
 
 def _periodic_coefficients(
@@ -186,12 +217,13 @@ def _periodic_coefficients(
             "periodic_amplitude_ratio and phase_shift_days for every ground element. "
             "Use coefficients derived from the applicable ISO 13370 Annex-D procedure."
         )
+    conductivity, density, specific_heat, _wall_thickness = _required_material_values(settings)
     depth = config.diagnostic_effective_depth_m or fallback_depth_m
     ratio, lag = diagnostic_periodic_response(
         depth,
-        float(settings.soil_conductivity_w_mk),
-        float(settings.soil_density_kg_m3),
-        float(settings.soil_specific_heat_j_kgk),
+        conductivity,
+        density,
+        specific_heat,
     )
     return ratio, lag, False
 
@@ -205,8 +237,9 @@ def prepare_ground_boundaries(
     if not settings.enabled:
         return []
 
-    conductivity = float(settings.soil_conductivity_w_mk)
-    wall_thickness = float(settings.external_wall_thickness_m)
+    conductivity, _density, _specific_heat, wall_thickness = _required_material_values(
+        settings
+    )
     checks: list[ComplianceCheck] = []
     found = 0
 
@@ -230,10 +263,10 @@ def prepare_ground_boundaries(
                         f"Ground floor '{element.name}' requires explicit "
                         "floor_thermal_resistance_m2k_w in certificate mode"
                     )
-                # Diagnostic-only inference. It is deliberately reported and
-                # never used in certificate mode because construction U-value
-                # and layer resistance are not interchangeable quantities.
-                floor_resistance = max(1.0 / float(element.u_value) - R_SI_FLOOR_DOWN_M2K_W, 1e-6)
+                floor_resistance = max(
+                    1.0 / float(element.u_value) - R_SI_FLOOR_DOWN_M2K_W,
+                    1e-6,
+                )
                 checks.append(
                     _check(
                         "GROUND_RESISTANCE_INFERRED",
@@ -252,12 +285,16 @@ def prepare_ground_boundaries(
                 wall_thickness,
             )
             element.u_value = u_ground
-            fallback_depth = config.diagnostic_effective_depth_m or max(0.25, b_prime / 2.0)
+            fallback_depth = config.diagnostic_effective_depth_m or max(
+                0.25,
+                b_prime / 2.0,
+            )
         else:
-            # For ground-contact walls the entered construction U-value is
-            # retained. The periodic boundary is evaluated at the explicit
-            # representative depth when available.
-            fallback_depth = config.basement_depth_m or config.diagnostic_effective_depth_m or 1.0
+            fallback_depth = (
+                config.basement_depth_m
+                or config.diagnostic_effective_depth_m
+                or 1.0
+            )
             if settings.certificate_mode and config.basement_depth_m is None:
                 raise ValueError(
                     f"Ground-contact element '{element.name}' requires basement_depth_m "
@@ -269,25 +306,32 @@ def prepare_ground_boundaries(
             settings,
             fallback_depth_m=fallback_depth,
         )
-        profile = periodic_ground_temperature(np.asarray(t_e, dtype=float), ratio, lag_days)
+        profile = periodic_ground_temperature(
+            np.asarray(t_e, dtype=float),
+            ratio,
+            lag_days,
+        )
         object.__setattr__(element, "_ground_temperature_profile", profile)
         object.__setattr__(
             element,
             "_ground_periodic_coefficients_verified",
             coefficients_verified,
         )
+        periodic_message = (
+            "Periodic coefficients supplied explicitly for dynamic use."
+            if coefficients_verified
+            else (
+                "Periodic coefficients are diagnostic 1-D soil-response values, "
+                "not Annex-D verification."
+            )
+        )
         checks.append(
             _check(
                 "ISO13370_GROUND_BOUNDARY",
                 f"'{element.name}': hourly ground boundary attached; U={element.u_value:.4f} "
                 f"W/(m²K), annual periodic amplitude ratio={ratio:.4f}, "
-                f"lag={lag_days:.2f} d. "
-                + (
-                    "Periodic coefficients supplied explicitly for dynamic use."
-                    if coefficients_verified
-                    else "Periodic coefficients are diagnostic 1-D soil-response values, not Annex-D verification."
-                ),
-                passed=coefficients_verified or not settings.certificate_mode,
+                f"lag={lag_days:.2f} d. {periodic_message}",
+                passed=coefficients_verified,
             )
         )
 
