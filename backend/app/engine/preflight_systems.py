@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from math import isclose
-from typing import Any
 
 from app.engine.preflight_geometry import audit_check, enum_value
 from app.schemas.models import BuildingProject, ComplianceCheck
@@ -26,11 +25,10 @@ DHW_STORAGE_SOURCES = {
     "heat_pump_water",
     "district_heating",
 }
-RENEWABLE_CARRIERS = {"solar", "wind", "geothermal"}
 
 
 def system_preflight(project: BuildingProject) -> list[ComplianceCheck]:
-    """Reject missing inputs that would otherwise silently suppress losses."""
+    """Expose missing inputs that can suppress losses in the current core."""
     checks: list[ComplianceCheck] = []
     heating = project.systems.heating
     heating_type = enum_value(heating.system_type)
@@ -38,10 +36,13 @@ def system_preflight(project: BuildingProject) -> list[ComplianceCheck]:
         explicit_aux = getattr(heating, "auxiliary_energy_kwh_year", None)
         installation = str(getattr(heating, "installation_type", None) or "").strip()
         if heating_type in HYDRONIC_HEATING_SOURCES and explicit_aux is None and not installation:
-            raise ValueError(
-                "Heating installation type is required for a hydronic source when auxiliary "
-                "electricity is not entered explicitly. Choose the installation type or provide "
-                "auxiliary_energy_kwh_year; zero circulation-pump demand will not be assumed."
+            checks.append(
+                audit_check(
+                    "HEATING_INSTALLATION_NOT_CLASSIFIED",
+                    "No heating installation type and no explicit auxiliary electricity were provided. "
+                    "The core can therefore omit receiver-side circulation-pump electricity. Select an "
+                    "installation type or enter auxiliary_energy_kwh_year before treating EK/EP as final.",
+                )
             )
 
     dhw = project.systems.dhw
@@ -50,12 +51,15 @@ def system_preflight(project: BuildingProject) -> list[ComplianceCheck]:
         volume = getattr(dhw, "storage_volume_dm3", None)
         storage_eff = float(getattr(dhw, "storage_efficiency", 1.0))
         if volume is None and isclose(storage_eff, 1.0, rel_tol=0.0, abs_tol=1e-9):
-            raise ValueError(
-                "The selected DHW source normally includes storage, but neither tank geometry "
-                "nor a non-unity storage efficiency was provided. Enter tank volume/location "
-                "(and insulation where required) or explicitly provide ηW,s < 1.0."
+            checks.append(
+                audit_check(
+                    "DHW_STORAGE_LOSSES_NOT_DEFINED",
+                    "The selected DHW source normally includes storage, but no tank geometry was supplied "
+                    "and ηW,s=1.000. Standby storage losses are therefore zero in the numerical result. "
+                    "Enter tank volume/location/insulation or an explicit non-unity storage efficiency.",
+                )
             )
-        if volume is None:
+        elif volume is None:
             checks.append(
                 audit_check(
                     "DHW_STORAGE_MANUAL_EFFICIENCY",
@@ -135,13 +139,10 @@ def model_limit_checks(project: BuildingProject) -> list[ComplianceCheck]:
 
 
 def normalise_renewable_carriers(project: BuildingProject) -> None:
-    """Make solar/wind/geothermal count in the legacy core renewable-share bucket."""
-    systems: list[Any] = [project.systems.heating, project.systems.dhw]
-    if project.systems.cooling is not None:
-        systems.append(project.systems.cooling)
-    for system in systems:
-        carrier = enum_value(getattr(system, "fuel_or_carrier", "electricity"))
-        if carrier in RENEWABLE_CARRIERS:
-            # model_copy/assignment is intentionally performed on a deep calculation copy.
-            # The core PrimaryEnergyFactors already contains the zero-primary "renewable" bucket.
-            system.fuel_or_carrier = "renewable"
+    """Compatibility hook retained for the audited pipeline.
+
+    Renewable-share handling is fixed directly in ``primary_energy.py`` for
+    biomass, biogas, solar, wind, geothermal and the legacy renewable bucket,
+    so carrier names no longer need to be rewritten on the calculation copy.
+    """
+    return None
