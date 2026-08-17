@@ -50,7 +50,9 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
           exit "$status"
-      - name: Run tests
+      - name: Run audit repair regressions
+        run: pytest tests/test_audit_repairs.py -q -vv
+      - name: Run full backend regression suite
         shell: bash
         run: |
           set +e
