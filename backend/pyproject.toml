@@ -45,6 +45,13 @@ target-version = "py311"
 select = ["E", "F", "I", "N", "W", "UP", "B", "C4", "SIM"]
 ignore = ["N803", "N806"]  # Allow uppercase physical-quantity names (T_e, Q_H, H_tr, etc.)
 
+[tool.ruff.lint.per-file-ignores]
+# Compatibility packages intentionally load the historical sibling module
+# before importing/overriding selected names. Static name discovery cannot see
+# the re-exported globals; runtime regression tests cover these wrappers.
+"app/engine/*/__init__.py" = ["E402", "E501", "F821"]
+"tests/test_audit_repairs.py" = ["I001"]
+
 [tool.mypy]
 python_version = "3.12"
 strict = true
