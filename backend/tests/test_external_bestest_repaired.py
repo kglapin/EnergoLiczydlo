@@ -21,6 +21,18 @@ from tests.test_external_bestest import CASE_600_REFERENCE, _download_bestest_we
 
 Layer = tuple[float, float, float, float]  # thickness, conductivity, cp, density
 
+# Published Case 600 box geometry: 8 m x 6 m x 2.7 m, with two 6 m²
+# south-facing windows. Keep these dimensions explicit so the benchmark cannot
+# accidentally pass with an undersized envelope.
+CASE_600_LENGTH_M = 8.0
+CASE_600_WIDTH_M = 6.0
+CASE_600_HEIGHT_M = 2.7
+CASE_600_WINDOW_AREA_M2 = 12.0
+CASE_600_FLOOR_AREA_M2 = CASE_600_LENGTH_M * CASE_600_WIDTH_M
+CASE_600_LONG_WALL_M2 = CASE_600_LENGTH_M * CASE_600_HEIGHT_M
+CASE_600_SHORT_WALL_M2 = CASE_600_WIDTH_M * CASE_600_HEIGHT_M
+CASE_600_SOUTH_OPAQUE_M2 = CASE_600_LONG_WALL_M2 - CASE_600_WINDOW_AREA_M2
+
 WALL_LAYERS_OUTSIDE_TO_INSIDE: tuple[Layer, ...] = (
     (0.009, 0.140, 900.0, 530.0),
     (0.066, 0.040, 840.0, 12.0),
@@ -147,14 +159,42 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         )
 
     opaque_elements = [
-        opaque("east", "East", 16.2, wall_u, wall_nodes, azimuth=90.0),
-        opaque("north", "North", 16.2, wall_u, wall_nodes, azimuth=0.0),
-        opaque("south", "South", 9.6, wall_u, wall_nodes, azimuth=180.0),
-        opaque("west", "West", 16.2, wall_u, wall_nodes, azimuth=270.0),
+        opaque(
+            "east",
+            "East",
+            CASE_600_SHORT_WALL_M2,
+            wall_u,
+            wall_nodes,
+            azimuth=90.0,
+        ),
+        opaque(
+            "north",
+            "North",
+            CASE_600_LONG_WALL_M2,
+            wall_u,
+            wall_nodes,
+            azimuth=0.0,
+        ),
+        opaque(
+            "south",
+            "South",
+            CASE_600_SOUTH_OPAQUE_M2,
+            wall_u,
+            wall_nodes,
+            azimuth=180.0,
+        ),
+        opaque(
+            "west",
+            "West",
+            CASE_600_SHORT_WALL_M2,
+            wall_u,
+            wall_nodes,
+            azimuth=270.0,
+        ),
         opaque(
             "roof",
             "Roof",
-            48.0,
+            CASE_600_FLOOR_AREA_M2,
             roof_u,
             roof_nodes,
             inclination=0.0,
@@ -163,7 +203,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         opaque(
             "floor",
             "Ground floor",
-            48.0,
+            CASE_600_FLOOR_AREA_M2,
             floor_u,
             floor_nodes,
             inclination=180.0,
@@ -178,7 +218,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             name="South window 1",
             zone_id="bestest",
             orientation_azimuth=180.0,
-            area=6.0,
+            area=CASE_600_WINDOW_AREA_M2 / 2.0,
             u_value=window_u,
             g_value=0.68,
             frame_factor=0.0,
@@ -188,7 +228,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             name="South window 2",
             zone_id="bestest",
             orientation_azimuth=180.0,
-            area=6.0,
+            area=CASE_600_WINDOW_AREA_M2 / 2.0,
             u_value=window_u,
             g_value=0.68,
             frame_factor=0.0,
