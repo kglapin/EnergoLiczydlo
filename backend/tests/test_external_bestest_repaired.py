@@ -10,11 +10,15 @@ import pytest
 
 from app.engine.climate import load_epw, radiation_on_surface
 from app.engine.iso52016_dynamic_surfaces import solve_zone_iso52016_dynamic_surfaces
-from app.engine.solar import solar_gains_transparent
+from app.engine.solar import (
+    _direct_surface_irradiance_and_incidence_rad,
+    _incidence_modifier,
+    solar_gains_transparent,
+)
 from app.schemas.models import OpaqueElement, ThermalBridgeConfig, TransparentElement
 from tests.test_external_bestest import CASE_600_REFERENCE, _download_bestest_weather
 
-Layer = tuple[float, float, float, float]  # thickness, conductivity, cp, density
+Layer = tuple[float, float, float, float]
 
 CASE_600_LENGTH_M = 8.0
 CASE_600_WIDTH_M = 6.0
@@ -25,10 +29,8 @@ CASE_600_VOLUME_M3 = CASE_600_FLOOR_AREA_M2 * CASE_600_HEIGHT_M
 CASE_600_LONG_WALL_M2 = CASE_600_LENGTH_M * CASE_600_HEIGHT_M
 CASE_600_SHORT_WALL_M2 = CASE_600_WIDTH_M * CASE_600_HEIGHT_M
 CASE_600_SOUTH_OPAQUE_M2 = CASE_600_LONG_WALL_M2 - CASE_600_WINDOW_AREA_M2
+CASE_600_INTERIOR_SOLAR_ABSORPTANCE = 0.6
 
-# The published altitude adjustment represents the nominal 0.5 ACH at the
-# Denver test location as 0.414 h⁻¹. Use the same implied air density for the
-# explicit room-air capacitance rather than a generic furniture-capacity proxy.
 CASE_600_AIR_DENSITY_KG_M3 = (0.414 / 0.5) * 1.2
 CASE_600_AIR_CP_J_KG_K = 1006.0
 CASE_600_AIR_HEAT_CAPACITY_J_K = (
@@ -59,13 +61,6 @@ FLOOR_LAYERS_OUTSIDE_TO_INSIDE: tuple[Layer, ...] = (
 def _five_node_material(
     layers_outside_to_inside: Sequence[Layer],
 ) -> tuple[list[float], list[float], tuple[float, float]]:
-    """Map layers to five capacitive nodes plus two explicit surface half-cells.
-
-    Returns capacities [kJ/(m² K)], four centre-to-centre resistances and the
-    exterior/interior surface-to-nearest-node half-cell resistances. Surface
-    films are intentionally absent: the dynamic solver calculates them from the
-    hourly surface state and weather.
-    """
     layers_inside_to_outside = list(reversed(layers_outside_to_inside))
     layer_r = [
         thickness / conductivity for thickness, conductivity, _, _ in layers_inside_to_outside
@@ -94,13 +89,10 @@ def _five_node_material(
                 capacity += layer_capacity * overlap / (layer_end - layer_start)
         capacities.append(max(capacity, 1e-9))
 
-    core_resistances = [bin_r] * 4
-    boundary_halves = (0.5 * bin_r, 0.5 * bin_r)
-    return capacities, core_resistances, boundary_halves
+    return capacities, [bin_r] * 4, (0.5 * bin_r, 0.5 * bin_r)
 
 
 def _black_sky_temperature_c(climate) -> np.ndarray:
-    """Convert EPW horizontal infrared intensity to effective black-sky temperature."""
     if "ghi_infrared" not in climate.columns:
         raise ValueError("BESTEST EPW must contain horizontal infrared radiation intensity")
     sigma = 5.670374419e-8
@@ -110,13 +102,49 @@ def _black_sky_temperature_c(climate) -> np.ndarray:
     return np.power(infrared / sigma, 0.25) - 273.15
 
 
+def _transparent_direct_gain(element: TransparentElement, climate) -> np.ndarray:
+    direct, incidence = _direct_surface_irradiance_and_incidence_rad(
+        climate,
+        float(element.inclination),
+        float(element.orientation_azimuth),
+    )
+    modifier = _incidence_modifier(incidence, CASE_600_DIRECT_IAM)
+    net_area = float(element.area) * (1.0 - float(element.frame_factor))
+    g_total = float(element.g_value) * float(element.shading_factor)
+    return net_area * g_total * direct * modifier
+
+
+def _case600_solar_distribution(
+    opaque_elements: list[OpaqueElement],
+    transparent_elements: list[TransparentElement],
+    total_gain: np.ndarray,
+    direct_gain: np.ndarray,
+) -> dict[str, float]:
+    """Send absorbed direct beam to the floor; area-distribute the diffuse pool."""
+    total_energy = float(np.sum(total_gain))
+    if total_energy <= 0.0:
+        raise ValueError("BESTEST transparent solar gain must be positive")
+    direct_fraction = min(max(float(np.sum(direct_gain)) / total_energy, 0.0), 1.0)
+
+    areas = {element.id: float(element.area) for element in opaque_elements}
+    areas.update({element.id: float(element.area) for element in transparent_elements})
+    total_area = sum(areas.values())
+    floor_absorbed = direct_fraction * CASE_600_INTERIOR_SOLAR_ABSORPTANCE
+    diffuse_pool = 1.0 - floor_absorbed
+    distribution = {
+        element_id: diffuse_pool * area / total_area for element_id, area in areas.items()
+    }
+    distribution["floor"] += floor_absorbed
+    if not np.isclose(sum(distribution.values()), 1.0, atol=1e-9):
+        raise AssertionError("Case 600 solar distribution must sum to one")
+    return distribution
+
+
 @pytest.mark.skipif(
     os.environ.get("RUN_EXTERNAL_BENCHMARKS") != "1",
     reason="set RUN_EXTERNAL_BENCHMARKS=1 to download public BESTEST weather",
 )
-def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
-    tmp_path,
-) -> None:
+def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(tmp_path) -> None:
     epw_path = tmp_path / "DRYCOLDTMY.epw"
     _download_bestest_weather(epw_path)
     climate = load_epw(epw_path)
@@ -127,8 +155,6 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         FLOOR_LAYERS_OUTSIDE_TO_INSIDE
     )
 
-    # Nominal U-values are retained only as project metadata. The dynamic path
-    # below uses the verified material R/C plus hourly surface transfer directly.
     wall_u = 1.0 / (sum(wall_core_r) + sum(wall_boundary_r) + 0.13 + 0.04)
     roof_u = 1.0 / (sum(roof_core_r) + sum(roof_boundary_r) + 0.10 + 0.04)
     floor_u = 1.0 / (sum(floor_core_r) + sum(floor_boundary_r) + 0.17 + 0.04)
@@ -161,24 +187,8 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         )
 
     opaque_elements = [
-        opaque(
-            "east",
-            "East",
-            CASE_600_SHORT_WALL_M2,
-            wall_u,
-            wall_cap,
-            wall_core_r,
-            azimuth=90.0,
-        ),
-        opaque(
-            "north",
-            "North",
-            CASE_600_LONG_WALL_M2,
-            wall_u,
-            wall_cap,
-            wall_core_r,
-            azimuth=0.0,
-        ),
+        opaque("east", "East", CASE_600_SHORT_WALL_M2, wall_u, wall_cap, wall_core_r, azimuth=90.0),
+        opaque("north", "North", CASE_600_LONG_WALL_M2, wall_u, wall_cap, wall_core_r),
         opaque(
             "south",
             "South",
@@ -188,15 +198,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             wall_core_r,
             azimuth=180.0,
         ),
-        opaque(
-            "west",
-            "West",
-            CASE_600_SHORT_WALL_M2,
-            wall_u,
-            wall_cap,
-            wall_core_r,
-            azimuth=270.0,
-        ),
+        opaque("west", "West", CASE_600_SHORT_WALL_M2, wall_u, wall_cap, wall_core_r, azimuth=270.0),
         opaque(
             "roof",
             "Roof",
@@ -207,8 +209,6 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             inclination=0.0,
             element_type="roof",
         ),
-        # Case 600 uses a raised floor: outside thermal boundary, no direct
-        # solar on the underside and no wind-driven exterior convection there.
         opaque(
             "floor",
             "Raised floor",
@@ -256,6 +256,17 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         ),
         np.zeros(8760, dtype=float),
     )
+    transparent_direct = sum(
+        (_transparent_direct_gain(element, climate) for element in transparent),
+        np.zeros(8760, dtype=float),
+    )
+    solar_distribution = _case600_solar_distribution(
+        opaque_elements,
+        transparent,
+        transparent_solar,
+        transparent_direct,
+    )
+
     opaque_solar: dict[str, np.ndarray] = {}
     for element in opaque_elements:
         if element.id == "floor":
@@ -307,6 +318,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         solar_convective_fraction=0.0,
         hvac_convective_fraction=1.0,
         operative_air_weight=1.0,
+        solar_radiant_distribution=solar_distribution,
         wind_exposed_by_element={"floor": False},
         roughness_by_element={
             "east": "rough",
