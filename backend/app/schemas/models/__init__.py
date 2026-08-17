@@ -37,6 +37,8 @@ AdjacentSpaceType = _legacy.AdjacentSpaceType
 
 AdjacentSpaceType = _legacy.AdjacentSpaceType
 
+AdjacentSpaceType = _legacy.AdjacentSpaceType
+
 MassDistributionClass = Literal[
     "internal", "external", "middle", "distributed", "internal_external"
 ]
