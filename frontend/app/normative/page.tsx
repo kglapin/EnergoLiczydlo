@@ -125,7 +125,7 @@ function JsonField({
             onChange(parsed)
             setError(null)
           } catch {
-            setError("Nieprawidłowy JSON — wartość nie zostanie zapisana do obliczeń.")
+            setError("Nieprawidłowy zapis danych w formacie JSON — ta wartość nie zostanie użyta w obliczeniu.")
           }
         }}
       />
@@ -196,48 +196,48 @@ export default function NormativeSettingsPage() {
           <Button variant="ghost" size="sm" asChild className="-ml-3">
             <Link href="/building"><ArrowLeft className="mr-2 h-4 w-4" />Wróć do budynku</Link>
           </Button>
-          <h1 className="text-3xl font-semibold tracking-tight">Ustawienia normatywne i projektowe</h1>
+          <h1 className="text-3xl font-semibold tracking-tight">Zaawansowane ustawienia obliczeniowe</h1>
           <p className="max-w-3xl text-sm text-muted-foreground">
-            Parametry używane przez rozszerzony model godzinowy gruntu, odzysku ciepła i
-            projektowego obciążenia cieplnego. Tryb formalny nie uzupełnia brakujących danych
-            normowych automatycznie — wymagane wartości muszą pochodzić z dokumentacji projektu,
-            właściwej normy lub dokumentacji badanego urządzenia.
+            Tutaj ustawiasz szczegółowy model wymiany ciepła z gruntem, pracę wentylacji z odzyskiem
+            ciepła oraz projektowe obciążenie cieplne. Jeżeli włączysz tryb wymagający formalnej
+            kontroli danych, aplikacja nie będzie zgadywać brakujących wartości — muszą one pochodzić
+            z dokumentacji projektu, właściwej procedury normowej albo dokumentacji urządzenia.
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={reset}><RotateCcw className="mr-2 h-4 w-4" />Resetuj</Button>
+          <Button variant="outline" onClick={reset}><RotateCcw className="mr-2 h-4 w-4" />Przywróć wartości początkowe</Button>
           <Button onClick={save}><Save className="mr-2 h-4 w-4" />Zapisz ustawienia</Button>
         </div>
       </div>
 
       {saved ? (
         <Alert>
-          <AlertTitle>Zapisano</AlertTitle>
+          <AlertTitle>Zapisano ustawienia</AlertTitle>
           <AlertDescription>
-            Konfiguracja zostanie automatycznie dołączona do następnego obliczenia.
+            Te dane zostaną automatycznie dołączone do następnego obliczenia.
           </AlertDescription>
         </Alert>
       ) : null}
 
       {!project ? (
         <Alert>
-          <AlertTitle>Brak aktywnego projektu</AlertTitle>
+          <AlertTitle>Brak aktywnego projektu budynku</AlertTitle>
           <AlertDescription>
-            Możesz ustawić parametry ogólne, ale konfiguracja konkretnych przegród i stref będzie
-            łatwiejsza po utworzeniu projektu budynku.
+            Możesz ustawić parametry ogólne, ale ustawienia konkretnych przegród i stref będą dostępne
+            po utworzeniu albo wczytaniu projektu budynku.
           </AlertDescription>
         </Alert>
       ) : null}
 
       <Card>
         <CardHeader>
-          <CardTitle>1. Grunt — PN-EN ISO 13370 / integracja godzinowa</CardTitle>
+          <CardTitle>1. Wymiana ciepła z gruntem — PN-EN ISO 13370</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid gap-4 md:grid-cols-2">
             <Toggle
               id="ground-enabled"
-              label="Włącz model gruntu ISO 13370"
+              label="Włącz rozszerzony model wymiany ciepła z gruntem"
               checked={settings.ground.enabled}
               onChange={(enabled) => setSettings((current) => ({
                 ...current,
@@ -246,7 +246,7 @@ export default function NormativeSettingsPage() {
             />
             <Toggle
               id="ground-certificate"
-              label="Tryb formalny — nie dopuszczaj współczynników diagnostycznych"
+              label="Wymagaj zweryfikowanych danych zamiast wartości diagnostycznych"
               checked={settings.ground.certificate_mode}
               onChange={(certificate_mode) => setSettings((current) => ({
                 ...current,
@@ -258,7 +258,7 @@ export default function NormativeSettingsPage() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <NumberField
               id="soil-lambda"
-              label="Przewodność gruntu λ [W/(m·K)]"
+              label="Przewodność cieplna gruntu [W/(m·K)]"
               value={settings.ground.soil_conductivity_w_mk}
               onChange={(soil_conductivity_w_mk) => setSettings((current) => ({
                 ...current,
@@ -268,7 +268,7 @@ export default function NormativeSettingsPage() {
             />
             <NumberField
               id="soil-density"
-              label="Gęstość gruntu ρ [kg/m³]"
+              label="Gęstość gruntu [kg/m³]"
               value={settings.ground.soil_density_kg_m3}
               onChange={(soil_density_kg_m3) => setSettings((current) => ({
                 ...current,
@@ -278,7 +278,7 @@ export default function NormativeSettingsPage() {
             />
             <NumberField
               id="soil-cp"
-              label="Ciepło właściwe gruntu c [J/(kg·K)]"
+              label="Ciepło właściwe gruntu [J/(kg·K)]"
               value={settings.ground.soil_specific_heat_j_kgk}
               onChange={(soil_specific_heat_j_kgk) => setSettings((current) => ({
                 ...current,
@@ -288,7 +288,7 @@ export default function NormativeSettingsPage() {
             />
             <NumberField
               id="wall-thickness"
-              label="Grubość ściany zewn. w [m]"
+              label="Grubość ściany zewnętrznej [m]"
               value={settings.ground.external_wall_thickness_m}
               onChange={(external_wall_thickness_m) => setSettings((current) => ({
                 ...current,
@@ -299,29 +299,30 @@ export default function NormativeSettingsPage() {
           </div>
 
           <Alert>
-            <AlertTitle>Model dynamiczny</AlertTitle>
+            <AlertTitle>Zmiana temperatury gruntu w ciągu roku</AlertTitle>
             <AlertDescription>
-              Dla kroku godzinowego tryb formalny wymaga dla każdej przegrody gruntowej
-              współczynnika tłumienia amplitudy i przesunięcia fazowego wyznaczonych z właściwej
-              procedury okresowej. Kalkulator nie tworzy ich z arbitralnych stałych.
+              Przy analizie godzinowej każda przegroda do gruntu może wymagać współczynnika określającego,
+              jak mocno roczna zmiana temperatury jest tłumiona w gruncie, oraz przesunięcia czasowego tej
+              odpowiedzi. W trybie wymagającym zweryfikowanych danych wartości te muszą pochodzić z właściwej
+              procedury obliczeniowej. Program nie tworzy ich z arbitralnych stałych.
             </AlertDescription>
           </Alert>
 
           <div className="space-y-4">
             {groundElements.length === 0 ? (
-              <p className="text-sm text-muted-foreground">W aktywnym projekcie nie ma przegród do gruntu.</p>
+              <p className="text-sm text-muted-foreground">W aktywnym projekcie nie ma przegród stykających się z gruntem.</p>
             ) : groundElements.map((element) => {
               const config = settings.ground.elements[element.id] ?? {}
               return (
                 <div key={element.id} className="rounded-lg border p-4">
                   <div className="mb-4">
                     <p className="font-medium">{element.name}</p>
-                    <p className="text-xs text-muted-foreground">ID: {element.id}</p>
+                    <p className="text-xs text-muted-foreground">Identyfikator techniczny: {element.id}</p>
                   </div>
                   <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                     <NumberField
                       id={`${element.id}-perimeter`}
-                      label="Obwód eksponowany P [m]"
+                      label="Obwód podłogi wystawiony na wymianę z gruntem [m]"
                       value={config.exposed_perimeter_m}
                       onChange={(exposed_perimeter_m) => updateGroundElement(
                         element.id, { exposed_perimeter_m },
@@ -330,7 +331,7 @@ export default function NormativeSettingsPage() {
                     />
                     <NumberField
                       id={`${element.id}-rf`}
-                      label="Opór warstw podłogi Rf [m²K/W]"
+                      label="Opór cieplny warstw podłogi [m²·K/W]"
                       value={config.floor_thermal_resistance_m2k_w}
                       onChange={(floor_thermal_resistance_m2k_w) => updateGroundElement(
                         element.id, { floor_thermal_resistance_m2k_w },
@@ -339,7 +340,7 @@ export default function NormativeSettingsPage() {
                     />
                     <NumberField
                       id={`${element.id}-depth`}
-                      label="Głębokość piwnicy / elementu [m]"
+                      label="Głębokość piwnicy lub położenia elementu poniżej terenu [m]"
                       value={config.basement_depth_m}
                       onChange={(basement_depth_m) => updateGroundElement(
                         element.id, { basement_depth_m },
@@ -348,17 +349,18 @@ export default function NormativeSettingsPage() {
                     />
                     <NumberField
                       id={`${element.id}-ratio`}
-                      label="Wsp. amplitudy okresowej [-]"
+                      label="Współczynnik tłumienia rocznej zmiany temperatury [-]"
                       value={config.periodic_amplitude_ratio}
                       onChange={(periodic_amplitude_ratio) => updateGroundElement(
                         element.id, { periodic_amplitude_ratio },
                       )}
                       min={0}
                       max={1}
+                      hint="0 oznacza pełne wytłumienie zmiany temperatury, a 1 brak tłumienia. Wartość formalna musi pochodzić ze zweryfikowanej procedury."
                     />
                     <NumberField
                       id={`${element.id}-phase`}
-                      label="Przesunięcie fazowe [dni]"
+                      label="Przesunięcie czasowe odpowiedzi gruntu [dni]"
                       value={config.phase_shift_days}
                       onChange={(phase_shift_days) => updateGroundElement(
                         element.id, { phase_shift_days },
@@ -368,13 +370,13 @@ export default function NormativeSettingsPage() {
                     />
                     <NumberField
                       id={`${element.id}-diagnostic-depth`}
-                      label="Głębokość diagnostyczna [m]"
+                      label="Efektywna głębokość używana tylko w analizie diagnostycznej [m]"
                       value={config.diagnostic_effective_depth_m}
                       onChange={(diagnostic_effective_depth_m) => updateGroundElement(
                         element.id, { diagnostic_effective_depth_m },
                       )}
                       min={0}
-                      hint="Używana tylko poza trybem formalnym."
+                      hint="To pole nie jest używane jako formalna wartość normowa."
                     />
                   </div>
                 </div>
@@ -386,13 +388,13 @@ export default function NormativeSettingsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>2. Rekuperacja — model godzinowy, bypass i ochrona przeciwzamrożeniowa</CardTitle>
+          <CardTitle>2. Wentylacja z odzyskiem ciepła — praca wymiennika i ochrona przed zamarzaniem</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid gap-4 md:grid-cols-2">
             <Toggle
               id="hr-enabled"
-              label="Włącz szczegółowy model odzysku ciepła"
+              label="Włącz szczegółowy godzinowy model odzysku ciepła"
               checked={settings.heat_recovery.enabled}
               onChange={(enabled) => setSettings((current) => ({
                 ...current,
@@ -401,7 +403,7 @@ export default function NormativeSettingsPage() {
             />
             <Toggle
               id="hr-certificate"
-              label="Tryb formalny — wymagaj źródła charakterystyki urządzenia"
+              label="Wymagaj źródła charakterystyki zastosowanego urządzenia"
               checked={settings.heat_recovery.certificate_mode}
               onChange={(certificate_mode) => setSettings((current) => ({
                 ...current,
@@ -411,7 +413,7 @@ export default function NormativeSettingsPage() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="performance-source">Źródło danych urządzenia</Label>
+            <Label htmlFor="performance-source">Źródło danych dotyczących sprawności urządzenia</Label>
             <Input
               id="performance-source"
               value={settings.heat_recovery.performance_source ?? ""}
@@ -422,13 +424,13 @@ export default function NormativeSettingsPage() {
                   performance_source: event.target.value || undefined,
                 },
               }))}
-              placeholder="np. karta producenta / raport badania, numer dokumentu"
+              placeholder="np. karta producenta albo raport z badania wraz z numerem dokumentu"
             />
           </div>
 
           <JsonField
             id="efficiency-curve"
-            label="Krzywa sprawności odzysku"
+            label="Sprawność odzysku ciepła dla różnych temperatur zewnętrznych"
             value={settings.heat_recovery.efficiency_curve}
             onChange={(value) => setSettings((current) => ({
               ...current,
@@ -439,13 +441,13 @@ export default function NormativeSettingsPage() {
                   : [],
               },
             }))}
-            hint='Format: [{"outdoor_temperature_c": -10, "efficiency": 0.82}, ...]. Pusta tablica używa sprawności wpisanej w projekcie.'
+            hint='Dane techniczne zapisuje się jako listę punktów, np. [{"outdoor_temperature_c": -10, "efficiency": 0.82}]. Pierwsza liczba oznacza temperaturę zewnętrzną w °C, a druga sprawność od 0 do 1. Pusta lista oznacza użycie sprawności wpisanej w głównych danych projektu.'
           />
 
           <div className="grid gap-4 md:grid-cols-2">
             <Toggle
               id="bypass-enabled"
-              label="Aktywny bypass letni"
+              label="Włącz letnie obejście wymiennika odzysku ciepła"
               checked={settings.heat_recovery.summer_bypass_enabled}
               onChange={(summer_bypass_enabled) => setSettings((current) => ({
                 ...current,
@@ -456,7 +458,7 @@ export default function NormativeSettingsPage() {
           <div className="grid gap-4 md:grid-cols-3">
             <NumberField
               id="bypass-min"
-              label="Bypass — Tmin zewn. [°C]"
+              label="Najniższa temperatura zewnętrzna pozwalająca włączyć obejście [°C]"
               value={settings.heat_recovery.bypass_min_outdoor_c}
               onChange={(bypass_min_outdoor_c) => setSettings((current) => ({
                 ...current,
@@ -465,7 +467,7 @@ export default function NormativeSettingsPage() {
             />
             <NumberField
               id="bypass-max"
-              label="Bypass — Tmax zewn. [°C]"
+              label="Najwyższa temperatura zewnętrzna pozwalająca włączyć obejście [°C]"
               value={settings.heat_recovery.bypass_max_outdoor_c}
               onChange={(bypass_max_outdoor_c) => setSettings((current) => ({
                 ...current,
@@ -474,7 +476,7 @@ export default function NormativeSettingsPage() {
             />
             <NumberField
               id="bypass-margin"
-              label="Margines względem T chłodzenia [K]"
+              label="Wymagana różnica względem zadanej temperatury chłodzenia [K]"
               value={settings.heat_recovery.bypass_indoor_margin_k}
               onChange={(bypass_indoor_margin_k) => setSettings((current) => ({
                 ...current,
@@ -489,7 +491,7 @@ export default function NormativeSettingsPage() {
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <div className="space-y-2">
-              <Label htmlFor="frost-strategy">Strategia ochrony przed szronieniem</Label>
+              <Label htmlFor="frost-strategy">Sposób ochrony wymiennika przed zamarzaniem</Label>
               <select
                 id="frost-strategy"
                 className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
@@ -504,13 +506,13 @@ export default function NormativeSettingsPage() {
               >
                 <option value="none">Brak aktywnej ochrony</option>
                 <option value="preheater">Nagrzewnica wstępna</option>
-                <option value="reduce_recovery">Redukcja odzysku</option>
-                <option value="disable_recovery">Wyłączenie odzysku</option>
+                <option value="reduce_recovery">Ograniczenie odzysku ciepła</option>
+                <option value="disable_recovery">Czasowe wyłączenie odzysku ciepła</option>
               </select>
             </div>
             <NumberField
               id="frost-limit"
-              label="Minimalna T wyrzutowa [°C]"
+              label="Minimalna dopuszczalna temperatura powietrza wyrzucanego [°C]"
               value={settings.heat_recovery.frost_exhaust_limit_c}
               onChange={(frost_exhaust_limit_c) => setSettings((current) => ({
                 ...current,
@@ -522,7 +524,7 @@ export default function NormativeSettingsPage() {
             />
             <NumberField
               id="indoor-rh"
-              label="Wilgotność względna wywiewu [-]"
+              label="Wilgotność względna powietrza usuwanego [-]"
               value={settings.heat_recovery.indoor_relative_humidity}
               onChange={(indoor_relative_humidity) => setSettings((current) => ({
                 ...current,
@@ -530,11 +532,11 @@ export default function NormativeSettingsPage() {
               }))}
               min={0}
               max={1}
-              hint="Np. 0,50 = 50%. Wymagana dla frost protection w trybie formalnym."
+              hint="Wpisz np. 0,50 dla 50% wilgotności względnej. Wymagana przy formalnej kontroli aktywnej ochrony przed zamarzaniem."
             />
             <NumberField
               id="preheater-power"
-              label="Moc elektr. nagrzewnicy [W]"
+              label="Maksymalna moc elektryczna nagrzewnicy wstępnej [W]"
               value={settings.heat_recovery.preheater_max_power_w}
               onChange={(preheater_max_power_w) => setSettings((current) => ({
                 ...current,
@@ -548,13 +550,13 @@ export default function NormativeSettingsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>3. Projektowe obciążenie cieplne — jawne warunki projektowe</CardTitle>
+          <CardTitle>3. Projektowe obciążenie cieplne</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid gap-4 md:grid-cols-2">
             <Toggle
               id="design-enabled"
-              label="Oblicz projektowe obciążenie cieplne niezależnie od TMY"
+              label="Oblicz projektowe obciążenie cieplne niezależnie od typowego roku meteorologicznego (TMY)"
               checked={settings.design_conditions.enabled}
               onChange={(enabled) => setSettings((current) => ({
                 ...current,
@@ -563,7 +565,7 @@ export default function NormativeSettingsPage() {
             />
             <Toggle
               id="design-certificate"
-              label="Tryb formalny — wymagaj źródła temperatury projektowej"
+              label="Wymagaj udokumentowanego źródła projektowej temperatury zewnętrznej"
               checked={settings.design_conditions.certificate_mode}
               onChange={(certificate_mode) => setSettings((current) => ({
                 ...current,
@@ -581,10 +583,10 @@ export default function NormativeSettingsPage() {
                 ...current,
                 design_conditions: { ...current.design_conditions, outdoor_design_temperature_c },
               }))}
-              hint="W trybie formalnym wpisz wartość z właściwego źródła projektowego, nie minimum TMY."
+              hint="Podaj temperaturę wynikającą z właściwego źródła projektowego. Nie należy zastępować jej najniższą temperaturą występującą w typowym roku meteorologicznym."
             />
             <div className="space-y-2">
-              <Label htmlFor="design-source">Źródło warunków projektowych</Label>
+              <Label htmlFor="design-source">Źródło projektowej temperatury zewnętrznej</Label>
               <Input
                 id="design-source"
                 value={settings.design_conditions.source ?? ""}
@@ -595,20 +597,24 @@ export default function NormativeSettingsPage() {
                     source: event.target.value || undefined,
                   },
                 }))}
-                placeholder="np. załącznik krajowy / dokument projektowy, lokalizacja"
+                placeholder="np. właściwy dokument projektowy lub załącznik krajowy wraz z lokalizacją"
               />
             </div>
           </div>
 
           <div className="space-y-4">
-            <h3 className="font-medium">Moc na ponowne nagrzanie / heat-up</h3>
+            <h3 className="font-medium">Dodatkowa moc potrzebna do ponownego nagrzania pomieszczeń</h3>
+            <p className="text-sm text-muted-foreground">
+              To pole służy wyłącznie do projektowego obciążenia cieplnego. Nie jest automatycznie
+              dodawane do rocznego zużycia energii.
+            </p>
             {conditionedZones.length === 0 ? (
               <p className="text-sm text-muted-foreground">Brak aktywnych stref.</p>
             ) : conditionedZones.map((zone) => (
               <NumberField
                 key={zone.id}
                 id={`heatup-${zone.id}`}
-                label={`${zone.name} — dodatkowa moc [W]`}
+                label={`${zone.name} — dodatkowa moc ponownego nagrzania [W]`}
                 value={settings.design_conditions.heat_up_power_by_zone_w[zone.id]}
                 onChange={(value) => setSettings((current) => ({
                   ...current,
@@ -627,15 +633,17 @@ export default function NormativeSettingsPage() {
 
           {unheatedBoundaries.length > 0 ? (
             <div className="space-y-4">
-              <h3 className="font-medium">Temperatury przestrzeni nieogrzewanych</h3>
+              <h3 className="font-medium">Projektowe temperatury przestrzeni nieogrzewanych</h3>
               <p className="text-sm text-muted-foreground">
-                Tryb formalny nie przyjmuje automatycznie „Tzew + 3 K” dla tych przegród.
+                Przy formalnej kontroli obciążenia projektowego program nie przyjmuje automatycznie
+                wartości „temperatura zewnętrzna + 3 K”. Temperaturę po drugiej stronie przegrody
+                należy podać na podstawie właściwych danych projektowych.
               </p>
               {unheatedBoundaries.map((element) => (
                 <NumberField
                   key={element.id}
                   id={`unheated-${element.id}`}
-                  label={`${element.name} — temperatura sąsiednia [°C]`}
+                  label={`${element.name} — projektowa temperatura po drugiej stronie przegrody [°C]`}
                   value={settings.design_conditions.unheated_adjacent_temperature_by_element_c[element.id]}
                   onChange={(value) => setSettings((current) => ({
                     ...current,
@@ -655,12 +663,14 @@ export default function NormativeSettingsPage() {
       </Card>
 
       <Alert>
-        <AlertTitle>Rozdzielenie wyników</AlertTitle>
+        <AlertTitle>Jak interpretować wyniki?</AlertTitle>
         <AlertDescription>
-          Projektowe obciążenie cieplne jest wynikiem wymiarującym i nie jest dodawane do rocznego
-          Eu. Roczne Eu, Ek i Ep nadal wynikają z 8760-godzinnego bilansu strefy. Energia elektryczna
-          aktywnej nagrzewnicy przeciwzamrożeniowej jest natomiast energią pomocniczą i zwiększa Ek
-          oraz Ep.
+          Projektowe obciążenie cieplne jest osobnym wynikiem mocy i nie zwiększa rocznej energii
+          użytkowej. Godzinowa analiza 8760 godzin jest analizą techniczną. Jeżeli włączony jest tryb
+          świadectwa, główne formalne wartości energii użytkowej (Eu), energii końcowej (Ek) i
+          nieodnawialnej energii pierwotnej (Ep) pochodzą z osobnego miesięcznego silnika formalnej
+          charakterystyki energetycznej. Energia elektryczna zużywana przez aktywną nagrzewnicę
+          wstępną jest energią systemową i może zwiększać Ek oraz Ep.
         </AlertDescription>
       </Alert>
     </main>
