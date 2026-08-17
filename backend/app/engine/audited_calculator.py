@@ -1,9 +1,10 @@
-"""Audited calculation entry point.
+"""Audited calculation entry point with dual hourly/formal calculation layers.
 
-The annual 5R1C core remains the source of hourly useful-energy demand. This
-wrapper validates modelling completeness, prepares normative boundary models,
-adds auxiliary electricity omitted by the legacy core and replaces the former
-TMY sizing diagnostic with an explicit design-condition load when configured.
+The 8760-hour ISO 52016 model is always available as the detailed physical
+analysis. When Polish formal-certificate mode is enabled, the primary Eu/Ek/Ep
+reported by ``CalculationResult`` are replaced by the monthly calculation
+prescribed by the Polish methodology regulation; the hourly indicators remain
+available under ``hourly.normative_diagnostics.iso52016_hourly_analysis``.
 """
 
 from __future__ import annotations
@@ -16,6 +17,7 @@ from app.engine.ground_iso13370 import prepare_ground_boundaries
 from app.engine.heat_recovery import attach_heat_recovery_settings
 from app.engine.normative_models import NormativeSettings, load_normative_settings
 from app.engine.normative_runtime import annual_heat_recovery_stats
+from app.engine.polish_certificate_monthly import calculate_polish_monthly_certificate
 from app.engine.preflight_geometry import (
     apply_net_opaque_areas,
     audit_check,
@@ -76,9 +78,22 @@ def _legal_readiness_checks(
     project: BuildingProject,
     settings: NormativeSettings,
 ) -> list[ComplianceCheck]:
-    """Validate evidence trail needed for a formal Polish calculation run."""
+    """Validate evidence and model completeness for a formal Polish result."""
     if not settings.legal.certificate_mode:
         return []
+
+    certificate = settings.polish_certificate
+    if not certificate.enabled:
+        raise ValueError(
+            "Formal Polish certificate mode requires metadata.normative.polish_certificate.enabled=true. "
+            "The legal certificate indicators use the monthly method prescribed by the regulation; "
+            "the 8760-hour ISO 52016 result is a separate analytical result."
+        )
+    if not certificate.official_bip_climate_data:
+        raise ValueError(
+            "Formal Polish certificate mode requires monthly climate data from the official "
+            "ministerial BIP source for the selected meteorological station."
+        )
 
     has_ground = any(
         enum_value(element.adjacent_space_type) == "ground"
@@ -101,7 +116,18 @@ def _legal_readiness_checks(
     ):
         raise ValueError(
             "Formal calculation mode with heat recovery requires the detailed "
-            "heat-recovery model in certificate_mode and documented device performance."
+            "hourly heat-recovery model in certificate_mode and documented device performance."
+        )
+
+    if (
+        settings.heat_recovery.enabled
+        and settings.heat_recovery.frost_strategy == "preheater"
+        and not certificate.preheater_electricity_kwh_by_month
+    ):
+        raise ValueError(
+            "Formal monthly Ek/Ep requires 12 monthly preheater-electricity values "
+            "when frost protection uses a preheater. The hourly TMY-derived preheater "
+            "energy is analytical and is not substituted into the legal monthly result."
         )
 
     if settings.design_conditions.enabled and not settings.design_conditions.certificate_mode:
@@ -131,7 +157,9 @@ def _legal_readiness_checks(
             "Formal calculation evidence recorded for date "
             f"{settings.legal.calculation_date}; methodology source: "
             f"{settings.legal.methodology_source}; climate source: "
-            f"{settings.legal.climate_data_source}; wi provenance available for "
+            f"{settings.legal.climate_data_source}; utilization-factor source: "
+            f"{settings.legal.utilization_factor_source}; ventilation-factor source: "
+            f"{settings.legal.ventilation_factor_source}; wi provenance available for "
             f"{', '.join(sorted(used_carriers)) or 'no carriers'}.",
             passed=True,
         )
@@ -218,7 +246,6 @@ def _prepare_normative_extensions(
 def prepare_project_for_audited_calculation(
     project: BuildingProject,
 ) -> tuple[BuildingProject, list[ComplianceCheck]]:
-    """Return a corrected deep copy plus audit checks; never mutate caller input."""
     corrected = project.model_copy(deep=True)
     checks: list[ComplianceCheck] = []
 
@@ -264,11 +291,12 @@ def _apply_preheater_energy(
     checks.append(
         audit_check(
             "HEAT_RECOVERY_RUNTIME",
-            "Dynamic recovery runtime: "
+            "Dynamic hourly recovery analysis: "
             f"recovery active {stats.recovery_active_hours} h, "
             f"summer bypass {stats.bypass_hours} h, frost-risk {stats.frost_risk_hours} h, "
             f"preheater electricity {preheater_kwh:.2f} kWh/year. "
-            "Preheater electricity is included in Ek, Ep and CO2.",
+            "This value affects the hourly analytical Ek/Ep only; a formal Polish "
+            "monthly result uses the separately supplied monthly preheater series.",
             passed=True,
         )
     )
@@ -332,8 +360,34 @@ def _apply_design_load(
     }
 
 
+def _replace_with_formal_monthly_result(
+    result: CalculationResult,
+    project: BuildingProject,
+    settings: NormativeSettings,
+    checks: list[ComplianceCheck],
+) -> dict[str, object]:
+    if not settings.legal.certificate_mode:
+        return {}
+
+    hourly_analysis = {
+        "annual_indicators": result.annual_indicators.model_dump(),
+        "monthly": [month.model_dump() for month in result.monthly],
+    }
+    formal = calculate_polish_monthly_certificate(project, settings.polish_certificate)
+    result.annual_indicators = formal.annual_indicators
+    result.monthly = list(formal.monthly)
+    checks.extend(formal.compliance)
+    return {
+        "primary_result_method": "polish_regulation_monthly",
+        "formal_final_energy_by_carrier_wh": formal.final_energy_by_carrier_wh,
+        "formal_heating_useful_kwh": formal.heating_useful_kwh,
+        "formal_cooling_useful_kwh": formal.cooling_useful_kwh,
+        "formal_dhw_useful_kwh": formal.dhw_useful_kwh,
+        "iso52016_hourly_analysis": hourly_analysis,
+    }
+
+
 def calculate_building_energy(project: BuildingProject) -> CalculationResult:
-    """Run audited hourly energy calculation with optional normative extensions."""
     corrected, checks = prepare_project_for_audited_calculation(project)
     settings_value = getattr(corrected, "_normative_settings", None)
     settings = (
@@ -341,10 +395,36 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
         if isinstance(settings_value, NormativeSettings)
         else load_normative_settings(corrected)
     )
-    result = core_calculator.calculate_building_energy(corrected)
 
+    result = core_calculator.calculate_building_energy(corrected)
     recovery_diag = _apply_preheater_energy(result, corrected, settings, checks)
     design_diag = _apply_design_load(result, corrected, settings, checks)
+    formal_diag = _replace_with_formal_monthly_result(
+        result,
+        corrected,
+        settings,
+        checks,
+    )
+
+    core_checks = list(result.compliance)
+    if settings.legal.certificate_mode:
+        core_checks = [
+            check
+            for check in core_checks
+            if not check.name.startswith("Kontrola informacyjna: EP")
+            and check.name != "Eu >= 0"
+        ]
+        checks.append(
+            ComplianceCheck(
+                name="Eu >= 0",
+                passed=result.annual_indicators.eu_kwh_m2_year >= 0.0,
+                message=(
+                    "Formal monthly Eu = "
+                    f"{result.annual_indicators.eu_kwh_m2_year:.2f} kWh/(m²·rok)"
+                ),
+            )
+        )
+
     hourly = dict(result.hourly or {})
     hourly["normative_diagnostics"] = {
         "ground_enabled": settings.ground.enabled,
@@ -352,7 +432,8 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
         "heat_recovery": recovery_diag,
         "design_load": design_diag,
         "formal_legal_mode": settings.legal.certificate_mode,
+        "certificate": formal_diag,
     }
     result.hourly = hourly
-    result.compliance = checks + list(result.compliance)
+    result.compliance = checks + core_checks
     return result
