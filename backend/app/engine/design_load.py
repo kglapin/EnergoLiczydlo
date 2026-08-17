@@ -93,7 +93,7 @@ def _resolved_design_ventilation(project: BuildingProject) -> Ventilation:
     return resolved
 
 
-def _ground_design_temperature(
+def _diagnostic_ground_temperature(
     element: OpaqueElement,
     annual_mean_outdoor_c: float,
 ) -> float:
@@ -114,13 +114,21 @@ def _opaque_adjacent_temperature(
     if adjacent == AdjacentSpaceType.OUTDOOR:
         return outdoor_design_c
     if adjacent == AdjacentSpaceType.GROUND:
-        return _ground_design_temperature(element, annual_mean_outdoor_c)
+        explicit_ground = settings.ground_adjacent_temperature_by_element_c.get(
+            element.id
+        )
+        if explicit_ground is not None:
+            return float(explicit_ground)
+        if settings.certificate_mode:
+            raise ValueError(
+                "Design load requires explicit ground adjacent temperature for "
+                f"element '{element.id}' in certificate mode"
+            )
+        return _diagnostic_ground_temperature(element, annual_mean_outdoor_c)
     if adjacent == AdjacentSpaceType.CONSTANT_TEMPERATURE:
         value = element.adjacent_temperature
         if value is None:
-            raise ValueError(
-                f"Element {element.id} requires adjacent_temperature"
-            )
+            raise ValueError(f"Element {element.id} requires adjacent_temperature")
         return float(value)
     if adjacent == AdjacentSpaceType.UNHEATED_ZONE:
         element_id = str(element.id)
@@ -159,12 +167,18 @@ def _zone_transmission_load_w(
         )
         if adjacent is None:
             continue
-        load += float(element.area) * float(element.u_value) * max(indoor - adjacent, 0.0)
+        load += float(element.area) * float(element.u_value) * max(
+            indoor - adjacent,
+            0.0,
+        )
 
     for element in project.transparent_building_elements:
         if element.zone_id != zone.id:
             continue
-        load += float(element.area) * float(element.u_value) * max(indoor - outdoor, 0.0)
+        load += float(element.area) * float(element.u_value) * max(
+            indoor - outdoor,
+            0.0,
+        )
 
     delta_outdoor = max(indoor - outdoor, 0.0)
     for bridge in project.thermal_bridges.linear_bridges:
