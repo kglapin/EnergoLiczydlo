@@ -11,19 +11,11 @@ import pytest
 from app.engine.climate import load_epw, radiation_on_surface
 from app.engine.iso52016_hourly import solve_zone_iso52016
 from app.engine.solar import solar_gains_transparent
-from app.schemas.models import (
-    AdjacentSpaceType,
-    OpaqueElement,
-    ThermalBridgeConfig,
-    TransparentElement,
-)
+from app.schemas.models import OpaqueElement, ThermalBridgeConfig, TransparentElement
 from tests.test_external_bestest import CASE_600_REFERENCE, _download_bestest_weather
 
 Layer = tuple[float, float, float, float]  # thickness, conductivity, cp, density
 
-# Published Case 600 box geometry: 8 m x 6 m x 2.7 m, with two 6 m²
-# south-facing windows. Keep these dimensions explicit so the benchmark cannot
-# accidentally pass with an undersized envelope.
 CASE_600_LENGTH_M = 8.0
 CASE_600_WIDTH_M = 6.0
 CASE_600_HEIGHT_M = 2.7
@@ -34,22 +26,24 @@ CASE_600_LONG_WALL_M2 = CASE_600_LENGTH_M * CASE_600_HEIGHT_M
 CASE_600_SHORT_WALL_M2 = CASE_600_WIDTH_M * CASE_600_HEIGHT_M
 CASE_600_SOUTH_OPAQUE_M2 = CASE_600_LONG_WALL_M2 - CASE_600_WINDOW_AREA_M2
 
-# Case600FF forms infiltration mass flow from the prescribed 0.414 h⁻¹ volume
-# flow and actual room-air density. The 0.414/0.5 ratio is the altitude density
-# correction relative to the 1.2 kg/m³ sea-level convention used by the
-# benchmark translation. Use the same density for the room-air thermal state
-# rather than the generic ISO 52016 furniture-capacity fallback.
+# Standard 140 Case 600 uses prescribed combined surface coefficients for the
+# lightweight envelope. The floor is a raised/exterior floor; it is not a slab
+# coupled to a 2 m soil domain in the benchmark being compared here.
+CASE_600_HI_W_M2K = 8.29
+CASE_600_HO_W_M2K = 29.3
+CASE_600_RSI_M2K_W = 1.0 / CASE_600_HI_W_M2K
+CASE_600_RSE_M2K_W = 1.0 / CASE_600_HO_W_M2K
+
+# The published altitude correction converts the nominal 0.5 ACH to 0.414 h⁻¹
+# for the Denver weather. Use the same implied density for the explicit room-air
+# thermal capacity instead of the generic furniture-capacity fallback.
 CASE_600_AIR_DENSITY_KG_M3 = (0.414 / 0.5) * 1.2
 CASE_600_AIR_CP_J_KG_K = 1006.0
 CASE_600_AIR_HEAT_CAPACITY_J_K = (
     CASE_600_VOLUME_M3 * CASE_600_AIR_DENSITY_KG_M3 * CASE_600_AIR_CP_J_KG_K
 )
 
-# The detailed 2007 reference uses the physical Win600 double glazing. The
-# application schema intentionally abstracts glazing to U + g, therefore the
-# benchmark uses LBNL's own reduced Case 600 translation: g=0.789 plus the
-# direct-beam incidence-angle polynomial below. Diffuse radiation is unchanged.
-# This is an explicit translation of the reference window, not a fitted value.
+CASE_600_WINDOW_U_VALUE = 3.0
 CASE_600_WINDOW_G_VALUE = 0.789
 CASE_600_DIRECT_IAM = (1.0, -0.189, 0.644, -0.596)
 
@@ -63,11 +57,7 @@ ROOF_LAYERS_OUTSIDE_TO_INSIDE: tuple[Layer, ...] = (
     (0.1118, 0.040, 840.0, 12.0),
     (0.010, 0.160, 840.0, 950.0),
 )
-# ASHRAE 140-2007 / LBNL Case600FF connects the room-side floor construction
-# to a 2 m soil layer and fixes the lower soil boundary at 10°C. The list is
-# ordered boundary -> room for the helper below.
-FLOOR_AND_SOIL_LAYERS_BOUNDARY_TO_INSIDE: tuple[Layer, ...] = (
-    (2.0, 1.3, 800.0, 1500.0),
+FLOOR_LAYERS_OUTSIDE_TO_INSIDE: tuple[Layer, ...] = (
     (1.003, 0.040, 0.0, 0.0),
     (0.025, 0.140, 1200.0, 650.0),
 )
@@ -79,13 +69,7 @@ def _five_node_construction(
     r_si: float,
     r_se: float,
 ) -> tuple[list[float], list[float]]:
-    """Map published material layers to five finite-volume nodes.
-
-    The construction is partitioned into five equal intervals in thermal-
-    resistance coordinates. Nodal heat capacity is integrated from the actual
-    materials over each interval. Six path resistances connect the indoor film,
-    five node centres and the external/boundary film, preserving total R and C.
-    """
+    """Map material layers to five finite-volume nodes, preserving total R/C."""
     layers_inside_to_outside = list(reversed(layers_outside_to_inside))
     layer_r = [
         thickness / conductivity for thickness, conductivity, _, _ in layers_inside_to_outside
@@ -129,25 +113,41 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
     _download_bestest_weather(epw_path)
     climate = load_epw(epw_path)
 
-    wall_u = 1.0 / (0.009 / 0.14 + 0.066 / 0.04 + 0.012 / 0.16 + 0.13 + 0.04)
-    roof_u = 1.0 / (0.019 / 0.14 + 0.1118 / 0.04 + 0.01 / 0.16 + 0.10 + 0.04)
-    floor_u = 1.0 / (2.0 / 1.3 + 1.003 / 0.04 + 0.025 / 0.14 + 0.17)
-    window_u = 1.0 / (2.0 * 0.003175 / 1.06 + 0.1588 + 0.13 + 0.04)
+    wall_u = 1.0 / (
+        0.009 / 0.14
+        + 0.066 / 0.04
+        + 0.012 / 0.16
+        + CASE_600_RSI_M2K_W
+        + CASE_600_RSE_M2K_W
+    )
+    roof_u = 1.0 / (
+        0.019 / 0.14
+        + 0.1118 / 0.04
+        + 0.01 / 0.16
+        + CASE_600_RSI_M2K_W
+        + CASE_600_RSE_M2K_W
+    )
+    floor_u = 1.0 / (
+        1.003 / 0.04
+        + 0.025 / 0.14
+        + CASE_600_RSI_M2K_W
+        + CASE_600_RSE_M2K_W
+    )
 
     wall_nodes = _five_node_construction(
         WALL_LAYERS_OUTSIDE_TO_INSIDE,
-        r_si=0.13,
-        r_se=0.04,
+        r_si=CASE_600_RSI_M2K_W,
+        r_se=CASE_600_RSE_M2K_W,
     )
     roof_nodes = _five_node_construction(
         ROOF_LAYERS_OUTSIDE_TO_INSIDE,
-        r_si=0.10,
-        r_se=0.04,
+        r_si=CASE_600_RSI_M2K_W,
+        r_se=CASE_600_RSE_M2K_W,
     )
     floor_nodes = _five_node_construction(
-        FLOOR_AND_SOIL_LAYERS_BOUNDARY_TO_INSIDE,
-        r_si=0.17,
-        r_se=0.0,
+        FLOOR_LAYERS_OUTSIDE_TO_INSIDE,
+        r_si=CASE_600_RSI_M2K_W,
+        r_se=CASE_600_RSE_M2K_W,
     )
 
     def opaque(
@@ -160,8 +160,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         azimuth: float = 0.0,
         inclination: float = 90.0,
         element_type: str = "external_wall",
-        adjacent: AdjacentSpaceType = AdjacentSpaceType.OUTDOOR,
-        adjacent_temperature: float | None = None,
+        absorptance: float = 0.6,
     ) -> OpaqueElement:
         capacities, resistances = nodes
         return OpaqueElement(
@@ -173,11 +172,13 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             inclination=inclination,
             area=area,
             u_value=u_value,
-            solar_absorptance=0.6,
-            adjacent_space_type=adjacent,
-            adjacent_temperature=adjacent_temperature,
+            solar_absorptance=absorptance,
             thermal_node_capacities_kj_m2k=capacities,
             thermal_node_resistances_m2k_w=resistances,
+            h_ci_w_m2k=CASE_600_HI_W_M2K,
+            h_ri_w_m2k=0.0,
+            h_ce_w_m2k=CASE_600_HO_W_M2K,
+            h_re_w_m2k=0.0,
         )
 
     opaque_elements = [
@@ -201,18 +202,23 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             inclination=0.0,
             element_type="roof",
         ),
+        # Raised floor: outdoor thermal boundary, but no incident solar on the
+        # underside in the benchmark geometry.
         opaque(
             "floor",
-            "Floor + 2 m soil",
+            "Raised floor",
             CASE_600_FLOOR_AREA_M2,
             floor_u,
             floor_nodes,
             inclination=180.0,
             element_type="ground_floor",
-            adjacent=AdjacentSpaceType.CONSTANT_TEMPERATURE,
-            adjacent_temperature=10.0,
+            absorptance=0.0,
         ),
     ]
+
+    window_core_r = (
+        1.0 / CASE_600_WINDOW_U_VALUE - CASE_600_RSI_M2K_W - CASE_600_RSE_M2K_W
+    )
     transparent = [
         TransparentElement(
             id="south-window-1",
@@ -220,9 +226,14 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             zone_id="bestest",
             orientation_azimuth=180.0,
             area=CASE_600_WINDOW_AREA_M2 / 2.0,
-            u_value=window_u,
+            u_value=CASE_600_WINDOW_U_VALUE,
             g_value=CASE_600_WINDOW_G_VALUE,
             frame_factor=0.001,
+            h_ci_w_m2k=CASE_600_HI_W_M2K,
+            h_ri_w_m2k=0.0,
+            h_ce_w_m2k=CASE_600_HO_W_M2K,
+            h_re_w_m2k=0.0,
+            core_thermal_resistance_m2k_w=window_core_r,
         ),
         TransparentElement(
             id="south-window-2",
@@ -230,9 +241,14 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             zone_id="bestest",
             orientation_azimuth=180.0,
             area=CASE_600_WINDOW_AREA_M2 / 2.0,
-            u_value=window_u,
+            u_value=CASE_600_WINDOW_U_VALUE,
             g_value=CASE_600_WINDOW_G_VALUE,
             frame_factor=0.001,
+            h_ci_w_m2k=CASE_600_HI_W_M2K,
+            h_ri_w_m2k=0.0,
+            h_ce_w_m2k=CASE_600_HO_W_M2K,
+            h_re_w_m2k=0.0,
+            core_thermal_resistance_m2k_w=window_core_r,
         ),
     ]
 
@@ -249,7 +265,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
     )
     opaque_solar: dict[str, np.ndarray] = {}
     for element in opaque_elements:
-        if element.adjacent_space_type != AdjacentSpaceType.OUTDOOR:
+        if element.id == "floor":
             opaque_solar[element.id] = np.zeros(8760, dtype=float)
             continue
         irradiance = radiation_on_surface(
@@ -268,9 +284,6 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         transparent_elements=transparent,
         bridges=ThermalBridgeConfig(),
         zone_id="bestest",
-        # LBNL Case600FF defines 0.5 air changes per hour at sea-level volume
-        # and multiplies by actual room-air density. This constant heat-transfer
-        # coefficient is the documented altitude-equivalent translation.
         h_ve=0.414 * CASE_600_VOLUME_M3 * 1200.0 / 3600.0,
         t_e=climate["T_e"].to_numpy(dtype=float),
         phi_int=np.full(8760, 200.0),
