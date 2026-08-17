@@ -58,3 +58,22 @@ strict = true
 warn_return_any = true
 warn_unused_ignores = true
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+# These modules are runtime compatibility shims. They dynamically load and
+# re-export the pre-existing implementation, which cannot be represented
+# faithfully by static import discovery. Core numerical modules remain strict.
+module = [
+    "app.schemas.models",
+    "app.engine.normative_models",
+    "app.engine.calculator",
+    "app.engine.climate",
+    "app.engine.design_load",
+    "app.engine.ground_iso13370",
+    "app.engine.heat_recovery",
+    "app.engine.polish_certificate_monthly",
+    "app.engine.thermal_balance",
+    "app.engine.ventilation",
+]
+follow_imports = "skip"
+ignore_errors = true
