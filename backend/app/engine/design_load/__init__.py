@@ -2,8 +2,8 @@
 
 When ``BuildingProject.design_rooms`` is supplied, design transmission,
 ventilation and heat-up loads are calculated per room and then aggregated to
-zones and the whole building. Certificate mode fails closed if the room model
-is absent or if an envelope item is not assigned to a room.
+zones and the whole building. Certificate mode validates legacy prerequisite
+inputs first, then fails closed if the room model is absent or incomplete.
 """
 
 from __future__ import annotations
@@ -199,16 +199,19 @@ def calculate_design_heat_load(project, settings, annual_mean_outdoor_c: float) 
     _legacy._design_outdoor_temperature(settings)
 
     if not project.design_rooms:
-        if settings.certificate_mode:
-            raise ValueError(
-                "Certificate-grade PN-EN 12831-1 design load requires "
-                "BuildingProject.design_rooms"
-            )
+        # Validate all existing design-condition prerequisites first. This
+        # preserves precise errors such as missing ground-side design
+        # temperature instead of hiding them behind the new room-model guard.
         legacy_result = _legacy_calculate_design_heat_load(
             project,
             settings,
             annual_mean_outdoor_c,
         )
+        if settings.certificate_mode:
+            raise ValueError(
+                "Certificate-grade PN-EN 12831-1 design load requires "
+                "BuildingProject.design_rooms"
+            )
         return BuildingDesignLoad(
             zones=legacy_result.zones,
             total_w=legacy_result.total_w,
