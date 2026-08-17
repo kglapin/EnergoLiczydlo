@@ -1,40 +1,320 @@
-============================= test session starts ==============================
-platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /opt/hostedtoolcache/Python/3.11.15/x64/bin/python
-cachedir: .pytest_cache
-hypothesis profile 'ci' -> database=None, deadline=None, print_blob=True, derandomize=True, suppress_health_check=(HealthCheck.too_slow,)
-benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
-rootdir: /home/runner/work/EnergoLiczydlo/EnergoLiczydlo/backend
-configfile: pyproject.toml
-plugins: hypothesis-6.165.10, anyio-4.14.2, benchmark-5.2.3, asyncio-1.4.0, cov-6.3.0
-asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
-collecting ... collected 25 items
+                    u_value=1.0,
+                    g_value=0.6,
+                    frame_factor=0.2,
+                    shading_factor=1.0,
+                ),
+            ],
+            ventilation=Ventilation(
+                ventilation_type="natural",
+                airflow_rate=120.0,
+                infiltration_rate=0.5,
+            ),
+            systems={
+                "heating": {
+                    "system_type": "heat_pump_air",
+                    "fuel_or_carrier": "electricity",
+                    "efficiency_or_cop_map": {"constant": True, "value": 3.5},
+                    "sink_temperature": 35.0,
+                },
+                "dhw": {
+                    "system_type": "electric_storage",
+                    "efficiency": 0.9,
+                },
+            },
+        )
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+E       opaque_elements
+E         Field required [type=missing, input_value={'project_name': 'Test ho...e', 'efficiency': 0.9}}}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/missing
+E       transparent_elements
+E         Field required [type=missing, input_value={'project_name': 'Test ho...e', 'efficiency': 0.9}}}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/missing
 
-tests/test_post_repair_audit.py::test_manual_01_opaque_transmission_25m2_u1_dt20_is_500w PASSED
-tests/test_post_repair_audit.py::test_manual_02_transparent_transmission_5m2_u2_dt20_is_200w PASSED
-tests/test_post_repair_audit.py::test_manual_03_thermal_bridges_are_60w PASSED
-tests/test_post_repair_audit.py::test_manual_04_ventilation_360m3h_has_hve_120w_per_k PASSED
-tests/test_post_repair_audit.py::test_manual_05_ventilation_loss_360m3h_dt20_is_2400w PASSED
-tests/test_post_repair_audit.py::test_manual_06_horizontal_transparent_solar_gain_is_1200w PASSED
-tests/test_post_repair_audit.py::test_manual_07_full_shading_makes_solar_gain_zero PASSED
-tests/test_post_repair_audit.py::test_manual_08_residential_normative_internal_gain_is_6_8wm2 PASSED
-tests/test_post_repair_audit.py::test_manual_09_constant_schedule_quarter_is_quarter PASSED
-tests/test_post_repair_audit.py::test_manual_10_occupancy_internal_gain_is_80w PASSED
-tests/test_post_repair_audit.py::test_manual_11_area_internal_gain_is_100w PASSED
-tests/test_post_repair_audit.py::test_manual_12_total_internal_gain_is_330w PASSED
-tests/test_post_repair_audit.py::test_manual_13_ground_characteristic_dimension_is_2_5m PASSED
-tests/test_post_repair_audit.py::test_manual_14_ground_equivalent_thickness_includes_both_surface_terms PASSED
-tests/test_post_repair_audit.py::test_manual_15_ground_u_value_matches_correct_formula_branch PASSED
-tests/test_post_repair_audit.py::test_manual_16_room_design_load_one_wall_is_1000w PASSED
-tests/test_post_repair_audit.py::test_manual_17_monthly_january_transmission_is_372kwh PASSED
-tests/test_post_repair_audit.py::test_edge_zero_ventilation_and_zero_gains_are_finite PASSED
-tests/test_post_repair_audit.py::test_edge_negative_ventilation_is_rejected PASSED
-tests/test_post_repair_audit.py::test_three_day_new_solver_energy_balance_closes_hour_by_hour POST_REPAIR_3DAY_BALANCE_W= {'winter': 4.547473508864641e-12, 'transition': 6.650680006714538e-12, 'summer': 1.014655026665423e-11}
-PASSED
-tests/test_post_repair_audit.py::test_hourly_and_monthly_match_constant_reference_and_units POST_REPAIR_ENGINE_CROSSCHECK= {'hourly_kwh': 4379.999999999997, 'monthly_kwh': 4380.0, 'manual_kwh': 4380.0, 'relative_difference': 6.229415765568002e-16}
-PASSED
-tests/test_post_repair_audit.py::test_unit_conversion_constant_1000w_for_year_is_8760kwh PASSED
-tests/test_post_repair_audit.py::test_each_opaque_construction_has_its_own_five_nodes PASSED
-tests/test_post_repair_audit.py::test_heat_recovery_is_not_double_counted_and_uses_correct_sign PASSED
-tests/test_post_repair_audit.py::test_cooling_energy_need_is_nonnegative PASSED
+scripts/test_building.py:15: ValidationError
+____________ test_manual_17_monthly_january_transmission_is_372kwh _____________
 
-============================== 25 passed in 2.44s ==============================
+    def test_manual_17_monthly_january_transmission_is_372kwh() -> None:
+>       project = _monthly_reference_project()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_post_repair_audit.py:368: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_post_repair_audit.py:85: in _monthly_reference_project
+    project = make_test_project()
+              ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def make_test_project() -> BuildingProject:
+>       return BuildingProject(
+            project_name="Test house Warsaw",
+            general=GeneralInfo(
+                building_name="Dom jednorodzinny",
+                building_type="residential",
+                dhw_usage_profile="residential_single_family",
+                construction_year=2020,
+                conditioned_floor_area=150.0,
+                usable_floor_area=150.0,
+                heated_volume=375.0,
+                number_of_storeys=1,
+            ),
+            climate_station_id="POL_MZ_Okecie-Warszawa-Chopina.Intl.AP.123750_TMYx.2009-2023",
+            thermal_zones=[
+                ThermalZone(
+                    id="zone_1",
+                    name="Cały budynek",
+                    zone_type="heated",
+                    floor_area=150.0,
+                    volume=375.0,
+                    setpoint_heating=20.0,
+                    setpoint_cooling=26.0,
+                    occupancy_density=0.03,
+                )
+            ],
+            opaque_building_elements=[
+                OpaqueElement(
+                    id="wall_n",
+                    name="Ściana północna",
+                    zone_id="zone_1",
+                    element_type="external_wall",
+                    orientation_azimuth=0.0,
+                    inclination=90.0,
+                    area=40.0,
+                    u_value=0.25,
+                ),
+                OpaqueElement(
+                    id="wall_s",
+                    name="Ściana południowa",
+                    zone_id="zone_1",
+                    element_type="external_wall",
+                    orientation_azimuth=180.0,
+                    inclination=90.0,
+                    area=40.0,
+                    u_value=0.25,
+                ),
+                OpaqueElement(
+                    id="roof",
+                    name="Dach",
+                    zone_id="zone_1",
+                    element_type="roof",
+                    orientation_azimuth=0.0,
+                    inclination=0.0,
+                    area=90.0,
+                    u_value=0.18,
+                ),
+                OpaqueElement(
+                    id="floor",
+                    name="Podłoga na gruncie",
+                    zone_id="zone_1",
+                    element_type="ground_floor",
+                    orientation_azimuth=0.0,
+                    inclination=180.0,
+                    area=90.0,
+                    u_value=0.25,
+                    adjacent_space_type="ground",
+                ),
+            ],
+            transparent_building_elements=[
+                TransparentElement(
+                    id="win_s",
+                    name="Okno południowe",
+                    zone_id="zone_1",
+                    element_type="window",
+                    orientation_azimuth=180.0,
+                    inclination=90.0,
+                    area=10.0,
+                    u_value=1.0,
+                    g_value=0.6,
+                    frame_factor=0.2,
+                    shading_factor=1.0,
+                ),
+            ],
+            ventilation=Ventilation(
+                ventilation_type="natural",
+                airflow_rate=120.0,
+                infiltration_rate=0.5,
+            ),
+            systems={
+                "heating": {
+                    "system_type": "heat_pump_air",
+                    "fuel_or_carrier": "electricity",
+                    "efficiency_or_cop_map": {"constant": True, "value": 3.5},
+                    "sink_temperature": 35.0,
+                },
+                "dhw": {
+                    "system_type": "electric_storage",
+                    "efficiency": 0.9,
+                },
+            },
+        )
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+E       opaque_elements
+E         Field required [type=missing, input_value={'project_name': 'Test ho...e', 'efficiency': 0.9}}}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/missing
+E       transparent_elements
+E         Field required [type=missing, input_value={'project_name': 'Test ho...e', 'efficiency': 0.9}}}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/missing
+
+scripts/test_building.py:15: ValidationError
+__________ test_hourly_and_monthly_match_constant_reference_and_units __________
+
+    def test_hourly_and_monthly_match_constant_reference_and_units() -> None:
+        wall = _explicit_wall()
+        hourly = solve_zone_iso52016(
+            opaque_elements=[wall],
+            transparent_elements=[],
+            bridges=ThermalBridgeConfig(),
+            zone_id="z1",
+            h_ve=0.0,
+            t_e=np.zeros(8760),
+            phi_int=np.zeros(8760),
+            phi_sol_transparent=np.zeros(8760),
+            opaque_solar_absorbed_w_by_element={"wall": np.zeros(8760)},
+            t_set_heating=20.0,
+            t_set_cooling=None,
+            require_explicit_construction_nodes=True,
+            warmup_tolerance_k=0.001,
+        )
+>       project = _monthly_reference_project()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_post_repair_audit.py:491: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_post_repair_audit.py:85: in _monthly_reference_project
+    project = make_test_project()
+              ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def make_test_project() -> BuildingProject:
+>       return BuildingProject(
+            project_name="Test house Warsaw",
+            general=GeneralInfo(
+                building_name="Dom jednorodzinny",
+                building_type="residential",
+                dhw_usage_profile="residential_single_family",
+                construction_year=2020,
+                conditioned_floor_area=150.0,
+                usable_floor_area=150.0,
+                heated_volume=375.0,
+                number_of_storeys=1,
+            ),
+            climate_station_id="POL_MZ_Okecie-Warszawa-Chopina.Intl.AP.123750_TMYx.2009-2023",
+            thermal_zones=[
+                ThermalZone(
+                    id="zone_1",
+                    name="Cały budynek",
+                    zone_type="heated",
+                    floor_area=150.0,
+                    volume=375.0,
+                    setpoint_heating=20.0,
+                    setpoint_cooling=26.0,
+                    occupancy_density=0.03,
+                )
+            ],
+            opaque_building_elements=[
+                OpaqueElement(
+                    id="wall_n",
+                    name="Ściana północna",
+                    zone_id="zone_1",
+                    element_type="external_wall",
+                    orientation_azimuth=0.0,
+                    inclination=90.0,
+                    area=40.0,
+                    u_value=0.25,
+                ),
+                OpaqueElement(
+                    id="wall_s",
+                    name="Ściana południowa",
+                    zone_id="zone_1",
+                    element_type="external_wall",
+                    orientation_azimuth=180.0,
+                    inclination=90.0,
+                    area=40.0,
+                    u_value=0.25,
+                ),
+                OpaqueElement(
+                    id="roof",
+                    name="Dach",
+                    zone_id="zone_1",
+                    element_type="roof",
+                    orientation_azimuth=0.0,
+                    inclination=0.0,
+                    area=90.0,
+                    u_value=0.18,
+                ),
+                OpaqueElement(
+                    id="floor",
+                    name="Podłoga na gruncie",
+                    zone_id="zone_1",
+                    element_type="ground_floor",
+                    orientation_azimuth=0.0,
+                    inclination=180.0,
+                    area=90.0,
+                    u_value=0.25,
+                    adjacent_space_type="ground",
+                ),
+            ],
+            transparent_building_elements=[
+                TransparentElement(
+                    id="win_s",
+                    name="Okno południowe",
+                    zone_id="zone_1",
+                    element_type="window",
+                    orientation_azimuth=180.0,
+                    inclination=90.0,
+                    area=10.0,
+                    u_value=1.0,
+                    g_value=0.6,
+                    frame_factor=0.2,
+                    shading_factor=1.0,
+                ),
+            ],
+            ventilation=Ventilation(
+                ventilation_type="natural",
+                airflow_rate=120.0,
+                infiltration_rate=0.5,
+            ),
+            systems={
+                "heating": {
+                    "system_type": "heat_pump_air",
+                    "fuel_or_carrier": "electricity",
+                    "efficiency_or_cop_map": {"constant": True, "value": 3.5},
+                    "sink_temperature": 35.0,
+                },
+                "dhw": {
+                    "system_type": "electric_storage",
+                    "efficiency": 0.9,
+                },
+            },
+        )
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+E       opaque_elements
+E         Field required [type=missing, input_value={'project_name': 'Test ho...e', 'efficiency': 0.9}}}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/missing
+E       transparent_elements
+E         Field required [type=missing, input_value={'project_name': 'Test ho...e', 'efficiency': 0.9}}}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/missing
+
+scripts/test_building.py:15: ValidationError
+=========================== short test summary info ============================
+FAILED tests/test_post_repair_audit.py::test_manual_16_room_design_load_one_wall_is_1000w - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'Test ho...e', 'efficiency': 0.9}}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'Test ho...e', 'efficiency': 0.9}}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_post_repair_audit.py::test_manual_17_monthly_january_transmission_is_372kwh - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'Test ho...e', 'efficiency': 0.9}}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'Test ho...e', 'efficiency': 0.9}}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_post_repair_audit.py::test_hourly_and_monthly_match_constant_reference_and_units - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'Test ho...e', 'efficiency': 0.9}}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'Test ho...e', 'efficiency': 0.9}}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+========================= 3 failed, 22 passed in 2.59s =========================

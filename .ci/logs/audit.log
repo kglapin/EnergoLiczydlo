@@ -1,29 +1,320 @@
-============================= test session starts ==============================
-platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /opt/hostedtoolcache/Python/3.11.15/x64/bin/python
-cachedir: .pytest_cache
-hypothesis profile 'ci' -> database=None, deadline=None, print_blob=True, derandomize=True, suppress_health_check=(HealthCheck.too_slow,)
-benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
-rootdir: /home/runner/work/EnergoLiczydlo/EnergoLiczydlo/backend
-configfile: pyproject.toml
-plugins: hypothesis-6.165.10, anyio-4.14.2, benchmark-5.2.3, asyncio-1.4.0, cov-6.3.0
-asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
-collecting ... collected 16 items
+                construction_year=2020,
+                conditioned_floor_area=100.0,
+                usable_floor_area=100.0,
+                heated_volume=250.0,
+                number_of_storeys=1,
+            ),
+            climate_station_id="synthetic",
+            thermal_zones=[
+                ThermalZone(
+                    id="z1",
+                    name="Strefa",
+                    floor_area=100.0,
+                    volume=250.0,
+                    setpoint_heating=20.0,
+                    setpoint_cooling=26.0,
+                    occupancy_density=0.0,
+                )
+            ],
+            opaque_building_elements=[
+                OpaqueElement(
+                    id="wall",
+                    name="Ściana",
+                    zone_id="z1",
+                    area=wall_area,
+                    u_value=wall_u,
+                    solar_absorptance=0.0,
+                    **element_kwargs,
+                )
+            ],
+            transparent_building_elements=[],
+            design_rooms=design_rooms or [],
+            thermal_bridges=ThermalBridgeConfig(),
+            ventilation=Ventilation(
+                ventilation_type="none",
+                airflow_rate=0.0,
+                infiltration_rate=0.0,
+                fan_infiltration_rate=0.0,
+            ),
+            internal_gains=_zero_internal_gains(),
+            systems=BuildingSystems(
+                heating=SystemHeatingCooling(
+                    system_type="electric_direct",
+                    fuel_or_carrier="electricity",
+                    generation_efficiency=1.0,
+                    distribution_efficiency=1.0,
+                    storage_efficiency=1.0,
+                    control_efficiency=1.0,
+                    auxiliary_energy_kwh_year=0.0,
+                ),
+                cooling=SystemHeatingCooling(system_type="none", fuel_or_carrier="electricity"),
+                dhw=SystemDHW(system_type="none"),
+            ),
+        )
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+E       opaque_elements
+E         Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/missing
+E       transparent_elements
+E         Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/missing
 
-tests/test_audit_repairs.py::test_iso52016_schema_has_construction_level_mass_inputs PASSED [  6%]
-tests/test_audit_repairs.py::test_iso52010_runtime_uses_perez_not_hay_davies PASSED [ 12%]
-tests/test_audit_repairs.py::test_iso13370_equivalent_thickness_includes_rse PASSED [ 18%]
-tests/test_audit_repairs.py::test_iso13370_slab_formula_uses_correct_branch_after_rse_fix PASSED [ 25%]
-tests/test_audit_repairs.py::test_heat_recovery_hot_hour_uses_cooling_extract_reference PASSED [ 31%]
-tests/test_audit_repairs.py::test_heat_recovery_accepts_actual_extract_temperature PASSED [ 37%]
-tests/test_audit_repairs.py::test_repaired_hourly_year_reaches_steady_4380_kwh PASSED [ 43%]
-tests/test_audit_repairs.py::test_repaired_1000w_constant_loss_aggregates_to_8760kwh PASSED [ 50%]
-tests/test_audit_repairs.py::test_hourly_and_polish_monthly_match_steady_reference PASSED [ 56%]
-tests/test_audit_repairs.py::test_formal_mode_rejects_unverified_useful_energy_override PASSED [ 62%]
-tests/test_audit_repairs.py::test_verified_monthly_override_is_allowed PASSED [ 68%]
-tests/test_audit_repairs.py::test_project_schema_has_room_level_design_model PASSED [ 75%]
-tests/test_audit_repairs.py::test_room_level_design_load_matches_manual_wall_case PASSED [ 81%]
-tests/test_audit_repairs.py::test_design_load_certificate_mode_rejects_missing_rooms PASSED [ 87%]
-tests/test_audit_repairs.py::test_detailed_hourly_solver_has_five_nodes_per_construction_and_closes_steady_year PASSED [ 93%]
-tests/test_audit_repairs.py::test_detailed_hourly_certificate_mode_rejects_inferred_construction PASSED [100%]
+tests/test_audit_repairs.py:67: ValidationError
+__________________ test_verified_monthly_override_is_allowed ___________________
 
-============================== 16 passed in 3.84s ==============================
+    def test_verified_monthly_override_is_allowed() -> None:
+>       project = _project()
+                  ^^^^^^^^^^
+
+tests/test_audit_repairs.py:297: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+wall_area = 25.0, wall_u = 1.0, metadata = None, wall_kwargs = None
+design_rooms = None
+
+    def _project(
+        *,
+        wall_area: float = 25.0,
+        wall_u: float = 1.0,
+        metadata: dict | None = None,
+        wall_kwargs: dict | None = None,
+        design_rooms: list[DesignRoom] | None = None,
+    ) -> BuildingProject:
+        element_kwargs = dict(wall_kwargs or {})
+        resolved_metadata = (
+            metadata if metadata is not None else {"normative": {"hourly_iso52016": {"enabled": True}}}
+        )
+>       return BuildingProject(
+            project_name="Naprawy audytu",
+            metadata=resolved_metadata,
+            general=GeneralInfo(
+                building_name="Budynek testowy",
+                building_type="residential",
+                dhw_usage_profile="residential_single_family",
+                construction_year=2020,
+                conditioned_floor_area=100.0,
+                usable_floor_area=100.0,
+                heated_volume=250.0,
+                number_of_storeys=1,
+            ),
+            climate_station_id="synthetic",
+            thermal_zones=[
+                ThermalZone(
+                    id="z1",
+                    name="Strefa",
+                    floor_area=100.0,
+                    volume=250.0,
+                    setpoint_heating=20.0,
+                    setpoint_cooling=26.0,
+                    occupancy_density=0.0,
+                )
+            ],
+            opaque_building_elements=[
+                OpaqueElement(
+                    id="wall",
+                    name="Ściana",
+                    zone_id="z1",
+                    area=wall_area,
+                    u_value=wall_u,
+                    solar_absorptance=0.0,
+                    **element_kwargs,
+                )
+            ],
+            transparent_building_elements=[],
+            design_rooms=design_rooms or [],
+            thermal_bridges=ThermalBridgeConfig(),
+            ventilation=Ventilation(
+                ventilation_type="none",
+                airflow_rate=0.0,
+                infiltration_rate=0.0,
+                fan_infiltration_rate=0.0,
+            ),
+            internal_gains=_zero_internal_gains(),
+            systems=BuildingSystems(
+                heating=SystemHeatingCooling(
+                    system_type="electric_direct",
+                    fuel_or_carrier="electricity",
+                    generation_efficiency=1.0,
+                    distribution_efficiency=1.0,
+                    storage_efficiency=1.0,
+                    control_efficiency=1.0,
+                    auxiliary_energy_kwh_year=0.0,
+                ),
+                cooling=SystemHeatingCooling(system_type="none", fuel_or_carrier="electricity"),
+                dhw=SystemDHW(system_type="none"),
+            ),
+        )
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+E       opaque_elements
+E         Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/missing
+E       transparent_elements
+E         Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/missing
+
+tests/test_audit_repairs.py:67: ValidationError
+_____________ test_room_level_design_load_matches_manual_wall_case _____________
+
+    def test_room_level_design_load_matches_manual_wall_case() -> None:
+>       room = DesignRoom(
+            id="r1",
+            name="Pokój",
+            zone_id="z1",
+            floor_area=100.0,
+            volume=250.0,
+            design_temperature_c=20.0,
+            opaque_element_ids=["wall"],
+        )
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for DesignRoom
+E       design_internal_temperature
+E         Field required [type=missing, input_value={'id': 'r1', 'name': 'Pok..._element_ids': ['wall']}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/missing
+E       design_ventilation_airflow_m3_h
+E         Field required [type=missing, input_value={'id': 'r1', 'name': 'Pok..._element_ids': ['wall']}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/missing
+
+tests/test_audit_repairs.py:315: ValidationError
+___________ test_design_load_certificate_mode_rejects_missing_rooms ____________
+
+    def test_design_load_certificate_mode_rejects_missing_rooms() -> None:
+>       project = _project()
+                  ^^^^^^^^^^
+
+tests/test_audit_repairs.py:338: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+wall_area = 25.0, wall_u = 1.0, metadata = None, wall_kwargs = None
+design_rooms = None
+
+    def _project(
+        *,
+        wall_area: float = 25.0,
+        wall_u: float = 1.0,
+        metadata: dict | None = None,
+        wall_kwargs: dict | None = None,
+        design_rooms: list[DesignRoom] | None = None,
+    ) -> BuildingProject:
+        element_kwargs = dict(wall_kwargs or {})
+        resolved_metadata = (
+            metadata if metadata is not None else {"normative": {"hourly_iso52016": {"enabled": True}}}
+        )
+>       return BuildingProject(
+            project_name="Naprawy audytu",
+            metadata=resolved_metadata,
+            general=GeneralInfo(
+                building_name="Budynek testowy",
+                building_type="residential",
+                dhw_usage_profile="residential_single_family",
+                construction_year=2020,
+                conditioned_floor_area=100.0,
+                usable_floor_area=100.0,
+                heated_volume=250.0,
+                number_of_storeys=1,
+            ),
+            climate_station_id="synthetic",
+            thermal_zones=[
+                ThermalZone(
+                    id="z1",
+                    name="Strefa",
+                    floor_area=100.0,
+                    volume=250.0,
+                    setpoint_heating=20.0,
+                    setpoint_cooling=26.0,
+                    occupancy_density=0.0,
+                )
+            ],
+            opaque_building_elements=[
+                OpaqueElement(
+                    id="wall",
+                    name="Ściana",
+                    zone_id="z1",
+                    area=wall_area,
+                    u_value=wall_u,
+                    solar_absorptance=0.0,
+                    **element_kwargs,
+                )
+            ],
+            transparent_building_elements=[],
+            design_rooms=design_rooms or [],
+            thermal_bridges=ThermalBridgeConfig(),
+            ventilation=Ventilation(
+                ventilation_type="none",
+                airflow_rate=0.0,
+                infiltration_rate=0.0,
+                fan_infiltration_rate=0.0,
+            ),
+            internal_gains=_zero_internal_gains(),
+            systems=BuildingSystems(
+                heating=SystemHeatingCooling(
+                    system_type="electric_direct",
+                    fuel_or_carrier="electricity",
+                    generation_efficiency=1.0,
+                    distribution_efficiency=1.0,
+                    storage_efficiency=1.0,
+                    control_efficiency=1.0,
+                    auxiliary_energy_kwh_year=0.0,
+                ),
+                cooling=SystemHeatingCooling(system_type="none", fuel_or_carrier="electricity"),
+                dhw=SystemDHW(system_type="none"),
+            ),
+        )
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+E       opaque_elements
+E         Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/missing
+E       transparent_elements
+E         Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/missing
+
+tests/test_audit_repairs.py:67: ValidationError
+=========================== short test summary info ============================
+FAILED tests/test_audit_repairs.py::test_repaired_hourly_year_reaches_steady_4380_kwh - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_audit_repairs.py::test_repaired_1000w_constant_loss_aggregates_to_8760kwh - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_audit_repairs.py::test_hourly_and_polish_monthly_match_steady_reference - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_audit_repairs.py::test_formal_mode_rejects_unverified_useful_energy_override - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_audit_repairs.py::test_verified_monthly_override_is_allowed - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_audit_repairs.py::test_room_level_design_load_matches_manual_wall_case - pydantic_core._pydantic_core.ValidationError: 2 validation errors for DesignRoom
+design_internal_temperature
+  Field required [type=missing, input_value={'id': 'r1', 'name': 'Pok..._element_ids': ['wall']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+design_ventilation_airflow_m3_h
+  Field required [type=missing, input_value={'id': 'r1', 'name': 'Pok..._element_ids': ['wall']}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_audit_repairs.py::test_design_load_certificate_mode_rejects_missing_rooms - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'Naprawy...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+========================= 7 failed, 9 passed in 1.91s ==========================

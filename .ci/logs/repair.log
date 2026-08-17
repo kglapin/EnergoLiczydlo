@@ -6,11 +6,12 @@ SKIP backend/app/engine/iso52016_hourly.py: pattern not present
 SKIP backend/app/engine/iso52016_hourly.py: already applied
 SKIP backend/app/engine/iso52016_hourly.py: already applied
 SKIP backend/app/engine/iso52016_hourly/__init__.py: already applied
+SKIP backend/app/schemas/models/__init__.py: already applied
 SKIP backend/app/engine/iso52016_monthly.py: already applied
 SKIP backend/app/engine/iso52016_design_load.py: pattern not present
 SKIP backend/app/engine/iso52016_design_load.py: already applied
 SKIP backend/tests/test_post_repair_audit.py: pattern not present
 Deterministic repair patch applied
-All checks passed!
-67 files left unchanged
+Found 2 errors (2 fixed, 0 remaining).
+1 file reformatted, 66 files left unchanged
 All checks passed!

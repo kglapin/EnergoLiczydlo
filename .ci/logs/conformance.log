@@ -1,31 +1,320 @@
-============================= test session starts ==============================
-platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /opt/hostedtoolcache/Python/3.11.15/x64/bin/python
-cachedir: .pytest_cache
-hypothesis profile 'ci' -> database=None, deadline=None, print_blob=True, derandomize=True, suppress_health_check=(HealthCheck.too_slow,)
-benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
-rootdir: /home/runner/work/EnergoLiczydlo/EnergoLiczydlo/backend
-configfile: pyproject.toml
-plugins: hypothesis-6.165.10, anyio-4.14.2, benchmark-5.2.3, asyncio-1.4.0, cov-6.3.0
-asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
-collecting ... collected 18 items
+            area=10.0,
+            u_value=0.5,
+            solar_absorptance=0.0,
+            thermal_node_capacities_kj_m2k=[0.0, 20.0, 40.0, 20.0, 0.0],
+            thermal_node_resistances_m2k_w=[0.40, 0.40, 0.40, 0.40],
+            h_ci_w_m2k=2.5,
+            h_ri_w_m2k=5.0,
+            h_ce_w_m2k=20.0,
+            h_re_w_m2k=5.0,
+            sky_view_factor=0.0,
+        )
+        data.update(updates)
+>       return OpaqueElement(**data)
+               ^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for OpaqueElement
+E         Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 0.0}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/value_error
 
-tests/test_iso52016_conformance.py::test_opaque_nodes_are_five_and_ordered_exterior_to_interior PASSED [  5%]
-tests/test_iso52016_conformance.py::test_transparent_element_has_two_zero_capacity_surface_nodes PASSED [ 11%]
-tests/test_iso52016_conformance.py::test_hvac_controls_operative_temperature_not_air_temperature PASSED [ 16%]
-tests/test_iso52016_conformance.py::test_air_furniture_capacity_is_part_of_dynamic_state PASSED [ 22%]
-tests/test_iso52016_conformance.py::test_strict_mode_rejects_missing_delegated_surface_coefficients PASSED [ 27%]
-tests/test_iso52016_conformance.py::test_opaque_longwave_sky_exchange_increases_heating_load PASSED [ 33%]
-tests/test_iso52016_conformance.py::test_window_longwave_sky_exchange_increases_heating_load PASSED [ 38%]
-tests/test_iso52016_conformance.py::test_humidity_ratio_round_trip PASSED [ 44%]
-tests/test_iso52016_conformance.py::test_moisture_solver_clamps_to_humidity_band_and_reports_latent_load PASSED [ 50%]
-tests/test_iso52016_monthly.py::test_zone_time_constant_uses_internal_capacity_and_total_h PASSED [ 55%]
-tests/test_iso52016_monthly.py::test_heating_utilization_gamma_one_uses_analytical_limit PASSED [ 61%]
-tests/test_iso52016_monthly.py::test_numerical_parameter_increases_with_time_constant PASSED [ 66%]
-tests/test_iso52016_monthly.py::test_monthly_no_gains_returns_full_heating_losses_and_zero_cooling PASSED [ 72%]
-tests/test_iso52016_monthly.py::test_monthly_gains_reduce_heating_need PASSED [ 77%]
-tests/test_iso52016_monthly.py::test_heating_and_cooling_use_independent_monthly_inputs PASSED [ 83%]
-tests/test_iso52016_design_load.py::test_strict_design_load_requires_weather_provenance PASSED [ 88%]
-tests/test_iso52016_design_load.py::test_heating_design_weather_mean_must_match_design_temperature PASSED [ 94%]
-tests/test_iso52016_design_load.py::test_design_load_initializes_for_at_least_fourteen_days PASSED [100%]
+tests/test_iso52016_conformance.py:34: ValidationError
+_________ test_transparent_element_has_two_zero_capacity_surface_nodes _________
 
-============================== 18 passed in 1.70s ==============================
+    def test_transparent_element_has_two_zero_capacity_surface_nodes() -> None:
+>       result = _solve(windows=[_strict_window()])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_iso52016_conformance.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_iso52016_conformance.py:60: in _solve
+    wall = wall or _strict_wall()
+                   ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+updates = {}
+
+    def _strict_wall(**updates):
+        data = dict(
+            id="wall",
+            name="Wall",
+            zone_id="z1",
+            area=10.0,
+            u_value=0.5,
+            solar_absorptance=0.0,
+            thermal_node_capacities_kj_m2k=[0.0, 20.0, 40.0, 20.0, 0.0],
+            thermal_node_resistances_m2k_w=[0.40, 0.40, 0.40, 0.40],
+            h_ci_w_m2k=2.5,
+            h_ri_w_m2k=5.0,
+            h_ce_w_m2k=20.0,
+            h_re_w_m2k=5.0,
+            sky_view_factor=0.0,
+        )
+        data.update(updates)
+>       return OpaqueElement(**data)
+               ^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for OpaqueElement
+E         Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 0.0}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/value_error
+
+tests/test_iso52016_conformance.py:34: ValidationError
+_________ test_hvac_controls_operative_temperature_not_air_temperature _________
+
+    def test_hvac_controls_operative_temperature_not_air_temperature() -> None:
+>       result = _solve(outdoor=-10.0)
+                 ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_iso52016_conformance.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_iso52016_conformance.py:60: in _solve
+    wall = wall or _strict_wall()
+                   ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+updates = {}
+
+    def _strict_wall(**updates):
+        data = dict(
+            id="wall",
+            name="Wall",
+            zone_id="z1",
+            area=10.0,
+            u_value=0.5,
+            solar_absorptance=0.0,
+            thermal_node_capacities_kj_m2k=[0.0, 20.0, 40.0, 20.0, 0.0],
+            thermal_node_resistances_m2k_w=[0.40, 0.40, 0.40, 0.40],
+            h_ci_w_m2k=2.5,
+            h_ri_w_m2k=5.0,
+            h_ce_w_m2k=20.0,
+            h_re_w_m2k=5.0,
+            sky_view_factor=0.0,
+        )
+        data.update(updates)
+>       return OpaqueElement(**data)
+               ^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for OpaqueElement
+E         Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 0.0}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/value_error
+
+tests/test_iso52016_conformance.py:34: ValidationError
+_____________ test_air_furniture_capacity_is_part_of_dynamic_state _____________
+
+    def test_air_furniture_capacity_is_part_of_dynamic_state() -> None:
+>       light = _pulse_response(200_000.0)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_iso52016_conformance.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_iso52016_conformance.py:106: in _pulse_response
+    opaque_elements=[_strict_wall()],
+                     ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+updates = {}
+
+    def _strict_wall(**updates):
+        data = dict(
+            id="wall",
+            name="Wall",
+            zone_id="z1",
+            area=10.0,
+            u_value=0.5,
+            solar_absorptance=0.0,
+            thermal_node_capacities_kj_m2k=[0.0, 20.0, 40.0, 20.0, 0.0],
+            thermal_node_resistances_m2k_w=[0.40, 0.40, 0.40, 0.40],
+            h_ci_w_m2k=2.5,
+            h_ri_w_m2k=5.0,
+            h_ce_w_m2k=20.0,
+            h_re_w_m2k=5.0,
+            sky_view_factor=0.0,
+        )
+        data.update(updates)
+>       return OpaqueElement(**data)
+               ^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for OpaqueElement
+E         Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 0.0}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/value_error
+
+tests/test_iso52016_conformance.py:34: ValidationError
+_______ test_strict_mode_rejects_missing_delegated_surface_coefficients ________
+
+    def test_strict_mode_rejects_missing_delegated_surface_coefficients() -> None:
+>       wall = OpaqueElement(
+            id="wall",
+            name="Wall",
+            zone_id="z1",
+            area=10.0,
+            u_value=0.5,
+            thermal_node_capacities_kj_m2k=[0, 20, 40, 20, 0],
+            thermal_node_resistances_m2k_w=[0.4, 0.4, 0.4, 0.4],
+        )
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for OpaqueElement
+E         Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W...': [0.4, 0.4, 0.4, 0.4]}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/value_error
+
+tests/test_iso52016_conformance.py:131: ValidationError
+___________ test_opaque_longwave_sky_exchange_increases_heating_load ___________
+
+    def test_opaque_longwave_sky_exchange_increases_heating_load() -> None:
+>       wall = _strict_wall(sky_view_factor=1.0)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_iso52016_conformance.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+updates = {'sky_view_factor': 1.0}
+
+    def _strict_wall(**updates):
+        data = dict(
+            id="wall",
+            name="Wall",
+            zone_id="z1",
+            area=10.0,
+            u_value=0.5,
+            solar_absorptance=0.0,
+            thermal_node_capacities_kj_m2k=[0.0, 20.0, 40.0, 20.0, 0.0],
+            thermal_node_resistances_m2k_w=[0.40, 0.40, 0.40, 0.40],
+            h_ci_w_m2k=2.5,
+            h_ri_w_m2k=5.0,
+            h_ce_w_m2k=20.0,
+            h_re_w_m2k=5.0,
+            sky_view_factor=0.0,
+        )
+        data.update(updates)
+>       return OpaqueElement(**data)
+               ^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for OpaqueElement
+E         Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 1.0}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/value_error
+
+tests/test_iso52016_conformance.py:34: ValidationError
+___________ test_window_longwave_sky_exchange_increases_heating_load ___________
+
+    def test_window_longwave_sky_exchange_increases_heating_load() -> None:
+>       wall = _strict_wall(sky_view_factor=0.0)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_iso52016_conformance.py:182: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+updates = {'sky_view_factor': 0.0}
+
+    def _strict_wall(**updates):
+        data = dict(
+            id="wall",
+            name="Wall",
+            zone_id="z1",
+            area=10.0,
+            u_value=0.5,
+            solar_absorptance=0.0,
+            thermal_node_capacities_kj_m2k=[0.0, 20.0, 40.0, 20.0, 0.0],
+            thermal_node_resistances_m2k_w=[0.40, 0.40, 0.40, 0.40],
+            h_ci_w_m2k=2.5,
+            h_ri_w_m2k=5.0,
+            h_ce_w_m2k=20.0,
+            h_re_w_m2k=5.0,
+            sky_view_factor=0.0,
+        )
+        data.update(updates)
+>       return OpaqueElement(**data)
+               ^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for OpaqueElement
+E         Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 0.0}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/value_error
+
+tests/test_iso52016_conformance.py:34: ValidationError
+_____________ test_strict_design_load_requires_weather_provenance ______________
+
+    def test_strict_design_load_requires_weather_provenance() -> None:
+>       with pytest.raises(ValueError, match="provenance"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'provenance'
+E         Actual message: "1 validation error for OpaqueElement\n  Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 0.0}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/value_error"
+
+tests/test_iso52016_design_load.py:104: AssertionError
+________ test_heating_design_weather_mean_must_match_design_temperature ________
+
+    def test_heating_design_weather_mean_must_match_design_temperature() -> None:
+>       with pytest.raises(ValueError, match="mean"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'mean'
+E         Actual message: "1 validation error for OpaqueElement\n  Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 0.0}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/value_error"
+
+tests/test_iso52016_design_load.py:115: AssertionError
+___________ test_design_load_initializes_for_at_least_fourteen_days ____________
+
+    def test_design_load_initializes_for_at_least_fourteen_days() -> None:
+        result = calculate_iso52016_design_load(
+>           _project(),
+            ^^^^^^^^^^
+            _climate(-20.0),
+            outdoor_design_temperature_c=-20.0,
+            strict_conformance=True,
+            climate_source="ISO 15927 test sequence",
+            sky_temperature_difference_k=0.0,
+        )
+
+tests/test_iso52016_design_load.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def _project() -> BuildingProject:
+        zone = ThermalZone(
+            id="z1",
+            name="Zone",
+            floor_area=50.0,
+            volume=125.0,
+            setpoint_heating=20.0,
+            setpoint_cooling=26.0,
+            occupancy_density=0.0,
+            air_furniture_heat_capacity_kj_m2k=10.0,
+        )
+>       wall = OpaqueElement(
+            id="wall",
+            name="Wall",
+            zone_id="z1",
+            area=25.0,
+            u_value=1.0,
+            solar_absorptance=0.0,
+            thermal_node_capacities_kj_m2k=[0.0, 20.0, 40.0, 20.0, 0.0],
+            thermal_node_resistances_m2k_w=[0.2075, 0.2075, 0.2075, 0.2075],
+            h_ci_w_m2k=2.5,
+            h_ri_w_m2k=5.1923076923,
+            h_ce_w_m2k=20.0,
+            h_re_w_m2k=5.0,
+            sky_view_factor=0.0,
+        )
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for OpaqueElement
+E         Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 0.0}, input_type=dict]
+E           For further information visit https://errors.pydantic.dev/2.11/v/value_error
+
+tests/test_iso52016_design_load.py:51: ValidationError
+=========================== short test summary info ============================
+FAILED tests/test_iso52016_conformance.py::test_opaque_nodes_are_five_and_ordered_exterior_to_interior - pydantic_core._pydantic_core.ValidationError: 1 validation error for OpaqueElement
+  Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 0.0}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/value_error
+FAILED tests/test_iso52016_conformance.py::test_transparent_element_has_two_zero_capacity_surface_nodes - pydantic_core._pydantic_core.ValidationError: 1 validation error for OpaqueElement
+  Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 0.0}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/value_error
+FAILED tests/test_iso52016_conformance.py::test_hvac_controls_operative_temperature_not_air_temperature - pydantic_core._pydantic_core.ValidationError: 1 validation error for OpaqueElement
+  Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 0.0}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/value_error
+FAILED tests/test_iso52016_conformance.py::test_air_furniture_capacity_is_part_of_dynamic_state - pydantic_core._pydantic_core.ValidationError: 1 validation error for OpaqueElement
+  Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 0.0}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/value_error
+FAILED tests/test_iso52016_conformance.py::test_strict_mode_rejects_missing_delegated_surface_coefficients - pydantic_core._pydantic_core.ValidationError: 1 validation error for OpaqueElement
+  Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W...': [0.4, 0.4, 0.4, 0.4]}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/value_error
+FAILED tests/test_iso52016_conformance.py::test_opaque_longwave_sky_exchange_increases_heating_load - pydantic_core._pydantic_core.ValidationError: 1 validation error for OpaqueElement
+  Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 1.0}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/value_error
+FAILED tests/test_iso52016_conformance.py::test_window_longwave_sky_exchange_increases_heating_load - pydantic_core._pydantic_core.ValidationError: 1 validation error for OpaqueElement
+  Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 0.0}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/value_error
+FAILED tests/test_iso52016_design_load.py::test_strict_design_load_requires_weather_provenance - AssertionError: Regex pattern did not match.
+  Expected regex: 'provenance'
+  Actual message: "1 validation error for OpaqueElement\n  Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 0.0}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/value_error"
+FAILED tests/test_iso52016_design_load.py::test_heating_design_weather_mean_must_match_design_temperature - AssertionError: Regex pattern did not match.
+  Expected regex: 'mean'
+  Actual message: "1 validation error for OpaqueElement\n  Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 0.0}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/value_error"
+FAILED tests/test_iso52016_design_load.py::test_design_load_initializes_for_at_least_fourteen_days - pydantic_core._pydantic_core.ValidationError: 1 validation error for OpaqueElement
+  Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 0.0}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/value_error
+========================= 10 failed, 8 passed in 1.95s =========================

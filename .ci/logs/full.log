@@ -1,58 +1,320 @@
-........................................................................ [ 19%]
-........................................................................ [ 39%]
-....................................ss.................................. [ 58%]
-........................................................................ [ 78%]
-........................................................................ [ 97%]
-.........                                                                [100%]
-================================ tests coverage ================================
-_______________ coverage: platform linux, python 3.11.15-final-0 _______________
-
-Name                                                Stmts   Miss  Cover   Missing
----------------------------------------------------------------------------------
-app/__init__.py                                         0      0   100%
-app/api/__init__.py                                     0      0   100%
-app/api/calculate.py                                   15     15     0%   3-26
-app/api/climate.py                                     60     26    57%   28, 54-88, 94, 102, 124-128
-app/api/health.py                                       5      5     0%   3-10
-app/data_paths.py                                      10      0   100%
-app/engine/__init__.py                                  2      0   100%
-app/engine/audited_calculator.py                      164    164     0%   10-439
-app/engine/audited_calculator/__init__.py             170    108    36%   44, 46, 48, 54-75, 99-165, 192-194, 203-224, 245, 253, 279-312, 326-364, 379, 400-451
-app/engine/calculator.py                              252     21    92%   68, 199, 235-319, 491, 493
-app/engine/calculator/__init__.py                     128     38    70%   49-50, 84-85, 98-111, 120-151, 262-270, 275, 335
-app/engine/climate.py                                 147     55    63%   78-115, 130-178, 258, 278, 281, 285-286, 314, 361-381, 429
-app/engine/climate/__init__.py                         30      0   100%
-app/engine/design_load.py                             121     43    64%   61, 68, 74, 88, 96-100, 121-140, 155, 163, 174-176, 184-185, 187-188, 202-218, 228, 238
-app/engine/design_load/__init__.py                    115     23    80%   90-91, 101-102, 104-105, 118-161, 192, 202, 271
-app/engine/envelope.py                                 93     10    89%   56-61, 69, 80, 85, 188, 191, 207
-app/engine/ground_iso13370.py                         120     71    41%   32, 42, 52-56, 75-84, 91, 126, 145, 160, 164-166, 172-183, 197-213, 222-325
-app/engine/ground_iso13370/__init__.py                 60     27    55%   40, 42, 73-83, 88-134
-app/engine/heat_recovery.py                           112     66    41%   47, 54, 68-71, 82, 85, 126-218
-app/engine/heat_recovery/__init__.py                   89     19    79%   33, 35, 37, 46, 67, 70, 76, 80-82, 88-92, 115, 117-123
-app/engine/internal_gains.py                           76     10    87%   55, 61-67, 121, 135
-app/engine/iso52016_design_load.py                     91      7    92%   67-68, 104, 107, 119, 204-205
-app/engine/iso52016_hourly.py                         421     78    81%   121, 137, 174, 181, 184, 191, 199, 202, 219, 228-253, 259-268, 304-308, 314-349, 391-398, 400, 418, 429, 506, 519, 526, 531, 546, 609, 629, 632, 691, 693
-app/engine/iso52016_hourly/__init__.py                110     10    91%   48-50, 97-98, 146, 154, 177, 191, 196
-app/engine/iso52016_moisture.py                        97     16    84%   58, 62, 100, 109, 113, 116, 122, 135-142, 153-155
-app/engine/iso52016_monthly.py                         70      5    93%   42, 47, 53, 90, 92
-app/engine/normative_models.py                        165     17    90%   45, 72, 109, 113, 115, 121, 139, 141, 146, 184, 221, 269-274
-app/engine/normative_models/__init__.py               122     19    84%   40-45, 54-61, 96, 98-101, 103, 105, 124, 141-148, 203, 205
-app/engine/normative_runtime.py                        57     40    30%   36, 44-80, 88-121
-app/engine/polish_certificate_monthly.py              307    102    67%   88, 101, 115, 126-134, 152-171, 185, 193, 203-205, 215-216, 218-219, 231, 235-237, 249-253, 280-282, 285-287, 299-307, 316-325, 396, 426-452, 475-480, 484-485, 504-506, 508, 521-538, 541, 545-546, 563-574, 583, 601, 677
-app/engine/polish_certificate_monthly/__init__.py      23      1    96%   37
-app/engine/preflight_geometry.py                       94     12    87%   45, 49, 52, 54, 79, 84, 101, 110, 171, 219-221
-app/engine/preflight_systems.py                        62      6    90%   58-59, 86, 109, 121, 149
-app/engine/primary_energy.py                           18      1    94%   47
-app/engine/solar.py                                    48     19    60%   25-35, 43-48, 93-100
-app/engine/systems.py                                 126     11    91%   62, 86, 192, 230, 315, 322, 326, 334, 356, 358, 360
-app/engine/thermal_balance.py                         145     74    49%   73, 113, 157, 170, 230-344
-app/engine/thermal_balance/__init__.py                105     12    89%   92, 165, 167, 175, 177, 179, 181, 205-220
-app/engine/ventilation.py                             136     39    71%   59-60, 77, 96, 101, 103, 115, 117, 179, 191-195, 221, 233-284, 311, 316, 318
-app/engine/ventilation/__init__.py                     40      3    92%   39, 45, 74
-app/main.py                                             9      9     0%   3-31
-app/schemas/__init__.py                                 2      0   100%
-app/schemas/models.py                                 392      3    99%   260, 440, 598
-app/schemas/models/__init__.py                        144     14    90%   77, 79, 82, 86, 91, 96, 129, 178, 181, 196, 202, 209, 213, 217
----------------------------------------------------------------------------------
-TOTAL                                                4553   1199    74%
-367 passed, 2 skipped in 87.79s (0:01:27)
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-mechanical-north-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-mechanical-north-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-mechanical-north-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-mechanical-north-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-mechanical_with_recovery-none-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-mechanical_with_recovery-none-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-mechanical_with_recovery-none-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-mechanical_with_recovery-none-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-mechanical_with_recovery-south-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-mechanical_with_recovery-south-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-mechanical_with_recovery-south-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-mechanical_with_recovery-south-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-mechanical_with_recovery-north-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-mechanical_with_recovery-north-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-mechanical_with_recovery-north-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-mechanical_with_recovery-north-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-mechanical_periodic-none-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-mechanical_periodic-none-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-mechanical_periodic-none-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-mechanical_periodic-none-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-mechanical_periodic-south-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-mechanical_periodic-south-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-mechanical_periodic-south-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-mechanical_periodic-south-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-mechanical_periodic-north-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-mechanical_periodic-north-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-mechanical_periodic-north-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-mechanical_periodic-north-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-none-none-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-none-none-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-none-none-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-none-none-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-none-south-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-none-south-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-none-south-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-none-south-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-none-north-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-none-north-bridges=False] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[heating-none-north-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_72_annual_variants_conserve_the_hourly_energy_balance[cooling-none-north-bridges=True] - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'cooling...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_recovery_reduces_heating_demand_without_changing_the_external_climate - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_thermal_bridges_increase_heating_demand - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_periodic_ventilation_schedule_changes_hourly_demand - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+FAILED tests/test_validation_matrix.py::test_system_efficiency_product_is_the_only_heating_conversion_factor - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'heating...None, efficiency=None))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+ERROR tests/test_benchmark_office.py::test_office_benchmark_order_of_magnitude - pydantic_core._pydantic_core.ValidationError: 2 validation errors for BuildingProject
+opaque_elements
+  Field required [type=missing, input_value={'project_name': 'Benchma...Factor(fp=0.0, we=0.0))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+transparent_elements
+  Field required [type=missing, input_value={'project_name': 'Benchma...Factor(fp=0.0, we=0.0))}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+180 failed, 186 passed, 2 skipped, 1 error in 25.03s

@@ -182,4 +182,4 @@ FAILED tests/test_external_bestest_repaired.py::test_repaired_solver_bestest_cas
 element_type
   Input should be 'external_wall', 'roof', 'ground_floor', 'floor_over_unheated', 'internal_wall', 'basement_wall' or 'party_wall' [type=enum, input_value='floor', input_type=str]
     For further information visit https://errors.pydantic.dev/2.11/v/enum
-============================== 1 failed in 1.21s ===============================
+============================== 1 failed in 1.42s ===============================
