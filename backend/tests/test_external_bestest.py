@@ -33,12 +33,14 @@ BESTEST_WEATHER_URL = (
 )
 BESTEST_WEATHER_SHA256 = "a0c27c3eaf22c5f32e1337ddde10f90f9e181a3b732ee78385013fd99b58818b"
 
-# Published reference intervals from LBL Modelica BESTEST Case 600.
-# Energy values are converted from J to kWh; cooling is compared as an
-# absolute load because the source stores it as a negative heat flow.
+# Published reference intervals from the LBL BESTEST user guide / Standard
+# 140-2007 comparison table. Energy values are converted from J to kWh;
+# cooling is compared as an absolute load because source models store it as a
+# negative heat flow. The Case 600 annual-cooling maximum is 7.964 MWh; 7.278
+# MWh is one individual program result, not the maximum of the reference set.
 CASE_600_REFERENCE = {
     "annual_heating_kwh": (15465600000 / 3600000, 20552400000 / 3600000),
-    "annual_cooling_kwh": (22093200000 / 3600000, 26200800000 / 3600000),
+    "annual_cooling_kwh": (22093200000 / 3600000, 28670400000 / 3600000),
     "peak_heating_w": (3437.0, 4354.0),
     "peak_cooling_w": (5965.0, 6827.0),
 }
