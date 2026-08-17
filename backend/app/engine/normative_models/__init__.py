@@ -33,14 +33,13 @@ for _name in dir(_legacy):
 class HourlyISO52016Settings(BaseModel):
     """Controls the detailed per-construction hourly nodal calculation.
 
-    The repaired per-construction solver is the default analytical hourly
-    engine. ``certificate_mode`` is intentionally stricter: every opaque
-    construction must provide five explicit nodal capacities and six explicit
-    resistances. Reduced inputs based only on U-value and a mass class are
-    allowed for analytical runs but are reported as inferred construction data.
+    Direct low-level core calls keep this solver opt-in for regression and
+    legacy comparisons. The public audited calculation path selects it by
+    default unless a project explicitly sets ``enabled``. ``certificate_mode``
+    is stricter and requires explicit five-node construction data.
     """
 
-    enabled: bool = True
+    enabled: bool = False
     certificate_mode: bool = False
     max_warmup_cycles: int = Field(20, ge=2, le=100)
     warmup_tolerance_k: float = Field(0.01, gt=0.0, le=1.0)
@@ -83,9 +82,6 @@ class NormativeSettings(_legacy.NormativeSettings):
     )
 
     def __getattribute__(self, name: str):
-        # The existing audited-calculator readiness function reads ``legal``
-        # first. Fail closed at that boundary so every real formal calculation
-        # rejects undocumented manual useful-energy overrides.
         if name == "legal":
             legal = super().__getattribute__(name)
             if legal.certificate_mode:
