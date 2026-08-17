@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -80,6 +81,9 @@ function MetricCard({ label, value, icon: Icon, iconClassName, accentClassName }
 
 export function CalculationResults({ result, project }: CalculationResultsProps) {
   const indicators = result.annual_indicators
+  const hasExplicitDesignLoad = result.compliance.some((check) =>
+    check.name.includes("DESIGN_LOAD_EXPLICIT_CONDITIONS"),
+  )
 
   return (
     <section aria-labelledby="calculation-results-heading" className="space-y-6">
@@ -95,6 +99,12 @@ export function CalculationResults({ result, project }: CalculationResultsProps)
                 Projekt: <span className="font-semibold text-slate-950">{project.project_name}</span>
               </p>
             )}
+            <Link
+              href="/normative"
+              className="mt-3 inline-flex text-sm font-medium text-blue-700 underline-offset-4 hover:underline"
+            >
+              Ustawienia normatywne i projektowe
+            </Link>
           </div>
           <div className="flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700">
             <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
@@ -110,14 +120,17 @@ export function CalculationResults({ result, project }: CalculationResultsProps)
               <Thermometer className="h-5 w-5" aria-hidden="true" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-amber-950">Diagnostyczna szczytowa strata ciepła</p>
+              <p className="text-sm font-semibold text-amber-950">
+                {hasExplicitDesignLoad ? "Projektowe obciążenie cieplne" : "Diagnostyczna szczytowa strata ciepła"}
+              </p>
               <div className="mt-1 flex items-baseline gap-2">
                 <span className="text-3xl font-bold tracking-tight text-slate-950">{result.design_heating_power_kw.toFixed(1)}</span>
                 <span className="text-sm font-medium text-slate-600">kW</span>
               </div>
               <p className="mt-1 max-w-3xl text-xs leading-5 text-slate-600">
-                Maksimum strat przez przenikanie i wentylację w wybranym roku TMY. Ta wartość nie zastępuje
-                odrębnego obliczenia projektowego obciążenia cieplnego dla temperatury obliczeniowej.
+                {hasExplicitDesignLoad
+                  ? "Wartość wyznaczona z jawnej projektowej temperatury zewnętrznej i warunków brzegowych. Nie jest dodawana do rocznego Eu. Szczegóły stref i źródło warunków projektowych są raportowane w kontrolach poniżej."
+                  : "Maksimum strat przez przenikanie i wentylację w wybranym roku TMY. Ta wartość nie zastępuje odrębnego obliczenia projektowego obciążenia cieplnego dla temperatury obliczeniowej."}
               </p>
             </div>
           </CardContent>
@@ -152,21 +165,23 @@ export function CalculationResults({ result, project }: CalculationResultsProps)
         />
         <div className="mt-5 grid grid-cols-1 gap-3">
           {result.compliance.map((check) => {
-            const isAuditWarning = check.name.startsWith("Ostrzeżenie audytowe:")
-            const isAuditInfo = check.name.startsWith("Informacja audytowa:")
+            const isWarning = check.name.startsWith("Ostrzeżenie audytowe:")
+              || check.name.startsWith("Ostrzeżenie normatywne:")
+            const isInfo = check.name.startsWith("Informacja audytowa:")
+              || check.name.startsWith("Informacja normatywna:")
             return (
               <Alert
-                key={check.name}
-                variant={!check.passed && !isAuditWarning ? "destructive" : "default"}
-                className={isAuditWarning ? "border-amber-300 bg-amber-50 text-amber-950" : undefined}
+                key={`${check.name}-${check.message}`}
+                variant={!check.passed && !isWarning ? "destructive" : "default"}
+                className={isWarning ? "border-amber-300 bg-amber-50 text-amber-950" : undefined}
               >
                 <AlertTitle className="flex flex-wrap items-center gap-2">
                   {check.name}
                   <Badge
-                    variant={!check.passed && !isAuditWarning ? "destructive" : "default"}
-                    className={isAuditWarning ? "bg-amber-600 text-white hover:bg-amber-600" : undefined}
+                    variant={!check.passed && !isWarning ? "destructive" : "default"}
+                    className={isWarning ? "bg-amber-600 text-white hover:bg-amber-600" : undefined}
                   >
-                    {isAuditWarning ? "UWAGA" : isAuditInfo ? "INFO" : check.passed ? "OK" : "NIE"}
+                    {isWarning ? "UWAGA" : isInfo ? "INFO" : check.passed ? "OK" : "NIE"}
                   </Badge>
                 </AlertTitle>
                 <AlertDescription>{check.message}</AlertDescription>
