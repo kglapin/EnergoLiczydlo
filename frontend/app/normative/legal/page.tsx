@@ -20,6 +20,12 @@ function carrierValue(value: unknown): string | undefined {
   return typeof value === "string" && value !== "" ? value : undefined
 }
 
+function optionalNumber(value: string): number | undefined {
+  if (value.trim() === "") return undefined
+  const parsed = Number(value)
+  return Number.isFinite(parsed) ? parsed : undefined
+}
+
 export default function LegalProvenancePage() {
   const project = useAppStore((state) => state.project)
   const [settings, setSettings] = useState<NormativeSettings | null>(null)
@@ -51,8 +57,19 @@ export default function LegalProvenancePage() {
     return Array.from(carriers).sort()
   }, [project])
 
+  const groundElements = useMemo(
+    () => project?.opaque_building_elements.filter(
+      (element) => element.adjacent_space_type === "ground",
+    ) ?? [],
+    [project],
+  )
+
   if (!settings) {
-    return <main className="mx-auto max-w-4xl px-4 py-12 text-sm text-muted-foreground">Ładowanie…</main>
+    return (
+      <main className="mx-auto max-w-4xl px-4 py-12 text-sm text-muted-foreground">
+        Ładowanie…
+      </main>
+    )
   }
 
   const legal = settings.legal
@@ -61,6 +78,19 @@ export default function LegalProvenancePage() {
     setSettings((current) => current ? {
       ...current,
       legal: { ...current.legal, ...patch },
+    } : current)
+  }
+
+  function updateDesignGroundTemperature(elementId: string, value?: number) {
+    setSettings((current) => current ? {
+      ...current,
+      design_conditions: {
+        ...current.design_conditions,
+        ground_adjacent_temperature_by_element_c: {
+          ...current.design_conditions.ground_adjacent_temperature_by_element_c,
+          ...(value === undefined ? {} : { [elementId]: value }),
+        },
+      },
     } : current)
   }
 
@@ -74,7 +104,10 @@ export default function LegalProvenancePage() {
     <main className="mx-auto w-full max-w-4xl space-y-8 px-4 py-8 md:px-8 md:py-12">
       <div className="space-y-3">
         <Button variant="ghost" size="sm" asChild className="-ml-3">
-          <Link href="/normative"><ArrowLeft className="mr-2 h-4 w-4" />Ustawienia normatywne</Link>
+          <Link href="/normative">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Ustawienia normatywne
+          </Link>
         </Button>
         <h1 className="text-3xl font-semibold tracking-tight">Tryb formalny — ślad źródłowy</h1>
         <p className="text-sm leading-6 text-muted-foreground">
@@ -175,6 +208,42 @@ export default function LegalProvenancePage() {
         </CardContent>
       </Card>
 
+      {settings.design_conditions.enabled && groundElements.length > 0 ? (
+        <Card>
+          <CardHeader>
+            <CardTitle>Warunek projektowy dla przegród do gruntu</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-5">
+            <p className="text-sm leading-6 text-muted-foreground">
+              W formalnym obciążeniu cieplnym kalkulator nie używa średniej temperatury gruntu z
+              profilu rocznego. Podaj zweryfikowaną projektową temperaturę sąsiednią dla każdej
+              przegrody do gruntu, zgodną z przyjętą procedurą projektową.
+            </p>
+            {groundElements.map((element) => (
+              <div className="space-y-2" key={element.id}>
+                <Label htmlFor={`design-ground-${element.id}`}>
+                  {element.name} — projektowa temperatura po stronie gruntu [°C]
+                </Label>
+                <Input
+                  id={`design-ground-${element.id}`}
+                  type="number"
+                  step="any"
+                  value={
+                    settings.design_conditions.ground_adjacent_temperature_by_element_c[
+                      element.id
+                    ] ?? ""
+                  }
+                  onChange={(event) => updateDesignGroundTemperature(
+                    element.id,
+                    optionalNumber(event.target.value),
+                  )}
+                />
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      ) : null}
+
       {legal.certificate_mode ? (
         <Alert>
           <AlertTitle>Kontrole uruchamiane przez backend</AlertTitle>
@@ -189,7 +258,10 @@ export default function LegalProvenancePage() {
       ) : null}
 
       <div className="flex justify-end">
-        <Button onClick={save}><Save className="mr-2 h-4 w-4" />Zapisz ślad źródłowy</Button>
+        <Button onClick={save}>
+          <Save className="mr-2 h-4 w-4" />
+          Zapisz ślad źródłowy
+        </Button>
       </div>
 
       {saved ? (
