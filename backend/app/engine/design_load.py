@@ -156,37 +156,46 @@ def _zone_transmission_load_w(
     indoor = float(zone.setpoint_heating)
     load = 0.0
 
-    for element in project.opaque_building_elements:
-        if element.zone_id != zone.id:
+    for opaque_element in project.opaque_building_elements:
+        if opaque_element.zone_id != zone.id:
             continue
         adjacent = _opaque_adjacent_temperature(
-            element,
+            opaque_element,
             settings,
             outdoor,
             annual_mean_outdoor_c,
         )
         if adjacent is None:
             continue
-        load += float(element.area) * float(element.u_value) * max(
+        load += float(opaque_element.area) * float(opaque_element.u_value) * max(
             indoor - adjacent,
             0.0,
         )
 
-    for element in project.transparent_building_elements:
-        if element.zone_id != zone.id:
+    for transparent_element in project.transparent_building_elements:
+        if transparent_element.zone_id != zone.id:
             continue
-        load += float(element.area) * float(element.u_value) * max(
-            indoor - outdoor,
-            0.0,
+        load += (
+            float(transparent_element.area)
+            * float(transparent_element.u_value)
+            * max(indoor - outdoor, 0.0)
         )
 
     delta_outdoor = max(indoor - outdoor, 0.0)
-    for bridge in project.thermal_bridges.linear_bridges:
-        if bridge.zone_id == zone.id:
-            load += float(bridge.psi_value) * float(bridge.length) * delta_outdoor
-    for bridge in project.thermal_bridges.point_bridges:
-        if bridge.zone_id == zone.id:
-            load += float(bridge.chi_value) * int(bridge.count) * delta_outdoor
+    for linear_bridge in project.thermal_bridges.linear_bridges:
+        if linear_bridge.zone_id == zone.id:
+            load += (
+                float(linear_bridge.psi_value)
+                * float(linear_bridge.length)
+                * delta_outdoor
+            )
+    for point_bridge in project.thermal_bridges.point_bridges:
+        if point_bridge.zone_id == zone.id:
+            load += (
+                float(point_bridge.chi_value)
+                * int(point_bridge.count)
+                * delta_outdoor
+            )
 
     return float(max(load, 0.0))
 
