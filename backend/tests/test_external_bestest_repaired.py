@@ -1,4 +1,4 @@
-"""External BESTEST Case 600 validation of the repaired per-construction solver."""
+"""External BESTEST Case 600 validation of the dynamic-surface solver."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ import numpy as np
 import pytest
 
 from app.engine.climate import load_epw, radiation_on_surface
-from app.engine.iso52016_hourly import solve_zone_iso52016
+from app.engine.iso52016_dynamic_surfaces import solve_zone_iso52016_dynamic_surfaces
 from app.engine.solar import solar_gains_transparent
 from app.schemas.models import OpaqueElement, ThermalBridgeConfig, TransparentElement
 from tests.test_external_bestest import CASE_600_REFERENCE, _download_bestest_weather
@@ -26,17 +26,9 @@ CASE_600_LONG_WALL_M2 = CASE_600_LENGTH_M * CASE_600_HEIGHT_M
 CASE_600_SHORT_WALL_M2 = CASE_600_WIDTH_M * CASE_600_HEIGHT_M
 CASE_600_SOUTH_OPAQUE_M2 = CASE_600_LONG_WALL_M2 - CASE_600_WINDOW_AREA_M2
 
-# Standard 140 Case 600 uses prescribed combined surface coefficients for the
-# lightweight envelope. The floor is a raised/exterior floor; it is not a slab
-# coupled to a 2 m soil domain in the benchmark being compared here.
-CASE_600_HI_W_M2K = 8.29
-CASE_600_HO_W_M2K = 29.3
-CASE_600_RSI_M2K_W = 1.0 / CASE_600_HI_W_M2K
-CASE_600_RSE_M2K_W = 1.0 / CASE_600_HO_W_M2K
-
-# The published altitude correction converts the nominal 0.5 ACH to 0.414 h⁻¹
-# for the Denver weather. Use the same implied density for the explicit room-air
-# thermal capacity instead of the generic furniture-capacity fallback.
+# The published altitude adjustment represents the nominal 0.5 ACH at the
+# Denver test location as 0.414 h⁻¹. Use the same implied air density for the
+# explicit room-air capacitance rather than a generic furniture-capacity proxy.
 CASE_600_AIR_DENSITY_KG_M3 = (0.414 / 0.5) * 1.2
 CASE_600_AIR_CP_J_KG_K = 1006.0
 CASE_600_AIR_HEAT_CAPACITY_J_K = (
@@ -46,6 +38,7 @@ CASE_600_AIR_HEAT_CAPACITY_J_K = (
 CASE_600_WINDOW_U_VALUE = 3.0
 CASE_600_WINDOW_G_VALUE = 0.789
 CASE_600_DIRECT_IAM = (1.0, -0.189, 0.644, -0.596)
+CASE_600_WINDOW_CORE_R_M2K_W = 2.0 * 0.003175 / 1.06 + 0.1588
 
 WALL_LAYERS_OUTSIDE_TO_INSIDE: tuple[Layer, ...] = (
     (0.009, 0.140, 900.0, 530.0),
@@ -63,13 +56,16 @@ FLOOR_LAYERS_OUTSIDE_TO_INSIDE: tuple[Layer, ...] = (
 )
 
 
-def _five_node_construction(
+def _five_node_material(
     layers_outside_to_inside: Sequence[Layer],
-    *,
-    r_si: float,
-    r_se: float,
-) -> tuple[list[float], list[float]]:
-    """Map material layers to five finite-volume nodes, preserving total R/C."""
+) -> tuple[list[float], list[float], tuple[float, float]]:
+    """Map layers to five capacitive nodes plus two explicit surface half-cells.
+
+    Returns capacities [kJ/(m² K)], four centre-to-centre resistances and the
+    exterior/interior surface-to-nearest-node half-cell resistances. Surface
+    films are intentionally absent: the dynamic solver calculates them from the
+    hourly surface state and weather.
+    """
     layers_inside_to_outside = list(reversed(layers_outside_to_inside))
     layer_r = [
         thickness / conductivity for thickness, conductivity, _, _ in layers_inside_to_outside
@@ -98,8 +94,20 @@ def _five_node_construction(
                 capacity += layer_capacity * overlap / (layer_end - layer_start)
         capacities.append(max(capacity, 1e-9))
 
-    resistances = [r_si + 0.5 * bin_r, *([bin_r] * 4), r_se + 0.5 * bin_r]
-    return capacities, resistances
+    core_resistances = [bin_r] * 4
+    boundary_halves = (0.5 * bin_r, 0.5 * bin_r)
+    return capacities, core_resistances, boundary_halves
+
+
+def _black_sky_temperature_c(climate) -> np.ndarray:
+    """Convert EPW horizontal infrared intensity to effective black-sky temperature."""
+    if "ghi_infrared" not in climate.columns:
+        raise ValueError("BESTEST EPW must contain horizontal infrared radiation intensity")
+    sigma = 5.670374419e-8
+    infrared = np.asarray(climate["ghi_infrared"], dtype=float)
+    if np.any(infrared <= 0.0):
+        raise ValueError("BESTEST horizontal infrared radiation must be positive")
+    return np.power(infrared / sigma, 0.25) - 273.15
 
 
 @pytest.mark.skipif(
@@ -113,56 +121,31 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
     _download_bestest_weather(epw_path)
     climate = load_epw(epw_path)
 
-    wall_u = 1.0 / (
-        0.009 / 0.14
-        + 0.066 / 0.04
-        + 0.012 / 0.16
-        + CASE_600_RSI_M2K_W
-        + CASE_600_RSE_M2K_W
-    )
-    roof_u = 1.0 / (
-        0.019 / 0.14
-        + 0.1118 / 0.04
-        + 0.01 / 0.16
-        + CASE_600_RSI_M2K_W
-        + CASE_600_RSE_M2K_W
-    )
-    floor_u = 1.0 / (
-        1.003 / 0.04
-        + 0.025 / 0.14
-        + CASE_600_RSI_M2K_W
-        + CASE_600_RSE_M2K_W
+    wall_cap, wall_core_r, wall_boundary_r = _five_node_material(WALL_LAYERS_OUTSIDE_TO_INSIDE)
+    roof_cap, roof_core_r, roof_boundary_r = _five_node_material(ROOF_LAYERS_OUTSIDE_TO_INSIDE)
+    floor_cap, floor_core_r, floor_boundary_r = _five_node_material(
+        FLOOR_LAYERS_OUTSIDE_TO_INSIDE
     )
 
-    wall_nodes = _five_node_construction(
-        WALL_LAYERS_OUTSIDE_TO_INSIDE,
-        r_si=CASE_600_RSI_M2K_W,
-        r_se=CASE_600_RSE_M2K_W,
-    )
-    roof_nodes = _five_node_construction(
-        ROOF_LAYERS_OUTSIDE_TO_INSIDE,
-        r_si=CASE_600_RSI_M2K_W,
-        r_se=CASE_600_RSE_M2K_W,
-    )
-    floor_nodes = _five_node_construction(
-        FLOOR_LAYERS_OUTSIDE_TO_INSIDE,
-        r_si=CASE_600_RSI_M2K_W,
-        r_se=CASE_600_RSE_M2K_W,
-    )
+    # Nominal U-values are retained only as project metadata. The dynamic path
+    # below uses the verified material R/C plus hourly surface transfer directly.
+    wall_u = 1.0 / (sum(wall_core_r) + sum(wall_boundary_r) + 0.13 + 0.04)
+    roof_u = 1.0 / (sum(roof_core_r) + sum(roof_boundary_r) + 0.10 + 0.04)
+    floor_u = 1.0 / (sum(floor_core_r) + sum(floor_boundary_r) + 0.17 + 0.04)
 
     def opaque(
         element_id: str,
         name: str,
         area: float,
         u_value: float,
-        nodes: tuple[list[float], list[float]],
+        capacities: list[float],
+        core_resistances: list[float],
         *,
         azimuth: float = 0.0,
         inclination: float = 90.0,
         element_type: str = "external_wall",
         absorptance: float = 0.6,
     ) -> OpaqueElement:
-        capacities, resistances = nodes
         return OpaqueElement(
             id=element_id,
             name=name,
@@ -174,51 +157,71 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             u_value=u_value,
             solar_absorptance=absorptance,
             thermal_node_capacities_kj_m2k=capacities,
-            thermal_node_resistances_m2k_w=resistances,
-            h_ci_w_m2k=CASE_600_HI_W_M2K,
-            h_ri_w_m2k=0.0,
-            h_ce_w_m2k=CASE_600_HO_W_M2K,
-            h_re_w_m2k=0.0,
+            thermal_node_resistances_m2k_w=core_resistances,
         )
 
     opaque_elements = [
-        opaque("east", "East", CASE_600_SHORT_WALL_M2, wall_u, wall_nodes, azimuth=90.0),
-        opaque("north", "North", CASE_600_LONG_WALL_M2, wall_u, wall_nodes, azimuth=0.0),
+        opaque(
+            "east",
+            "East",
+            CASE_600_SHORT_WALL_M2,
+            wall_u,
+            wall_cap,
+            wall_core_r,
+            azimuth=90.0,
+        ),
+        opaque(
+            "north",
+            "North",
+            CASE_600_LONG_WALL_M2,
+            wall_u,
+            wall_cap,
+            wall_core_r,
+            azimuth=0.0,
+        ),
         opaque(
             "south",
             "South",
             CASE_600_SOUTH_OPAQUE_M2,
             wall_u,
-            wall_nodes,
+            wall_cap,
+            wall_core_r,
             azimuth=180.0,
         ),
-        opaque("west", "West", CASE_600_SHORT_WALL_M2, wall_u, wall_nodes, azimuth=270.0),
+        opaque(
+            "west",
+            "West",
+            CASE_600_SHORT_WALL_M2,
+            wall_u,
+            wall_cap,
+            wall_core_r,
+            azimuth=270.0,
+        ),
         opaque(
             "roof",
             "Roof",
             CASE_600_FLOOR_AREA_M2,
             roof_u,
-            roof_nodes,
+            roof_cap,
+            roof_core_r,
             inclination=0.0,
             element_type="roof",
         ),
-        # Raised floor: outdoor thermal boundary, but no incident solar on the
-        # underside in the benchmark geometry.
+        # Case 600 uses a raised floor: outside thermal boundary, no direct
+        # solar on the underside and no wind-driven exterior convection there.
         opaque(
             "floor",
             "Raised floor",
             CASE_600_FLOOR_AREA_M2,
             floor_u,
-            floor_nodes,
+            floor_cap,
+            floor_core_r,
             inclination=180.0,
             element_type="ground_floor",
             absorptance=0.0,
         ),
     ]
 
-    window_core_r = (
-        1.0 / CASE_600_WINDOW_U_VALUE - CASE_600_RSI_M2K_W - CASE_600_RSE_M2K_W
-    )
     transparent = [
         TransparentElement(
             id="south-window-1",
@@ -229,11 +232,6 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             u_value=CASE_600_WINDOW_U_VALUE,
             g_value=CASE_600_WINDOW_G_VALUE,
             frame_factor=0.001,
-            h_ci_w_m2k=CASE_600_HI_W_M2K,
-            h_ri_w_m2k=0.0,
-            h_ce_w_m2k=CASE_600_HO_W_M2K,
-            h_re_w_m2k=0.0,
-            core_thermal_resistance_m2k_w=window_core_r,
         ),
         TransparentElement(
             id="south-window-2",
@@ -244,11 +242,6 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             u_value=CASE_600_WINDOW_U_VALUE,
             g_value=CASE_600_WINDOW_G_VALUE,
             frame_factor=0.001,
-            h_ci_w_m2k=CASE_600_HI_W_M2K,
-            h_ri_w_m2k=0.0,
-            h_ce_w_m2k=CASE_600_HO_W_M2K,
-            h_re_w_m2k=0.0,
-            core_thermal_resistance_m2k_w=window_core_r,
         ),
     ]
 
@@ -279,7 +272,20 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
             * np.asarray(irradiance, dtype=float)
         )
 
-    solution = solve_zone_iso52016(
+    boundary_resistances = {
+        "east": wall_boundary_r,
+        "north": wall_boundary_r,
+        "south": wall_boundary_r,
+        "west": wall_boundary_r,
+        "roof": roof_boundary_r,
+        "floor": floor_boundary_r,
+    }
+    window_core = {
+        "south-window-1": CASE_600_WINDOW_CORE_R_M2K_W,
+        "south-window-2": CASE_600_WINDOW_CORE_R_M2K_W,
+    }
+
+    solution = solve_zone_iso52016_dynamic_surfaces(
         opaque_elements=opaque_elements,
         transparent_elements=transparent,
         bridges=ThermalBridgeConfig(),
@@ -291,12 +297,41 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(
         opaque_solar_absorbed_w_by_element=opaque_solar,
         t_set_heating=20.0,
         t_set_cooling=27.0,
+        wind_speed_m_s=climate["v_wind"].to_numpy(dtype=float),
+        wind_direction_deg=climate["dir_wind"].to_numpy(dtype=float),
+        sky_temperature_c=_black_sky_temperature_c(climate),
+        opaque_boundary_resistances_m2k_w=boundary_resistances,
+        window_core_resistances_m2k_w=window_core,
+        air_heat_capacity_j_k=CASE_600_AIR_HEAT_CAPACITY_J_K,
         internal_convective_fraction=0.4,
-        air_furniture_heat_capacity_j_k=CASE_600_AIR_HEAT_CAPACITY_J_K,
-        floor_area_m2=CASE_600_FLOOR_AREA_M2,
-        require_explicit_construction_nodes=True,
+        solar_convective_fraction=0.0,
+        hvac_convective_fraction=1.0,
+        operative_air_weight=1.0,
+        wind_exposed_by_element={"floor": False},
+        roughness_by_element={
+            "east": "rough",
+            "north": "rough",
+            "south": "rough",
+            "west": "rough",
+            "roof": "rough",
+            "floor": "rough",
+            "south-window-1": "very_smooth",
+            "south-window-2": "very_smooth",
+        },
+        emissivity_by_element={
+            "east": 0.9,
+            "north": 0.9,
+            "south": 0.9,
+            "west": 0.9,
+            "roof": 0.9,
+            "floor": 0.9,
+            "south-window-1": 0.84,
+            "south-window-2": 0.84,
+        },
         max_warmup_cycles=30,
         warmup_tolerance_k=0.01,
+        nonlinear_iterations=5,
+        nonlinear_tolerance_k=0.02,
     )
 
     actual = {
