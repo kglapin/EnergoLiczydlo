@@ -7,12 +7,20 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
-  statuses: write
+  contents: write
 
 jobs:
   backend:
     runs-on: ubuntu-latest
+    outputs:
+      install: ${{ steps.collect.outputs.install }}
+      lint: ${{ steps.collect.outputs.lint }}
+      mypy: ${{ steps.collect.outputs.mypy }}
+      conformance: ${{ steps.collect.outputs.conformance }}
+      audit: ${{ steps.collect.outputs.audit }}
+      post_audit: ${{ steps.collect.outputs.post_audit }}
+      bestest: ${{ steps.collect.outputs.bestest }}
+      full_regression: ${{ steps.collect.outputs.full_regression }}
     defaults:
       run:
         working-directory: backend
@@ -23,10 +31,11 @@ jobs:
           python-version: "3.11"
           cache: "pip"
           cache-dependency-path: backend/requirements.txt
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-      - name: Lint with ruff
+      - id: install
+        name: Install dependencies
+        run: pip install -r requirements.txt
+      - id: lint
+        name: Lint with ruff
         run: >-
           ruff check app tests --output-format=github
           --extend-per-file-ignores "app/engine/calculator/__init__.py:E402"
@@ -43,10 +52,10 @@ jobs:
           --extend-per-file-ignores "tests/test_post_repair_audit.py:F401"
           --extend-per-file-ignores "tests/test_external_bestest_repaired.py:I001"
           --extend-per-file-ignores "tests/test_external_bestest_repaired.py:E501"
-      - name: Type check ISO 52016 numerical modules with mypy
+      - id: mypy
+        name: Type check ISO 52016 numerical modules with mypy
         shell: bash
         run: |
-          set +e
           mypy \
             app/engine/iso52016_hourly.py \
             app/engine/iso52016_monthly.py \
@@ -54,84 +63,53 @@ jobs:
             app/engine/iso52016_design_load.py \
             --follow-imports=skip \
             --disable-error-code=no-untyped-def \
-            --show-error-codes --no-pretty | tee /tmp/mypy.txt
-          status=${PIPESTATUS[0]}
-          {
-            echo "### mypy — ISO 52016 numerical modules"
-            echo '```text'
-            cat /tmp/mypy.txt
-            echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
-          exit "$status"
-      - name: Run ISO 52016 conformance regressions
+            --show-error-codes --no-pretty
+      - id: conformance
+        name: Run ISO 52016 conformance regressions
         run: >-
           pytest
           tests/test_iso52016_conformance.py
           tests/test_iso52016_monthly.py
           tests/test_iso52016_design_load.py
           -q -vv
-      - name: Run audit repair regressions
+      - id: audit
+        name: Run audit repair regressions
         run: pytest tests/test_audit_repairs.py -q -vv
-      - name: Run independent post-repair audit
+      - id: post_audit
+        name: Run independent post-repair audit
         run: pytest tests/test_post_repair_audit.py -q -vv -s
-      - name: Run repaired BESTEST Case 600
+      - id: bestest
+        name: Run repaired BESTEST Case 600
         env:
           RUN_EXTERNAL_BENCHMARKS: "1"
         run: >-
           pytest
           tests/test_external_bestest_repaired.py::test_repaired_solver_bestest_case_600_is_inside_published_reference_band
           -q -vv -s
-      - name: Run full backend regression suite
-        shell: bash
-        run: |
-          set +e
-          pytest tests -q --cov=app --cov-report=term-missing 2>&1 | tee /tmp/pytest.txt
-          status=${PIPESTATUS[0]}
-          if [ "$status" -ne 0 ]; then
-            python - <<'PY'
-          from pathlib import Path
-
-          text = Path("/tmp/pytest.txt").read_text(encoding="utf-8")[-6000:]
-          escaped = (
-              text.replace("%", "%25")
-              .replace("\r", "%0D")
-              .replace("\n", "%0A")
-          )
-          print(f"::error title=pytest failure::{escaped}")
-          PY
-          fi
-          exit "$status"
-      - name: Publish backend result as commit status
+      - id: full_regression
+        name: Run full backend regression suite
+        run: pytest tests -q --cov=app --cov-report=term-missing
+      - id: collect
+        name: Collect backend step outcomes
         if: always()
         working-directory: .
-        env:
-          GH_TOKEN: ${{ github.token }}
-          COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-          JOB_STATUS: ${{ job.status }}
         run: |
-          if [ "$JOB_STATUS" = "success" ]; then
-            state="success"
-            description="Backend, ISO conformance and BESTEST passed"
-          else
-            state="failure"
-            description="Backend validation failed"
-          fi
-          jq -n \
-            --arg state "$state" \
-            --arg context "energoliczydlo/backend" \
-            --arg description "$description" \
-            '{state:$state, context:$context, description:$description}' \
-            > /tmp/status.json
-          curl --fail-with-body -L \
-            -X POST \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${COMMIT_SHA}" \
-            -d @/tmp/status.json
+          echo "install=${{ steps.install.outcome }}" >> "$GITHUB_OUTPUT"
+          echo "lint=${{ steps.lint.outcome }}" >> "$GITHUB_OUTPUT"
+          echo "mypy=${{ steps.mypy.outcome }}" >> "$GITHUB_OUTPUT"
+          echo "conformance=${{ steps.conformance.outcome }}" >> "$GITHUB_OUTPUT"
+          echo "audit=${{ steps.audit.outcome }}" >> "$GITHUB_OUTPUT"
+          echo "post_audit=${{ steps.post_audit.outcome }}" >> "$GITHUB_OUTPUT"
+          echo "bestest=${{ steps.bestest.outcome }}" >> "$GITHUB_OUTPUT"
+          echo "full_regression=${{ steps.full_regression.outcome }}" >> "$GITHUB_OUTPUT"
 
   frontend:
     runs-on: ubuntu-latest
+    outputs:
+      install: ${{ steps.collect.outputs.install }}
+      lint: ${{ steps.collect.outputs.lint }}
+      typecheck: ${{ steps.collect.outputs.typecheck }}
+      build: ${{ steps.collect.outputs.build }}
     defaults:
       run:
         working-directory: frontend
@@ -140,41 +118,104 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Install dependencies
+      - id: install
+        name: Install dependencies
         run: |
           corepack enable
           pnpm install --frozen-lockfile
-      - name: Lint
+      - id: lint
+        name: Lint
         run: pnpm lint
-      - name: Type check
+      - id: typecheck
+        name: Type check
         run: pnpm typecheck
-      - name: Build
+      - id: build
+        name: Build
         run: pnpm build
-      - name: Publish frontend result as commit status
+      - id: collect
+        name: Collect frontend step outcomes
         if: always()
         working-directory: .
-        env:
-          GH_TOKEN: ${{ github.token }}
-          COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-          JOB_STATUS: ${{ job.status }}
         run: |
-          if [ "$JOB_STATUS" = "success" ]; then
-            state="success"
-            description="Frontend lint, typecheck and build passed"
-          else
-            state="failure"
-            description="Frontend validation failed"
-          fi
+          echo "install=${{ steps.install.outcome }}" >> "$GITHUB_OUTPUT"
+          echo "lint=${{ steps.lint.outcome }}" >> "$GITHUB_OUTPUT"
+          echo "typecheck=${{ steps.typecheck.outcome }}" >> "$GITHUB_OUTPUT"
+          echo "build=${{ steps.build.outcome }}" >> "$GITHUB_OUTPUT"
+
+  report:
+    if: always() && github.event_name == 'pull_request'
+    needs: [backend, frontend]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - name: Write validation report
+        env:
+          TESTED_SHA: ${{ github.event.pull_request.head.sha }}
+          BACKEND_RESULT: ${{ needs.backend.result }}
+          B_INSTALL: ${{ needs.backend.outputs.install }}
+          B_LINT: ${{ needs.backend.outputs.lint }}
+          B_MYPY: ${{ needs.backend.outputs.mypy }}
+          B_CONFORMANCE: ${{ needs.backend.outputs.conformance }}
+          B_AUDIT: ${{ needs.backend.outputs.audit }}
+          B_POST_AUDIT: ${{ needs.backend.outputs.post_audit }}
+          B_BESTEST: ${{ needs.backend.outputs.bestest }}
+          B_FULL: ${{ needs.backend.outputs.full_regression }}
+          FRONTEND_RESULT: ${{ needs.frontend.result }}
+          F_INSTALL: ${{ needs.frontend.outputs.install }}
+          F_LINT: ${{ needs.frontend.outputs.lint }}
+          F_TYPECHECK: ${{ needs.frontend.outputs.typecheck }}
+          F_BUILD: ${{ needs.frontend.outputs.build }}
+        run: |
+          mkdir -p .ci
           jq -n \
-            --arg state "$state" \
-            --arg context "energoliczydlo/frontend" \
-            --arg description "$description" \
-            '{state:$state, context:$context, description:$description}' \
-            > /tmp/status.json
-          curl --fail-with-body -L \
-            -X POST \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${COMMIT_SHA}" \
-            -d @/tmp/status.json
+            --arg tested_sha "$TESTED_SHA" \
+            --arg backend_result "$BACKEND_RESULT" \
+            --arg b_install "$B_INSTALL" \
+            --arg b_lint "$B_LINT" \
+            --arg b_mypy "$B_MYPY" \
+            --arg b_conformance "$B_CONFORMANCE" \
+            --arg b_audit "$B_AUDIT" \
+            --arg b_post_audit "$B_POST_AUDIT" \
+            --arg b_bestest "$B_BESTEST" \
+            --arg b_full "$B_FULL" \
+            --arg frontend_result "$FRONTEND_RESULT" \
+            --arg f_install "$F_INSTALL" \
+            --arg f_lint "$F_LINT" \
+            --arg f_typecheck "$F_TYPECHECK" \
+            --arg f_build "$F_BUILD" \
+            '{
+              tested_sha: $tested_sha,
+              backend: {
+                result: $backend_result,
+                install: $b_install,
+                lint: $b_lint,
+                mypy: $b_mypy,
+                conformance: $b_conformance,
+                audit_repairs: $b_audit,
+                post_repair_audit: $b_post_audit,
+                bestest: $b_bestest,
+                full_regression: $b_full
+              },
+              frontend: {
+                result: $frontend_result,
+                install: $f_install,
+                lint: $f_lint,
+                typecheck: $f_typecheck,
+                build: $f_build
+              }
+            }' > .ci/last-run.json
+      - name: Commit validation report
+        env:
+          TESTED_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .ci/last-run.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "[skip ci] record validation for ${TESTED_SHA}"
+          git push origin "HEAD:${{ github.head_ref }}"
