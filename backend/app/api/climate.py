@@ -10,11 +10,12 @@ from typing import Any
 import httpx
 from fastapi import APIRouter, HTTPException
 
+from app.data_paths import resolve_tmy_data_dir
 from app.engine.climate import ClimateStation, load_epw, nearest_climate_station
 
 router = APIRouter()
 
-DATA_DIR = Path(__file__).parents[3] / "data" / "tmy"
+DATA_DIR = resolve_tmy_data_dir(__file__)
 GEOCODING_API_URL = os.getenv(
     "GEOCODING_API_URL", "https://geocoding-api.open-meteo.com/v1/search"
 )

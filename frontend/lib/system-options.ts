@@ -6,6 +6,23 @@ export type SystemOption = {
   sinkTemperature?: number
 }
 
+/** Iloczyn sezonowych składowych sprawności systemu, używany jako η_tot. */
+export function totalSystemEfficiency(system: {
+  generation_efficiency?: unknown
+  distribution_efficiency?: unknown
+  storage_efficiency?: unknown
+  control_efficiency?: unknown
+}): number | null {
+  const values = [
+    system.generation_efficiency,
+    system.distribution_efficiency,
+    system.storage_efficiency,
+    system.control_efficiency,
+  ].map(Number)
+  if (values.some((value) => !Number.isFinite(value) || value <= 0)) return null
+  return values.reduce((product, value) => product * value, 1)
+}
+
 /**
  * Normatywne obciążenie cieplne q_int [W/m²] z tabeli 26 rozporządzenia
  * w sprawie metodologii (Dz.U. 2015 poz. 376). Wiersze z β (udział czasu
@@ -27,15 +44,36 @@ export const normativeInternalGainWm2: Record<string, number> = {
 const OCCUPANT_HEAT_W = 80 // W/osoba
 const DEFAULT_OCCUPANCY_DENSITY = 0.03 // os./m² (domyślna gęstość strefy)
 
-/** Podział normatywnego q_int na trzy źródła zysków (osoby/światło/sprzęt). */
-export function normativeInternalGains(dhwUsageProfile: string) {
-  const qInt = normativeInternalGainWm2[dhwUsageProfile] ?? 6.8
+/** Podział normatywnego q_int na trzy źródła (osoby/światło/sprzęt). */
+export function normativeInternalGains(
+  buildingType: string,
+  dhwUsageProfile: string,
+  beta = 0.3,
+) {
+  const safeBeta = Math.min(1, Math.max(0, beta))
+  const qInt =
+    buildingType === "office"
+      ? 15.2 * safeBeta + 1.6 * (1 - safeBeta)
+      : buildingType === "school"
+        ? 12 * safeBeta + 1 * (1 - safeBeta)
+        : buildingType === "retail"
+          ? 10 * safeBeta + 1 * (1 - safeBeta)
+          : buildingType === "healthcare"
+            ? 8
+            : buildingType === "residential" &&
+                dhwUsageProfile === "residential_multi_family_lump_sum"
+              ? 7.1
+              : buildingType === "residential" &&
+                  dhwUsageProfile === "residential_multi_family_individual_metering"
+                ? 7.1
+                : normativeInternalGainWm2[dhwUsageProfile] ?? 6.8
   const occupancyPart = Math.min(qInt, OCCUPANT_HEAT_W * DEFAULT_OCCUPANCY_DENSITY)
   const remainder = qInt - occupancyPart
   return {
     occupancy: { power_density: OCCUPANT_HEAT_W },
     lighting: { power_density: Math.round(0.3 * remainder * 100) / 100 },
     equipment: { power_density: Math.round(0.7 * remainder * 100) / 100 },
+    normative_power_density_w_m2: qInt,
   }
 }
 
@@ -127,6 +165,22 @@ export const heatingSourceOptions: SystemOption[] = [
     carrier: "district_heating",
     generationEfficiency: 0.98,
   },
+]
+
+/**
+ * Klasyfikacja instalacji odbiorczej. Pole opisuje sposób oddawania ciepła,
+ * a nie źródło energii; nie ustawia automatycznie wartości ηH,d/ηH,e, bo ich
+ * dobór zależy od rzeczywistego projektu instalacji i danych metodologii.
+ * Backend wykorzystuje rozpoznane instalacje wodne do doboru pompy obiegowej
+ * z tabeli 20, gdy energia pomocnicza nie została podana jawnie.
+ */
+export const heatingInstallationOptions = [
+  { value: "water_radiators", label: "Ogrzewanie wodne z grzejnikami" },
+  { value: "water_surface", label: "Ogrzewanie wodne płaszczyznowe (np. podłogowe)" },
+  { value: "air_heating", label: "Ogrzewanie powietrzne" },
+  { value: "electric_direct", label: "Ogrzewanie elektryczne bezpośrednie" },
+  { value: "steam", label: "Ogrzewanie parowe" },
+  { value: "other", label: "Inny rodzaj instalacji" },
 ]
 
 export const dhwSourceOptions: SystemOption[] = [
@@ -223,6 +277,16 @@ export const coolingSourceOptions: SystemOption[] = [
     carrier: "district_heating",
     generationEfficiency: 0.8,
   },
+]
+
+/** Klasyfikacja instalacji odbiorczej chłodu; nie zmienia automatycznie SEER. */
+export const coolingInstallationOptions = [
+  { value: "direct_expansion", label: "Chłodzenie bezpośrednie (DX, split, VRF/VRV)" },
+  { value: "water_fan_coils", label: "Chłodzenie wodne z klimakonwektorami" },
+  { value: "water_surface", label: "Chłodzenie wodne płaszczyznowe" },
+  { value: "air_cooling", label: "Chłodzenie powietrzne" },
+  { value: "passive", label: "Chłodzenie pasywne" },
+  { value: "other", label: "Inny rodzaj instalacji" },
 ]
 
 export const dhwDistributionOptions = [

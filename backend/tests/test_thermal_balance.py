@@ -5,11 +5,26 @@ import pytest
 
 from app.engine.thermal_balance import (
     TransmissionNetwork,
+    opaque_external_conductance,
     solve_zone_5r1c,
     zone_thermal_properties,
 )
 
 N = 8760
+
+
+def test_opaque_external_conductance_preserves_opaque_u_value():
+    """The Htr,em/Htr,ms series path must equal the input Htr,op."""
+    h_opaque = 50.0
+    h_ms = 9.1 * 250.0
+    h_em = opaque_external_conductance(h_opaque, h_ms)
+    equivalent = 1.0 / (1.0 / h_em + 1.0 / h_ms)
+    assert equivalent == pytest.approx(h_opaque, rel=1e-12)
+
+
+def test_opaque_external_conductance_rejects_invalid_split():
+    with pytest.raises(ValueError, match="H_tr,op < H_tr,ms"):
+        opaque_external_conductance(100.0, 100.0)
 
 
 def _network(h_opaque: float = 50.0, drive: float = -10.0) -> TransmissionNetwork:
@@ -70,11 +85,10 @@ def test_steady_state_heating_matches_analytic():
         t_set_heating=t_set,
         t_set_cooling=None,
     )
-    # Recover the surface node from the operative temperature definition.
-    t_s = (solution.t_operative - 0.3 * solution.t_air) / 0.7
-    hem = 1.0 / (1.0 / h_op + 1.0 / (9.1 * 250.0))  # series with H_tr,ms
+    t_s = solution.t_surface
+    hem = opaque_external_conductance(h_op, 9.1 * 250.0)
     losses = (
-        hem * (solution.t_mass - t_e_val)
+        hem * (solution.t_mass_mean - t_e_val)
         + h_w * (t_s - t_e_val)
         + h_ve * (solution.t_air - t_e_val)
     )
@@ -121,10 +135,10 @@ def test_gain_splitting_conserves_energy():
         t_set_heating=None,
         t_set_cooling=None,
     )
-    t_s = (solution.t_operative - 0.3 * solution.t_air) / 0.7
-    hem = 1.0 / (1.0 / 50.0 + 1.0 / (9.1 * 250.0))
+    t_s = solution.t_surface
+    hem = opaque_external_conductance(50.0, 9.1 * 250.0)
     losses = (
-        hem * (solution.t_mass - 10.0)
+        hem * (solution.t_mass_mean - 10.0)
         + 30.0 * (t_s - 10.0)
         + 30.0 * (solution.t_air - 10.0)
     )

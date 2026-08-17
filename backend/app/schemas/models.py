@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from enum import StrEnum
+from math import isclose
 from typing import Any
 
 from pydantic import BaseModel, Field, field_validator, model_validator
@@ -75,6 +76,13 @@ class VentilationType(StrEnum):
     EXHAUST = "exhaust"
     HYBRID = "hybrid"
     NONE = "none"
+
+
+class VentilationOperationMode(StrEnum):
+    """Operating mode of mechanical ventilation."""
+
+    CONTINUOUS = "continuous"
+    PERIODIC = "periodic"
 
 
 class EnergyCarrier(StrEnum):
@@ -168,6 +176,8 @@ class Schedule(BaseModel):
     def _check_hourly_length(cls, v: list[float] | None) -> list[float] | None:
         if v is not None and len(v) != 24:
             raise ValueError("Hourly profile must contain exactly 24 values")
+        if v is not None and any(value < 0.0 or value > 1.0 for value in v):
+            raise ValueError("Hourly profile values must be between 0.0 and 1.0")
         return v
 
 
@@ -280,19 +290,31 @@ class ThermalBridgeConfig(BaseModel):
 
 class Ventilation(BaseModel):
     ventilation_type: VentilationType = VentilationType.NATURAL
-    # Budynkowy strumień powietrza [m3/h]. Wartość 0 oznacza pobranie
-    # strumienia normatywnego z tabel 21/22/24/25 rozporządzenia (V0 wg
-    # profilu użytkowania, z β i r_n dla wentylacji mechanicznej).
+    operation_mode: VentilationOperationMode = VentilationOperationMode.CONTINUOUS
+    # Budynkowy nominalny strumień powietrza [m3/h] podczas pracy wentylatorów.
+    # Wartość 0 oznacza pobranie strumienia normatywnego z tabel 21/22/24/25
+    # rozporządzenia; dla trybu okresowego jest to strumień w okresie użytkowania.
     airflow_rate: float = Field(0.0, ge=0.0)
     heat_recovery_efficiency: float = Field(0.0, ge=0.0, le=1.0)
-    infiltration_rate: float = Field(0.5, ge=0.0)
+    # Infiltracja przy wyłączonej wentylacji mechanicznej [1/h], tj. V_inf/V.
+    # Modern buildings default to the methodology value n = 0.2 1/h. The
+    # calculator switches an omitted field to n = 0.3 1/h for buildings from
+    # before 1996; an explicitly entered value always takes precedence.
+    infiltration_rate: float = Field(0.2, ge=0.0)
+    # Dodatkowa infiltracja przy pracy wentylatorów [1/h], tj. V_x,su/V lub
+    # V_x,ex/V. Zero oznacza brak danych o dodatkowym strumieniu.
+    fan_infiltration_rate: float = Field(0.0, ge=0.0)
     # Udział czasu użytkowania budynku β (§ 5.5.2). None = 1,0 dla
     # mieszkalnych (praca ciągła), 0,3 dla pozostałych (analogicznie do
     # przykładu standardowego z tabeli 26).
     usage_share_beta: float | None = Field(None, ge=0.0, le=1.0)
     supply_temperature: float | None = None
     mechanical_fan_power: float | None = Field(0.0, ge=0.0)
-    schedule: Schedule = Schedule()
+    # None means that no hourly operating profile was supplied; in periodic
+    # mode the calculator then uses the regulatory time-share beta as an
+    # explicit average-flow fallback.  A supplied constant/profile is used
+    # literally and is never silently replaced by beta.
+    schedule: Schedule | None = None
 
 
 class InternalGainSource(BaseModel):
@@ -303,16 +325,21 @@ class InternalGainSource(BaseModel):
 class InternalGains(BaseModel):
     """Internal heat gains; defaults reproduce tabela 26 of the methodology.
 
-    The default split (occupancy 80 W/person with the default zone density of
-    0.03 person/m2, lighting 2.0 W/m2, equipment 2.4 W/m2) sums to 6.8 W/m2 -
-    the normative q_int for a single-family residential building
-    (rozporządzenie Dz.U. 2015 poz. 376, tabela 26).  Other building types
-    should use ``normative_internal_gains`` from app.engine.internal_gains.
+    The automatically generated project default carries the normative q_int
+    total from table 26 alongside a display-oriented three-source split. The
+    total is kept independent of a zone's user-entered occupancy density.
+    Other building types should use ``normative_internal_gains`` from
+    app.engine.internal_gains.
     """
 
     occupancy: InternalGainSource = InternalGainSource(power_density=80.0)
     lighting: InternalGainSource = InternalGainSource(power_density=2.0)
     equipment: InternalGainSource = InternalGainSource(power_density=2.4)
+    # When the project omits an explicit internal-gains breakdown, the
+    # methodology supplies one total q_int [W/m²].  Keep that target alongside
+    # the UI-friendly source split so changing a zone's occupancy density does
+    # not silently change the normative total.
+    normative_power_density_w_m2: float | None = Field(None, ge=0.0)
 
 
 class SystemHeatingCooling(BaseModel):
@@ -320,10 +347,14 @@ class SystemHeatingCooling(BaseModel):
 
     ``generation_efficiency`` is ηH,g for heating and SEER for cooling.
     The remaining fields correspond to the distribution, storage and
-    regulation/use components of the seasonal efficiency.
+    regulation/use components of the seasonal efficiency. The total efficiency
+    is their product. ``installation_type`` classifies the terminal installation
+    and selects the corresponding Table 20 circulation-pump fallback when
+    auxiliary electricity is not entered explicitly.
     """
 
     system_type: SystemSourceType = SystemSourceType.HEAT_PUMP_AIR
+    installation_type: str | None = Field(None)
     fuel_or_carrier: EnergyCarrier = EnergyCarrier.ELECTRICITY
     # Retained only to import older JSON files. It is ignored: heating power
     # is derived from calculated peak heat losses and cooling Q_C,nd is
@@ -344,7 +375,28 @@ class SystemHeatingCooling(BaseModel):
     # (brine or water).  When None, a ground/water heat pump runs at its
     # rated COP all year instead of following the outdoor air temperature.
     source_temperature: float | None = Field(None)
-    auxiliary_energy: float = Field(0.0, ge=0.0)
+    # Explicit annual final electricity for pumps, controls and other system
+    # auxiliaries [kWh/year]. None keeps the legacy/methodology fallback; zero
+    # is an explicit statement that no auxiliary electricity is required.
+    auxiliary_energy_kwh_year: float | None = Field(None, ge=0.0)
+    # Legacy field in Wh/year retained for older JSON imports. It is used only
+    # when auxiliary_energy_kwh_year is omitted and the value is positive.
+    auxiliary_energy: float = Field(0.0, ge=0.0, deprecated=True)
+
+    @model_validator(mode="after")
+    def infer_carrier_when_omitted(self) -> SystemHeatingCooling:
+        """Keep source defaults consistent with their physical carrier."""
+        if "fuel_or_carrier" not in self.model_fields_set:
+            self.fuel_or_carrier = {
+                SystemSourceType.GAS_BOILER: EnergyCarrier.NATURAL_GAS,
+                SystemSourceType.GAS_CONDENSING: EnergyCarrier.NATURAL_GAS,
+                SystemSourceType.OIL_BOILER: EnergyCarrier.HEATING_OIL,
+                SystemSourceType.BIOMASS_BOILER: EnergyCarrier.BIOMASS,
+                SystemSourceType.COAL_BOILER: EnergyCarrier.HARD_COAL,
+                SystemSourceType.FIREPLACE: EnergyCarrier.BIOMASS,
+                SystemSourceType.DISTRICT_HEATING: EnergyCarrier.DISTRICT_HEATING,
+            }.get(self.system_type, EnergyCarrier.ELECTRICITY)
+        return self
 
 
 class SystemDHW(BaseModel):
@@ -371,6 +423,39 @@ class SystemDHW(BaseModel):
     storage_insulation_mm: float | None = Field(None, gt=0.0)  # 100/50/20
     # Legacy input retained for imported JSON files from the previous schema.
     efficiency: float | None = Field(None, gt=0.0)
+
+    @model_validator(mode="after")
+    def validate_storage_inputs(self) -> SystemDHW:
+        """Do not invent storage location or insulation data."""
+        if self.storage_volume_dm3 is None or self.system_type == DHWSourceType.NONE:
+            return self
+        if self.storage_location is None:
+            raise ValueError(
+                "storage_location is required when storage_volume_dm3 is provided"
+            )
+        requires_insulation = self.system_type in {
+            DHWSourceType.HEAT_PUMP_AIR,
+            DHWSourceType.HEAT_PUMP_GROUND,
+            DHWSourceType.HEAT_PUMP_WATER,
+            DHWSourceType.DISTRICT_HEATING,
+        }
+        if requires_insulation and self.storage_insulation_mm is None:
+            raise ValueError(
+                "storage_insulation_mm is required for an indirect DHW storage tank"
+            )
+        return self
+
+    @model_validator(mode="after")
+    def infer_carrier_when_omitted(self) -> SystemDHW:
+        """Keep DHW source defaults consistent with their physical carrier."""
+        if "fuel_or_carrier" not in self.model_fields_set:
+            self.fuel_or_carrier = {
+                DHWSourceType.GAS_INSTANTANEOUS: EnergyCarrier.NATURAL_GAS,
+                DHWSourceType.GAS_BOILER: EnergyCarrier.NATURAL_GAS,
+                DHWSourceType.GAS_CONDENSING: EnergyCarrier.NATURAL_GAS,
+                DHWSourceType.DISTRICT_HEATING: EnergyCarrier.DISTRICT_HEATING,
+            }.get(self.system_type, EnergyCarrier.ELECTRICITY)
+        return self
 
 
 HEATING_SOURCE_TYPES = frozenset(
@@ -434,15 +519,15 @@ class PrimaryEnergyFactor(BaseModel):
 class PrimaryEnergyFactors(BaseModel):
     """Non-renewable primary energy factors w_i and CO2 emission indicators.
 
-    ``fp`` defaults follow tabela 1 of the methodology (Dz.U. 2015 poz. 376):
-    electricity 3.00, local fossil fuels 1.10, biomass 0.20, biogas 0.50.
+    ``fp`` defaults follow the current tabela 1 (Dz.U. 2023 poz. 697):
+    electricity 2.50, local fossil fuels 1.10, biomass 0.20, biogas 0.50.
     District heating depends on the source plant (cogeneration 0.80 coal/gas
     or 0.15 biomass; heat-only plant 1.30 coal or 1.20 gas/oil) - 1.20 is
     kept as a neutral default that the user should adjust per project.
     ``we`` is expressed in kg CO2/kWh; override with current KOBiZE values.
     """
 
-    electricity: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=3.0, we=0.6)
+    electricity: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=2.5, we=0.6)
     natural_gas: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=1.1, we=0.2)
     lpg: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=1.1, we=0.2)
     heating_oil: PrimaryEnergyFactor = PrimaryEnergyFactor(fp=1.1, we=0.27)
@@ -468,12 +553,34 @@ class BuildingProject(BaseModel):
     transparent_building_elements: list[TransparentElement]
     thermal_bridges: ThermalBridgeConfig = ThermalBridgeConfig()
     ventilation: Ventilation
-    internal_gains: InternalGains = InternalGains()
+    internal_gains: InternalGains = Field(
+        default_factory=lambda: InternalGains(normative_power_density_w_m2=None)
+    )
     systems: BuildingSystems = Field(default_factory=BuildingSystems)
     primary_energy: PrimaryEnergyFactors = PrimaryEnergyFactors()
 
     @model_validator(mode="after")
     def validate_zone_references(self) -> BuildingProject:
+        # If a caller omits the input, derive the norm-specific default from
+        # the building type instead of always using the single-family
+        # 6.8 W/m² fallback.  The local import avoids a schema-module cycle.
+        if "internal_gains" not in self.model_fields_set:
+            from app.engine.internal_gains import normative_internal_gains
+
+            profile = str(
+                getattr(self.general.dhw_usage_profile, "value", self.general.dhw_usage_profile)
+            )
+            beta = (
+                self.ventilation.usage_share_beta
+                if self.ventilation.usage_share_beta is not None
+                else (1.0 if profile.startswith("residential") else 0.3)
+            )
+            self.internal_gains = normative_internal_gains(
+                self.general.building_type,
+                self.general.dhw_usage_profile,
+                beta=beta,
+            )
+
         zone_ids = [zone.id for zone in self.thermal_zones]
         if len(zone_ids) != len(set(zone_ids)):
             raise ValueError("Thermal zone IDs must be unique")
@@ -493,6 +600,73 @@ class BuildingProject(BaseModel):
         if missing_zone_ids:
             missing = ", ".join(missing_zone_ids)
             raise ValueError(f"Unknown thermal zone ID referenced by an element: {missing}")
+
+        conditioned_types = {
+            ZoneType.HEATED,
+            ZoneType.COOLED,
+            ZoneType.HEATED_AND_COOLED,
+            ZoneType.SEMI_HEATED,
+        }
+        conditioned_zones = [
+            zone for zone in self.thermal_zones if zone.zone_type in conditioned_types
+        ]
+        if not conditioned_zones:
+            raise ValueError("BuildingProject requires at least one conditioned thermal zone")
+        zone_area = sum(zone.floor_area for zone in conditioned_zones)
+        if not isclose(
+            zone_area,
+            self.general.conditioned_floor_area,
+            rel_tol=1e-6,
+            abs_tol=0.01,
+        ):
+            raise ValueError(
+                "Conditioned floor area must equal the sum of conditioned zone areas; "
+                f"got Af={self.general.conditioned_floor_area:g}, zones={zone_area:g}"
+            )
+        zone_volume = sum(zone.volume for zone in conditioned_zones)
+        if not isclose(zone_volume, self.general.heated_volume, rel_tol=1e-6, abs_tol=0.01):
+            raise ValueError(
+                "Heated volume must equal the sum of conditioned zone volumes; "
+                f"got V={self.general.heated_volume:g}, zones={zone_volume:g}"
+            )
+
+        # The current 5R1C implementation treats a heated-zone partition as
+        # zero net flow.  That is valid only when the conditioned spaces have
+        # the same active temperature limits; otherwise a coupled multi-zone
+        # solver is required and silently dropping the partition is unsafe.
+        has_heated_partition = any(
+            element.adjacent_space_type == AdjacentSpaceType.HEATED_ZONE
+            for element in self.opaque_building_elements
+        )
+        if has_heated_partition:
+            conditioned_limits = {
+                (
+                    zone.setpoint_heating
+                    if zone.zone_type
+                    in {
+                        ZoneType.HEATED,
+                        ZoneType.HEATED_AND_COOLED,
+                        ZoneType.SEMI_HEATED,
+                    }
+                    else None,
+                    zone.setpoint_cooling
+                    if zone.zone_type in {ZoneType.COOLED, ZoneType.HEATED_AND_COOLED}
+                    else None,
+                )
+                for zone in self.thermal_zones
+                if zone.zone_type
+                in {
+                    ZoneType.HEATED,
+                    ZoneType.HEATED_AND_COOLED,
+                    ZoneType.COOLED,
+                    ZoneType.SEMI_HEATED,
+                }
+            }
+            if len(conditioned_limits) > 1:
+                raise ValueError(
+                    "Partitions adjacent to heated zones require identical "
+                    "active heating/cooling setpoints in all conditioned zones"
+                )
         return self
 
 

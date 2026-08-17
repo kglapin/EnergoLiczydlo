@@ -63,6 +63,30 @@ def default_generation_efficiency(system: Any, fallback: float = 0.96) -> float:
     return DEFAULT_GENERATION_EFFICIENCY.get(system_type, fallback)
 
 
+def total_system_efficiency(
+    generation_efficiency: float,
+    distribution_efficiency: float,
+    storage_efficiency: float,
+    control_efficiency: float,
+) -> float:
+    """Return the total seasonal system efficiency/COP product.
+
+    The generation term is ηH,g/ηC,g (or COP/SEER); the remaining terms are
+    the distribution, storage and control/use factors.  The product may be
+    greater than one for heat pumps and cooling systems because COP/SEER is
+    not bounded by one.
+    """
+    values = (
+        generation_efficiency,
+        distribution_efficiency,
+        storage_efficiency,
+        control_efficiency,
+    )
+    if any(value <= 0.0 for value in values):
+        raise ValueError("System efficiency components must be positive")
+    return float(np.prod(values))
+
+
 def constant_efficiency_final_energy(
     Q_demand_wh: np.ndarray, efficiency: float, distribution_factor: float = 1.0
 ) -> np.ndarray:
@@ -156,7 +180,7 @@ def storage_unit_loss_w_dm3(
     volume_dm3: float,
     location: str = "unheated",
     tank_kind: str = "indirect",
-    insulation_mm: float = 50.0,
+    insulation_mm: float | None = None,
 ) -> float | None:
     """Strata jednostkowa zasobnika q_S [W/dm³] wg tabeli 13 rozporządzenia.
 
@@ -167,6 +191,10 @@ def storage_unit_loss_w_dm3(
     """
     if volume_dm3 <= 0:
         raise ValueError("storage volume must be positive")
+    if location not in {"heated", "unheated"}:
+        raise ValueError("storage location must be 'heated' or 'unheated'")
+    if tank_kind not in {"indirect", "electric", "gas"}:
+        raise ValueError("tank_kind must be 'indirect', 'electric' or 'gas'")
     row_volume = next((v for v in _STORAGE_VOLUMES if volume_dm3 <= v), None)
     if row_volume is None:
         return None
@@ -175,15 +203,26 @@ def storage_unit_loss_w_dm3(
         return row["electric"]
     if tank_kind == "gas":
         return row["gas"]
-    key = min(("100", "50", "20"), key=lambda k: abs(float(k) - insulation_mm))
-    return row[key]
+    if insulation_mm is None:
+        raise ValueError(
+            "insulation_mm is required for an indirect storage tank"
+        )
+    insulation_key = next(
+        (key for key in ("100", "50", "20") if np.isclose(float(key), insulation_mm)),
+        None,
+    )
+    if insulation_key is None:
+        raise ValueError(
+            "insulation_mm must be one of the normative table-13 values: 20, 50 or 100"
+        )
+    return row[insulation_key]
 
 
 def dhw_storage_standby_loss_kwh(
     volume_dm3: float,
     location: str = "unheated",
     tank_kind: str = "indirect",
-    insulation_mm: float = 50.0,
+    insulation_mm: float | None = None,
 ) -> float | None:
     """Roczne straty ciepła zasobnika ΔQ_W,s [kWh/rok] wg wzoru (30):
 
@@ -262,14 +301,25 @@ Tabela20Row = tuple[float, float]  # (q_el [W/m2], t_el [h/rok])
 
 
 def heating_auxiliary_demand_wh(
-    system_type: str, floor_area_m2: float
+    system_type: str,
+    floor_area_m2: float,
+    installation_type: str | None = None,
 ) -> float:
-    """E_el,pom,H [Wh/rok] wg wzoru (37) i tabeli 20 (kluczowe wiersze)."""
+    """E_el,pom,H [Wh/rok] wg wzoru (37) i tabeli 20.
+
+    Source rows (7--10) are combined with receiver-side circulation-pump
+    rows (1--2) when the installation classification is known. A hydronic
+    boiler or heat pump therefore includes both its source controls and the
+    heating-circuit pump. An unclassified installation does not invent a
+    pump demand.
+    """
     st = str(system_type)
+    if floor_area_m2 <= 0:
+        raise ValueError("floor_area_m2 must be positive")
     rows: list[Tabela20Row] = []
     small = floor_area_m2 <= 250.0
     if st in ("gas_boiler", "gas_condensing", "oil_boiler", "coal_boiler", "fireplace"):
-        # 7: napęd pomocniczy i regulacja kotła (pompa obiegowa wliczona)
+        # 7: napęd pomocniczy i regulacja kotła do ogrzewania
         rows.append((0.50, 2520.0) if small else (0.15, 3900.0))
     elif st == "heat_pump_water":
         rows.append((0.70, 1600.0))
@@ -278,6 +328,17 @@ def heating_auxiliary_demand_wh(
     elif st == "district_heating":
         rows.append((0.09, 8760.0))  # 10: regulacja węzła cieplnego
     # electric_direct: brak urządzeń pomocniczych
+
+    installation = str(installation_type or "")
+    if installation == "water_radiators":
+        rows.append((0.30, 5700.0) if floor_area_m2 <= 250.0 else (0.15, 4700.0))
+    elif installation == "water_surface":
+        if floor_area_m2 > 250.0:
+            raise ValueError(
+                "Table 20 does not provide a default circulation-pump row for "
+                "water-surface systems above 250 m2; enter explicit auxiliary energy"
+            )
+        rows.append((0.50, 6700.0))
     return sum(q * t * floor_area_m2 for q, t in rows)
 
 

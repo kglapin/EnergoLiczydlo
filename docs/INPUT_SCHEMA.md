@@ -40,6 +40,10 @@ Typy danych wejściowych są modelowane w backendzie za pomocą **Pydantic v2**,
 | `number_of_storeys` | `int` | Liczba kondygnacji |
 | `location_address` | `str` | Adres (opcjonalnie) |
 
+`conditioned_floor_area` i `heated_volume` muszą być równe odpowiednio sumie
+`floor_area` i `volume` stref typu `heated`, `cooled`, `heated_and_cooled` lub
+`semi_heated`. Projekt musi zawierać co najmniej jedną taką strefę.
+
 ## ThermalZone
 
 | Pole | Typ | Opis |
@@ -124,14 +128,21 @@ Typy danych wejściowych są modelowane w backendzie za pomocą **Pydantic v2**,
 | Pole | Typ | Opis |
 |------|-----|------|
 | `ventilation_type` | `enum` | `natural`, `exhaust`, `mechanical`, `mechanical_with_recovery`, `hybrid`, `none` |
-| `airflow_rate` | `float` | Strumień powietrza wentylacyjnego [m³/h] |
+| `operation_mode` | `enum` | `continuous` albo `periodic`; w trybie okresowym strumień nominalny działa według profilu godzinowego / β |
+| `airflow_rate` | `float` | Nominalny strumień podczas pracy wentylatorów [m³/h]; `0` = strumień normatywny |
 | `heat_recovery_efficiency` | `float` | Sprawność odzysku ciepła `η` [-] (0–1) |
-| `infiltration_rate` | `float` | Infiltracja [1/h] (n50 lub q50 po konwersji) |
-| `supply_temperature` | `float?` | Temperatura nawiewu [°C] |
+| `infiltration_rate` | `float` | Infiltracja `Vinf/V` [1/h]; przy pominięciu silnik przyjmuje 0,2 po 1995 r. lub 0,3 wcześniej |
+| `fan_infiltration_rate` | `float` | Dodatkowa infiltracja przy pracy wentylatorów `Vx/V` [1/h] |
+| `supply_temperature` | `float?` | Rzeczywista temperatura powietrza po centrali [°C]; po podaniu zastępuje model redukcji `1−η`, aby nie liczyć odzysku podwójnie |
 | `mechanical_fan_power` | `float?` | Moc wentylatorów [W] |
-| `schedule` | `Schedule` | Harmonogram wentylacji |
+| `schedule` | `Schedule?` | Harmonogram wentylacji; brak oznacza fallback `β` w trybie okresowym |
 
 ## InternalGains
+
+Jeżeli pole zostanie pominięte, backend dobiera normowy poziom zysków do
+`building_type`, `dhw_usage_profile` i `usage_share_beta`. Podanie obiektu
+`InternalGains` oznacza świadome nadpisanie tego poziomu; harmonogramy źródeł
+umożliwiają wtedy rzeczywisty przebieg godzinowy.
 
 ```json
 {
@@ -150,6 +161,10 @@ Typy danych wejściowych są modelowane w backendzie za pomocą **Pydantic v2**,
   }
 }
 ```
+
+Jeżeli harmonogramy zysków nie są podane, źródła działają ze stałym
+współczynnikiem 1,0. Normowe `q_int` pozostaje wtedy wartością średnią, a nie
+rzeczywistym profilem obecności w ciągu doby.
 
 ## Schedule
 
@@ -171,21 +186,24 @@ Lub uproszczony typ `constant` / `weekday_weekend`.
 {
   "heating": {
     "system_type": "heat_pump_air",
+    "installation_type": "water_surface",
     "fuel_or_carrier": "electricity",
     "generation_efficiency": 3.0,
     "distribution_efficiency": 0.95,
     "storage_efficiency": 1.0,
     "control_efficiency": 1.0,
     "sink_temperature": 35.0,
-    "auxiliary_energy": 0.0
+    "auxiliary_energy_kwh_year": null
   },
   "cooling": {
     "system_type": "split_ac",
+    "installation_type": "direct_expansion",
     "fuel_or_carrier": "electricity",
     "generation_efficiency": 3.9,
     "distribution_efficiency": 1.0,
     "storage_efficiency": 1.0,
-    "control_efficiency": 0.94
+    "control_efficiency": 0.94,
+    "auxiliary_energy_kwh_year": null
   },
   "dhw": {
     "system_type": "electric_storage",
@@ -228,6 +246,30 @@ akumulacji oraz regulacji i wykorzystania z pkt 4.1 metodologii. Formularz
 udostępnia kontrolowane listy źródeł i nośników oraz ustawia wartości domyślne
 na podstawie tabel rozporządzenia; dane producenta mogą je zastąpić.
 
+`auxiliary_energy_kwh_year` oznacza roczne zapotrzebowanie końcowej energii
+elektrycznej `E_el,pom` [kWh/rok] na pompy, napędy i automatykę danego systemu.
+Dla ogrzewania puste pole uruchamia wartość normatywną z tabeli 20, a wpisanie
+`0` oznacza świadomy brak energii pomocniczej. Dla chłodzenia puste pole oznacza
+`0`; jeżeli dokumentacja urządzenia podaje własne zużycie, należy wpisać je
+jawnie. Energia pomocnicza jest doliczana do energii końcowej elektrycznej, ale
+nie zwiększa energii użytkowej `Eu`.
+
+Sprawność całkowita jest prezentowana w formularzu jako wartość obliczona:
+`η_tot = η_g/COP/SEER × η_d × η_s × η_e`. Obecny główny bilans nie wyznacza
+rzeczywistego COP osobno dla każdej godziny. `η_tot` jest kontrolnym iloczynem
+sezonowych wartości użytych do przeliczenia `Q_H`/`Q_C` na energię końcową, a
+nie dodatkowym niezależnym wejściem. Godzinowe krzywe COP/SEER wymagają
+osobnego, jawnego modelu danych.
+
+`installation_type` jest opcjonalną klasyfikacją instalacji odbiorczej, np.
+`water_radiators` (ogrzewanie wodne z grzejnikami), `water_surface` (instalacja
+płaszczyznowa) albo `direct_expansion` (chłodzenie DX/split/VRF). Dla ogrzewania
+`water_radiators` i `water_surface` uruchamiają odpowiedni normowy wiersz pomp
+obiegowych tabeli 20, o ile nie podano jawnego `auxiliary_energy_kwh_year`.
+Pole nie ustawia automatycznie ηH,d, ηH,e, ηC,d, ηC,e ani COP/SEER. Wartości
+sprawności należy dobrać na podstawie rzeczywistej instalacji i właściwej
+tabeli metodologii.
+
 Źródła ogrzewania i chłodzenia są walidowane osobno, a `system_type` CWU
 korzysta z odrębnego katalogu. Dzięki temu np. źródło chłodu nie może zostać
 przypadkowo zapisane jako źródło ogrzewania.
@@ -236,7 +278,7 @@ przypadkowo zapisane jako źródło ogrzewania.
 
 ```json
 {
-  "electricity": { "fp": 3.0, "we": 0.6 },
+  "electricity": { "fp": 2.5, "we": 0.6 },
   "natural_gas": { "fp": 1.1, "we": 0.2 },
   "lpg": { "fp": 1.1, "we": 0.2 },
   "heating_oil": { "fp": 1.1, "we": 0.27 },

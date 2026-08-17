@@ -1,6 +1,6 @@
 fastapi>=0.115.0,<0.116
 uvicorn[standard]>=0.32.0,<0.33
-pydantic>=2.9.0,<3
+pydantic>=2.9.0,<2.12.0
 numpy>=2.0.0,<3
 pandas>=2.2.0,<3
 pybuildingenergy>=2.0.2,<3

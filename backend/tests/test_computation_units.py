@@ -7,12 +7,11 @@ Każdy test porównuje wynik z niezależnie wyliczoną wartością analityczną
 from __future__ import annotations
 
 import numpy as np
+import pandas as pd
 import pytest
 from pydantic import ValidationError
 
 from app.engine.climate import (
-    AIR_DENSITY_KG_M3,
-    AIR_SPECIFIC_HEAT_J_KGK,
     annual_hourly_index,
     haversine_distance_km,
     make_synthetic_year,
@@ -42,13 +41,16 @@ from app.engine.systems import (
 )
 from app.engine.thermal_balance import (
     TransmissionNetwork,
+    opaque_external_conductance,
     solve_zone_5r1c,
     thermal_capacity,
     zone_thermal_properties,
 )
 from app.engine.ventilation import (
+    ventilation_effective_supply_temperature,
     ventilation_heat_loss,
     ventilation_heat_transfer_coefficient,
+    ventilation_operation_profile,
 )
 from app.schemas.models import (
     AdjacentSpaceType,
@@ -64,9 +66,10 @@ from app.schemas.models import (
     ThermalZone,
     TransparentElement,
     Ventilation,
+    VentilationOperationMode,
 )
 
-CP_VOLUMETRIC = AIR_DENSITY_KG_M3 * AIR_SPECIFIC_HEAT_J_KGK  # 1206 J/(m3*K)
+CP_VOLUMETRIC = 1200.0  # methodology value rho_a*c_a [J/(m3*K)]
 
 
 # ---------------------------------------------------------------------------
@@ -109,6 +112,13 @@ class TestVentilation:
         )
         assert ventilation_heat_transfer_coefficient(vent, _zone()) == 0.0
 
+    def test_disabled_ventilation_keeps_only_background_infiltration(self):
+        vent = Ventilation(
+            ventilation_type="none", airflow_rate=120.0, infiltration_rate=0.5
+        )
+        expected = (0.5 * 375.0 / 3600.0) * CP_VOLUMETRIC
+        assert ventilation_heat_transfer_coefficient(vent, _zone()) == pytest.approx(expected)
+
     def test_ventilation_heat_loss_analytic(self):
         vent = Ventilation(airflow_rate=120.0, infiltration_rate=0.5)
         zone = _zone()
@@ -127,6 +137,124 @@ class TestVentilation:
         loss = ventilation_heat_loss(vent, zone, T_int, T_e, schedule_profile=schedule)
         H_ve = (120.0 / 3600.0 + 0.5 * 375.0 / 3600.0) * CP_VOLUMETRIC
         np.testing.assert_allclose(loss, schedule * H_ve * 20.0)
+
+    def test_ventilation_heat_loss_rejects_two_schedule_mechanisms(self):
+        vent = Ventilation(airflow_rate=120.0, infiltration_rate=0.5)
+        with pytest.raises(ValueError, match="either schedule_profile or operation_profile"):
+            ventilation_heat_loss(
+                vent,
+                _zone(),
+                np.full(2, 20.0),
+                np.zeros(2),
+                schedule_profile=np.ones(2),
+                operation_profile=np.ones(2),
+            )
+
+    def test_ventilation_heat_loss_uses_supply_temperature_when_provided(self):
+        vent = Ventilation(airflow_rate=120.0, infiltration_rate=0.5)
+        zone = _zone()
+        T_int = np.full(24, 20.0)
+        T_e = np.full(24, 0.0)
+        T_supply = np.full(24, 15.0)
+        loss = ventilation_heat_loss(vent, zone, T_int, T_e, T_supply=T_supply)
+        H_ve = (120.0 / 3600.0 + 0.5 * 375.0 / 3600.0) * CP_VOLUMETRIC
+        np.testing.assert_allclose(loss, H_ve * 5.0)
+
+    def test_supply_temperature_applies_only_to_mechanical_component(self):
+        vent = Ventilation(
+            ventilation_type="mechanical_with_recovery",
+            airflow_rate=100.0,
+            heat_recovery_efficiency=0.5,
+            infiltration_rate=0.5,
+            supply_temperature=20.0,
+        )
+        zone = _zone(volume=375.0)
+        T_e = np.zeros(24)
+        effective = ventilation_effective_supply_temperature(vent, zone, T_e)
+        # Explicit T_supply replaces the equivalent (1 - eta) reduction;
+        # otherwise the heat recovery would be counted twice.
+        expected = (100.0 * 20.0) / (100.0 + 0.5 * 375.0)
+        np.testing.assert_allclose(effective, expected)
+
+    def test_periodic_supply_extract_matches_arcadia_weighted_hve(self):
+        """Arcadia table-22 streams reproduce its Hve for a periodic office.
+
+        Vve,1 = 19_715 m3/h, Vx,su = 0.04*V, Vinf = 0.20*V,
+        beta = 0.30 and eta_oc = 0.73 give Hve = 972.21 W/K with
+        the methodology's rho_a*c_a = 1200 J/(m3*K).
+        """
+        zone = _zone(floor_area=2935.0, volume=8682.26)
+        vent = Ventilation(
+            ventilation_type="mechanical_with_recovery",
+            operation_mode=VentilationOperationMode.PERIODIC,
+            airflow_rate=19715.0,
+            heat_recovery_efficiency=0.73,
+            infiltration_rate=0.20,
+            fan_infiltration_rate=0.04,
+        )
+        datetimes = annual_hourly_index(2023)
+        profile = ventilation_operation_profile(vent, datetimes, beta=0.30)
+        h_ve = ventilation_heat_transfer_coefficient(
+            vent,
+            zone,
+            operation_profile=profile,
+        )
+
+        expected = 1200.0 / 3600.0 * (
+            0.30 * (19715.0 * (1.0 - 0.73) + 0.04 * 8682.26)
+            + 0.70 * (0.20 * 8682.26)
+        )
+        np.testing.assert_allclose(profile, 0.30)
+        np.testing.assert_allclose(h_ve, expected, rtol=1e-12)
+
+    def test_periodic_profile_uses_operating_and_off_hours_streams(self):
+        zone = _zone(floor_area=100.0, volume=300.0)
+        vent = Ventilation(
+            ventilation_type="mechanical_with_recovery",
+            operation_mode="periodic",
+            airflow_rate=1000.0,
+            heat_recovery_efficiency=0.75,
+            infiltration_rate=0.20,
+            fan_infiltration_rate=0.04,
+        )
+        profile = np.array([1.0, 0.0])
+        h_ve = ventilation_heat_transfer_coefficient(
+            vent,
+            zone,
+            operation_profile=profile,
+        )
+        expected_on = (1000.0 * 0.25 + 0.04 * 300.0) / 3600.0 * CP_VOLUMETRIC
+        expected_off = (0.20 * 300.0) / 3600.0 * CP_VOLUMETRIC
+        np.testing.assert_allclose(h_ve, [expected_on, expected_off])
+
+    def test_periodic_beta_fallback_is_distinct_from_explicit_constant_schedule(self):
+        datetimes = annual_hourly_index(2023)
+        fallback = ventilation_operation_profile(
+            Ventilation(operation_mode="periodic"), datetimes, beta=0.3
+        )
+        explicit = ventilation_operation_profile(
+            Ventilation(
+                operation_mode="periodic",
+                schedule=Schedule(type="constant", constant_value=1.0),
+            ),
+            datetimes,
+            beta=0.3,
+        )
+        np.testing.assert_allclose(fallback, 0.3)
+        np.testing.assert_allclose(explicit, 1.0)
+
+    def test_hourly_schedule_is_evaluated_for_short_series(self):
+        vent = Ventilation(
+            ventilation_type="mechanical_with_recovery",
+            operation_mode="periodic",
+            schedule=Schedule(
+                type="hourly_profile",
+                weekday=[1.0] + [0.0] * 23,
+            ),
+        )
+        datetimes = pd.date_range("2023-01-02", periods=24, freq="h")
+        profile = ventilation_operation_profile(vent, datetimes, beta=0.3)
+        np.testing.assert_array_equal(profile, [1.0] + [0.0] * 23)
 
 
 # ---------------------------------------------------------------------------
@@ -311,6 +439,8 @@ class TestInternalGains:
             Schedule(type="constant", constant_value=1.5)  # poza [0, 1]
         with pytest.raises(ValidationError):
             Schedule(type="hourly_profile", weekday=[1.0] * 23)  # nie 24 wartości
+        with pytest.raises(ValidationError):
+            Schedule(type="hourly_profile", weekday=[1.1] * 24)
 
     def test_constant_zero_schedule_means_zero_gains(self):
         source = InternalGainSource(
@@ -354,6 +484,41 @@ class TestThermalBalance:
         assert np.all(solution.q_heating[500:] > 0.0)
         assert solution.q_cooling.sum() == 0.0
         np.testing.assert_allclose(solution.t_air[500:], 20.0, atol=1e-9)
+
+    def test_hourly_h_ve_array_matches_constant_coefficient(self):
+        """The 5R1C solver accepts a separate ventilation coefficient per hour."""
+        n = 48
+        network = self._net(-10.0, n=n)
+        kwargs = {
+            "network": network,
+            "t_e": np.full(n, -10.0),
+            "phi_int": np.zeros(n),
+            "phi_sol": np.zeros(n),
+            "properties": zone_thermal_properties(100.0),
+            "t_set_heating": 20.0,
+            "t_set_cooling": None,
+        }
+        scalar = solve_zone_5r1c(h_ve=30.0, **kwargs)
+        hourly = solve_zone_5r1c(h_ve=np.full(n, 30.0), **kwargs)
+        np.testing.assert_allclose(hourly.t_air, scalar.t_air)
+        np.testing.assert_allclose(hourly.q_heating, scalar.q_heating)
+
+    def test_supply_temperature_is_connected_to_air_node(self):
+        n = 48
+        network = TransmissionNetwork()
+        kwargs = {
+            "network": network,
+            "h_ve": 120.0,
+            "t_e": np.zeros(n),
+            "phi_int": np.zeros(n),
+            "phi_sol": np.zeros(n),
+            "properties": zone_thermal_properties(100.0),
+            "t_set_heating": 20.0,
+            "t_set_cooling": None,
+        }
+        cold_supply = solve_zone_5r1c(t_supply=np.zeros(n), **kwargs)
+        warm_supply = solve_zone_5r1c(t_supply=np.full(n, 20.0), **kwargs)
+        assert np.sum(warm_supply.q_heating) < np.sum(cold_supply.q_heating)
 
     def test_steady_state_cooling_analytic(self):
         """Po rozruchu: chłodzenie > 0, powietrze na setpoincie 26°C."""
@@ -412,12 +577,12 @@ class TestThermalBalance:
         assert solution.q_heating.sum() == 0.0 and solution.q_cooling.sum() == 0.0
 
         props = zone_thermal_properties(100.0)
-        h_ms, h_em = props.h_tr_ms, 1.0 / (1.0 / 50.0 + 1.0 / props.h_tr_ms)
-        t_s = (solution.t_operative - 0.3 * solution.t_air) / 0.7
+        h_ms, h_em = props.h_tr_ms, opaque_external_conductance(50.0, props.h_tr_ms)
+        t_s = solution.t_surface
         t_m = solution.t_mass
         # Warunek początkowy solvera: masa startuje od setpointu ogrzewania.
         t_m_prev = np.concatenate(([0.0], t_m[:-1]))
-        t_m_avg = (t_m + t_m_prev) / 2.0
+        t_m_avg = solution.t_mass_mean
         phi_m = (2.5 / 4.5) * (0.5 * Q + np.zeros(n))  # frac_mass*(0.5*phi_int+phi_sol)
         d_u = props.capacity / 3600.0 * (t_m - t_m_prev)
         flows = phi_m + h_ms * (t_s - t_m_avg) + h_em * (0.0 - t_m_avg)
@@ -632,8 +797,8 @@ class TestPrimaryEnergy:
     def test_annual_primary_energy_analytic_mixed_carriers(self):
         carriers = {"electricity": 1000.0, "natural_gas": 2000.0}
         ep_wh, ec_t = annual_primary_energy(carriers, PrimaryEnergyFactors())
-        # fp elektryczności = 3.00 wg tabeli 1 rozporządzenia (Dz.U. 2015 poz. 376)
-        assert ep_wh == pytest.approx(1000.0 * 3.0 + 2000.0 * 1.1)  # 5200 Wh
+        # fp elektryczności = 2.50 wg aktualnej tabeli 1 (Dz.U. 2023 poz. 697)
+        assert ep_wh == pytest.approx(1000.0 * 2.5 + 2000.0 * 1.1)  # 4700 Wh
         # we w kg CO2/kWh -> t CO2: 1 kWh*0.6 + 2 kWh*0.2 = 1.0 kg = 0.001 t
         assert ec_t == pytest.approx((1000.0 * 0.6 + 2000.0 * 0.2) / 1e6)
 

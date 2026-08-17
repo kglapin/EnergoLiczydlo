@@ -19,6 +19,7 @@ from .models import (
     ThermalZone,
     TransparentElement,
     Ventilation,
+    VentilationOperationMode,
 )
 
 __all__ = [
@@ -40,4 +41,5 @@ __all__ = [
     "ThermalZone",
     "TransparentElement",
     "Ventilation",
+    "VentilationOperationMode",
 ]

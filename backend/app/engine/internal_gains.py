@@ -19,8 +19,6 @@ if TYPE_CHECKING:
     from app.schemas.models import InternalGains
 
 
-HOURS_IN_YEAR = 8760
-
 # Normative internal heat gains q_int [W/m2], tabela 26 of the methodology
 # (rozporządzenie Dz.U. 2015 poz. 376).  Rows given as q = a*beta + b*(1-beta)
 # depend on beta - the monthly share of building usage time (§ 5.5.2).
@@ -44,6 +42,9 @@ def normative_internal_gain_w_m2(
     (single-family 6.8, multi-family 7.1 W/m2).  ``beta`` is the share of
     usage time; the regulation's worked example uses 0.3 for offices.
     """
+    if not 0.0 <= beta <= 1.0:
+        raise ValueError("beta must be between 0 and 1")
+
     profile = str(getattr(dhw_usage_profile, "value", dhw_usage_profile) or "")
     btype = str(getattr(building_type, "value", building_type))
 
@@ -72,6 +73,10 @@ def normative_internal_gains(
     beta: float = DEFAULT_USAGE_SHARE_BETA,
 ) -> InternalGains:
     """Default three-source split reproducing the tabela 26 q_int density."""
+    # Imported lazily because schemas import this module only while
+    # populating omitted project defaults.
+    from app.schemas.models import InternalGains, InternalGainSource
+
     q_int = normative_internal_gain_w_m2(building_type, dhw_usage_profile, beta)
     occupancy_part = min(q_int, _OCCUPANT_HEAT_W * _DEFAULT_OCCUPANCY_DENSITY)
     remainder = q_int - occupancy_part
@@ -79,6 +84,7 @@ def normative_internal_gains(
         occupancy=InternalGainSource(power_density=_OCCUPANT_HEAT_W),
         lighting=InternalGainSource(power_density=round(0.3 * remainder, 2)),
         equipment=InternalGainSource(power_density=round(0.7 * remainder, 2)),
+        normative_power_density_w_m2=q_int,
     )
 
 
@@ -98,10 +104,10 @@ def evaluate_schedule(schedule: Schedule, datetimes: pd.DatetimeIndex) -> np.nda
     """
     if schedule.type == ScheduleType.CONSTANT:
         value = schedule.constant_value if schedule.constant_value is not None else 1.0
-        return np.full(HOURS_IN_YEAR, value)
+        return np.full(len(datetimes), value)
 
     if schedule.type == ScheduleType.HOURLY_PROFILE:
-        profile = np.empty(HOURS_IN_YEAR, dtype=float)
+        profile = np.empty(len(datetimes), dtype=float)
         for i, dt in enumerate(datetimes):
             hour = dt.hour
             dow = dt.weekday()
@@ -117,7 +123,7 @@ def evaluate_schedule(schedule: Schedule, datetimes: pd.DatetimeIndex) -> np.nda
         return profile
 
     if schedule.type == ScheduleType.WEEKDAY_WEEKEND:
-        profile = np.empty(HOURS_IN_YEAR, dtype=float)
+        profile = np.empty(len(datetimes), dtype=float)
         for i, dt in enumerate(datetimes):
             dow = dt.weekday()
             arr = schedule.weekday if dow < 5 else schedule.sunday or schedule.weekday
@@ -173,6 +179,17 @@ def total_internal_gains(
     datetimes: pd.DatetimeIndex,
 ) -> np.ndarray:
     """Sum hourly internal gains [W] from occupancy, lighting and equipment."""
+    normative_target = gains.normative_power_density_w_m2
+    if normative_target is not None:
+        # This marker is set only for the automatically generated normative
+        # profile.  Its three source fields remain useful for display/editing,
+        # but the regulatory q_int is a floor-area density and must not vary
+        # with an unrelated zone occupancy-density input.
+        schedules = (gains.occupancy.schedule, gains.lighting.schedule, gains.equipment.schedule)
+        profiles = [evaluate_schedule(schedule, datetimes) for schedule in schedules]
+        if all(np.allclose(profile, 1.0) for profile in profiles):
+            return np.full(len(datetimes), normative_target * floor_area, dtype=float)
+
     return np.asarray(
         internal_gains(occupancy_density, floor_area, gains.occupancy, datetimes,
                        per_person=True)

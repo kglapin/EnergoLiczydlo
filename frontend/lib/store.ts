@@ -65,20 +65,33 @@ export interface BuildingProject {
   }
   ventilation: {
     ventilation_type: string
+    operation_mode?: string
     airflow_rate: number
     heat_recovery_efficiency: number
     infiltration_rate: number
+    fan_infiltration_rate?: number
+    usage_share_beta?: number
     supply_temperature?: number
     mechanical_fan_power?: number
+    schedule?: {
+      type: string
+      constant_value?: number
+      weekday?: number[]
+      saturday?: number[]
+      sunday?: number[]
+      holiday?: number[]
+    } | null
   }
   internal_gains?: {
-    occupancy: { power_density: number }
-    lighting: { power_density: number }
-    equipment: { power_density: number }
+    occupancy: { power_density: number; schedule?: BuildingProject["ventilation"]["schedule"] }
+    lighting: { power_density: number; schedule?: BuildingProject["ventilation"]["schedule"] }
+    equipment: { power_density: number; schedule?: BuildingProject["ventilation"]["schedule"] }
+    normative_power_density_w_m2?: number
   }
   systems?: {
     heating: {
       system_type: string
+      installation_type?: string
       fuel_or_carrier: string
       nominal_power?: number
       generation_efficiency?: number
@@ -86,14 +99,17 @@ export interface BuildingProject {
       storage_efficiency?: number
       control_efficiency?: number
       sink_temperature?: number
+      auxiliary_energy_kwh_year?: number
     }
     cooling?: {
       system_type: string
+      installation_type?: string
       fuel_or_carrier: string
       generation_efficiency?: number
       distribution_efficiency?: number
       storage_efficiency?: number
       control_efficiency?: number
+      auxiliary_energy_kwh_year?: number
     }
     dhw: {
       system_type: string

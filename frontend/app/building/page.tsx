@@ -2,7 +2,23 @@
 
 import { Suspense, useCallback, useEffect, useRef, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { Loader2, MapPin, Trash2 } from "lucide-react"
+import {
+  Building2,
+  Calculator,
+  Download,
+  GitBranch,
+  Info,
+  Layers3,
+  Loader2,
+  MapPin,
+  PanelTop,
+  Settings2,
+  SunMedium,
+  Trash2,
+  Upload,
+  Wind,
+  type LucideIcon,
+} from "lucide-react"
 import {
   useForm,
   useFieldArray,
@@ -18,6 +34,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { FormField } from "@/components/form-field"
 import { FormSelect } from "@/components/form-select"
+import { HourlyProfileEditor } from "@/components/hourly-profile-editor"
 import {
   Accordion,
   AccordionContent,
@@ -43,13 +60,20 @@ import {
 import { useAppStore, type BuildingProject } from "@/lib/store"
 import { CalculationResults } from "@/components/calculation-results"
 import {
+  coolingInstallationOptions,
   coolingSourceOptions,
   dhwDistributionOptions,
   dhwSourceOptions,
   energyCarrierOptions,
+  heatingInstallationOptions,
   heatingSourceOptions,
   normativeInternalGains,
+  totalSystemEfficiency,
 } from "@/lib/system-options"
+import {
+  normalizeHourlyProfileInput,
+  parseHourlyProfile,
+} from "@/lib/hourly-profile"
 
 const buildingTypeValues = ["residential", "office", "school", "retail", "healthcare", "other"] as const
 const dhwUsageProfileValues = [
@@ -98,6 +122,38 @@ const ventilationTypeValues = [
   "hybrid",
   "none",
 ] as const
+const ventilationOperationModeValues = ["continuous", "periodic"] as const
+const scheduleTypeValues = ["constant", "weekday_weekend", "hourly_profile"] as const
+
+const optionalNumber = (schema: z.ZodNumber) => z.preprocess(
+  (value) => typeof value === "string" && value.trim() === "" || value === null
+    ? undefined
+    : value,
+  schema.optional(),
+)
+
+const optionalNonNegativeNumber = optionalNumber(z.coerce.number().min(0))
+const optionalPositiveNumber = optionalNumber(z.coerce.number().positive())
+const optionalPlainNumber = optionalNumber(z.coerce.number())
+
+const scheduleSchema = z.object({
+  type: z.enum(scheduleTypeValues),
+  constant_value: optionalNumber(z.coerce.number().min(0).max(1)),
+  weekday: z.array(z.coerce.number().min(0).max(1)).length(24).optional(),
+  saturday: z.array(z.coerce.number().min(0).max(1)).length(24).optional(),
+  sunday: z.array(z.coerce.number().min(0).max(1)).length(24).optional(),
+  holiday: z.array(z.coerce.number().min(0).max(1)).length(24).optional(),
+})
+
+const hourlyProfileTextSchema = z.string().optional().refine(
+  (value) => !value?.trim() || parseHourlyProfile(value) !== undefined,
+  "Ustaw wszystkie 24 godziny w edytorze albo wpisz 24 wartości od 0 do 1",
+)
+
+const internalGainSourceSchema = z.object({
+  power_density: z.coerce.number().min(0),
+  schedule: scheduleSchema.optional(),
+})
 
 const zoneSchema = z.object({
   id: z.string().min(1),
@@ -106,7 +162,7 @@ const zoneSchema = z.object({
   floor_area: z.coerce.number().positive(),
   volume: z.coerce.number().positive(),
   setpoint_heating: z.coerce.number(),
-  setpoint_cooling: z.coerce.number().optional(),
+  setpoint_cooling: optionalPlainNumber,
   occupancy_density: z.coerce.number().min(0),
 })
 
@@ -124,6 +180,7 @@ const opaqueSchema = z.object({
   solar_absorptance: z.coerce.number().min(0).max(1).optional(),
   solar_reduction_factor: z.coerce.number().min(0).max(1).optional(),
   adjacent_space_type: z.enum(adjacentSpaceTypeValues).optional(),
+  adjacent_temperature: optionalPlainNumber,
 })
 
 const transparentSchema = z.object({
@@ -142,14 +199,35 @@ const transparentSchema = z.object({
   shading_factor: z.coerce.number().min(0).max(1).optional(),
 })
 
+const thermalBridgeSchema = z.object({
+  auto_calculate: z.boolean().optional().default(false),
+  linear_bridges: z.array(z.object({
+    id: z.string().min(1),
+    name: z.string().min(1),
+    psi_value: z.coerce.number().min(0),
+    length: z.coerce.number().min(0),
+    zone_id: z.string().min(1),
+    element_id: z.string().optional(),
+  })),
+  point_bridges: z.array(z.object({
+    id: z.string().min(1),
+    name: z.string().min(1),
+    chi_value: z.coerce.number().min(0),
+    count: z.coerce.number().int().min(0),
+    zone_id: z.string().min(1),
+  })),
+})
+
 const heatingSystemSchema = z.object({
   system_type: z.string().min(1),
+  installation_type: z.string().optional(),
   fuel_or_carrier: z.string().min(1),
   generation_efficiency: z.coerce.number().positive(),
   distribution_efficiency: z.coerce.number().positive().max(1),
   storage_efficiency: z.coerce.number().positive().max(1),
   control_efficiency: z.coerce.number().positive().max(1),
-  sink_temperature: z.coerce.number().positive().optional(),
+  sink_temperature: optionalPositiveNumber,
+  auxiliary_energy_kwh_year: optionalNonNegativeNumber,
 })
 
 const coolingSystemSchema = heatingSystemSchema
@@ -162,9 +240,9 @@ const dhwSchema = z.object({
   distribution_efficiency: z.coerce.number().positive().max(1),
   utilization_efficiency: z.coerce.number().positive().max(1),
   distribution_type: z.string().min(1),
-  storage_volume_dm3: z.coerce.number().positive().optional(),
+  storage_volume_dm3: optionalPositiveNumber,
   storage_location: z.enum(["heated", "unheated"]).optional(),
-  storage_insulation_mm: z.coerce.number().positive().optional(),
+  storage_insulation_mm: optionalPositiveNumber,
 })
 
 const formSchema = z.object({
@@ -179,19 +257,47 @@ const formSchema = z.object({
     heated_volume: z.coerce.number().positive(),
     number_of_storeys: z.coerce.number().int().positive(),
     location_address: z.string().optional(),
-    lighting_indicator_leni: z.coerce.number().min(0).optional(),
-    lighting_area_m2: z.coerce.number().positive().optional(),
+    lighting_indicator_leni: optionalNonNegativeNumber,
+    lighting_area_m2: optionalPositiveNumber,
   }),
   climate_station_id: z.string().min(1),
   thermal_zones: z.array(zoneSchema).min(1),
   opaque_building_elements: z.array(opaqueSchema),
   transparent_building_elements: z.array(transparentSchema),
+  thermal_bridges: thermalBridgeSchema,
+  internal_gains: z.object({
+    occupancy: internalGainSourceSchema,
+    lighting: internalGainSourceSchema,
+    equipment: internalGainSourceSchema,
+    // Preserve the norm-specific total when an API project is round-tripped
+    // through the form. Without this field a changed zone occupancy density
+    // would silently alter the regulatory q_int total.
+    normative_power_density_w_m2: optionalNonNegativeNumber,
+  }).optional(),
   ventilation: z.object({
     ventilation_type: z.enum(ventilationTypeValues),
+    operation_mode: z.enum(ventilationOperationModeValues),
     airflow_rate: z.coerce.number().min(0),
     heat_recovery_efficiency: z.coerce.number().min(0).max(1),
     infiltration_rate: z.coerce.number().min(0),
-    usage_share_beta: z.coerce.number().min(0).max(1).optional(),
+    fan_infiltration_rate: z.coerce.number().min(0),
+    usage_share_beta: optionalNumber(z.coerce.number().min(0).max(1)),
+    supply_temperature: optionalPlainNumber,
+    schedule: scheduleSchema.nullable().optional(),
+    schedule_weekday_profile: hourlyProfileTextSchema,
+    schedule_saturday_profile: hourlyProfileTextSchema,
+    schedule_sunday_profile: hourlyProfileTextSchema,
+  }).superRefine((value, context) => {
+    const hasWeekendProfile =
+      Boolean(value.schedule_saturday_profile?.trim())
+      || Boolean(value.schedule_sunday_profile?.trim())
+    if (hasWeekendProfile && !value.schedule_weekday_profile?.trim()) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["schedule_weekday_profile"],
+        message: "Profil dni roboczych jest wymagany przed profilem weekendowym",
+      })
+    }
   }),
   systems: z.object({
     heating: heatingSystemSchema,
@@ -217,29 +323,78 @@ const validationFieldLabels: Record<string, string> = {
   "general.usable_floor_area": "Powierzchnia użytkowa",
   "general.heated_volume": "Kubatura ogrzewana",
   "general.number_of_storeys": "Liczba kondygnacji",
+  "general.lighting_indicator_leni": "Wskaźnik LENI oświetlenia",
+  "general.lighting_area_m2": "Powierzchnia oświetlana",
   climate_station_id: "Stacja klimatyczna",
   "ventilation.ventilation_type": "Typ wentylacji",
+  "ventilation.operation_mode": "Tryb pracy wentylacji",
   "ventilation.airflow_rate": "Strumień powietrza",
   "ventilation.heat_recovery_efficiency": "Sprawność odzysku ciepła",
   "ventilation.infiltration_rate": "Współczynnik infiltracji",
+  "ventilation.fan_infiltration_rate": "Dodatkowa infiltracja przy pracy wentylatorów",
+  "ventilation.schedule_weekday_profile": "Profil wentylacji dni roboczych",
+  "ventilation.schedule_saturday_profile": "Profil wentylacji soboty",
+  "ventilation.schedule_sunday_profile": "Profil wentylacji niedzieli",
+  "ventilation.supply_temperature": "Temperatura nawiewu",
+  "ventilation.usage_share_beta": "Udział użytkowania β",
   "systems.heating.system_type": "Źródło ciepła",
+  "systems.heating.installation_type": "Rodzaj instalacji ogrzewania",
   "systems.heating.fuel_or_carrier": "Nośnik energii ogrzewania",
+  "systems.heating.auxiliary_energy_kwh_year": "Energia pomocnicza ogrzewania",
   "systems.cooling.system_type": "Źródło chłodu",
+  "systems.cooling.installation_type": "Rodzaj instalacji chłodzenia",
   "systems.cooling.fuel_or_carrier": "Nośnik energii chłodzenia",
+  "systems.cooling.auxiliary_energy_kwh_year": "Energia pomocnicza chłodzenia",
   "systems.dhw.system_type": "Źródło CWU",
   "systems.dhw.fuel_or_carrier": "Nośnik energii CWU",
   "systems.dhw.distribution_type": "Typ przesyłu CWU",
+  "systems.dhw.generation_efficiency": "Sprawność wytwarzania CWU / COP",
+  "systems.dhw.distribution_efficiency": "Sprawność przesyłu CWU",
+  "systems.dhw.storage_efficiency": "Sprawność akumulacji CWU",
+  "systems.dhw.utilization_efficiency": "Sprawność wykorzystania CWU",
+  "systems.dhw.storage_volume_dm3": "Pojemność zasobnika CWU",
+  "systems.dhw.storage_location": "Lokalizacja zasobnika CWU",
+  "systems.dhw.storage_insulation_mm": "Izolacja zasobnika CWU",
+  "systems.heating.generation_efficiency": "Sprawność wytwarzania ogrzewania / COP",
+  "systems.heating.distribution_efficiency": "Sprawność przesyłu ogrzewania",
+  "systems.heating.storage_efficiency": "Sprawność akumulacji ogrzewania",
+  "systems.heating.control_efficiency": "Sprawność regulacji ogrzewania",
+  "systems.heating.sink_temperature": "Temperatura zasilania ogrzewania",
+  "systems.cooling.generation_efficiency": "SEER chłodzenia",
+  "systems.cooling.distribution_efficiency": "Sprawność przesyłu chłodzenia",
+  "systems.cooling.storage_efficiency": "Sprawność akumulacji chłodzenia",
+  "systems.cooling.control_efficiency": "Sprawność regulacji chłodzenia",
+  "thermal_bridges.auto_calculate": "Automatyczne wyznaczanie mostków",
+  "thermal_bridges.linear_bridges": "Mostki liniowe",
+  "thermal_bridges.point_bridges": "Mostki punktowe",
+  psi_value: "Współczynnik ψ",
+  length: "Długość mostka",
+  element_id: "ID powiązanej przegrody",
+  chi_value: "Współczynnik χ",
+  count: "Liczba powtórzeń",
   __root__: "Zależność między danymi",
   id: "ID",
   name: "Nazwa",
   zone_id: "ID strefy",
+  zone_type: "Typ strefy",
   floor_area: "Powierzchnia strefy",
   volume: "Kubatura strefy",
+  setpoint_heating: "Temperatura ogrzewania",
+  setpoint_cooling: "Temperatura chłodzenia",
+  occupancy_density: "Gęstość zaludnienia",
+  element_type: "Typ przegrody",
+  orientation_azimuth: "Azymut",
+  inclination: "Nachylenie",
   height: "Wysokość",
   width: "Szerokość",
   area: "Powierzchnia",
   u_value: "Współczynnik U",
+  solar_absorptance: "Absorpcja promieniowania słonecznego α",
+  adjacent_space_type: "Przestrzeń sąsiednia",
+  adjacent_temperature: "Temperatura przestrzeni sąsiedniej",
   g_value: "Współczynnik g",
+  frame_factor: "Udział ramy",
+  shading_factor: "Współczynnik ekranowania",
   generation_efficiency: "Sprawność wytwarzania",
   distribution_efficiency: "Sprawność przesyłu",
   storage_efficiency: "Sprawność akumulacji",
@@ -272,19 +427,40 @@ function formatValidationPath(path: string): string {
     const field = parts.slice(2).join(".")
     return `${collectionLabels[parts[0]]} ${Number(parts[1]) + 1} — ${validationFieldLabels[field] ?? field}`
   }
+  if (
+    parts[0] === "thermal_bridges"
+    && parts.length >= 4
+    && /^\d+$/.test(parts[2])
+  ) {
+    const collectionLabel = parts[1] === "linear_bridges" ? "Mostek liniowy" : "Mostek punktowy"
+    const field = parts.slice(3).join(".")
+    return `${collectionLabel} ${Number(parts[2]) + 1} — ${validationFieldLabels[field] ?? field}`
+  }
   return validationFieldLabels[path] ?? path
 }
 
 function formatValidationMessage(message: string): string {
-  if (message.includes("at least 1 character")) return "Pole jest wymagane."
-  if (message.includes("received nan") || message.includes("received undefined")) {
+  const normalized = message.toLowerCase()
+  if (
+    normalized.includes("at least 1 character")
+    || normalized.includes("expected string to have >=1 characters")
+    || normalized.includes("too_small")
+  ) return "Pole jest wymagane."
+  if (
+    normalized.includes("received nan")
+    || normalized.includes("received undefined")
+    || normalized.includes("expected number")
+    || normalized.includes("not a number")
+  ) {
     return "Podaj poprawną liczbę."
   }
-  if (message.includes("greater than 0")) return "Wartość musi być większa od 0."
-  if (message.includes("greater than or equal to 0")) {
+  if (normalized.includes("greater than 0") || normalized.includes("positive")) {
+    return "Wartość musi być większa od 0."
+  }
+  if (normalized.includes("greater than or equal to 0") || normalized.includes("nonnegative")) {
     return "Wartość nie może być ujemna."
   }
-  if (message.includes("less than or equal to 1")) {
+  if (normalized.includes("less than or equal to 1")) {
     return "Wartość nie może być większa niż 1."
   }
   return message
@@ -376,6 +552,7 @@ function sectionForValidationPath(path: string): string | null {
   if (path.startsWith("thermal_zones.")) return "zones"
   if (path.startsWith("opaque_building_elements.")) return "opaque"
   if (path.startsWith("transparent_building_elements.")) return "transparent"
+  if (path.startsWith("thermal_bridges.")) return "thermal-bridges"
   if (path.startsWith("systems.")) return "systems"
   if (path.startsWith("ventilation.")) return "ventilation"
   return null
@@ -506,30 +683,46 @@ const defaultValues: FormValues = {
       frame_factor: 0.2,
     },
   ],
+  thermal_bridges: {
+    auto_calculate: false,
+    linear_bridges: [],
+    point_bridges: [],
+  },
   ventilation: {
     ventilation_type: "natural",
+    operation_mode: "continuous",
     airflow_rate: 120,
     heat_recovery_efficiency: 0,
-    infiltration_rate: 0.5,
+    infiltration_rate: 0.2,
+    fan_infiltration_rate: 0,
     usage_share_beta: undefined,
+    supply_temperature: undefined,
+    schedule: null,
+    schedule_weekday_profile: "",
+    schedule_saturday_profile: "",
+    schedule_sunday_profile: "",
   },
   systems: {
     heating: {
       system_type: "heat_pump_air",
+      installation_type: "",
       fuel_or_carrier: "electricity",
       generation_efficiency: 3.0,
       distribution_efficiency: 0.95,
       storage_efficiency: 1.0,
       control_efficiency: 1.0,
       sink_temperature: 35,
+      auxiliary_energy_kwh_year: undefined,
     },
     cooling: {
       system_type: "none",
+      installation_type: "",
       fuel_or_carrier: "electricity",
       generation_efficiency: 3.9,
       distribution_efficiency: 1.0,
       storage_efficiency: 1.0,
       control_efficiency: 0.94,
+      auxiliary_energy_kwh_year: undefined,
     },
     dhw: {
       system_type: "electric_storage",
@@ -635,6 +828,8 @@ function mergeFormValues(project: unknown): FormValues {
     "target_temperature",
     "cold_water_temperature",
   ])
+  const incomingVentilation = (incoming.ventilation ?? {}) as Partial<FormValues["ventilation"]>
+  const incomingSchedule = incomingVentilation.schedule
   return {
     ...defaultValues,
     ...incoming,
@@ -667,6 +862,33 @@ function mergeFormValues(project: unknown): FormValues {
       ...element,
       element_type: migrateLegacyValue(element.element_type, legacyTransparentElementTypeValues),
     })),
+    thermal_bridges: incoming.thermal_bridges ?? defaultValues.thermal_bridges,
+    ventilation: {
+      ...defaultValues.ventilation,
+      ...incomingVentilation,
+      infiltration_rate: incomingVentilation.infiltration_rate
+        ?? ((incoming.general?.construction_year ?? defaultValues.general.construction_year) > 1995
+          ? 0.2
+          : 0.3),
+      schedule_weekday_profile: normalizeHourlyProfileInput(
+        incomingVentilation.schedule_weekday_profile
+        ?? incomingSchedule?.weekday?.join(", ")
+        ?? "",
+      ),
+      schedule_saturday_profile: normalizeHourlyProfileInput(
+        incomingVentilation.schedule_saturday_profile
+        ?? incomingSchedule?.saturday?.join(", ")
+        ?? "",
+      ),
+      schedule_sunday_profile: normalizeHourlyProfileInput(
+        incomingVentilation.schedule_sunday_profile
+        ?? incomingSchedule?.sunday?.join(", ")
+        ?? "",
+      ),
+    },
+    // Preserve explicit hourly gain schedules from imported/API projects;
+    // the form does not replace them with normative defaults on round-trip.
+    internal_gains: incoming.internal_gains,
     systems: {
       ...defaultValues.systems,
       ...incomingSystems,
@@ -678,16 +900,31 @@ function mergeFormValues(project: unknown): FormValues {
 }
 
 function createProjectPayload(values: FormValues): BuildingProject {
+  const {
+    schedule_weekday_profile,
+    schedule_saturday_profile,
+    schedule_sunday_profile,
+    ...ventilationValues
+  } = values.ventilation
+  const weekdayProfile = parseHourlyProfile(schedule_weekday_profile)
+  const saturdayProfile = parseHourlyProfile(schedule_saturday_profile)
+  const sundayProfile = parseHourlyProfile(schedule_sunday_profile)
+  const schedule = weekdayProfile
+    ? {
+        type: "hourly_profile" as const,
+        weekday: weekdayProfile,
+        ...(saturdayProfile ? { saturday: saturdayProfile } : {}),
+        ...(sundayProfile ? { sunday: sundayProfile } : {}),
+      }
+    : values.ventilation.schedule ?? null
+
   return {
     version: "0.1.0",
     metadata: {},
-    thermal_bridges: { auto_calculate: false, linear_bridges: [], point_bridges: [] },
-    // Normatywne zyski wewnętrzne z tabeli 26 metodologii (Dz.U. 2015 poz. 376),
-    // dobrane do profilu użytkowania CWU budynku.
-    internal_gains: normativeInternalGains(values.general.dhw_usage_profile),
     primary_energy: {
-      // w_i wg tabeli 1 rozporządzenia (Dz.U. 2015 poz. 376); we w kg CO2/kWh.
-      electricity: { fp: 3.0, we: 0.6 },
+      // w_i wg aktualnej tabeli 1 rozporządzenia (Dz.U. 2023 poz. 697);
+      // we w kg CO2/kWh.
+      electricity: { fp: 2.5, we: 0.6 },
       natural_gas: { fp: 1.1, we: 0.2 },
       lpg: { fp: 1.1, we: 0.2 },
       heating_oil: { fp: 1.1, we: 0.27 },
@@ -702,6 +939,22 @@ function createProjectPayload(values: FormValues): BuildingProject {
       renewable: { fp: 0.0, we: 0.0 },
     },
     ...values,
+    ventilation: {
+      ...ventilationValues,
+      schedule,
+    },
+    // Normatywne zyski wewnętrzne z tabeli 26 metodologii (Dz.U. 2015 poz. 376),
+    // dobrane do typu budynku i profilu użytkowania CWU.  Umieszczamy to po
+    // spreadzie formularza, aby puste opcjonalne pole nie nadpisało wartości
+    // domyślnej przez ``undefined``.
+    internal_gains:
+      values.internal_gains ??
+      normativeInternalGains(
+        values.general.building_type,
+        values.general.dhw_usage_profile,
+        values.ventilation.usage_share_beta ??
+          (values.general.dhw_usage_profile.startsWith("residential") ? 1 : 0.3),
+      ),
     // Chłodzenie liczone jest wyłącznie dla stref chłodzonych (§ 5.4
     // metodologii) - dla pozostałych typów stref setpoint jest ignorowany,
     // więc nie wysyłamy go, żeby nie sugerować, że działa.
@@ -721,6 +974,32 @@ function createProjectPayload(values: FormValues): BuildingProject {
       area: Number(element.height) * Number(element.width),
     })),
   }
+}
+
+type AnalysisSectionHeadingProps = {
+  icon: LucideIcon
+  title: string
+  description: string
+  iconClassName: string
+}
+
+function AnalysisSectionHeading({
+  icon: Icon,
+  title,
+  description,
+  iconClassName,
+}: AnalysisSectionHeadingProps) {
+  return (
+    <span className="flex min-w-0 items-center gap-3">
+      <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${iconClassName}`}>
+        <Icon className="h-5 w-5" aria-hidden="true" />
+      </span>
+      <span className="min-w-0">
+        <span className="block text-base font-semibold text-slate-900">{title}</span>
+        <span className="mt-1 block text-xs font-normal leading-5 text-slate-500">{description}</span>
+      </span>
+    </span>
+  )
 }
 
 function BuildingFormContent() {
@@ -987,6 +1266,14 @@ function BuildingFormContent() {
     control: form.control,
     name: "transparent_building_elements",
   })
+  const linearBridgeFieldArray = useFieldArray({
+    control: form.control,
+    name: "thermal_bridges.linear_bridges",
+  })
+  const pointBridgeFieldArray = useFieldArray({
+    control: form.control,
+    name: "thermal_bridges.point_bridges",
+  })
   const watchedZones = useWatch({ control: form.control, name: "thermal_zones" })
   const watchedOpaqueElements = useWatch({
     control: form.control,
@@ -996,6 +1283,20 @@ function BuildingFormContent() {
     control: form.control,
     name: "transparent_building_elements",
   })
+  const watchedWeekdayProfile = useWatch({
+    control: form.control,
+    name: "ventilation.schedule_weekday_profile",
+  })
+  const watchedHeatingSystem = useWatch({
+    control: form.control,
+    name: "systems.heating",
+  })
+  const watchedCoolingSystem = useWatch({
+    control: form.control,
+    name: "systems.cooling",
+  })
+  const heatingTotalEfficiency = totalSystemEfficiency(watchedHeatingSystem)
+  const coolingTotalEfficiency = totalSystemEfficiency(watchedCoolingSystem)
   const zoneOptions = (watchedZones ?? [])
     .filter((zone) => zone.id.trim().length > 0)
     .filter(
@@ -1081,21 +1382,35 @@ function BuildingFormContent() {
   const inputClass = "max-w-sm"
 
   return (
-    <main className="container mx-auto py-8 px-4">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <h1 className="text-3xl font-bold">Nowa analiza energetyczna</h1>
-        <div className="flex flex-wrap items-center justify-end gap-3">
-          <span className="text-xs text-muted-foreground" aria-live="polite">
-            {autosaveState === "saving"
-              ? "Autozapis…"
-              : autosaveState === "saved"
-                ? "Autozapis: zapisano"
-                : "Autozapis gotowy"}
-          </span>
-          <div className="flex gap-2">
-          <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()}>
-            Wczytaj JSON
-          </Button>
+    <main className="min-h-screen bg-slate-50/70">
+      <div className="container mx-auto px-4 py-8 md:py-10">
+        <div className="mb-8 flex flex-col gap-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm md:flex-row md:items-center md:justify-between md:p-6">
+          <div className="flex min-w-0 items-center gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-sm">
+              <Building2 className="h-6 w-6" aria-hidden="true" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                Analiza godzinowa
+              </p>
+              <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-950 md:text-3xl">
+                Nowa analiza energetyczna
+              </h1>
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center gap-3 md:justify-end">
+            <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700" aria-live="polite">
+              {autosaveState === "saving"
+                ? "Autozapis…"
+                : autosaveState === "saved"
+                  ? "Autozapis: zapisano"
+                  : "Autozapis gotowy"}
+            </span>
+            <div className="flex gap-2">
+            <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()}>
+              <Upload className="mr-2 h-4 w-4" aria-hidden="true" />
+              Wczytaj JSON
+            </Button>
           <input
             ref={fileInputRef}
             type="file"
@@ -1104,12 +1419,34 @@ function BuildingFormContent() {
             onChange={handleImport}
           />
           <Button type="button" variant="outline" onClick={handleExport}>
+            <Download className="mr-2 h-4 w-4" aria-hidden="true" />
             Zapisz JSON
           </Button>
           </div>
         </div>
       </div>
       <form noValidate onSubmit={form.handleSubmit(onSubmit, onInvalid)}>
+        <div className="mb-7 rounded-2xl border border-blue-200 bg-blue-50/70 p-5 text-sm text-blue-950 shadow-sm">
+          <div className="flex items-start gap-3">
+            <Info className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" aria-hidden="true" />
+            <div>
+          <p className="font-semibold text-blue-950">Jak uzupełniać dane</p>
+          <p className="mt-1">
+            Jednostka znajduje się w nazwie pola, a ikona „?” wyjaśnia znaczenie i sposób wpisania
+            wartości. Pole opisane jako „opcjonalne”, „puste = …” albo „brak danych” możesz
+            pozostawić puste. Pozostałe pola są wymagane do wykonania obliczeń.
+          </p>
+          <p className="mt-1">
+            Po próbie obliczeń każda brakująca lub niepoprawna wartość zostanie pokazana na liście
+            błędów z nazwą sekcji i numerem elementu. Kliknięcie komunikatu przenosi do właściwego pola.
+          </p>
+          <p className="mt-1">
+            Normowe zyski wewnętrzne oraz współczynniki energii pierwotnej są dobierane automatycznie
+            zgodnie z metodologią i nie wymagają ręcznego wpisywania.
+          </p>
+            </div>
+          </div>
+        </div>
         <Accordion
           type="multiple"
           value={openSections}
@@ -1117,7 +1454,14 @@ function BuildingFormContent() {
           className="space-y-4"
         >
           <AccordionItem value="general">
-            <AccordionTrigger>Informacje ogólne</AccordionTrigger>
+            <AccordionTrigger>
+              <AnalysisSectionHeading
+                icon={Building2}
+                title="Informacje ogólne"
+                description="Dane budynku, powierzchnia, kubatura i stacja klimatyczna"
+                iconClassName="bg-blue-100 text-blue-700"
+              />
+            </AccordionTrigger>
             <AccordionContent>
               <p className="text-sm text-slate-600 mb-4">
                 Wprowadź podstawowe dane budynku. Większość pól posiada ikonę „?”
@@ -1265,7 +1609,14 @@ function BuildingFormContent() {
           </AccordionItem>
 
           <AccordionItem value="zones">
-            <AccordionTrigger>Strefy termiczne</AccordionTrigger>
+            <AccordionTrigger>
+              <AnalysisSectionHeading
+                icon={Layers3}
+                title="Strefy termiczne"
+                description="Temperatury, powierzchnie i warunki użytkowania stref"
+                iconClassName="bg-violet-100 text-violet-700"
+              />
+            </AccordionTrigger>
             <AccordionContent>
               <p className="text-sm text-slate-600 mb-4">
                 Strefa termiczna = obszar budynku o jednolitych warunkach
@@ -1332,7 +1683,14 @@ function BuildingFormContent() {
           </AccordionItem>
 
           <AccordionItem value="opaque">
-            <AccordionTrigger>Przegrody nieprzezroczyste</AccordionTrigger>
+            <AccordionTrigger>
+              <AnalysisSectionHeading
+                icon={PanelTop}
+                title="Przegrody nieprzezroczyste"
+                description="Ściany, dachy, podłogi i ich parametry cieplne"
+                iconClassName="bg-amber-100 text-amber-700"
+              />
+            </AccordionTrigger>
             <AccordionContent>
               <p className="text-sm text-slate-600 mb-4">
                 Ściany zewnętrzne, dachy, stropy, podłogi na gruncie itp. Dla
@@ -1427,7 +1785,7 @@ function BuildingFormContent() {
                       <FormField label="Absorpcja słońca (α)" tooltip="Współczynnik absorpcji promieniowania słonecznego powierzchni (0 = odbija wszystko, 1 = pochłania wszystko). Dla farb jasnych ~0.4, ciemnych ~0.8. Silnik liczy zysk do wewnątrz fizycznie: A·α·U·Rse·I.">
                         <Input type="number" step="0.01" placeholder="0-1" {...form.register(`opaque_building_elements.${index}.solar_absorptance`)} />
                       </FormField>
-                      <FormField label="Przestrzeń sąsiednia" tooltip="Co znajduje się po drugiej stronie przegrody. Ma wpływ na temperaturę i straty ciepła.">
+                      <FormField label="Przestrzeń sąsiednia" tooltip="Co znajduje się po drugiej stronie przegrody. Opcja „inna ogrzewana strefa” zakłada identyczne aktywne nastawy temperatury; dla różnych nastaw potrzebny jest model wielostrefowy.">
                         <Controller
                           name={`opaque_building_elements.${index}.adjacent_space_type` as any}
                           control={form.control}
@@ -1465,8 +1823,180 @@ function BuildingFormContent() {
             </AccordionContent>
           </AccordionItem>
 
+          <AccordionItem value="thermal-bridges">
+            <AccordionTrigger>
+              <AnalysisSectionHeading
+                icon={GitBranch}
+                title="Mostki cieplne"
+                description="Mostki liniowe i punktowe uwzględniane w bilansie"
+                iconClassName="bg-orange-100 text-orange-700"
+              />
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="mb-4 rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-950">
+                <p className="font-medium">Wprowadź tylko wartości z projektu lub dokumentacji.</p>
+                <p className="mt-1">
+                  Mostki liniowe i punktowe zwiększają straty przez przegrody. Jeżeli nie masz
+                  danych, pozostaw obie listy puste — aplikacja nie będzie ich wymyślać ani
+                  doliczać. Automatyczne wyznaczanie mostków nie jest obecnie aktywnym trybem.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-center justify-between border-b pb-2">
+                  <div>
+                    <h3 className="text-base font-semibold text-slate-800">Mostki liniowe</h3>
+                    <p className="text-sm text-slate-600">
+                      ψ [W/(m·K)] × długość [m]. Przykład: połączenie ściany z dachem lub płytą balkonową.
+                    </p>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => linearBridgeFieldArray.append({
+                      id: `lb_${linearBridgeFieldArray.fields.length + 1}`,
+                      name: "Nowy mostek liniowy",
+                      psi_value: 0.05,
+                      length: 1,
+                      zone_id: zoneOptions[0]?.value ?? "",
+                      element_id: "",
+                    })}
+                  >
+                    Dodaj mostek liniowy
+                  </Button>
+                </div>
+
+                {linearBridgeFieldArray.fields.length === 0 ? (
+                  <p className="rounded-md border border-dashed p-3 text-sm text-slate-600">
+                    Brak mostków liniowych — przy obliczeniach przyjęto 0 W/K.
+                  </p>
+                ) : (
+                  linearBridgeFieldArray.fields.map((field, index) => (
+                    <Card key={field.id}>
+                      <CardContent className="grid grid-cols-1 gap-4 pt-4 md:grid-cols-6">
+                        <FormField label="ID" tooltip="Unikalny identyfikator mostka, np. lb_wieniec_1.">
+                          <Input placeholder="np. lb_1" {...form.register(`thermal_bridges.linear_bridges.${index}.id`)} />
+                        </FormField>
+                        <FormField label="Nazwa" tooltip="Czytelny opis miejsca występowania mostka.">
+                          <Input placeholder="np. Wieniec" {...form.register(`thermal_bridges.linear_bridges.${index}.name`)} />
+                        </FormField>
+                        <FormSelect
+                          name={`thermal_bridges.linear_bridges.${index}.zone_id` as any}
+                          control={form.control}
+                          label="Strefa"
+                          tooltip="Strefa, której dotyczy mostek."
+                          placeholder="Wybierz strefę"
+                          options={zoneOptions}
+                        />
+                        <FormField label="ψ (W/m·K)" tooltip="Liniowy współczynnik przenikania ciepła z dokumentacji, np. 0,05 W/(m·K).">
+                          <Input type="number" min="0" step="0.001" placeholder="np. 0.05" {...form.register(`thermal_bridges.linear_bridges.${index}.psi_value`)} />
+                        </FormField>
+                        <FormField label="Długość (m)" tooltip="Łączna długość tego typu mostka w danej strefie.">
+                          <Input type="number" min="0" step="0.01" placeholder="np. 20" {...form.register(`thermal_bridges.linear_bridges.${index}.length`)} />
+                        </FormField>
+                        <div className="flex items-end">
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="sm"
+                            onClick={() => linearBridgeFieldArray.remove(index)}
+                            aria-label={`Usuń mostek liniowy ${index + 1}`}
+                          >
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            Usuń
+                          </Button>
+                        </div>
+                        <FormField
+                          label="ID powiązanej przegrody (opcjonalne)"
+                          tooltip="Możesz wskazać ID przegrody z listy powyżej. Pole ma charakter opisowy i nie zmienia wartości ψ ani długości."
+                          className="md:col-span-3"
+                        >
+                          <Input placeholder="np. wall_s" {...form.register(`thermal_bridges.linear_bridges.${index}.element_id`)} />
+                        </FormField>
+                      </CardContent>
+                    </Card>
+                  ))
+                )}
+
+                <div className="flex items-center justify-between border-b pb-2 pt-4">
+                  <div>
+                    <h3 className="text-base font-semibold text-slate-800">Mostki punktowe</h3>
+                    <p className="text-sm text-slate-600">
+                      χ [W/K] × liczba identycznych punktów, np. kotew lub łączników.
+                    </p>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => pointBridgeFieldArray.append({
+                      id: `pb_${pointBridgeFieldArray.fields.length + 1}`,
+                      name: "Nowy mostek punktowy",
+                      chi_value: 0.01,
+                      count: 1,
+                      zone_id: zoneOptions[0]?.value ?? "",
+                    })}
+                  >
+                    Dodaj mostek punktowy
+                  </Button>
+                </div>
+
+                {pointBridgeFieldArray.fields.length === 0 ? (
+                  <p className="rounded-md border border-dashed p-3 text-sm text-slate-600">
+                    Brak mostków punktowych — przy obliczeniach przyjęto 0 W/K.
+                  </p>
+                ) : (
+                  pointBridgeFieldArray.fields.map((field, index) => (
+                    <Card key={field.id}>
+                      <CardContent className="grid grid-cols-1 gap-4 pt-4 md:grid-cols-6">
+                        <FormField label="ID" tooltip="Unikalny identyfikator mostka, np. pb_kotwy_1.">
+                          <Input placeholder="np. pb_1" {...form.register(`thermal_bridges.point_bridges.${index}.id`)} />
+                        </FormField>
+                        <FormField label="Nazwa" tooltip="Czytelny opis rodzaju mostka punktowego.">
+                          <Input placeholder="np. Kotwa" {...form.register(`thermal_bridges.point_bridges.${index}.name`)} />
+                        </FormField>
+                        <FormSelect
+                          name={`thermal_bridges.point_bridges.${index}.zone_id` as any}
+                          control={form.control}
+                          label="Strefa"
+                          tooltip="Strefa, której dotyczą mostki punktowe."
+                          placeholder="Wybierz strefę"
+                          options={zoneOptions}
+                        />
+                        <FormField label="χ (W/K)" tooltip="Punktowy współczynnik przenikania ciepła z dokumentacji.">
+                          <Input type="number" min="0" step="0.001" placeholder="np. 0.01" {...form.register(`thermal_bridges.point_bridges.${index}.chi_value`)} />
+                        </FormField>
+                        <FormField label="Liczba sztuk" tooltip="Liczba identycznych mostków punktowych w tej strefie.">
+                          <Input type="number" min="0" step="1" placeholder="np. 12" {...form.register(`thermal_bridges.point_bridges.${index}.count`)} />
+                        </FormField>
+                        <div className="flex items-end">
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="sm"
+                            onClick={() => pointBridgeFieldArray.remove(index)}
+                            aria-label={`Usuń mostek punktowy ${index + 1}`}
+                          >
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            Usuń
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))
+                )}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+
           <AccordionItem value="transparent">
-            <AccordionTrigger>Przegrody transparentne</AccordionTrigger>
+            <AccordionTrigger>
+              <AnalysisSectionHeading
+                icon={SunMedium}
+                title="Przegrody transparentne"
+                description="Okna, drzwi szklane, świetliki i zyski słoneczne"
+                iconClassName="bg-sky-100 text-sky-700"
+              />
+            </AccordionTrigger>
             <AccordionContent>
               <p className="text-sm text-slate-600 mb-4">
                 Okna, drzwi przeszklone, świetliki. Podaj wysokość i szerokość,
@@ -1577,7 +2107,14 @@ function BuildingFormContent() {
           </AccordionItem>
 
           <AccordionItem value="systems">
-            <AccordionTrigger>Źródła energii i instalacje techniczne</AccordionTrigger>
+            <AccordionTrigger>
+              <AnalysisSectionHeading
+                icon={Settings2}
+                title="Źródła energii i instalacje techniczne"
+                description="Ogrzewanie, CWU, chłodzenie i energia pomocnicza"
+                iconClassName="bg-emerald-100 text-emerald-700"
+              />
+            </AccordionTrigger>
             <AccordionContent>
               <p className="text-sm text-slate-600 mb-4">
                 Wybierz źródło dla każdego systemu. Wartości sprawności są
@@ -1610,6 +2147,15 @@ function BuildingFormContent() {
                       className={inputClass}
                       options={energyCarrierOptions}
                     />
+                    <FormSelect
+                      name="systems.heating.installation_type"
+                      control={form.control}
+                      label="Rodzaj instalacji wg metodologii"
+                      tooltip="Klasyfikacja instalacji odbiorczej, np. ogrzewanie wodne z grzejnikami. Dla ogrzewania wodnego uruchamia normowy wiersz pomp obiegowych tabeli 20, jeśli nie podasz jawnej energii pomocniczej; nie ustawia automatycznie ηH,d ani ηH,e."
+                      placeholder="Wybierz rodzaj instalacji"
+                      className={inputClass}
+                      options={heatingInstallationOptions}
+                    />
                     <div className="rounded-md border border-dashed bg-slate-50 p-3 text-sm text-slate-600 md:col-span-2">
                       Moc źródła ciepła zostanie dobrana automatycznie po
                       obliczeniu szczytowych strat przez przenikanie i wentylację.
@@ -1629,6 +2175,31 @@ function BuildingFormContent() {
                     </FormField>
                     <FormField label="Temperatura zasilania (°C)" tooltip="Temperatura po stronie odbioru używana przy charakterystyce pompy ciepła.">
                       <Input type="number" step="0.1" {...form.register("systems.heating.sink_temperature")} className={inputClass} />
+                    </FormField>
+                    <FormField
+                      label="Eel,pom,H – energia pomocnicza (kWh/rok)"
+                      tooltip="Roczne zapotrzebowanie końcowej energii elektrycznej na pompy, napędy i automatykę systemu ogrzewania. Puste pole oznacza użycie wartości normatywnej z tabeli 20; wpisanie 0 oznacza brak energii pomocniczej."
+                    >
+                      <Input
+                        type="number"
+                        min="0"
+                        step="1"
+                        placeholder="puste = tabela 20"
+                        {...form.register("systems.heating.auxiliary_energy_kwh_year")}
+                        className={inputClass}
+                      />
+                    </FormField>
+                    <FormField
+                      label="ηH,tot – sprawność całkowita"
+                      tooltip="Wartość obliczona jako ηH,g/COP × ηH,d × ηH,s × ηH,e. Dla pompy ciepła rzeczywisty COP w obliczeniach godzinowych zależy dodatkowo od temperatury źródła i zasilania."
+                    >
+                      <Input
+                        type="number"
+                        step="0.001"
+                        value={heatingTotalEfficiency?.toFixed(3) ?? ""}
+                        readOnly
+                        className={`${inputClass} bg-slate-50`}
+                      />
                     </FormField>
                   </CardContent>
                 </Card>
@@ -1738,6 +2309,15 @@ function BuildingFormContent() {
                       className={inputClass}
                       options={energyCarrierOptions}
                     />
+                    <FormSelect
+                      name="systems.cooling.installation_type"
+                      control={form.control}
+                      label="Rodzaj instalacji wg metodologii"
+                      tooltip="Klasyfikacja instalacji odbiorczej chłodu, np. chłodzenie bezpośrednie DX albo wodne z klimakonwektorami. To pole opisowe nie zmienia automatycznie SEER ani ηC,d/ηC,e."
+                      placeholder="Wybierz rodzaj instalacji"
+                      className={inputClass}
+                      options={coolingInstallationOptions}
+                    />
                     <div className="rounded-md border border-dashed bg-slate-50 p-3 text-sm text-slate-600 md:col-span-2">
                       Roczne zapotrzebowanie użytkowe chłodzenia (QC,nd) jest
                       wyznaczane z godzinowego bilansu zysków i strat stref
@@ -1756,6 +2336,31 @@ function BuildingFormContent() {
                     <FormField label="ηC,e – regulacja i wykorzystanie" tooltip="Średnia sezonowa sprawność regulacji i wykorzystania chłodu w przestrzeni chłodzonej.">
                       <Input type="number" step="0.01" {...form.register("systems.cooling.control_efficiency")} className={inputClass} />
                     </FormField>
+                    <FormField
+                      label="Eel,pom,C – energia pomocnicza (kWh/rok)"
+                      tooltip="Roczne zapotrzebowanie końcowej energii elektrycznej na pompy, wentylatory, napędy i automatykę systemu chłodzenia. Puste pole oznacza 0 kWh/rok; wpisz wartość z projektu lub dokumentacji urządzenia."
+                    >
+                      <Input
+                        type="number"
+                        min="0"
+                        step="1"
+                        placeholder="np. 250"
+                        {...form.register("systems.cooling.auxiliary_energy_kwh_year")}
+                        className={inputClass}
+                      />
+                    </FormField>
+                    <FormField
+                      label="ηC,tot – sprawność całkowita"
+                      tooltip="Wartość obliczona jako SEER × ηC,d × ηC,s × ηC,e. Energia pomocnicza jest doliczana osobno do końcowej energii elektrycznej."
+                    >
+                      <Input
+                        type="number"
+                        step="0.001"
+                        value={coolingTotalEfficiency?.toFixed(3) ?? ""}
+                        readOnly
+                        className={`${inputClass} bg-slate-50`}
+                      />
+                    </FormField>
                   </CardContent>
                 </Card>
               </div>
@@ -1763,7 +2368,14 @@ function BuildingFormContent() {
           </AccordionItem>
 
           <AccordionItem value="ventilation">
-            <AccordionTrigger>Wentylacja</AccordionTrigger>
+            <AccordionTrigger>
+              <AnalysisSectionHeading
+                icon={Wind}
+                title="Wentylacja"
+                description="Strumień powietrza, odzysk ciepła, infiltracja i profile"
+                iconClassName="bg-cyan-100 text-cyan-700"
+              />
+            </AccordionTrigger>
             <AccordionContent>
               <p className="text-sm text-slate-600 mb-4">
                 Parametry wentylacji i infiltracji. Strumień powietrza może być
@@ -1787,32 +2399,118 @@ function BuildingFormContent() {
                     { value: "none", label: "Brak wentylacji" },
                   ]}
                 />
-                <FormField label="Strumień powietrza (m³/h)" tooltip="Budynkowy strumień powietrza wentylacyjnego. Wpisz 0, aby pobrać wartość normatywną z tabel 24/25 metodologii (V0 wg profilu użytkowania budynku).">
+                <FormSelect
+                  name="ventilation.operation_mode"
+                  control={form.control}
+                  label="Tryb pracy wentylacji"
+                  tooltip="Ciągła = strumień działa cały czas. Okresowa = w obliczeniach godzinowych strumień podstawowy i infiltracja są ważone profilem pracy; przy braku harmonogramu stosowany jest udział β."
+                  className={inputClass}
+                  options={[
+                    { value: "continuous", label: "Ciągła" },
+                    { value: "periodic", label: "Okresowa" },
+                  ]}
+                />
+                <FormField label="Strumień powietrza (m³/h)" tooltip="Dla wentylacji ciągłej wpisz strumień całkowity. Dla okresowej wpisz nominalny strumień podczas pracy wentylatorów — nie pomniejszaj go o β ani o odzysk. Wpisz 0, aby pobrać wartość normatywną.">
                   <Input type="number" step="0.1" placeholder="np. 120" {...form.register("ventilation.airflow_rate")} className={inputClass} />
                 </FormField>
                 <FormField label="Sprawność odzysku" tooltip="Sprawność rekuperatora (0 = brak, 0.8 = wysoka). Dla wentylacji grawitacyjnej zostaw 0.">
                   <Input type="number" step="0.01" placeholder="0-1" {...form.register("ventilation.heat_recovery_efficiency")} className={inputClass} />
                 </FormField>
-                <FormField label="Współczynnik infiltracji (1/h)" tooltip="Liczba wymian powietrza na godzinę w wyniku nieszczelności. Dla budynków szczelnych 0.1-0.3, dla starszych 0.5-1.0.">
-                  <Input type="number" step="0.01" placeholder="np. 0.5" {...form.register("ventilation.infiltration_rate")} className={inputClass} />
+                <FormField label="Współczynnik infiltracji (1/h)" tooltip="Bez próby szczelności: 0,2 1/h dla budynków wzniesionych po 1995 r. i 0,3 1/h dla starszych. Wpisana wartość jawna ma pierwszeństwo.">
+                  <Input type="number" step="0.01" placeholder="np. 0.2" {...form.register("ventilation.infiltration_rate")} className={inputClass} />
+                </FormField>
+                <FormField label="Infiltracja przy pracy wentylatorów (1/h)" tooltip="Dodatkowy strumień infiltracji przy włączonej wentylacji mechanicznej Vx/V. Wpisz wartość z projektu lub 0, jeśli nie występuje / brak danych.">
+                  <Input type="number" step="0.01" placeholder="np. 0.04" {...form.register("ventilation.fan_infiltration_rate")} className={inputClass} />
+                </FormField>
+                <FormField label="Temperatura nawiewu (°C)" tooltip="Opcjonalna temperatura powietrza nawiewanego do strefy. Puste pole oznacza temperaturę zewnętrzną; przy odzysku ciepła podaj temperaturę rzeczywistą z projektu tylko wtedy, gdy zastępuje model odzysku.">
+                  <Input type="number" step="0.1" placeholder="pusta = T zewnętrzna" {...form.register("ventilation.supply_temperature")} className={inputClass} />
                 </FormField>
                 <FormField label="Udział użytkowania β" tooltip="β – udział czasu użytkowania budynku (§ 5.5.2 metodologii). Redukuje normatywny strumień wentylacji i czas pracy wentylatorów poza okresem użytkowania (tabele 20 i 22). Dla mieszkalnych = 1 (praca ciągła), dla biur typowo ~0.3.">
                   <Input type="number" step="0.01" placeholder="np. 0.3" {...form.register("ventilation.usage_share_beta")} className={inputClass} />
                 </FormField>
+                <div className="md:col-span-2 space-y-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
+                  <div>
+                    <h3 className="text-base font-semibold text-slate-800">Harmonogram pracy wentylacji</h3>
+                    <p className="mt-1 text-sm text-slate-600">
+                      Ustawiasz teraz osobno każdą godzinę. Wartość 0 oznacza wyłączenie,
+                      1 pełną pracę, a wartości pośrednie częściowe użytkowanie.
+                    </p>
+                  </div>
+
+                  <Controller
+                    name="ventilation.schedule_weekday_profile"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <FormField
+                        label="Dni robocze (poniedziałek–piątek)"
+                        tooltip="Profil dla godzin 00:00–23:00. Jeżeli go nie włączysz, w trybie okresowym użyty zostanie udział użytkowania β."
+                        error={fieldState.error?.message}
+                      >
+                        <HourlyProfileEditor
+                          value={field.value}
+                          onChange={field.onChange}
+                          emptyHint="Brak profilu = użycie udziału użytkowania β."
+                        />
+                      </FormField>
+                    )}
+                  />
+
+                  <Controller
+                    name="ventilation.schedule_saturday_profile"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <FormField
+                        label="Sobota"
+                        tooltip="Profil dla godzin 00:00–23:00. Puste pole oznacza powielenie profilu dni roboczych."
+                        error={fieldState.error?.message}
+                      >
+                        <HourlyProfileEditor
+                          value={field.value}
+                          onChange={field.onChange}
+                          copyValue={watchedWeekdayProfile}
+                          emptyHint="Brak profilu = powielenie profilu dni roboczych."
+                        />
+                      </FormField>
+                    )}
+                  />
+
+                  <Controller
+                    name="ventilation.schedule_sunday_profile"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <FormField
+                        label="Niedziela"
+                        tooltip="Profil dla godzin 00:00–23:00. Puste pole oznacza powielenie profilu dni roboczych."
+                        error={fieldState.error?.message}
+                      >
+                        <HourlyProfileEditor
+                          value={field.value}
+                          onChange={field.onChange}
+                          copyValue={watchedWeekdayProfile}
+                          emptyHint="Brak profilu = powielenie profilu dni roboczych."
+                        />
+                      </FormField>
+                    )}
+                  />
+                </div>
               </div>
             </AccordionContent>
           </AccordionItem>
         </Accordion>
 
         {error && (
-          <Alert variant="destructive" className="mt-6">
+          <Alert variant="destructive" className="mt-6" role="alert" aria-live="assertive">
             <AlertTitle>
               {validationErrors.length > 0 ? "Uzupełnij dane" : "Błąd obliczeń"}
             </AlertTitle>
             <AlertDescription>
               <p>{error}</p>
               {validationErrors.length > 0 && (
-                <ul className="mt-2 list-disc space-y-1 pl-5">
+                <>
+                  <p className="mt-2 font-medium">
+                    Brakujące lub niepoprawne dane ({validationErrors.length}):
+                  </p>
+                  <ul className="mt-1 list-disc space-y-1 pl-5">
                   {validationErrors.map((entry) => (
                     <li key={`${entry.path}-${entry.message}`}>
                       <button
@@ -1830,14 +2528,22 @@ function BuildingFormContent() {
                       </button>
                     </li>
                   ))}
-                </ul>
+                  </ul>
+                  <p className="mt-2 text-sm">
+                    Kliknij nazwę pola, aby przejść bezpośrednio do miejsca wymagającego poprawy.
+                  </p>
+                </>
               )}
             </AlertDescription>
           </Alert>
         )}
 
-        <div className="mt-8 flex gap-4">
-          <Button type="submit" size="lg" disabled={loading}>
+        <div className="mt-8 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-slate-600">
+            Po uruchomieniu obliczeń otrzymasz wskaźniki EU, EK i EP oraz miesięczny bilans energii.
+          </p>
+          <Button type="submit" size="lg" disabled={loading} className="shrink-0 shadow-sm">
+            {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" /> : <Calculator className="mr-2 h-4 w-4" aria-hidden="true" />}
             {loading ? "Obliczanie..." : "Oblicz charakterystykę"}
           </Button>
         </div>
@@ -1848,6 +2554,7 @@ function BuildingFormContent() {
           <CalculationResults result={currentResult} project={currentProject} />
         </div>
       )}
+      </div>
     </main>
   )
 }

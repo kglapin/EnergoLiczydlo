@@ -8,7 +8,7 @@ network (ISO 13790:2008 Annex C, carried over to PN-EN ISO 52016-1):
 - ``H_tr,w`` transparent elements: surfaces node -> outdoor,
 - ``H_tr,ms`` surfaces node <-> thermal-mass node (9.1 W/(m2*K) on A_m),
 - ``H_tr,em`` mass node -> outdoor through the opaque envelope,
-              ``1 / (1/H_tr,op + 1/H_tr,ms)``.
+              ``1 / (1/H_tr,op - 1/H_tr,ms)``.
 
 Heat gains are split between the nodes (ISO 13790 C.2):
 
@@ -52,6 +52,32 @@ KAPPA_HEAVY_KJ_M2K = 260.0
 DEFAULT_KAPPA_KJ_M2K = KAPPA_MEDIUM_KJ_M2K
 
 SECONDS_PER_HOUR = 3600.0
+
+
+def opaque_external_conductance(h_opaque: float, h_mass_surface: float) -> float:
+    """Return ``H_tr,em`` for the standard 5R1C opaque path [W/K].
+
+    ``h_opaque`` is the complete opaque transmission coefficient ``H_tr,op``
+    and ``h_mass_surface`` is ``H_tr,ms``.  The latter is part of the fictive
+    5R1C split, so the standard relationship is:
+
+    ``H_tr,em = 1 / (1/H_tr,op - 1/H_tr,ms)``.
+
+    The split is undefined when ``H_tr,op >= H_tr,ms``.  Silently switching to
+    a different network in that case would change the physical model, so the
+    caller receives an explicit validation error.
+    """
+    if h_opaque <= 0.0:
+        return 0.0
+    if h_mass_surface <= 0.0:
+        raise ValueError("H_tr,ms must be positive when opaque transmission exists")
+    denominator = 1.0 / h_opaque - 1.0 / h_mass_surface
+    if denominator <= 0.0:
+        raise ValueError(
+            "5R1C opaque split requires H_tr,op < H_tr,ms; "
+            f"got H_tr,op={h_opaque:g}, H_tr,ms={h_mass_surface:g}"
+        )
+    return 1.0 / denominator
 
 
 @dataclass(frozen=True)
@@ -158,6 +184,8 @@ class ZoneSolution:
     t_air: np.ndarray  # indoor air temperature [degC]
     t_operative: np.ndarray  # operative temperature 0.3*t_air + 0.7*t_s [degC]
     t_mass: np.ndarray  # mass node temperature (instantaneous) [degC]
+    t_mass_mean: np.ndarray  # mass node temperature averaged over each hour [degC]
+    t_surface: np.ndarray  # central internal-surface node temperature [degC]
     q_heating: np.ndarray  # heating need [Wh] per hour (>= 0)
     q_cooling: np.ndarray  # cooling need [Wh] per hour (>= 0)
 
@@ -165,7 +193,7 @@ class ZoneSolution:
 def solve_zone_5r1c(
     *,
     network: TransmissionNetwork,
-    h_ve: float,
+    h_ve: float | np.ndarray,
     t_e: np.ndarray,
     phi_int: np.ndarray,
     phi_sol: np.ndarray,
@@ -180,8 +208,9 @@ def solve_zone_5r1c(
     ----------
     network : TransmissionNetwork
         Transmission conductances and driving temperatures (8760 h).
-    h_ve : float
-        Ventilation heat transfer coefficient [W/K].
+    h_ve : float or np.ndarray
+        Ventilation heat transfer coefficient [W/K], either constant or one
+        value per simulation hour.
     t_e : np.ndarray
         Outdoor air temperature [degC]; also the supply temperature unless
         ``t_supply`` is given.
@@ -203,11 +232,29 @@ def solve_zone_5r1c(
     phi_int = np.asarray(phi_int, dtype=float)
     phi_sol = np.asarray(phi_sol, dtype=float)
     n = len(t_e)
+    for name, values in (
+        ("t_supply", t_sup),
+        ("phi_int", phi_int),
+        ("phi_sol", phi_sol),
+    ):
+        if values.shape != (n,):
+            raise ValueError(f"{name} must contain one value per simulation hour")
+        if not np.isfinite(values).all():
+            raise ValueError(f"{name} must contain finite values")
+    h_ve_input = np.asarray(h_ve, dtype=float)
+    if h_ve_input.ndim == 0:
+        h_ve_hourly = np.full(n, float(h_ve_input), dtype=float)
+    elif h_ve_input.shape == (n,):
+        h_ve_hourly = h_ve_input
+    else:
+        raise ValueError("h_ve must be a scalar or contain one value per hour")
+    if not np.isfinite(h_ve_hourly).all() or np.any(h_ve_hourly < 0.0):
+        raise ValueError("h_ve must contain finite non-negative values")
 
     h_is = properties.h_tr_is
     h_ms = properties.h_tr_ms
     h_op = network.h_opaque
-    h_em = 0.0 if h_op <= 0.0 else 1.0 / (1.0 / h_op + 1.0 / h_ms)
+    h_em = opaque_external_conductance(h_op, h_ms)
     h_surface_total = sum(network.h_surface)
     t_opaque = (
         network.t_opaque
@@ -237,22 +284,11 @@ def solve_zone_5r1c(
     a11_rhs = properties.capacity - 0.5 * dt * (h_ms + h_em)
     a33 = h_is + h_ms + h_surface_total
 
-    matrix = np.array(
-        [
-            [a11, 0.0, -dt * h_ms],
-            [0.0, h_is + h_ve, -h_is],
-            [-0.5 * h_ms, -h_is, a33],
-        ]
-    )
-    # Response of theta_air to unit heating power (network is linear).
-    unit = np.linalg.solve(matrix, np.array([0.0, 1.0, 0.0]))
-    d_theta_air_per_w = unit[1]
-    if d_theta_air_per_w <= 0:
-        raise ValueError("5R1C network is singular: air node insensitive to heating")
-
     t_air = np.empty(n, dtype=float)
     t_op = np.empty(n, dtype=float)
     t_mass = np.empty(n, dtype=float)
+    t_mass_mean = np.empty(n, dtype=float)
+    t_surface = np.empty(n, dtype=float)
     q_h = np.zeros(n, dtype=float)
     q_c = np.zeros(n, dtype=float)
 
@@ -261,13 +297,28 @@ def solve_zone_5r1c(
     t_m_prev = float(t_set_heating) if t_set_heating is not None else float(t_e[0])
 
     for t in range(n):
+        t_m_previous = t_m_prev
+        h_ve_t = h_ve_hourly[t]
+        matrix = np.array(
+            [
+                [a11, 0.0, -dt * h_ms],
+                [0.0, h_is + h_ve_t, -h_is],
+                [-0.5 * h_ms, -h_is, a33],
+            ]
+        )
+        # Response of theta_air to unit heating power (network is linear).
+        unit = np.linalg.solve(matrix, np.array([0.0, 1.0, 0.0]))
+        d_theta_air_per_w = unit[1]
+        if d_theta_air_per_w <= 0:
+            raise ValueError("5R1C network is singular: air node insensitive to heating")
+
         surface_drive = sum(
             h * ts[t] for h, ts in zip(network.h_surface, network.t_surface, strict=True)
         )
         rhs = np.array(
             [
                 a11_rhs * t_m_prev + dt * (phi_m[t] + h_em * t_opaque[t]),
-                h_ve * t_sup[t] + phi_ia[t],
+                h_ve_t * t_sup[t] + phi_ia[t],
                 phi_st[t] + surface_drive + 0.5 * h_ms * t_m_prev,
             ]
         )
@@ -287,6 +338,8 @@ def solve_zone_5r1c(
 
         x = x0 if phi_hc == 0.0 else x0 + phi_hc * unit
         t_mass[t] = x[0]
+        t_mass_mean[t] = 0.5 * (t_m_previous + x[0])
+        t_surface[t] = x[2]
         t_air[t] = x[1]
         t_op[t] = 0.3 * x[1] + 0.7 * x[2]
         t_m_prev = float(x[0])
@@ -295,6 +348,8 @@ def solve_zone_5r1c(
         t_air=t_air,
         t_operative=t_op,
         t_mass=t_mass,
+        t_mass_mean=t_mass_mean,
+        t_surface=t_surface,
         q_heating=q_h,
         q_cooling=q_c,
     )

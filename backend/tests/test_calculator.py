@@ -1,8 +1,11 @@
 import numpy as np
+import pandas as pd
 import pytest
 from pydantic import ValidationError
 
 from app.engine.calculator import _design_heating_power_kw, calculate_building_energy
+from app.engine.internal_gains import total_internal_gains
+from app.engine.systems import total_system_efficiency
 from app.schemas.models import (
     BuildingProject,
     BuildingSystems,
@@ -10,6 +13,7 @@ from app.schemas.models import (
     SystemHeatingCooling,
     TransparentElement,
     VentilationType,
+    ZoneType,
 )
 from scripts.test_building import make_test_project
 
@@ -56,15 +60,102 @@ def test_exhaust_ventilation_is_accepted_and_counts_fan_energy():
 
 def test_technical_system_sources_are_context_validated():
     systems = BuildingSystems(
-        heating={"system_type": "heat_pump_air"},
-        cooling={"system_type": "split_ac"},
+        heating={"system_type": "heat_pump_air", "installation_type": "water_radiators"},
+        cooling={"system_type": "split_ac", "installation_type": "direct_expansion"},
         dhw={"system_type": "electric_storage"},
     )
+    assert systems.heating.installation_type == "water_radiators"
     assert systems.cooling is not None
     assert systems.cooling.system_type == "split_ac"
+    assert systems.cooling.installation_type == "direct_expansion"
 
     with pytest.raises(ValidationError):
         BuildingSystems(heating={"system_type": "split_ac"})
+
+
+def test_hydronic_installation_type_adds_table_20_circulation_pump_energy():
+    project_without_type = make_test_project()
+    project_with_type = project_without_type.model_copy(deep=True)
+    project_with_type.systems.heating.installation_type = "water_radiators"
+    project_with_type.systems.cooling = SystemHeatingCooling(
+        system_type="split_ac",
+        installation_type="direct_expansion",
+    )
+
+    without_type = calculate_building_energy(project_without_type)
+    with_type = calculate_building_energy(project_with_type)
+
+    # Heating is a hydronic installation, so Table 20 row 1 adds the
+    # circulation-pump demand in addition to the source-specific demand.
+    pump_aux_kwh = 0.30 * 5700.0 * 150.0 / 1000.0
+    assert with_type.annual_indicators.eu_kwh_m2_year == pytest.approx(
+        without_type.annual_indicators.eu_kwh_m2_year
+    )
+    assert with_type.annual_indicators.ek_kwh_m2_year == pytest.approx(
+        without_type.annual_indicators.ek_kwh_m2_year + pump_aux_kwh / 150.0
+    )
+    assert with_type.annual_indicators.ep_kwh_m2_year == pytest.approx(
+        without_type.annual_indicators.ep_kwh_m2_year + 2.5 * pump_aux_kwh / 150.0
+    )
+
+
+def test_explicit_heating_auxiliary_energy_is_added_to_final_electricity():
+    baseline_project = make_test_project()
+    baseline = calculate_building_energy(baseline_project)
+
+    explicit_project = baseline_project.model_copy(deep=True)
+    explicit_project.systems.heating.auxiliary_energy_kwh_year = 1200.0
+    explicit = calculate_building_energy(explicit_project)
+
+    assert explicit.annual_indicators.eu_kwh_m2_year == pytest.approx(
+        baseline.annual_indicators.eu_kwh_m2_year
+    )
+    ek_delta = (
+        explicit.annual_indicators.ek_kwh_m2_year
+        - baseline.annual_indicators.ek_kwh_m2_year
+    )
+    ep_delta = (
+        explicit.annual_indicators.ep_kwh_m2_year
+        - baseline.annual_indicators.ep_kwh_m2_year
+    )
+    assert ek_delta == pytest.approx(1200.0 / 150.0)
+    assert ep_delta == pytest.approx(2.5 * 1200.0 / 150.0)
+
+
+def test_explicit_cooling_auxiliary_energy_is_added_when_cooling_is_active():
+    baseline_project = make_test_project()
+    baseline_project.thermal_zones[0].zone_type = ZoneType.HEATED_AND_COOLED
+    baseline_project.systems.cooling = SystemHeatingCooling(
+        system_type="split_ac",
+        fuel_or_carrier="electricity",
+        generation_efficiency=3.9,
+        distribution_efficiency=1.0,
+        storage_efficiency=1.0,
+        control_efficiency=1.0,
+    )
+    baseline = calculate_building_energy(baseline_project)
+
+    explicit_project = baseline_project.model_copy(deep=True)
+    explicit_project.systems.cooling.auxiliary_energy_kwh_year = 600.0
+    explicit = calculate_building_energy(explicit_project)
+
+    assert explicit.annual_indicators.eu_kwh_m2_year == pytest.approx(
+        baseline.annual_indicators.eu_kwh_m2_year
+    )
+    ek_delta = (
+        explicit.annual_indicators.ek_kwh_m2_year
+        - baseline.annual_indicators.ek_kwh_m2_year
+    )
+    ep_delta = (
+        explicit.annual_indicators.ep_kwh_m2_year
+        - baseline.annual_indicators.ep_kwh_m2_year
+    )
+    assert ek_delta == pytest.approx(600.0 / 150.0)
+    assert ep_delta == pytest.approx(2.5 * 600.0 / 150.0)
+
+
+def test_total_system_efficiency_is_the_product_of_all_components():
+    assert total_system_efficiency(3.0, 0.95, 0.9, 0.8) == pytest.approx(2.052)
 
 
 def test_system_efficiency_components_change_final_energy():
@@ -190,9 +281,58 @@ def test_building_project_rejects_unknown_element_zone_id():
         BuildingProject.model_validate(project_data)
 
 
+def test_heated_zone_partition_rejects_different_conditioned_limits():
+    project_data = make_test_project().model_dump(mode="json")
+    project_data["opaque_building_elements"][0]["adjacent_space_type"] = "heated_zone"
+    project_data["thermal_zones"].append(
+        {
+            **project_data["thermal_zones"][0],
+            "id": "z2",
+            "name": "Druga strefa",
+            "setpoint_heating": 21.0,
+        }
+    )
+    project_data["general"]["conditioned_floor_area"] = 300.0
+    project_data["general"]["heated_volume"] = 750.0
+
+    with pytest.raises(ValidationError, match="identical active heating/cooling"):
+        BuildingProject.model_validate(project_data)
+
+
+def test_omitted_internal_gains_use_building_type_normative_default():
+    project_data = make_test_project().model_dump(mode="json")
+    project_data.pop("internal_gains", None)
+    project_data["general"]["building_type"] = "office"
+    project_data["general"]["dhw_usage_profile"] = "office"
+    project = BuildingProject.model_validate(project_data)
+
+    hourly = total_internal_gains(
+        0.03,
+        100.0,
+        project.internal_gains,
+        pd.date_range("2023-01-01", periods=8760, freq="h"),
+    )
+    np.testing.assert_allclose(hourly, 5.68 * 100.0)
+
+
 def test_building_project_rejects_duplicate_thermal_zone_ids():
     project_data = make_test_project().model_dump(mode="json")
     project_data["thermal_zones"].append(project_data["thermal_zones"][0].copy())
 
     with pytest.raises(ValidationError, match="Thermal zone IDs must be unique"):
+        BuildingProject.model_validate(project_data)
+
+
+@pytest.mark.parametrize(
+    ("field", "message"),
+    [
+        ("conditioned_floor_area", "Conditioned floor area"),
+        ("heated_volume", "Heated volume"),
+    ],
+)
+def test_building_project_rejects_inconsistent_conditioned_geometry(field, message):
+    project_data = make_test_project().model_dump(mode="json")
+    project_data["general"][field] *= 2.0
+
+    with pytest.raises(ValidationError, match=message):
         BuildingProject.model_validate(project_data)

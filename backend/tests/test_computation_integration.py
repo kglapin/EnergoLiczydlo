@@ -8,7 +8,7 @@ oczekiwane wskaźniki EU/EK/EP/EC analitycznie, wprost ze wzorów metodyki:
 - stan ustalony sieci 5R1C: niezależne rozwiązanie układu równań węzłów
   (patrz ``_steady_state_heating_w``) - powietrze przypięte do setpointu
 - E_k = Q / (eta_g * eta_d * eta_s * eta_r)
-- E_p = suma(E_k,i * f_p,i);  f_p(el) = 3.0 (tabela 1 rozporządzenia)
+- E_p = suma(E_k,i * f_p,i);  f_p(el) = 2.5 (current tabela 1, Dz.U. 2023 poz. 697)
 
 Testy wielostrefowe pilnują, że podział na strefy nie zmienia bilansu całego
 budynku (mostki i wentylacja liczone dokładnie raz).
@@ -23,6 +23,7 @@ import pytest
 
 from app.engine.calculator import calculate_building_energy
 from app.engine.climate import make_synthetic_year
+from app.engine.thermal_balance import opaque_external_conductance
 from app.schemas.models import (
     BuildingProject,
     BuildingSystems,
@@ -43,11 +44,11 @@ WARSZAWA_STATION = "POL_MZ_Okecie-Warszawa-Chopina.Intl.AP.123750_TMYx.2009-2023
 
 # Analityczne współczynniki budynku referencyjnego (formuły niezależne od kodu)
 H_TR = 2 * (40.0 * 0.25) + 90.0 * 0.18 + 90.0 * 0.25 + 10.0 * 1.0  # = 68.7 W/K
-H_VE = (120.0 + 0.5 * 375.0) / 3600.0 * (1.2 * 1005)  # = 102.957 W/K
+H_VE = (120.0 + 0.5 * 375.0) / 3600.0 * 1200.0  # = 102.444 W/K
 Q_DHW_YEAR_WH = 1.40 * 150.0 * 4.19 * 1.0 * 45.0 * 0.90 * 365 / 3600 * 1000
 DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-FP_ELECTRICITY = 3.0  # tabela 1 rozporządzenia Dz.U. 2015 poz. 376
+FP_ELECTRICITY = 2.5  # tabela 1 rozporządzenia Dz.U. 2023 poz. 697
 
 
 def _steady_state_heating_w(
@@ -66,7 +67,7 @@ def _steady_state_heating_w(
     """
     h_is = 3.45 * 4.5 * floor_area
     h_ms = 9.1 * 2.5 * floor_area
-    h_em = 1.0 / (1.0 / h_opaque + 1.0 / h_ms)
+    h_em = opaque_external_conductance(h_opaque, h_ms)
     # niewiadome [Tm, ts]; ti = t_set
     a = np.array(
         [
@@ -367,10 +368,16 @@ class TestScenarioBHeatingOnly:
         assert with_garage.annual_indicators.eu_kwh_m2_year == pytest.approx(
             single.annual_indicators.eu_kwh_m2_year, rel=1e-6
         )
+        np.testing.assert_allclose(
+            with_garage.hourly["Q_transmission"], single.hourly["Q_transmission"]
+        )
+        np.testing.assert_allclose(
+            with_garage.hourly["Q_ventilation"], single.hourly["Q_ventilation"]
+        )
 
 
 # ---------------------------------------------------------------------------
-# Scenariusz C: pompa ciepła (COP z mapy temperatur)
+# Scenariusz C: pompa ciepła (sezonowy COP metodologii)
 # ---------------------------------------------------------------------------
 
 
@@ -379,7 +386,7 @@ class TestScenarioCHeatPump:
     def _climate(self, synthetic_climate):
         synthetic_climate(0.0)
 
-    def test_heat_pump_final_energy_with_cop_at_zero(self):
+    def test_heat_pump_final_energy_uses_seasonal_cop(self):
         p = _base_project()
         p.systems.heating = SystemHeatingCooling(
             system_type="heat_pump_air", fuel_or_carrier="electricity",
@@ -388,12 +395,11 @@ class TestScenarioCHeatPump:
         )
         result = calculate_building_energy(p)
         Q_wh = _reference_heating_wh()
-        cop_at_0 = 3.5 * (273.15 / 35.0) / (280.15 / 28.0)  # 2.7300 wg mapy COP
         assert result.annual_indicators.ek_kwh_m2_year == pytest.approx(
-            Q_wh / cop_at_0 / 0.95 / 1000 / 150, rel=2e-3
+            Q_wh / 3.5 / 0.95 / 1000 / 150, rel=2e-3
         )
         assert result.annual_indicators.ep_kwh_m2_year == pytest.approx(
-            Q_wh / cop_at_0 / 0.95 * FP_ELECTRICITY / 1000 / 150, rel=2e-3
+            Q_wh / 3.5 / 0.95 * FP_ELECTRICITY / 1000 / 150, rel=2e-3
         )
 
 
@@ -505,6 +511,30 @@ class TestGroundAndVentilationPhysics:
             one.annual_indicators.heating_kwh_m2_year, rel=0.05
         )
 
+    def test_calculator_connects_explicit_supply_temperature_to_hourly_balance(self):
+        project = _base_project()
+        project.ventilation = Ventilation(
+            ventilation_type="mechanical_with_recovery",
+            operation_mode="periodic",
+            airflow_rate=100.0,
+            heat_recovery_efficiency=0.5,
+            infiltration_rate=0.5,
+            fan_infiltration_rate=0.04,
+            supply_temperature=20.0,
+            schedule={"type": "constant", "constant_value": 1.0},
+        )
+        result = calculate_building_energy(project)
+
+        mechanical_flow = 100.0
+        external_flow = 0.04 * 375.0
+        expected_supply = mechanical_flow * 20.0 / (mechanical_flow + external_flow)
+        expected_h_ve = (mechanical_flow + external_flow) / 3600.0 * 1200.0
+        np.testing.assert_allclose(result.hourly["T_supply"], expected_supply)
+        np.testing.assert_allclose(
+            result.hourly["Q_ventilation"],
+            expected_h_ve * (20.0 - expected_supply),
+        )
+
     def test_ground_heat_pump_cop_is_not_driven_by_outdoor_air(self):
         """PC glikol/woda: bez podanej temperatury źródła COP = znamionowy
         (a nie mapowany z T_e, co zawalało COP zimą)."""
@@ -566,8 +596,8 @@ class TestRegulationGaps:
         expected_ek = (q_kwh + delta_d + standby) / 0.9 / 150.0
         assert result.annual_indicators.ek_kwh_m2_year == pytest.approx(expected_ek, rel=1e-6)
 
-    def test_office_lighting_leni_enters_electricity(self):
-        """Q_k,L = LENI·A_L (wzór 35) w EK/EP; EU rośnie o energię oświetlenia."""
+    def test_office_lighting_leni_enters_electricity_not_useful_energy(self):
+        """Q_k,L = LENI·A_L (wzór 35) enters EK/EP, not EU."""
         p = _scenario_a_project()  # izotermiczne 20°C, bez ogrzewania
         p.general.building_type = "office"
         p.general.dhw_usage_profile = "office"
@@ -577,7 +607,7 @@ class TestRegulationGaps:
         result = calculate_building_energy(p)
         ann = result.annual_indicators
         e_l_m2 = 15.0 * 150.0 / 150.0  # A_L = Af = 150
-        assert ann.eu_kwh_m2_year == pytest.approx(e_l_m2, rel=1e-6)
+        assert ann.eu_kwh_m2_year == pytest.approx(0.0, abs=1e-6)
         assert ann.ek_kwh_m2_year == pytest.approx(e_l_m2, rel=1e-6)
         assert ann.ep_kwh_m2_year == pytest.approx(e_l_m2 * FP_ELECTRICITY, rel=1e-6)
 
