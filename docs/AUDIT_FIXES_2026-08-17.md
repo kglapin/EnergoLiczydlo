@@ -14,6 +14,8 @@ Model jest odrzucany, jeżeli:
 - otwór nie ma odpowiadającej mu przegrody zewnętrznej,
 - otwór pasuje do więcej niż jednej przegrody i przypisanie jest niejednoznaczne.
 
+W modelach z kilkoma segmentami ścian o tej samej orientacji można podać jawne przypisanie w `metadata.opening_hosts`, np. `{ "window_1": "wall_segment_2" }`. Walidacja nadal sprawdza zgodność strefy, typu granicy, orientacji i nachylenia, więc samo wskazanie identyfikatora nie omija kontroli fizycznej spójności.
+
 ### Kontrola kompletności geometrii
 
 Audyt preflight generuje ostrzeżenia dla:
@@ -78,6 +80,7 @@ Sprawność odzysku jest obecnie stałą wartością sezonową. Nie ma pełnego 
 - zmianę Htr dokładnie o `Uw - Uwall` przy +1 m² okna,
 - blokadę powierzchni transparentnej większej od hosta,
 - blokadę niejednoznacznego hosta,
+- jawne rozwiązanie niejednoznaczności przez `metadata.opening_hosts`,
 - ostrzeżenia dla modelu `Af=150 m²`, dach/podłoga=90 m² i tylko N/S,
 - pierwszeństwo `height × width` przed ręcznym `area`,
 - ostrzeżenia o brakującej klasyfikacji instalacji, stratach zasobnika i mostkach,
