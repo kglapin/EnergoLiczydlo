@@ -21,6 +21,7 @@ from app.engine.ventilation import (
 from app.schemas.models import (
     AdjacentSpaceType,
     BuildingProject,
+    OpaqueElement,
     ThermalZone,
     Ventilation,
     VentilationType,
@@ -54,6 +55,13 @@ def _enum_value(value: object) -> str:
     return str(getattr(value, "value", value))
 
 
+def _design_outdoor_temperature(settings: DesignConditionsSettings) -> float:
+    value = settings.outdoor_design_temperature_c
+    if value is None:
+        raise ValueError("Design-load calculation requires outdoor design temperature")
+    return float(value)
+
+
 def _resolved_design_ventilation(project: BuildingProject) -> Ventilation:
     ventilation = project.ventilation
     if "infiltration_rate" not in ventilation.model_fields_set:
@@ -67,7 +75,9 @@ def _resolved_design_ventilation(project: BuildingProject) -> Ventilation:
     if ventilation.airflow_rate != 0.0:
         return ventilation
     floor_area = sum(
-        zone.floor_area for zone in project.thermal_zones if zone.zone_type in CONDITIONED_TYPES
+        zone.floor_area
+        for zone in project.thermal_zones
+        if zone.zone_type in CONDITIONED_TYPES
     )
     profile = _enum_value(project.general.dhw_usage_profile)
     airflow = normative_airflow_rate_m3h(
@@ -76,10 +86,17 @@ def _resolved_design_ventilation(project: BuildingProject) -> Ventilation:
         _enum_value(ventilation.ventilation_type),
         beta=1.0,
     )
-    return ventilation.model_copy(update={"airflow_rate": airflow})
+    resolved = ventilation.model_copy(update={"airflow_rate": airflow})
+    advanced = getattr(project.ventilation, "_heat_recovery_settings", None)
+    if advanced is not None:
+        object.__setattr__(resolved, "_heat_recovery_settings", advanced)
+    return resolved
 
 
-def _ground_design_temperature(element: object, annual_mean_outdoor_c: float) -> float:
+def _ground_design_temperature(
+    element: OpaqueElement,
+    annual_mean_outdoor_c: float,
+) -> float:
     profile = getattr(element, "_ground_temperature_profile", None)
     if profile is None:
         return annual_mean_outdoor_c
@@ -88,31 +105,31 @@ def _ground_design_temperature(element: object, annual_mean_outdoor_c: float) ->
 
 
 def _opaque_adjacent_temperature(
-    element: object,
+    element: OpaqueElement,
     settings: DesignConditionsSettings,
     outdoor_design_c: float,
     annual_mean_outdoor_c: float,
 ) -> float | None:
-    adjacent = getattr(element, "adjacent_space_type")
+    adjacent = element.adjacent_space_type
     if adjacent == AdjacentSpaceType.OUTDOOR:
         return outdoor_design_c
     if adjacent == AdjacentSpaceType.GROUND:
         return _ground_design_temperature(element, annual_mean_outdoor_c)
     if adjacent == AdjacentSpaceType.CONSTANT_TEMPERATURE:
-        value = getattr(element, "adjacent_temperature", None)
+        value = element.adjacent_temperature
         if value is None:
             raise ValueError(
-                f"Element {getattr(element, 'id')} requires adjacent_temperature"
+                f"Element {element.id} requires adjacent_temperature"
             )
         return float(value)
     if adjacent == AdjacentSpaceType.UNHEATED_ZONE:
-        element_id = str(getattr(element, "id"))
+        element_id = str(element.id)
         explicit = settings.unheated_adjacent_temperature_by_element_c.get(element_id)
         if explicit is not None:
             return float(explicit)
         if settings.certificate_mode:
             raise ValueError(
-                f"Design load requires explicit unheated adjacent temperature for "
+                "Design load requires explicit unheated adjacent temperature for "
                 f"element '{element_id}' in certificate mode"
             )
         return outdoor_design_c + 3.0
@@ -127,7 +144,7 @@ def _zone_transmission_load_w(
     settings: DesignConditionsSettings,
     annual_mean_outdoor_c: float,
 ) -> float:
-    outdoor = float(settings.outdoor_design_temperature_c)
+    outdoor = _design_outdoor_temperature(settings)
     indoor = float(zone.setpoint_heating)
     load = 0.0
 
@@ -169,7 +186,7 @@ def _zone_ventilation_load_w(
 ) -> float:
     if ventilation.ventilation_type == VentilationType.NONE:
         return 0.0
-    outdoor = np.asarray([float(settings.outdoor_design_temperature_c)], dtype=float)
+    outdoor = np.asarray([_design_outdoor_temperature(settings)], dtype=float)
     operation = np.ones(1, dtype=float)
     h_ve = ventilation_heat_transfer_coefficient(
         ventilation,
@@ -196,9 +213,12 @@ def calculate_design_heat_load(
     """Calculate useful design heat load for conditioned zones [W]."""
     if not settings.enabled:
         return BuildingDesignLoad(zones=(), total_w=0.0)
+    _design_outdoor_temperature(settings)
     ventilation = _resolved_design_ventilation(project)
     building_floor_area = sum(
-        zone.floor_area for zone in project.thermal_zones if zone.zone_type in CONDITIONED_TYPES
+        zone.floor_area
+        for zone in project.thermal_zones
+        if zone.zone_type in CONDITIONED_TYPES
     )
     zone_results: list[ZoneDesignLoad] = []
 
