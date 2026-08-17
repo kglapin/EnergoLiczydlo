@@ -25,7 +25,6 @@ def test_floor_and_ceiling_reverse_stable_unstable_coefficients() -> None:
     floor_cold = float(natural_convection_coefficient(-8.0, "floor"))
     ceiling_warm = float(natural_convection_coefficient(8.0, "ceiling"))
     ceiling_cold = float(natural_convection_coefficient(-8.0, "ceiling"))
-
     assert floor_warm == pytest.approx(1.51 * 8.0**0.3333)
     assert floor_cold == pytest.approx(0.76 * 8.0**0.3333)
     assert ceiling_warm == pytest.approx(floor_cold)
@@ -35,6 +34,12 @@ def test_floor_and_ceiling_reverse_stable_unstable_coefficients() -> None:
 def test_wind_direction_modifier_distinguishes_windward_and_leeward() -> None:
     modifiers = wind_direction_modifier(180.0, np.array([180.0, 0.0, 270.0]))
     assert modifiers.tolist() == [1.0, 0.5, 1.0]
+
+
+def test_wind_direction_modifier_is_smooth_at_100_degree_transition() -> None:
+    modifiers = wind_direction_modifier(0.0, np.array([99.9, 100.0, 100.1]))
+    assert 0.5 < modifiers[1] < 1.0
+    assert modifiers[0] > modifiers[1] > modifiers[2]
 
 
 def test_forced_convection_matches_square_surface_reduction() -> None:
@@ -47,6 +52,30 @@ def test_forced_convection_matches_square_surface_reduction() -> None:
     )
     expected = 2.537 * 1.0 * 1.67 * 2.0 / 16.0**0.25 * 4.0**0.5
     assert float(coefficient) == pytest.approx(expected)
+
+
+def test_forced_convection_is_regularized_and_finite_at_zero_wind() -> None:
+    zero = float(
+        forced_convection_coefficient(
+            area_m2=16.0,
+            wind_speed_m_s=0.0,
+            wind_direction_deg=180.0,
+            surface_azimuth_deg=180.0,
+            roughness="rough",
+        )
+    )
+    small = float(
+        forced_convection_coefficient(
+            area_m2=16.0,
+            wind_speed_m_s=0.1,
+            wind_direction_deg=180.0,
+            surface_azimuth_deg=180.0,
+            roughness="rough",
+        )
+    )
+    assert np.isfinite(zero)
+    assert zero > 0.0
+    assert small > zero
 
 
 def test_non_wind_exposed_surface_uses_natural_convection_only() -> None:
