@@ -1,4 +1,4 @@
-"""Structural and analytical conformance tests for PN-EN ISO 52016-1 clause 6.5."""
+"""Structural and analytical conformance checks for PN-EN ISO 52016-1 clause 6.5."""
 from __future__ import annotations
 
 import numpy as np
@@ -32,12 +32,13 @@ def _strict_window(**updates):
         g_value=0.6, frame_factor=0.0, shading_factor=1.0,
         h_ci_w_m2k=2.5, h_ri_w_m2k=5.0, h_ce_w_m2k=20.0, h_re_w_m2k=5.0,
         core_thermal_resistance_m2k_w=0.66,
+        sky_view_factor=0.5,
     )
     data.update(updates)
     return TransparentElement(**data)
 
 
-def _solve(*, wall=None, windows=(), outdoor=0.0, heating=20.0, cooling=None, solar=None, strict=True):
+def _solve(*, wall=None, windows=(), outdoor=0.0, heating=20.0, cooling=None, solar=None):
     n = 24
     wall = wall or _strict_wall()
     solar_array = np.zeros(n) if solar is None else np.asarray(solar, dtype=float)
@@ -53,7 +54,7 @@ def _solve(*, wall=None, windows=(), outdoor=0.0, heating=20.0, cooling=None, so
         solar_radiant_distribution=(
             {wall.id: 0.8, windows[0].id: 0.2} if windows and np.any(solar_array) else None
         ),
-        strict_conformance=strict,
+        strict_conformance=True,
     )
 
 
@@ -61,7 +62,6 @@ def test_opaque_nodes_are_five_and_ordered_exterior_to_interior() -> None:
     result = _solve()
     nodes = result.construction_node_temperatures["wall"]
     assert nodes.shape == (24, 5)
-    # With cold exterior and heated interior, the exterior node is colder.
     assert np.all(nodes[:, 0] < nodes[:, -1])
 
 
@@ -74,25 +74,30 @@ def test_transparent_element_has_two_zero_capacity_surface_nodes() -> None:
 def test_hvac_controls_operative_temperature_not_air_temperature() -> None:
     result = _solve(outdoor=-10.0)
     assert np.allclose(result.t_operative, 20.0, atol=1e-7)
-    # Cold mean-radiant surfaces require air temperature above the operative setpoint.
     assert np.mean(result.t_air) > 20.0
     assert result.t_mean_radiant is not None
     assert np.mean(result.t_mean_radiant) < 20.0
 
 
-def test_air_furniture_capacity_is_part_of_dynamic_state() -> None:
-    result = solve_zone_iso52016(
+def _pulse_response(air_capacity_j_k: float):
+    return solve_zone_iso52016(
         opaque_elements=[_strict_wall()], transparent_elements=[],
         bridges=ThermalBridgeConfig(), zone_id="z1", h_ve=0.0,
         t_e=np.zeros(6), phi_int=np.array([1000.0, 0, 0, 0, 0, 0]),
         phi_sol_transparent=np.zeros(6),
         opaque_solar_absorbed_w_by_element={"wall": np.zeros(6)},
         t_set_heating=None, t_set_cooling=None,
-        air_furniture_heat_capacity_j_k=2_000_000.0,
+        air_furniture_heat_capacity_j_k=air_capacity_j_k,
         sky_temperature_difference_k=0.0,
         strict_conformance=True,
     )
-    assert result.t_air[0] > result.t_air[1] > result.t_air[2]
+
+
+def test_air_furniture_capacity_is_part_of_dynamic_state() -> None:
+    light = _pulse_response(200_000.0)
+    heavy = _pulse_response(2_000_000.0)
+    assert light.t_air[0] > heavy.t_air[0]
+    assert not np.allclose(light.t_air, heavy.t_air)
 
 
 def test_strict_mode_rejects_missing_delegated_surface_coefficients() -> None:
@@ -113,22 +118,32 @@ def test_strict_mode_rejects_missing_delegated_surface_coefficients() -> None:
         )
 
 
-def test_longwave_sky_exchange_increases_heating_load() -> None:
+def test_opaque_longwave_sky_exchange_increases_heating_load() -> None:
     wall = _strict_wall(sky_view_factor=1.0)
-    base = solve_zone_iso52016(
+    common = dict(
         opaque_elements=[wall], transparent_elements=[], bridges=ThermalBridgeConfig(),
         zone_id="z1", h_ve=0.0, t_e=np.zeros(24), phi_int=np.zeros(24),
         phi_sol_transparent=np.zeros(24), opaque_solar_absorbed_w_by_element={"wall": np.zeros(24)},
         t_set_heating=20.0, t_set_cooling=None, air_furniture_heat_capacity_j_k=1_000_000.0,
-        sky_temperature_difference_k=0.0, strict_conformance=True,
+        strict_conformance=True,
     )
-    sky = solve_zone_iso52016(
-        opaque_elements=[wall], transparent_elements=[], bridges=ThermalBridgeConfig(),
+    base = solve_zone_iso52016(**common, sky_temperature_difference_k=0.0)
+    sky = solve_zone_iso52016(**common, sky_temperature_difference_k=11.0)
+    assert sky.q_heating.sum() > base.q_heating.sum()
+
+
+def test_window_longwave_sky_exchange_increases_heating_load() -> None:
+    wall = _strict_wall(sky_view_factor=0.0)
+    window = _strict_window(sky_view_factor=1.0)
+    common = dict(
+        opaque_elements=[wall], transparent_elements=[window], bridges=ThermalBridgeConfig(),
         zone_id="z1", h_ve=0.0, t_e=np.zeros(24), phi_int=np.zeros(24),
         phi_sol_transparent=np.zeros(24), opaque_solar_absorbed_w_by_element={"wall": np.zeros(24)},
         t_set_heating=20.0, t_set_cooling=None, air_furniture_heat_capacity_j_k=1_000_000.0,
-        sky_temperature_difference_k=11.0, strict_conformance=True,
+        strict_conformance=True,
     )
+    base = solve_zone_iso52016(**common, sky_temperature_difference_k=0.0)
+    sky = solve_zone_iso52016(**common, sky_temperature_difference_k=11.0)
     assert sky.q_heating.sum() > base.q_heating.sum()
 
 
