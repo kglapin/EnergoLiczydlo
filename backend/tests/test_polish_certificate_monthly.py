@@ -164,6 +164,9 @@ def test_heating_override_supports_verified_nonstandard_monthly_procedure() -> N
         official_bip_climate_data=True,
         monthly_outdoor_temperature_c=[0.0] * 12,
         heating_useful_override_kwh_by_zone={zone.id: override},
+        useful_energy_override_evidence_by_zone={
+            zone.id: "verified external monthly calculation; sha256=test"
+        },
         internal_gain_density_w_m2_by_zone={zone.id: 0.0},
     )
     result = calculate_polish_monthly_certificate(project, settings)
