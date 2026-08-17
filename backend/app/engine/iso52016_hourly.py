@@ -277,6 +277,7 @@ def _solve_cycle(
     t_supply: FloatArray,
     phi_int: FloatArray,
     phi_sol_transparent: FloatArray,
+    internal_convective_fraction: float,
     t_set_heating: float | None,
     t_set_cooling: float | None,
     previous_nodes: FloatArray,
@@ -307,12 +308,15 @@ def _solve_cycle(
         rhs[0] = (
             h_ve[hour] * t_supply[hour]
             + (prepared.h_windows + prepared.h_bridge) * t_e[hour]
-            + 0.5 * phi_int[hour]
+            + internal_convective_fraction * phi_int[hour]
         )
         if previous.size:
             rhs[1:] = prepared.storage_coefficients * previous
 
-        radiant = 0.5 * phi_int[hour] + phi_sol_transparent[hour]
+        radiant = (
+            (1.0 - internal_convective_fraction) * phi_int[hour]
+            + phi_sol_transparent[hour]
+        )
         if count and prepared.total_interior_area > 0.0:
             for i, construction in enumerate(prepared.constructions):
                 rhs[1 + 5 * i] += (
@@ -412,6 +416,7 @@ def solve_zone_iso52016(
     t_set_heating: float | None,
     t_set_cooling: float | None,
     t_supply: FloatArray | None = None,
+    internal_convective_fraction: float = 0.5,
     require_explicit_construction_nodes: bool = False,
     max_warmup_cycles: int = 20,
     warmup_tolerance_k: float = 0.01,
@@ -420,6 +425,10 @@ def solve_zone_iso52016(
     n = len(outdoor)
     if n == 0:
         raise ValueError("Hourly solver requires at least one hour")
+    if not np.isfinite(internal_convective_fraction) or not (
+        0.0 <= internal_convective_fraction <= 1.0
+    ):
+        raise ValueError("internal_convective_fraction must be between 0 and 1")
     supply = outdoor if t_supply is None else _as_hourly(t_supply, n, "t_supply")
     ventilation = _as_hourly(h_ve, n, "h_ve")
     if np.any(ventilation < 0.0):
@@ -474,6 +483,7 @@ def solve_zone_iso52016(
             t_supply=supply,
             phi_int=internal,
             phi_sol_transparent=transparent_solar,
+            internal_convective_fraction=internal_convective_fraction,
             t_set_heating=t_set_heating,
             t_set_cooling=t_set_cooling,
             previous_nodes=start,
@@ -488,6 +498,7 @@ def solve_zone_iso52016(
                     t_supply=supply,
                     phi_int=internal,
                     phi_sol_transparent=transparent_solar,
+                    internal_convective_fraction=internal_convective_fraction,
                     t_set_heating=t_set_heating,
                     t_set_cooling=t_set_cooling,
                     previous_nodes=previous,
