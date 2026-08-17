@@ -59,7 +59,7 @@ class OpaqueElement(_legacy.OpaqueElement):
     ground_virtual_resistance_m2k_w: float | None = Field(None, gt=0.0)
 
     @model_validator(mode="after")
-    def validate_iso52016_surface_inputs(self) -> "OpaqueElement":
+    def validate_iso52016_surface_inputs(self) -> OpaqueElement:
         caps = self.thermal_node_capacities_kj_m2k
         resistances = self.thermal_node_resistances_m2k_w
         if (caps is None) != (resistances is None):
@@ -114,7 +114,7 @@ class BuildingProject(_legacy.BuildingProject):
     design_rooms: list[DesignRoom] = Field(default_factory=list)
 
     @model_validator(mode="after")
-    def validate_design_rooms(self) -> "BuildingProject":
+    def validate_design_rooms(self) -> BuildingProject:
         zone_ids = {zone.id for zone in self.zones}
         room_ids: set[str] = set()
         room_area_by_zone: dict[str, float] = {}
@@ -125,7 +125,9 @@ class BuildingProject(_legacy.BuildingProject):
             room_ids.add(room.id)
             if room.zone_id not in zone_ids:
                 raise ValueError(f"Design room {room.id} references unknown zone {room.zone_id}")
-            room_area_by_zone[room.zone_id] = room_area_by_zone.get(room.zone_id, 0.0) + room.floor_area
+            room_area_by_zone[room.zone_id] = (
+                room_area_by_zone.get(room.zone_id, 0.0) + room.floor_area
+            )
             room_volume_by_zone[room.zone_id] = (
                 room_volume_by_zone.get(room.zone_id, 0.0) + room.volume
             )
