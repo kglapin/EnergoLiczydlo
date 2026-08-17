@@ -13,6 +13,7 @@ jobs:
   backend:
     runs-on: ubuntu-latest
     outputs:
+      repair: ${{ steps.collect.outputs.repair }}
       install: ${{ steps.collect.outputs.install }}
       lint: ${{ steps.collect.outputs.lint }}
       mypy: ${{ steps.collect.outputs.mypy }}
@@ -37,6 +38,42 @@ jobs:
       - id: install
         name: Install dependencies
         run: pip install -r requirements.txt
+      - id: repair
+        name: Apply deterministic audit repairs and format code
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          python ../.ci/apply_repair.py 2>&1 | tee /tmp/ci-repair.log
+          ruff check app tests --fix \
+            --extend-per-file-ignores "app/engine/calculator/__init__.py:E402,F821" \
+            --extend-per-file-ignores "app/engine/climate/__init__.py:F821" \
+            --extend-per-file-ignores "app/engine/design_load/__init__.py:E501" \
+            --extend-per-file-ignores "app/engine/ground_iso13370/__init__.py:F821" \
+            --extend-per-file-ignores "app/engine/heat_recovery/__init__.py:F821" \
+            --extend-per-file-ignores "app/engine/thermal_balance/__init__.py:F821" \
+            --extend-per-file-ignores "app/engine/ventilation/__init__.py:F821" \
+            --extend-per-file-ignores "tests/test_post_repair_audit.py:F401" \
+            2>&1 | tee -a /tmp/ci-repair.log || true
+          ruff format app tests 2>&1 | tee -a /tmp/ci-repair.log
+          ruff check app tests --fix \
+            --extend-per-file-ignores "app/engine/calculator/__init__.py:E402,F821" \
+            --extend-per-file-ignores "app/engine/climate/__init__.py:F821" \
+            --extend-per-file-ignores "app/engine/design_load/__init__.py:E501" \
+            --extend-per-file-ignores "app/engine/ground_iso13370/__init__.py:F821" \
+            --extend-per-file-ignores "app/engine/heat_recovery/__init__.py:F821" \
+            --extend-per-file-ignores "app/engine/thermal_balance/__init__.py:F821" \
+            --extend-per-file-ignores "app/engine/ventilation/__init__.py:F821" \
+            --extend-per-file-ignores "tests/test_post_repair_audit.py:F401" \
+            2>&1 | tee -a /tmp/ci-repair.log || true
+          git diff --check 2>&1 | tee -a /tmp/ci-repair.log
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app tests
+          if ! git diff --cached --quiet; then
+            git commit -m "[skip ci] apply audited numerical repairs"
+            git push origin "HEAD:${{ github.head_ref }}"
+          fi
       - id: lint
         name: Lint with ruff
         continue-on-error: true
@@ -44,20 +81,14 @@ jobs:
         run: |
           set -o pipefail
           ruff check app tests --output-format=concise \
-            --extend-per-file-ignores "app/engine/calculator/__init__.py:E402" \
-            --extend-per-file-ignores "app/engine/calculator/__init__.py:F821" \
+            --extend-per-file-ignores "app/engine/calculator/__init__.py:E402,F821" \
             --extend-per-file-ignores "app/engine/climate/__init__.py:F821" \
             --extend-per-file-ignores "app/engine/design_load/__init__.py:E501" \
             --extend-per-file-ignores "app/engine/ground_iso13370/__init__.py:F821" \
             --extend-per-file-ignores "app/engine/heat_recovery/__init__.py:F821" \
             --extend-per-file-ignores "app/engine/thermal_balance/__init__.py:F821" \
             --extend-per-file-ignores "app/engine/ventilation/__init__.py:F821" \
-            --extend-per-file-ignores "tests/test_audit_repairs.py:I001" \
-            --extend-per-file-ignores "tests/test_post_repair_audit.py:I001" \
-            --extend-per-file-ignores "tests/test_post_repair_audit.py:E501" \
             --extend-per-file-ignores "tests/test_post_repair_audit.py:F401" \
-            --extend-per-file-ignores "tests/test_external_bestest_repaired.py:I001" \
-            --extend-per-file-ignores "tests/test_external_bestest_repaired.py:E501" \
             2>&1 | tee /tmp/ci-lint.log
       - id: mypy
         name: Type check ISO 52016 numerical modules with mypy
@@ -121,6 +152,7 @@ jobs:
         if: always()
         working-directory: .
         run: |
+          echo "repair=${{ steps.repair.outcome }}" >> "$GITHUB_OUTPUT"
           echo "install=${{ steps.install.outcome }}" >> "$GITHUB_OUTPUT"
           echo "lint=${{ steps.lint.outcome }}" >> "$GITHUB_OUTPUT"
           echo "mypy=${{ steps.mypy.outcome }}" >> "$GITHUB_OUTPUT"
@@ -137,10 +169,10 @@ jobs:
           HEAD_BRANCH: ${{ github.head_ref }}
         run: |
           mkdir -p /tmp/ci-diagnostics
-          for name in lint mypy conformance audit post-audit bestest full; do
+          for name in repair lint mypy conformance audit post-audit bestest full; do
             source="/tmp/ci-${name}.log"
             if [ -f "$source" ]; then
-              tail -n 240 "$source" > "/tmp/ci-diagnostics/${name}.log"
+              tail -n 280 "$source" > "/tmp/ci-diagnostics/${name}.log"
             fi
           done
           git fetch origin "$HEAD_BRANCH"
@@ -161,6 +193,7 @@ jobs:
         run: |
           outcomes=(
             "${{ steps.install.outcome }}"
+            "${{ steps.repair.outcome }}"
             "${{ steps.lint.outcome }}"
             "${{ steps.mypy.outcome }}"
             "${{ steps.conformance.outcome }}"
@@ -229,6 +262,7 @@ jobs:
         env:
           TESTED_SHA: ${{ github.event.pull_request.head.sha }}
           BACKEND_RESULT: ${{ needs.backend.result }}
+          B_REPAIR: ${{ needs.backend.outputs.repair }}
           B_INSTALL: ${{ needs.backend.outputs.install }}
           B_LINT: ${{ needs.backend.outputs.lint }}
           B_MYPY: ${{ needs.backend.outputs.mypy }}
@@ -247,6 +281,7 @@ jobs:
           jq -n \
             --arg tested_sha "$TESTED_SHA" \
             --arg backend_result "$BACKEND_RESULT" \
+            --arg b_repair "$B_REPAIR" \
             --arg b_install "$B_INSTALL" \
             --arg b_lint "$B_LINT" \
             --arg b_mypy "$B_MYPY" \
@@ -264,6 +299,7 @@ jobs:
               tested_sha: $tested_sha,
               backend: {
                 result: $backend_result,
+                repair: $b_repair,
                 install: $b_install,
                 lint: $b_lint,
                 mypy: $b_mypy,
