@@ -218,16 +218,26 @@ class PolishCertificateMonthlySettings(BaseModel):
                 self.preheater_electricity_kwh_by_month,
             )
         monthly_maps = {
-            "solar_irradiation_kwh_m2_by_element": self.solar_irradiation_kwh_m2_by_element,
-            "heating_internal_temperature_c_by_zone": self.heating_internal_temperature_c_by_zone,
-            "cooling_internal_temperature_c_by_zone": self.cooling_internal_temperature_c_by_zone,
+            "solar_irradiation_kwh_m2_by_element": (
+                self.solar_irradiation_kwh_m2_by_element
+            ),
+            "heating_internal_temperature_c_by_zone": (
+                self.heating_internal_temperature_c_by_zone
+            ),
+            "cooling_internal_temperature_c_by_zone": (
+                self.cooling_internal_temperature_c_by_zone
+            ),
             "heating_gain_utilization_by_zone": self.heating_gain_utilization_by_zone,
             "cooling_loss_utilization_by_zone": self.cooling_loss_utilization_by_zone,
             "beta_by_zone": self.beta_by_zone,
             "recovery_effectiveness_by_zone": self.recovery_effectiveness_by_zone,
             "supply_extract_reduction_by_zone": self.supply_extract_reduction_by_zone,
-            "unheated_adjacent_temperature_c_by_element": self.unheated_adjacent_temperature_c_by_element,
-            "ground_adjacent_temperature_c_by_element": self.ground_adjacent_temperature_c_by_element,
+            "unheated_adjacent_temperature_c_by_element": (
+                self.unheated_adjacent_temperature_c_by_element
+            ),
+            "ground_adjacent_temperature_c_by_element": (
+                self.ground_adjacent_temperature_c_by_element
+            ),
             "heating_useful_override_kwh_by_zone": self.heating_useful_override_kwh_by_zone,
             "cooling_useful_override_kwh_by_zone": self.cooling_useful_override_kwh_by_zone,
         }
@@ -246,7 +256,9 @@ class PolishCertificateMonthlySettings(BaseModel):
             for series in mapping.values()
             for value in series
         ):
-            raise ValueError("Monthly utilization, beta, recovery and reduction factors must be 0..1")
+            raise ValueError(
+                "Monthly utilization, beta, recovery and reduction factors must be 0..1"
+            )
         return self
 
 
