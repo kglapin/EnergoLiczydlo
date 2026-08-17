@@ -15,8 +15,9 @@ backwards compatibility and is exposed through ``used_inferred_construction``.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any, Sequence, cast
+from typing import Any, cast
 
 import numpy as np
 from numpy.typing import NDArray
