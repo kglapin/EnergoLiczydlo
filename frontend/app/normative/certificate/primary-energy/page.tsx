@@ -30,8 +30,27 @@ const FALLBACK_FACTORS: Record<string, Factor> = {
   geothermal: { fp: 0.0, we: 0.0 },
 }
 
+const CARRIER_LABELS: Record<string, string> = {
+  electricity: "Energia elektryczna",
+  natural_gas: "Gaz ziemny",
+  lpg: "Gaz płynny LPG",
+  heating_oil: "Olej opałowy",
+  hard_coal: "Węgiel kamienny",
+  lignite: "Węgiel brunatny",
+  district_heating: "Ciepło sieciowe",
+  biomass: "Biomasa",
+  biogas: "Biogaz",
+  solar: "Energia słoneczna",
+  wind: "Energia wiatru",
+  geothermal: "Energia geotermalna",
+}
+
 function carrier(value: unknown): string | undefined {
   return typeof value === "string" && value ? value : undefined
+}
+
+function carrierLabel(value: string): string {
+  return CARRIER_LABELS[value] ?? value
 }
 
 export default function PrimaryEnergyFactorsPage() {
@@ -84,28 +103,31 @@ export default function PrimaryEnergyFactorsPage() {
         <Button variant="ghost" size="sm" asChild className="-ml-3">
           <Link href="/normative/certificate">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Dane miesięczne świadectwa
+            Miesięczne dane formalnej charakterystyki
           </Link>
         </Button>
-        <h1 className="text-3xl font-semibold tracking-tight">Współczynniki wi i emisji</h1>
+        <h1 className="text-3xl font-semibold tracking-tight">Współczynniki energii pierwotnej i emisji</h1>
         <p className="text-sm leading-6 text-muted-foreground">
-          Tutaj zmieniasz wartość liczbową używaną przez projekt. Źródło każdej wartości wpisz
-          osobno w panelu „Tryb formalny”, aby wynik był audytowalny.
+          W tej sekcji ustawiasz wartości liczbowe używane do przeliczenia energii końcowej na
+          nieodnawialną energię pierwotną oraz do obliczenia emisji dwutlenku węgla. Dla formalnego
+          obliczenia samo wpisanie liczby nie wystarcza — źródło każdej wartości należy zapisać w
+          sekcji „Dane źródłowe do formalnego obliczenia”.
         </p>
       </div>
 
       {!project ? (
         <Alert variant="destructive">
-          <AlertTitle>Brak projektu</AlertTitle>
+          <AlertTitle>Brak projektu budynku</AlertTitle>
           <AlertDescription>Najpierw utwórz lub wczytaj projekt budynku.</AlertDescription>
         </Alert>
       ) : (
         <Alert>
-          <AlertTitle>Dane dostawcy mają znaczenie</AlertTitle>
+          <AlertTitle>Nie zmieniaj współczynnika bez udokumentowanej podstawy</AlertTitle>
           <AlertDescription>
-            Nie zmieniaj wartości tylko po to, aby obniżyć EP. Wpisz współczynnik właściwy dla
-            konkretnego dostawcy/nośnika albo pozostaw właściwy fallback regulacyjny i udokumentuj
-            jego zastosowanie w śladzie źródłowym.
+            Współczynnik nakładu nieodnawialnej energii pierwotnej wpływa bezpośrednio na wynik Ep.
+            Wprowadź wartość właściwą dla danego nośnika i konkretnego przypadku. Jeżeli stosujesz
+            wartość udostępnioną przez dostawcę, zapisz jej źródło. Jeżeli stosujesz wartość z tabeli
+            metodologii, również opisz to w danych źródłowych.
           </AlertDescription>
         </Alert>
       )}
@@ -116,10 +138,12 @@ export default function PrimaryEnergyFactorsPage() {
           ?? { fp: 0.0, we: 0.0 }
         return (
           <Card key={carrierName}>
-            <CardHeader><CardTitle>{carrierName}</CardTitle></CardHeader>
+            <CardHeader><CardTitle>{carrierLabel(carrierName)}</CardTitle></CardHeader>
             <CardContent className="grid gap-5 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor={`fp-${carrierName}`}>wi / fp [-]</Label>
+                <Label htmlFor={`fp-${carrierName}`}>
+                  Współczynnik nakładu nieodnawialnej energii pierwotnej (wi) [-]
+                </Label>
                 <Input
                   id={`fp-${carrierName}`}
                   type="number"
@@ -129,9 +153,13 @@ export default function PrimaryEnergyFactorsPage() {
                   disabled={!project}
                   onChange={(event) => updateFactor(carrierName, "fp", Number(event.target.value))}
                 />
+                <p className="text-xs text-muted-foreground">
+                  Ta wartość służy do przeliczenia energii końcowej danego nośnika na
+                  nieodnawialną energię pierwotną.
+                </p>
               </div>
               <div className="space-y-2">
-                <Label htmlFor={`we-${carrierName}`}>Wskaźnik emisji [kg CO₂/kWh]</Label>
+                <Label htmlFor={`we-${carrierName}`}>Wskaźnik emisji dwutlenku węgla [kg CO₂/kWh]</Label>
                 <Input
                   id={`we-${carrierName}`}
                   type="number"
@@ -141,6 +169,9 @@ export default function PrimaryEnergyFactorsPage() {
                   disabled={!project}
                   onChange={(event) => updateFactor(carrierName, "we", Number(event.target.value))}
                 />
+                <p className="text-xs text-muted-foreground">
+                  Wartość określa emisję przypisaną do 1 kWh energii końcowej danego nośnika.
+                </p>
               </div>
             </CardContent>
           </Card>
