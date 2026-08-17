@@ -1,7 +1,7 @@
 {
-  "tested_sha": "35227a73855afefb69ecef9350e0bf8f8f866512",
+  "tested_sha": "9f7c4f1c5639e698c121dd30e20e7a845350865f",
   "backend": {
-    "result": "success",
+    "result": "failure",
     "repair": "success",
     "install": "success",
     "lint": "success",
@@ -9,7 +9,7 @@
     "conformance": "success",
     "audit_repairs": "success",
     "post_repair_audit": "success",
-    "bestest": "success",
+    "bestest": "failure",
     "full_regression": "success"
   },
   "frontend": {
