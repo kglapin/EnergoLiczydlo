@@ -1,3 +1,4 @@
+# ruff: noqa: I001
 """Primary energy and CO2 emission calculations per Polish methodology."""
 
 from app.schemas.models import PrimaryEnergyFactors
