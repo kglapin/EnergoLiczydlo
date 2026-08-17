@@ -68,8 +68,13 @@ def _preserve_legacy_six_resistance_path(prepared, *, strict: bool):
     nodes. In compatibility mode it also adds separate inferred surface films.
     Without this correction, simply slicing ``r[1:5]`` drops both half-node
     resistances and shortens the total thermal path by one complete interval.
-    That raises the effective U-value and was visible in BESTEST Case 600 as
-    systematically excessive heating/cooling demand and peak loads.
+
+    Exterior short-wave absorption is physically applied at the outside
+    surface, not at the centre of the first construction node. Eliminating that
+    zero-capacity surface produces a Norton-equivalent source at the first node
+    equal to ``q_solar * Rse / (Rse + Rhalf)``. Applying the full solar source
+    at the node would bypass the exterior half-layer and strongly over-predict
+    inward solar gains once the complete resistance path is restored.
     """
     if strict:
         return prepared
@@ -108,7 +113,21 @@ def _preserve_legacy_six_resistance_path(prepared, *, strict: bool):
         matrix[interior, interior] += room_delta
         matrix[interior, 0] -= room_delta
 
-        patched_opaque.append(replace(path, h_boundary=desired_boundary_h))
+        exterior_film_h = float(film.h_ce + film.h_re)
+        exterior_film_r = 1.0 / exterior_film_h if exterior_film_h > 0.0 else 0.0
+        surface_source_fraction = min(
+            max(exterior_film_r / float(values[-1]), 0.0),
+            1.0,
+        )
+
+        patched_opaque.append(
+            replace(
+                path,
+                h_boundary=desired_boundary_h,
+                solar_w=np.asarray(path.solar_w, dtype=float) * surface_source_fraction,
+                sky_w=np.asarray(path.sky_w, dtype=float) * surface_source_fraction,
+            )
+        )
         changed = True
 
     if not changed:
