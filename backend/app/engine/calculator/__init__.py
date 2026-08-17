@@ -35,14 +35,14 @@ from app.engine.climate import radiation_on_surface
 from app.engine.heat_recovery import detailed_heat_recovery_settings
 from app.engine.iso52016_hourly import solve_zone_iso52016
 from app.engine.normative_models import load_normative_settings
-from app.engine.solar import solar_gains_transparent, total_solar_gains
+from app.engine.solar import total_solar_gains
 from app.engine.thermal_balance import solve_zone_5r1c, zone_thermal_properties
 from app.engine.ventilation import (
     ventilation_effective_supply_temperature,
     ventilation_heat_loss,
     ventilation_heat_transfer_coefficient,
 )
-from app.schemas.models import AdjacentSpaceType, ZoneType
+from app.schemas.models import AdjacentSpaceType
 
 
 def _raw_opaque_solar_absorption(opaque, df) -> dict[str, np.ndarray]:
@@ -125,7 +125,7 @@ def _aggregate_zone_results(
     # Heat-recovery supply temperature and zone temperature are mutually
     # dependent. Iterate the full annual vectors with damping; without detailed
     # recovery the loop executes exactly once.
-    for iteration in range(8):
+    for _ in range(8):
         t_supply = ventilation_effective_supply_temperature(
             ventilation,
             zone,
@@ -239,4 +239,15 @@ def _aggregate_zone_results(
 
 # The legacy annual aggregation resolves this global at call time.
 _legacy._aggregate_zone_results = _aggregate_zone_results
-calculate_building_energy = _legacy.calculate_building_energy
+
+
+def calculate_building_energy(project):
+    """Run the legacy annual aggregation with patched runtime globals.
+
+    Test suites and callers historically monkeypatch ``app.engine.calculator``
+    helpers such as ``_load_climate``. Synchronize those helpers into the
+    loaded legacy module before every run so that behaviour remains compatible.
+    """
+    _legacy._aggregate_zone_results = _aggregate_zone_results
+    _legacy._load_climate = globals()["_load_climate"]
+    return _legacy.calculate_building_energy(project)
