@@ -29,7 +29,23 @@ def test_report_exact_bestest_case_600_values(tmp_path) -> None:
     }
     print("AUDYT_BESTEST_CASE_600=", actual)
     print("AUDYT_BESTEST_REFERENCE=", CASE_600_REFERENCE)
-    assert CASE_600_REFERENCE["annual_heating_kwh"][0] <= actual["annual_heating_kwh"] <= CASE_600_REFERENCE["annual_heating_kwh"][1]
-    assert CASE_600_REFERENCE["annual_cooling_kwh"][0] <= actual["annual_cooling_kwh"] <= CASE_600_REFERENCE["annual_cooling_kwh"][1]
-    assert CASE_600_REFERENCE["peak_heating_w"][0] <= actual["peak_heating_w"] <= CASE_600_REFERENCE["peak_heating_w"][1]
-    assert CASE_600_REFERENCE["peak_cooling_w"][0] <= actual["peak_cooling_w"] <= CASE_600_REFERENCE["peak_cooling_w"][1]
+    assert (
+        CASE_600_REFERENCE["annual_heating_kwh"][0]
+        <= actual["annual_heating_kwh"]
+        <= CASE_600_REFERENCE["annual_heating_kwh"][1]
+    )
+    assert (
+        CASE_600_REFERENCE["annual_cooling_kwh"][0]
+        <= actual["annual_cooling_kwh"]
+        <= CASE_600_REFERENCE["annual_cooling_kwh"][1]
+    )
+    assert (
+        CASE_600_REFERENCE["peak_heating_w"][0]
+        <= actual["peak_heating_w"]
+        <= CASE_600_REFERENCE["peak_heating_w"][1]
+    )
+    assert (
+        CASE_600_REFERENCE["peak_cooling_w"][0]
+        <= actual["peak_cooling_w"]
+        <= CASE_600_REFERENCE["peak_cooling_w"][1]
+    )
