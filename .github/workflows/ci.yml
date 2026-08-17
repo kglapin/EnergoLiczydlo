@@ -47,7 +47,10 @@ jobs:
         env:
           RUN_EXTERNAL_BENCHMARKS: "1"
         run: |
-          pytest tests/test_external_bestest.py::test_external_bestest_case_600_is_inside_published_reference_band -s -vv
+          pytest \
+            tests/test_external_bestest.py::test_external_bestest_case_600_is_inside_published_reference_band \
+            tests/test_external_bestest_audit_values.py::test_report_exact_bestest_case_600_values \
+            -s -vv
       - name: Run production regression tests
         shell: bash
         run: |
