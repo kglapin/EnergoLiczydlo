@@ -69,6 +69,11 @@ replace(
     "        raise ValueError(\"h_ve must be non-negative\")\n"
     "    supply = outdoor if t_supply is None else _hourly(t_supply, n, \"t_supply\")\n",
 )
+replace(
+    "backend/app/engine/iso52016_hourly.py",
+    "    size = prepared.matrix.shape[0]\n",
+    "",
+)
 
 # Compatibility façade already selects an air-temperature thermostat in
 # non-strict mode; normalize the validation message for the regression test.
