@@ -317,4 +317,4 @@ FAILED tests/test_iso52016_design_load.py::test_heating_design_weather_mean_must
 FAILED tests/test_iso52016_design_load.py::test_design_load_initializes_for_at_least_fourteen_days - pydantic_core._pydantic_core.ValidationError: 1 validation error for OpaqueElement
   Value error, thermal node capacities must be > 0 [type=value_error, input_value={'id': 'wall', 'name': 'W... 'sky_view_factor': 0.0}, input_type=dict]
     For further information visit https://errors.pydantic.dev/2.11/v/value_error
-========================= 10 failed, 8 passed in 1.95s =========================
+========================= 10 failed, 8 passed in 1.85s =========================

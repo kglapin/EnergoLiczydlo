@@ -317,4 +317,4 @@ opaque_elements
 transparent_elements
   Field required [type=missing, input_value={'project_name': 'Test ho...e', 'efficiency': 0.9}}}, input_type=dict]
     For further information visit https://errors.pydantic.dev/2.11/v/missing
-========================= 3 failed, 22 passed in 2.59s =========================
+========================= 3 failed, 22 passed in 2.61s =========================

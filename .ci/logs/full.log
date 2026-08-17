@@ -317,4 +317,4 @@ opaque_elements
 transparent_elements
   Field required [type=missing, input_value={'project_name': 'Benchma...Factor(fp=0.0, we=0.0))}, input_type=dict]
     For further information visit https://errors.pydantic.dev/2.11/v/missing
-180 failed, 186 passed, 2 skipped, 1 error in 25.03s
+180 failed, 186 passed, 2 skipped, 1 error in 25.50s
