@@ -1,140 +1,250 @@
-# Metoda świadectwa w Polsce a model godzinowy ISO 52016
+# Formalna metoda charakterystyki energetycznej w Polsce
 
-## Zasada nadrzędna
+## 1. Cel dokumentu
 
-Aplikacja utrzymuje dwa różne poziomy obliczeń i nie utożsamia ich ze sobą:
+Ten dokument opisuje sposób działania części aplikacji przeznaczonej do wyznaczania formalnej charakterystyki energetycznej budynku zgodnie z polską metodologią.
 
-1. **wynik formalny charakterystyki energetycznej w Polsce** — liczony metodą
-   miesięczną wynikającą z załącznika nr 1 do rozporządzenia w sprawie
-   metodologii wyznaczania charakterystyki energetycznej,
-2. **szczegółowa analiza fizyczna 8760 h** — solver ISO 52016 wykorzystywany do
-   analizy godzinowej temperatur, ogrzewania/chłodzenia, gruntu i pracy
-   systemów.
+Najważniejsza zasada jest prosta:
 
-Włączenie `metadata.normative.legal.certificate_mode` powoduje, że główne
-`Eu`, `Ek`, `Ep` i tabela miesięczna pochodzą z polskiego silnika miesięcznego.
-Wynik ISO 52016 nie znika — jest przechowywany jako analiza równoległa w
-`hourly.normative_diagnostics.certificate.iso52016_hourly_analysis`.
+**formalny wynik świadectwa i szczegółowa analiza godzinowa są dwoma różnymi wynikami.**
 
-## Dlaczego są dwa silniki
+Aplikacja nie podstawia wyniku symulacji 8760 godzin w miejsce procedury wymaganej przez polską metodologię.
 
-Metodologia świadectwa definiuje roczne zapotrzebowanie jako sumę miesięcznych
-potrzeb energii. Dla ogrzewania bilans miesiąca ma postać:
+## 2. Dwa równoległe silniki obliczeniowe
+
+### 2.1. Silnik formalnej charakterystyki energetycznej
+
+W trybie świadectwa główne wskaźniki:
+
+- energia użytkowa (`Eu`),
+- energia końcowa (`Ek`),
+- nieodnawialna energia pierwotna (`Ep`)
+
+są wyznaczane przez miesięczny silnik formalny.
+
+Silnik korzysta z danych i współczynników wymaganych przez polską metodologię charakterystyki energetycznej.
+
+### 2.2. Godzinowa analiza fizyczna
+
+Równolegle aplikacja może wykonać analizę 8760 godzin roku z wykorzystaniem modelu opartego na PN-EN ISO 52016-1.
+
+Ta analiza pokazuje m.in.:
+
+- godzinowe temperatury wewnętrzne,
+- godzinowe zapotrzebowanie na ogrzewanie i chłodzenie,
+- działanie zysków słonecznych i wewnętrznych,
+- pracę wentylacji z odzyskiem ciepła,
+- wpływ wymiany ciepła z gruntem.
+
+Wynik godzinowy służy do diagnostyki, porównywania wariantów i kontroli jakości. Nie jest automatycznie formalnym wynikiem świadectwa.
+
+## 3. Kiedy aplikacja używa formalnego silnika
+
+Formalny tryb jest aktywny, gdy w projekcie ustawiono:
 
 ```text
-QH,nd,n = QH,ht,n - etaH,gn,n * QH,gn,n
+metadata.normative.legal.certificate_mode = true
 ```
 
-z ograniczeniem do wartości dodatnich.
+Po jego włączeniu główne wartości `Eu`, `Ek`, `Ep` oraz miesięczne zestawienia formalne pochodzą z miesięcznego silnika świadectwa.
 
-Dla chłodzenia analogicznie:
+Godzinowy wynik 8760 godzin pozostaje zapisany jako analiza równoległa.
+
+## 4. Miesięczny bilans ogrzewania
+
+Dla każdego miesiąca formalny silnik oblicza zapotrzebowanie na energię użytkową do ogrzewania.
+
+W uproszczonym zapisie:
 
 ```text
-QC,nd,n = QC,gn,n - etaC,ls,n * QC,ht,n
+zapotrzebowanie na ogrzewanie
+=
+straty ciepła
+-
+wykorzystana część zysków ciepła
 ```
 
-Dlatego wynik godzinowego solvera nie jest podstawiany w miejsce tych wzorów.
-Może służyć do kontroli jakości, diagnostyki i analiz technologicznych, ale nie
-jest automatycznie wynikiem ustawowej metody świadectwa.
+W kodzie odpowiada temu zapis:
 
-## Dane miesięczne formalnego silnika
+```text
+QH,nd,n = QH,ht,n - ηH,gn,n × QH,gn,n
+```
 
-`metadata.normative.polish_certificate` zawiera m.in.:
+Znaczenie symboli:
 
-- miesięczną temperaturę zewnętrzną,
-- miesięczne promieniowanie na każdą przegrodę przezroczystą,
-- miesięczne temperatury wewnętrzne dla ogrzewania/chłodzenia,
-- `etaH,gn` — wykorzystanie zysków dla ogrzewania,
-- `etaC,ls` — wykorzystanie strat dla chłodzenia,
-- `beta` — udział czasu użytkowania,
-- sprawność odzysku ciepła,
-- współczynnik redukcji strumienia nawiewno-wywiewnego,
-- temperatury przestrzeni nieogrzewanych i gruntu,
-- gęstość zysków wewnętrznych,
-- miesięczną energię elektryczną nagrzewnicy przeciwzamrożeniowej,
-- opcjonalne zweryfikowane miesięczne `QH,nd` / `QC,nd` dla przypadków, których
-  procedura szczegółowa wymaga zewnętrznego arkusza obliczeniowego.
+- `QH,nd,n` – zapotrzebowanie na energię użytkową do ogrzewania w danym miesiącu,
+- `QH,ht,n` – miesięczne straty ciepła przez przenikanie i wentylację,
+- `QH,gn,n` – miesięczne zyski ciepła,
+- `ηH,gn,n` – miesięczny współczynnik wykorzystania zysków ciepła.
 
-Każda seria miesięczna ma dokładnie 12 wartości.
+Wynik nie może być ujemny.
 
-## Klimat
+## 5. Miesięczny bilans chłodzenia
 
-Tryb formalny wymaga potwierdzenia, że miesięczne dane klimatyczne pochodzą z
-właściwego zestawu udostępnionego w Biuletynie Informacji Publicznej ministra
-właściwego do spraw budownictwa oraz dotyczą odpowiedniej stacji
-meteorologicznej.
+Dla chłodzenia stosowana jest analogiczna logika.
 
-Domyślny plik TMYx używany przez analizę godzinową nie jest automatycznie
-przenoszony do formalnego silnika świadectwa.
+W uproszczeniu:
 
-## Współczynniki delegowane do Polskiej Normy
+```text
+zapotrzebowanie na chłodzenie
+=
+zyski ciepła
+-
+część strat ciepła, którą można wykorzystać do ograniczenia chłodzenia
+```
 
-Jeżeli rozporządzenie wskazuje, że dany współczynnik należy wyznaczyć zgodnie z
-Polską Normą, aplikacja nie odtwarza go z niezweryfikowanego wzoru ani z
-pamięci implementacji.
+W kodzie:
 
-W szczególności formalny silnik wymaga jawnych miesięcznych serii:
+```text
+QC,nd,n = QC,gn,n - ηC,ls,n × QC,ht,n
+```
 
-- `heating_gain_utilization_by_zone`,
-- `cooling_loss_utilization_by_zone`.
+Znaczenie symboli:
 
-Tryb formalny przechowuje również źródło tych współczynników w
-`legal.utilization_factor_source`.
+- `QC,nd,n` – zapotrzebowanie na energię użytkową do chłodzenia w danym miesiącu,
+- `QC,gn,n` – miesięczne zyski ciepła,
+- `QC,ht,n` – miesięczne straty ciepła,
+- `ηC,ls,n` – miesięczny współczynnik wykorzystania strat ciepła.
 
-## Wentylacja
+Wynik również nie może być ujemny.
 
-Formalny model miesięczny zachowuje rozdzielenie:
+## 6. Dane wymagane dla każdego miesiąca
 
-- strumienia podstawowego,
-- udziału użytkowania `beta`,
-- przepływu poza okresem użytkowania,
-- infiltracji,
-- współczynnika redukcji dla instalacji nawiewno-wywiewnej,
-- odzysku ciepła.
+Formalny silnik może wymagać 12 wartości, po jednej dla każdego miesiąca roku, między innymi dla:
 
-Jeżeli projekt nie podaje wartości redukcji, stosowany jest przewidziany przez
-metodologię fallback `rn = 0.75`, a wynik zawiera informację o tym fakcie.
+- temperatury zewnętrznej,
+- temperatury wewnętrznej przy ogrzewaniu,
+- temperatury wewnętrznej przy chłodzeniu,
+- współczynnika wykorzystania zysków ciepła,
+- współczynnika wykorzystania strat ciepła,
+- udziału czasu użytkowania,
+- skuteczności odzysku ciepła,
+- temperatury gruntu,
+- temperatury pomieszczeń nieogrzewanych,
+- energii zużywanej przez nagrzewnicę wstępną, jeżeli występuje.
 
-Wartości odzysku ciepła wymagane przez formalny silnik są miesięcznymi danymi
-projektowymi. Szczegółowa symulacja godzinowa rekuperatora pozostaje odrębną
-analizą i nie jest niejawnie uśredniana do świadectwa.
+Każda seria miesięczna musi zawierać dokładnie 12 wartości.
 
-## Nagrzewnica przeciwzamrożeniowa
+## 7. Zyski słoneczne
 
-Godzinowy model rekuperacji wyznacza energię nagrzewnicy na podstawie TMY i
-pracy urządzenia. Ta energia jest wynikiem analitycznym.
+Dla każdej przegrody przezroczystej, np. okna albo świetlika, formalny silnik może wymagać miesięcznych danych dotyczących promieniowania słonecznego docierającego do tej przegrody.
 
-Jeżeli formalny model świadectwa wykorzystuje nagrzewnicę, wymagana jest
-odrębna 12-miesięczna seria
-`preheater_electricity_kwh_by_month`. Dzięki temu dane z analizy TMY nie są
-niejawnie mieszane z formalnymi danymi klimatycznymi świadectwa.
+Dane te są oddzielone od promieniowania używanego w analizie godzinowej.
 
-## Energia końcowa i pierwotna
+Oznacza to, że aplikacja nie zakłada automatycznie, że plik klimatyczny używany do symulacji 8760 godzin jest właściwym źródłem danych dla formalnego świadectwa.
 
-Po wyznaczeniu miesięcznego `QH,nd`, `QC,nd` oraz rocznego `QW,nd` aplikacja
-przelicza potrzeby na energię końcową z parametrów systemów technicznych, a
-następnie na energię pierwotną z `wi`.
+## 8. Dane klimatyczne
 
-Dla `wi` formalny tryb przechowuje źródło każdej wartości. Jeżeli dla danego
-nośnika dostępne są dane dostawcy, należy wprowadzić współczynnik właściwy dla
-tego projektu. Wartość tabelaryczna powinna być jawnie opisana jako fallback,
-gdy brak danych dostawcy.
+W trybie świadectwa użytkownik musi wskazać źródło danych klimatycznych użytych do formalnego obliczenia.
 
-## Projektowe obciążenie cieplne
+Pole:
 
-Obciążenie projektowe pozostaje trzecim, niezależnym wynikiem:
+```text
+official_bip_climate_data
+```
 
-- nie jest energią roczną,
-- nie wpływa na `Eu`, `Ek`, `Ep`,
-- nie korzysta z najzimniejszej godziny TMY,
-- korzysta z jawnych projektowych warunków brzegowych.
+służy do potwierdzenia, że wykorzystano odpowiedni oficjalny zestaw danych klimatycznych.
 
-## Zasada fail-closed
+Samo zaznaczenie pola nie zastępuje obowiązku wskazania konkretnego źródła w śladzie dokumentacyjnym projektu.
 
-W trybie formalnym brak danych nie prowadzi do cichego przyjęcia wartości
-uproszczonej. Obliczenie jest zatrzymywane, jeżeli brakuje m.in. wymaganych
-danych klimatycznych, współczynników miesięcznych, danych formalnego modelu
-gruntu, dokumentacji odzysku ciepła lub źródła `wi`.
+## 9. Współczynniki wyznaczane zgodnie z Polską Normą
 
-Ta zasada jest celowa: lepszy jest brak wyniku formalnego niż wynik o pozornej
-precyzji oparty na nieudokumentowanym fallbacku.
+Jeżeli polska metodologia wskazuje, że określony współczynnik należy wyznaczyć zgodnie z Polską Normą, aplikacja nie powinna odtwarzać go na podstawie niezweryfikowanego wzoru.
+
+Dotyczy to między innymi miesięcznych współczynników wykorzystania zysków i strat.
+
+Dlatego w trybie świadectwa użytkownik podaje zweryfikowane wartości oraz wskazuje ich źródło.
+
+Jest to celowe zabezpieczenie przed tworzeniem pozornie dokładnego wyniku na podstawie nieudokumentowanych założeń.
+
+## 10. Wentylacja i odzysk ciepła
+
+Formalny silnik miesięczny rozdziela m.in.:
+
+- podstawowy strumień powietrza,
+- udział czasu działania wentylacji,
+- infiltrację,
+- pracę instalacji poza okresem użytkowania,
+- skuteczność odzysku ciepła,
+- dodatkowe współczynniki redukcyjne wymagane przez metodologię.
+
+Szczegółowa godzinowa symulacja rekuperatora nie jest automatycznie uśredniana i przenoszona do formalnego świadectwa.
+
+Jeżeli formalne obliczenie wymaga miesięcznej skuteczności odzysku ciepła, należy podać odpowiednią serię 12 wartości.
+
+## 11. Nagrzewnica wstępna i ochrona przed zamarzaniem
+
+W analizie godzinowej aplikacja może obliczać energię zużywaną przez nagrzewnicę wstępną chroniącą wymiennik przed zamarzaniem.
+
+Formalny silnik świadectwa nie pobiera tej wartości automatycznie z typowego roku meteorologicznego.
+
+Jeżeli energia nagrzewnicy ma wpływać na formalny wynik, należy podać miesięczną serię:
+
+```text
+preheater_electricity_kwh_by_month
+```
+
+czyli 12 miesięcznych wartości zużycia energii elektrycznej.
+
+## 12. Ciepła woda użytkowa
+
+Zapotrzebowanie na energię użytkową do przygotowania ciepłej wody użytkowej jest wyznaczane osobno od ogrzewania i chłodzenia.
+
+Następnie energia użytkowa jest przeliczana na energię końcową z uwzględnieniem parametrów systemu przygotowania ciepłej wody.
+
+## 13. Energia użytkowa, końcowa i pierwotna
+
+### Energia użytkowa (`Eu`)
+
+Opisuje potrzeby energetyczne budynku przed uwzględnieniem strat i sprawności systemów technicznych.
+
+### Energia końcowa (`Ek`)
+
+Opisuje energię, którą trzeba dostarczyć do systemów technicznych po uwzględnieniu ich sprawności, strat i energii pomocniczej.
+
+### Nieodnawialna energia pierwotna (`Ep`)
+
+Powstaje przez przeliczenie energii końcowej za pomocą odpowiednich współczynników nakładu nieodnawialnej energii pierwotnej dla zastosowanych nośników energii.
+
+Nie należy zakładać uniwersalnej relacji `Ep ≥ Ek ≥ Eu`. Na przykład pompa ciepła może mieć energię końcową niższą od energii użytkowej, ponieważ wykorzystuje również energię pobieraną ze środowiska.
+
+## 14. Współczynnik nakładu nieodnawialnej energii pierwotnej
+
+Dla każdego nośnika energii formalny tryb zapisuje:
+
+- zastosowaną wartość współczynnika,
+- źródło tej wartości.
+
+Jeżeli dla konkretnego przypadku należy wykorzystać wartość udostępnioną przez dostawcę energii, użytkownik może nadpisać wartość domyślną w projekcie.
+
+Jeżeli stosowana jest wartość z tabeli metodologii, powinno to być jasno opisane jako źródło zastosowanego współczynnika.
+
+## 15. Projektowe obciążenie cieplne
+
+Projektowe obciążenie cieplne jest osobnym wynikiem i nie jest częścią rocznego bilansu energii.
+
+Nie wpływa bezpośrednio na `Eu`, `Ek` ani `Ep`.
+
+Służy do określenia wymaganej mocy cieplnej budynku lub strefy w zadanych warunkach projektowych.
+
+## 16. Blokada obliczenia przy braku wymaganych danych
+
+W trybie świadectwa brak danych wymaganych do formalnego obliczenia nie uruchamia cichej wartości zastępczej.
+
+Obliczenie jest blokowane, jeżeli brakuje np.:
+
+- formalnych danych klimatycznych,
+- miesięcznych współczynników wymaganych przez metodologię,
+- danych dotyczących gruntu, jeżeli są potrzebne,
+- dokumentacji odzysku ciepła, jeżeli wpływa na wynik,
+- źródła współczynnika nakładu nieodnawialnej energii pierwotnej.
+
+Zasada jest celowa: **lepiej zatrzymać formalne obliczenie niż wygenerować wynik oparty na nieudokumentowanym założeniu.**
+
+## 17. Powiązane dokumenty
+
+- `NORMATIVE_HOURLY_V2.md` – szczegółowa analiza godzinowa i moduły techniczne,
+- `METHODOLOGY.md` – ogólna metodologia projektu,
+- `COMPUTATION_LOGIC.md` – techniczny przebieg obliczeń,
+- `INPUT_SCHEMA.md` – struktura danych wejściowych,
+- `VALIDATION.md` – zasady testowania i walidacji.
