@@ -1,8 +1,17 @@
+# ruff: noqa: I001
 """Primary energy and CO2 emission calculations per Polish methodology."""
 
-from __future__ import annotations
-
 from app.schemas.models import PrimaryEnergyFactors
+
+
+RENEWABLE_FINAL_ENERGY_CARRIERS = {
+    "biomass",
+    "biogas",
+    "solar",
+    "wind",
+    "geothermal",
+    "renewable",
+}
 
 
 def annual_primary_energy(
@@ -18,8 +27,7 @@ def annual_primary_energy(
         attribute names of PrimaryEnergyFactors (e.g. 'electricity').
     factors : PrimaryEnergyFactors
         ``fp`` is the non-renewable primary energy factor [-] and ``we`` the
-        CO2 emission indicator in kg CO2/kWh (per metodologię: t CO2/TJ ==
-        kg CO2/kWh / 3.6).
+        CO2 emission indicator in kg CO2/kWh.
 
     Returns
     -------
@@ -34,7 +42,8 @@ def annual_primary_energy(
     for carrier, e_wh in final_energy_by_carrier.items():
         factor = getattr(factors, carrier, None)
         if factor is None:
-            # Unknown carrier: assume renewable (zero) and let the caller warn
+            # Unknown carriers stay explicit zero-primary only for backwards
+            # compatibility. New carrier names should be added to the schema.
             factor = factors.renewable
         ep_wh += e_wh * factor.fp
         ec_t += e_wh / 1000.0 * factor.we / 1000.0  # Wh -> kWh -> t CO2
@@ -45,12 +54,12 @@ def annual_primary_energy(
 def share_of_renewable_energy(
     final_energy_by_carrier: dict[str, float],
 ) -> float:
-    """Compute a simple share of renewable final energy [%]."""
+    """Compute renewable share of final energy [%] for all renewable carriers."""
     total = sum(final_energy_by_carrier.values())
     if total == 0:
         return 0.0
-    renewable = (
-        final_energy_by_carrier.get("biomass", 0.0)
-        + final_energy_by_carrier.get("renewable", 0.0)
+    renewable = sum(
+        final_energy_by_carrier.get(carrier, 0.0)
+        for carrier in RENEWABLE_FINAL_ENERGY_CARRIERS
     )
     return 100.0 * renewable / total

@@ -1,3 +1,4 @@
+import { enrichProjectWithNormativeSettings } from "./normative-settings"
 import { BuildingProject, CalculationResult } from "./store"
 
 export interface ApiValidationIssue {
@@ -69,10 +70,11 @@ export interface ClimateLocationResolution {
 }
 
 export async function calculate(project: BuildingProject): Promise<CalculationResult> {
+  const calculationProject = enrichProjectWithNormativeSettings(project)
   const res = await fetch("/api/calculate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(project),
+    body: JSON.stringify(calculationProject),
   })
   const data: unknown = await res.json()
   if (!res.ok) {

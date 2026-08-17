@@ -18,25 +18,20 @@ from app.schemas.models import (
     TransparentElement,
 )
 
-# Ground temperature model: deep-ground temperature approximated as
-# average annual outdoor temperature + a seasonal sinusoidal term
-# (first harmonic).  The phase lags the outdoor wave by roughly a quarter
-# period at typical slab depth: phase shift z*sqrt(pi/(a*P)) ~ 1 rad at
-# z ~ 2.5 m for soil diffusivity a ~ 0.7e-6 m2/s, i.e. about 2 months.
-# This is a documented simplification; a production implementation should
-# use the full ISO 13370 periodic ground model.
+# Legacy ground fallback retained for backwards compatibility only. The
+# audited certificate-grade path attaches an element-specific ISO 13370
+# periodic profile before this module is entered.
 DEFAULT_GROUND_TEMP_AMPLITUDE = 5.0  # K
-GROUND_TEMP_LAG_HOURS = 1460.0  # ~ 2 months
-
+GROUND_TEMP_LAG_HOURS = 1460.0  # ~2 months
 
 # External surface heat transfer resistance for horizontal / upward heat
-# flow, PN-EN ISO 6946 Table A.1.  Used to convert absorbed solar radiation
+# flow, PN-EN ISO 6946 Table A.1. Used to convert absorbed solar radiation
 # on opaque surfaces into an extra inward heat flow (sol-air equivalent).
 R_SE_M2K_W = 0.04
 
 
 def ground_temperature(T_e: pd.Series | np.ndarray) -> np.ndarray:
-    """Hourly ground temperature [°C] adjacent to ground-coupled elements."""
+    """Return the documented legacy ground-temperature fallback [°C]."""
     T_mean = float(np.mean(T_e))
     n = len(np.asarray(T_e))
     hours = np.arange(n)
@@ -56,6 +51,14 @@ def adjacent_temperature(
     if adj == AdjacentSpaceType.OUTDOOR:
         return np.asarray(T_e, dtype=float)
     if adj == AdjacentSpaceType.GROUND:
+        prepared = getattr(element, "_ground_temperature_profile", None)
+        if prepared is not None:
+            profile = np.asarray(prepared, dtype=float)
+            if profile.shape != np.asarray(T_e).shape:
+                raise ValueError(
+                    f"Prepared ground profile for {element.id} does not match climate length"
+                )
+            return profile
         return ground_temperature(T_e)
     if adj == AdjacentSpaceType.UNHEATED_ZONE:
         if unheated_zone_temperature is None:
@@ -145,9 +148,8 @@ def total_transmission_coefficient(
     given, only bridges assigned to that zone are included; when None, all
     bridges are counted (building-level total).
 
-    Note: this is the *aggregate* coefficient used for reporting.  Elements
-    adjacent to other heated zones (internal partitions) contribute no net
-    transfer and are excluded.
+    Note: this is the aggregate coefficient used for reporting. Elements
+    adjacent to other heated zones contribute no net transfer and are excluded.
     """
     network = zone_transmission_network(
         opaque_elements, transparent_elements, bridges, None, zone_id
@@ -167,17 +169,15 @@ def zone_transmission_network(
 
     Opaque elements (including thermal bridges, which act towards outdoor
     air) are lumped into ``h_opaque`` with a U*A-weighted driving temperature
-    built from each element's adjacent-space temperature.  Transparent
+    built from each element's adjacent-space temperature. Transparent
     elements couple the internal-surfaces node directly to outdoor air.
     Elements adjacent to another heated zone are excluded: with both sides at
-    the same (solved) temperature they transfer no net heat.
+    the same solved temperature they transfer no net heat.
 
-    ``T_e`` may be None for aggregate (non-simulated) use; the driving
+    ``T_e`` may be None for aggregate non-simulated use; the driving
     temperatures are then placeholders and only the conductances are valid.
     """
     network = TransmissionNetwork()
-    # Placeholder drive used when only conductances are needed (T_e is None);
-    # the weighted average then carries no physical meaning.
     placeholder = np.zeros(1)
 
     def _driving(element: OpaqueElement) -> np.ndarray:
@@ -192,7 +192,7 @@ def zone_transmission_network(
             continue
         conductance = el.area * el.u_value
         if el.adjacent_space_type == AdjacentSpaceType.HEATED_ZONE:
-            continue  # partition between equally conditioned spaces: no net flow
+            continue
         network.add_opaque(conductance, _driving(el))
 
     bridge_conductance = 0.0

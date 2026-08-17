@@ -1,7 +1,9 @@
 """Ventilation and infiltration heat loss calculations.
 
 Implements the hourly ventilation heat transfer coefficient H_ve following
-PN-EN ISO 52016-1.
+PN-EN ISO 52016-1. Detailed recovery mode keeps the physical ventilation
+flow and evaluates recovered supply-air temperature hour by hour; the legacy
+mode retains the equivalent ``1-eta`` flow reduction for backward compatibility.
 """
 
 from __future__ import annotations
@@ -9,6 +11,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
+from app.engine.heat_recovery import detailed_heat_recovery_settings, heat_recovery_state
 from app.engine.internal_gains import evaluate_schedule
 from app.schemas.models import (
     ThermalZone,
@@ -36,18 +39,11 @@ NORMATIVE_AIRFLOW_M3_S_M2: dict[str, float] = {
     "warehouse": 0.08e-3,
 }
 
-# Stopień zmniejszenia strumienia r_n dla wentylacji nawiewno-wywiewnej
-# (wzór (71) i przypis) przy braku danych o regulacji.
 SUPPLY_EXTRACT_FLOW_REDUCTION = 0.75
 
 
 def normative_infiltration_rate(construction_year: int) -> float:
-    """Return the default infiltration ACH from the methodology.
-
-    When no airtightness test is available, § 5.2.3.2 assigns ``n = 0.2``
-    to buildings erected after 1995 and ``n = 0.3`` to older buildings.
-    An explicitly entered project value always takes precedence.
-    """
+    """Return the default infiltration ACH from the methodology."""
     return 0.2 if construction_year > 1995 else 0.3
 
 
@@ -57,15 +53,7 @@ def normative_airflow_rate_m3h(
     ventilation_type: str,
     beta: float = 1.0,
 ) -> float:
-    """Uśredniony w czasie strumień podstawowy [m3/h] wg tabel 21/22/24/25.
-
-    Budynek mieszkalny (tabela 21): praca ciągła, strumień V0 (bez β).
-    Budynki użyteczności publicznej (tabela 22): strumień podstawowy działa
-    w udziale czasu β, poza okresem użytkowania pozostaje strumień
-    zredukowany: 0,2·V0 (grawitacyjna), 0,1·V_ex (wywiewna), 0
-    (nawiewno-wywiewna).  Dla nawiewno-wywiewnej stosowane jest r_n = 0,75
-    oraz odzysk ciepła (1 - η_oc).
-    """
+    """Uśredniony w czasie strumień podstawowy [m3/h] wg tabel 21/22/24/25."""
     base = NORMATIVE_AIRFLOW_M3_S_M2.get(str(dhw_usage_profile))
     if base is None:
         available_profiles = ", ".join(sorted(NORMATIVE_AIRFLOW_M3_S_M2))
@@ -80,15 +68,15 @@ def normative_airflow_rate_m3h(
 
     residential = str(dhw_usage_profile).startswith("residential")
     if residential:
-        beta = 1.0  # tabela 21: praca ciągła
+        beta = 1.0
 
     if vtype in ("mechanical", "mechanical_with_recovery"):
-        base = base * SUPPLY_EXTRACT_FLOW_REDUCTION  # r_n, wzór (71)
-        share = beta  # tabela 22 w.3: β·V_su, poza użytkowaniem 0
+        base = base * SUPPLY_EXTRACT_FLOW_REDUCTION
+        share = beta
     elif vtype in ("exhaust", "hybrid"):
-        share = beta + (1.0 - beta) * 0.1  # tabela 22 w.2
-    else:  # natural / none
-        share = beta + (1.0 - beta) * 0.2  # tabela 22 w.1
+        share = beta + (1.0 - beta) * 0.1
+    else:
+        share = beta + (1.0 - beta) * 0.2
 
     return base * share * floor_area_m2 * 3600.0
 
@@ -98,14 +86,7 @@ def ventilation_operation_profile(
     datetimes: pd.DatetimeIndex,
     beta: float = 1.0,
 ) -> np.ndarray:
-    """Return the hourly fan-operation fraction in ``[0, 1]``.
-
-    Continuous ventilation operates at one.  For periodic ventilation an
-    explicit ``Ventilation.schedule`` is used when supplied.  The default
-    constant schedule is interpreted as the methodology's time-share ``β``;
-    this preserves the monthly-method input while allowing the hourly thermal
-    solver to use the resulting effective hourly coefficient.
-    """
+    """Return the hourly fan-operation fraction in ``[0, 1]``."""
     if ventilation.operation_mode != VentilationOperationMode.PERIODIC:
         return np.ones(len(datetimes), dtype=float)
 
@@ -138,12 +119,7 @@ def _hourly_profile(
 
 
 def _recovery_efficiency(ventilation: Ventilation) -> float:
-    """Return the recovery reduction used by the equivalent-airflow model.
-
-    An explicit ``supply_temperature`` is an alternative to the equivalent
-    ``1 - η`` reduction: it describes the actual post-treatment supply air.
-    Applying both would count heat recovery twice.
-    """
+    """Return legacy equivalent-airflow recovery reduction."""
     if ventilation.supply_temperature is not None:
         return 0.0
     return ventilation.heat_recovery_efficiency
@@ -155,13 +131,12 @@ def ventilation_airflow_components(
     building_floor_area: float | None = None,
     operation_profile: np.ndarray | None = None,
 ) -> tuple[float | np.ndarray, float | np.ndarray]:
-    """Return effective mechanical and external-air flows [m³/h].
+    """Return mechanical and unrecovered outdoor-air flow components [m³/h].
 
-    The first component is the mechanical flow after heat-recovery
-    reduction.  The second component is unrecovered outdoor air: background
-    infiltration, fan-induced infiltration, natural ventilation or exhaust
-    flow.  Separating the components allows a user-supplied supply
-    temperature to affect only air that actually comes from the supply system.
+    In detailed heat-recovery mode the mechanical component is the full
+    physical flow. Recovery is represented by its hourly supply temperature.
+    In legacy mode the same component remains reduced by ``1-eta`` so existing
+    project results are backward compatible.
     """
     total_area = building_floor_area if building_floor_area else zone.floor_area
     zone_share = zone.floor_area / total_area if total_area > 0 else 0.0
@@ -177,31 +152,40 @@ def ventilation_airflow_components(
         operation_profile,
         0 if operation_profile is None else len(operation_profile),
     )
+    detailed = detailed_heat_recovery_settings(ventilation) is not None
 
     if profile is None or ventilation.operation_mode != VentilationOperationMode.PERIODIC:
         if vtype in (
             VentilationType.MECHANICAL,
             VentilationType.MECHANICAL_WITH_RECOVERY,
         ):
-            eta_rec = (
-                _recovery_efficiency(ventilation)
-                if vtype == VentilationType.MECHANICAL_WITH_RECOVERY
-                else 0.0
-            )
-            return qv_nominal * (1.0 - eta_rec), qv_inf + qv_fan_inf
+            if detailed and vtype == VentilationType.MECHANICAL_WITH_RECOVERY:
+                mechanical_scalar = qv_nominal
+            else:
+                eta_rec = (
+                    _recovery_efficiency(ventilation)
+                    if vtype == VentilationType.MECHANICAL_WITH_RECOVERY
+                    else 0.0
+                )
+                mechanical_scalar = qv_nominal * (1.0 - eta_rec)
+            return mechanical_scalar, qv_inf + qv_fan_inf
         return 0.0, qv_nominal + qv_inf + qv_fan_inf
 
     if vtype in (
         VentilationType.MECHANICAL,
         VentilationType.MECHANICAL_WITH_RECOVERY,
     ):
-        eta_rec = (
-            _recovery_efficiency(ventilation)
-            if vtype == VentilationType.MECHANICAL_WITH_RECOVERY
-            else 0.0
-        )
+        if detailed and vtype == VentilationType.MECHANICAL_WITH_RECOVERY:
+            mechanical_hourly = profile * qv_nominal
+        else:
+            eta_rec = (
+                _recovery_efficiency(ventilation)
+                if vtype == VentilationType.MECHANICAL_WITH_RECOVERY
+                else 0.0
+            )
+            mechanical_hourly = profile * qv_nominal * (1.0 - eta_rec)
         return (
-            profile * qv_nominal * (1.0 - eta_rec),
+            mechanical_hourly,
             profile * qv_fan_inf + (1.0 - profile) * qv_inf,
         )
     if vtype in (VentilationType.EXHAUST, VentilationType.HYBRID):
@@ -218,32 +202,27 @@ def ventilation_heat_transfer_coefficient(
     building_floor_area: float | None = None,
     operation_profile: np.ndarray | None = None,
 ) -> float | np.ndarray:
-    """Compute H_ve [W/K] for the zone.
-
-    Combines mechanical ventilation airflow and infiltration.  In continuous
-    mode this retains the legacy scalar calculation.  In periodic mode the
-    optional ``operation_profile`` applies the hourly streams from table 22:
-    supply/extract air and fan-induced infiltration during operation, and
-    background infiltration while the fans are off.
-
-    ``airflow_rate`` is a building-level total [m3/h]; it is split between
-    zones proportionally to floor area so that a multi-zone building does not
-    multiply the design airflow.  Pass ``building_floor_area`` equal to the
-    sum of all zone floor areas; when omitted, the zone is assumed to be the
-    only conditioned zone (backward-compatible single-zone behaviour).
-    """
+    """Compute H_ve [W/K] for the zone."""
     mechanical_flow, external_flow = ventilation_airflow_components(
         ventilation,
         zone,
         building_floor_area,
         operation_profile,
     )
-    total_flow = (
-        np.asarray(mechanical_flow, dtype=float)
-        + np.asarray(external_flow, dtype=float)
+    total_flow = np.asarray(mechanical_flow, dtype=float) + np.asarray(
+        external_flow, dtype=float
     )
     result = total_flow / 3600.0 * CP_AIR_VOLUMETRIC
     return float(result) if result.ndim == 0 else result
+
+
+def _as_hourly_flow(value: float | np.ndarray, n: int) -> np.ndarray:
+    array = np.asarray(value, dtype=float)
+    if array.ndim == 0:
+        return np.full(n, float(array), dtype=float)
+    if array.shape != (n,):
+        raise ValueError("Ventilation airflow components must match the climate length")
+    return array
 
 
 def ventilation_effective_supply_temperature(
@@ -253,18 +232,19 @@ def ventilation_effective_supply_temperature(
     building_floor_area: float | None = None,
     operation_profile: np.ndarray | None = None,
 ) -> np.ndarray:
-    """Return the equivalent supply temperature seen by the single 5R1C Hve.
-
-    With no explicit supply temperature the result is outdoor air, including
-    the usual equivalent reduction of the recovered mechanical flow.  With a
-    supplied temperature, only the mechanical component uses it; infiltration
-    and exhaust/natural air still use ``t_e``.
-    """
+    """Return the equivalent supply temperature seen by the single 5R1C Hve."""
     outdoor = np.asarray(t_e, dtype=float)
     if outdoor.ndim != 1:
         raise ValueError("t_e must be a one-dimensional hourly array")
-    if ventilation.supply_temperature is None:
+
+    detailed = detailed_heat_recovery_settings(ventilation)
+    if detailed is None and ventilation.supply_temperature is None:
         return outdoor.copy()
+    if detailed is not None and ventilation.supply_temperature is not None:
+        raise ValueError(
+            "Detailed heat-recovery control and explicit supply_temperature are "
+            "alternative models and cannot be used simultaneously"
+        )
 
     mechanical_flow, external_flow = ventilation_airflow_components(
         ventilation,
@@ -272,17 +252,34 @@ def ventilation_effective_supply_temperature(
         building_floor_area,
         operation_profile,
     )
-    mechanical = np.asarray(mechanical_flow, dtype=float)
-    external = np.asarray(external_flow, dtype=float)
-    if mechanical.ndim == 0:
-        mechanical = np.full(len(outdoor), float(mechanical))
-        external = np.full(len(outdoor), float(external))
-    if mechanical.shape != outdoor.shape or external.shape != outdoor.shape:
-        raise ValueError("Ventilation airflow components must match the climate length")
+    mechanical = _as_hourly_flow(mechanical_flow, len(outdoor))
+    external = _as_hourly_flow(external_flow, len(outdoor))
+
+    if detailed is not None:
+        total_area = building_floor_area if building_floor_area else zone.floor_area
+        capacity_fraction = zone.floor_area / total_area if total_area > 0.0 else 0.0
+        recovery = heat_recovery_state(
+            ventilation,
+            zone,
+            outdoor,
+            mechanical,
+            operation_profile=None,
+            capacity_fraction=capacity_fraction,
+        )
+        mechanical_supply = recovery.supply_temperature_c
+    else:
+        if ventilation.supply_temperature is None:
+            raise RuntimeError("Explicit supply temperature disappeared during evaluation")
+        mechanical_supply = np.full(
+            len(outdoor),
+            float(ventilation.supply_temperature),
+            dtype=float,
+        )
+
     total = mechanical + external
     result = outdoor.copy()
     np.divide(
-        mechanical * ventilation.supply_temperature + external * outdoor,
+        mechanical * mechanical_supply + external * outdoor,
         total,
         out=result,
         where=total > 0.0,
