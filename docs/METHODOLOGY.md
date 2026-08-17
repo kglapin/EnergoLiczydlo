@@ -1,293 +1,279 @@
 # Metodologia obliczeń
 
-## Cel dokumentu
+## 1. Cel dokumentu
 
-Opis metodologii stosowanej w silniku obliczeniowym `energoliczydlo` do wyznaczania charakterystyki energetycznej budynków. Silnik implementuje metodę godzinową z normy **PN-EN ISO 52016-1** oraz uwzględnia polską metodologię wyznaczania charakterystyki energetycznej budynku lub części budynku (rozporządzenie Ministra Infrastruktury i Rozwoju z dnia 27 lutego 2015 r. w sprawie metodologii wyznaczania charakterystyki energetycznej budynku lub części budynku oraz świadectw charakterystyki energetycznej, z późn. zm.).
+Ten dokument opisuje sposób, w jaki aplikacja Energoliczydło rozdziela i wykonuje różne rodzaje obliczeń energetycznych budynku.
 
-## Normy i dokumenty źródłowe
+Najważniejsza zasada projektu brzmi:
 
-- PN-EN ISO 52016-1:2017/2020 – *Energetyczne właściwości użytkowe budynków – Zapotrzebowanie na energię do ogrzewania i chłodzenia, wewnętrzne temperatury oraz jawne i utajone obciążenia cieplne – Część 1: Procedury obliczania*
-- PN-EN ISO 52010-1:2018 – dane klimatyczne i promieniowanie słoneczne
-- PN-EN ISO 12831-3 – instalacje ciepłej wody użytkowej
-- EN 15316-1, EN 15316-2, EN 15316-4 – systemy grzewcze, chłodnicze i generacja
-- Rozporządzenie w sprawie metodologii charakterystyki energetycznej (Dz.U. 2015 poz. 376 z późn. zm.)
+**formalna charakterystyka energetyczna, godzinowa analiza fizyczna i projektowe obciążenie cieplne są trzema różnymi wynikami.**
 
-## Założenia metodologiczne
+Nie należy ich ze sobą utożsamiać ani przedstawiać jako zamiennych.
 
-1. Obliczenia prowadzone są z krokiem **godzinowym** przez cały rok (8760 godzin).
-2. Budynek dzielony jest na **strefy termiczne** (ogrzewane, chłodzone, nieogrzewane).
-3. Dla każdej strefy prowadzony jest bilans ciepła uwzględniający:
-   - straty przez przenikanie,
-   - straty przez wentylację,
-   - zyski wewnętrzne,
-   - zyski od nasłonecznienia,
-   - pojemność cieplną budynku.
-4. System ogrzewania / chłodzenia włącza się, gdy temperatura wewnętrzna wykracza poza zadany zakres komfortu.
-5. Wynikiem końcowym są roczne wskaźniki `Eu`, `Ek`, `Ep` oraz ewentualnie `EC` i `Uoze`.
+## 2. Trzy rodzaje obliczeń
 
-Zgodnie z § 5.1 metodologii energia użytkowa jest sumą `QH,nd + QW,nd + QC,nd`.
-Energia wbudowanego oświetlenia `Qk,L` oraz energia pomocnicza `Eel,pom` należą
-do energii końcowej/pierwotnej i nie zwiększają `Eu`.
+### 2.1. Formalna charakterystyka energetyczna w Polsce
 
-## Bilans ciepła strefy (uproszczony zapis koncepcyjny)
+W trybie świadectwa główne wskaźniki:
 
-Dla każdej godziny `t` i strefy `z`:
+- energia użytkowa (`Eu`),
+- energia końcowa (`Ek`),
+- nieodnawialna energia pierwotna (`Ep`)
 
+są wyznaczane zgodnie z polską metodologią charakterystyki energetycznej.
+
+Formalny silnik działa w ujęciu miesięcznym. Dane i współczynniki wymagane przez metodologię muszą być jawnie podane lub wynikać z udokumentowanego źródła.
+
+Szczegółowy opis znajduje się w `POLISH_CERTIFICATE_METHOD.md`.
+
+### 2.2. Godzinowa analiza fizyczna
+
+Równolegle aplikacja wykonuje szczegółową analizę 8760 godzin roku z wykorzystaniem modelu opartego na PN-EN ISO 52016-1.
+
+Model godzinowy służy do analizy:
+
+- temperatur wewnętrznych,
+- zapotrzebowania na ogrzewanie i chłodzenie w kolejnych godzinach,
+- wpływu pojemności cieplnej budynku,
+- zysków słonecznych,
+- zysków wewnętrznych,
+- wentylacji i infiltracji,
+- odzysku ciepła,
+- wymiany ciepła z gruntem.
+
+W trybie świadectwa wynik godzinowy jest zachowywany jako analiza równoległa i kontrolna, ale nie zastępuje formalnej procedury miesięcznej.
+
+### 2.3. Projektowe obciążenie cieplne
+
+Projektowe obciążenie cieplne opisuje moc potrzebną do utrzymania wymaganych warunków wewnętrznych w określonych warunkach projektowych.
+
+Nie jest to energia roczna i nie jest dodawane do `Eu`, `Ek` ani `Ep`.
+
+Projektowe obciążenie cieplne nie może być utożsamiane z największą godzinową stratą występującą w typowym roku meteorologicznym.
+
+## 3. Dokumenty i zakresy metodologiczne
+
+Projekt wykorzystuje i rozdziela zakresy wynikające między innymi z:
+
+- polskiego rozporządzenia w sprawie metodologii wyznaczania charakterystyki energetycznej budynku lub części budynku oraz świadectw charakterystyki energetycznej,
+- PN-EN ISO 52016-1 – godzinowe potrzeby ogrzewania i chłodzenia, temperatury wewnętrzne i analiza dynamiczna,
+- PN-EN ISO 52010-1 – dane klimatyczne i promieniowanie słoneczne,
+- PN-EN ISO 13370 – wymiana ciepła z gruntem,
+- PN-EN 12831-1 – projektowe obciążenie cieplne,
+- właściwych norm systemowych i badawczych dotyczących urządzeń grzewczych, chłodniczych, wentylacyjnych i przygotowania ciepłej wody użytkowej.
+
+Pełne teksty norm nie są przechowywane w repozytorium. Jeżeli dana wartość musi pochodzić z procedury normowej albo dokumentacji konkretnego urządzenia, aplikacja wymaga jej jawnego podania i zapisania źródła.
+
+## 4. Godzinowy bilans cieplny strefy
+
+Dla każdej godziny i każdej strefy kondycjonowanej analizowane są między innymi:
+
+- straty przez przenikanie,
+- straty i zyski związane z wentylacją,
+- zyski wewnętrzne,
+- zyski słoneczne,
+- pojemność cieplna budynku,
+- energia dostarczana przez ogrzewanie,
+- energia odbierana przez chłodzenie.
+
+Uproszczony zapis bilansu ma postać:
+
+```text
+bilans cieplny
+=
+zyski wewnętrzne
++ zyski słoneczne
+- przenikanie
+- wentylacja
++ ogrzewanie
+- chłodzenie
 ```
-Q_bal(t) = Q_int(t) + Q_sol(t) - Q_tr(t) - Q_ve(t) + Q_H(t) - Q_C(t)
+
+W kodzie szczegółowy model godzinowy jest realizowany przez sieć cieplną 5R1C.
+
+## 5. Model 5R1C
+
+Model 5R1C opisuje budynek za pomocą kilku powiązanych oporów cieplnych i jednej pojemności cieplnej.
+
+W praktyce rozróżnia między innymi:
+
+- temperaturę powietrza wewnętrznego,
+- temperaturę powierzchni wewnętrznych,
+- temperaturę masy cieplnej budynku,
+- wymianę ciepła przez przegrody,
+- wymianę ciepła przez okna,
+- wymianę ciepła przez wentylację.
+
+Zyski wewnętrzne i słoneczne są rozdzielane pomiędzy odpowiednie węzły modelu.
+
+## 6. Powierzchnie przegród i otworów
+
+Powierzchnia nieprzezroczysta ściany jest liczona jako powierzchnia brutto ściany pomniejszona o powierzchnię przypisanych do niej okien, drzwi przeszklonych i świetlików.
+
+Oznacza to, że okno nie jest liczone dodatkowo „nałożone” na pełną powierzchnię ściany.
+
+Jeżeli otwór jest większy niż jego przegroda nadrzędna albo nie można jednoznacznie określić, do której przegrody należy, obliczenie jest blokowane.
+
+## 7. Przenikanie ciepła
+
+Dla pojedynczej przegrody podstawowa przewodność cieplna wynika z iloczynu:
+
+```text
+H = U × A
 ```
 
 gdzie:
-- `Q_int(t)` – zyski ciepła od wewnętrznych źródeł (ludzie, oświetlenie, sprzęt),
-- `Q_sol(t)` – zyski ciepła od nasłonecznienia (przez okna i pochłonięte przez przegrody),
-- `Q_tr(t)` – straty ciepła przez przenikanie przez przegrody,
-- `Q_ve(t)` – straty ciepła przez wentylację i infiltrację,
-- `Q_H(t)` – energia dostarczona przez ogrzewanie (≥ 0),
-- `Q_C(t)` – energia odjęta przez chłodzenie (≥ 0).
 
-Temperatura wewnętrzna `T_int(t)` wyznaczana jest z równania bilansu ciepła z uwzględnieniem pojemności cieplnej `C_m`:
+- `H` – przewodność cieplna przegrody w watach na kelwin,
+- `U` – współczynnik przenikania ciepła w watach na metr kwadratowy i kelwin,
+- `A` – powierzchnia przegrody w metrach kwadratowych.
 
-```
-C_m · (T_int(t) - T_int(t-1)) / Δt = Q_bal(t)
-```
+Mostki cieplne są uwzględniane osobno przez współczynniki liniowe i punktowe.
 
-Po obliczeniu `T_int(t)`:
-- jeśli `T_int(t) < T_int,H,set` → `Q_H(t) = (T_int,H,set - T_int(t)) · (H_tr + H_ve)` oraz korekta `T_int(t) = T_int,H,set`,
-- jeśli `T_int(t) > T_int,C,set` → `Q_C(t) = (T_int(t) - T_int,C,set) · (H_tr + H_ve)` oraz korekta `T_int(t) = T_int,C,set`.
+Brak wprowadzonych mostków oznacza wartość zero i jest sygnalizowany w audycie jako założenie wymagające weryfikacji.
 
-Dokładna forma równania zgodna z PN-EN ISO 52016-1 (uproszczona godzinowa
-metoda sieci 5R1C wg ISO 13790 Annex C / ISO 52016-1) jest implementowana w
-module `thermal_balance`. Sieć łączy węzły powietrza, powierzchni wewnętrznych
-i masy termicznej przez H_ve, H_tr,is = 3,45·A_t, H_tr,w (okna), H_tr,ms = 9,1·A_m
-i H_tr,em = 1/(1/H_tr,op − 1/H_tr,ms), przy domyślnych relacjach A_t = 4,5·A_f
-i A_m = 2,5·A_f. Zyski dzielone są na węzły: Φ_ia = 0,5·Φ_int oraz Φ_m i Φ_st
-proporcjonalnie do A_m/A_t (formuły C.2 normy). Równania węzłów rozwiązywane
-są jednocześnie jako układ liniowy z dyskretyzacją Cranka–Nicolsona węzła
-masy; zapotrzebowanie Φ_HC wynika z rozwiązania zamkniętego (bez iteracji).
-Elementy przyległe do gruntu, przestrzeni nieogrzewanych i o stałej
-temperaturze napędzane są własnymi temperaturami (grunt: sinusoida
-średnioroczna z opóźnieniem ~2 mies.), a przegrody między strefami o tej
-samej temperaturze nie przenoszą ciepła.
+## 8. Wymiana ciepła z gruntem
 
-## Straty przez przenikanie
+Dawny uproszczony model gruntu oparty na jednej globalnej sinusoidzie nie jest traktowany jako model formalny.
 
-Dla każdej przegrody `j`:
+Rozszerzony model wykorzystuje dane geometryczne i cieplne właściwe dla przegrody, w tym między innymi:
 
-```
-Q_tr,j(t) = A_j · U_j · (T_int(t) - T_adj,j(t))
+- powierzchnię podłogi,
+- obwód wystawiony na kontakt z gruntem,
+- opór cieplny warstw podłogi,
+- przewodność cieplną gruntu,
+- gęstość i ciepło właściwe gruntu,
+- parametry okresowej odpowiedzi cieplnej.
+
+Szczegóły opisuje `NORMATIVE_HOURLY_V2.md`.
+
+## 9. Wentylacja
+
+Straty wentylacyjne wynikają z rzeczywistego strumienia powietrza i różnicy temperatur między powietrzem wewnętrznym a powietrzem nawiewanym.
+
+Podstawowa zależność ma postać:
+
+```text
+Hve = ρ × cp × qv
 ```
 
-- `A_j` – powierzchnia przegrody [m²],
-- `U_j` – współczynnik przenikania ciepła [W/(m²·K)],
-- `T_adj,j(t)` – temperatura przestrzeni sąsiedniej (zewnętrzna, grunt, nieogrzewana strefa).
+gdzie:
 
-Poprawki na mostki cieplne:
+- `Hve` – przewodność cieplna wentylacji,
+- `ρ × cp` – objętościowa pojemność cieplna powietrza,
+- `qv` – strumień objętościowy powietrza.
 
-```
-ΣQ_bridges = Σ(l_k · Ψ_k) · ΔT + Σ(χ_n) · ΔT
-```
+W silniku stosowana jest wartość objętościowej pojemności cieplnej powietrza równoważna `1200 J/(m³·K)`.
 
-gdzie `Ψ_k` – liniowy współczynnik mostka cieplnego [W/(m·K)], `χ_n` – punktowy [W/K].
+## 10. Odzysk ciepła w wentylacji
 
-## Straty przez wentylację
+W szczegółowym modelu odzysku ciepła pełny fizyczny strumień powietrza pozostaje w obliczeniu.
 
-```
-H_ve = ρ_a · c_pa · q_v
-Q_ve(t) = H_ve · (T_int(t) - T_sup(t))
-```
+Odzysk ciepła zmienia temperaturę powietrza nawiewanego, a nie samą ilość wymienianego powietrza.
 
-- `ρ_a·c_pa` – objętościowa pojemność cieplna powietrza, przyjmowana w silniku
-  jako normowa wartość `1200 J/(m³·K)`,
-- `q_v` – strumień powietrza wentylacyjnego [m³/s], z uwzględnieniem odzysku
-  ciepła. W trybie okresowym strumień jest liczony godzinowo z profilu pracy;
-  jeśli profilu nie podano, `β` jest jawnym przybliżeniem stałego strumienia
-  uśrednionego w czasie.
-- `T_sup` – temperatura powietrza nawiewanego; jeśli nie została podana,
-  przyjmuje się `T_e` i stosuje równoważną redukcję strumienia `1−η`.
-  Podanie rzeczywistej temperatury po centrali zastępuje tę redukcję, aby
-  odzysk ciepła nie został uwzględniony podwójnie.
+Model może uwzględniać:
 
-## Zyski od nasłonecznienia
+- zmienną sprawność wymiennika,
+- obejście letnie wymiennika,
+- ochronę przed zamarzaniem,
+- nagrzewnicę wstępną,
+- ograniczenie mocy urządzenia.
 
-1. Dla każdej godziny obliczane są położenie słońca (azymut, kąt wysokości) na podstawie długości i szerokości geograficznej stacji.
-2. Promieniowanie słoneczne na powierzchni poziomej z pliku TMY/EPW dzielone jest na bezpośrednie `I_dir` i rozproszone `I_dif` (lub modelowane metodą Perez).
-3. Dla powierzchni pochylonej (okno, ściana) o azymucie `γ` i nachyleniu `β`:
-   ```
-   I_surface = I_dir · cos(θ) / cos(θ_z) + I_dif · R_dif + I_ref · R_ref
-   ```
-4. Zyski przez okno:
-   ```
-   Q_sol,win = A_win · g_total · I_surface · F_sh
-   ```
-   `g_total` – całkowity współczynnik przepuszczania energii słonecznej; `F_sh` – czynnik ekranowania.
-5. Zyski pochłonięte przez przegrody nieprzezroczyste: promieniowanie pochłone
-   podnosi temperaturę powierzchni zewnętrznej (efekt sol-air), a dodatkowy
-   przepływ do wewnątrz wynosi `q_in = A·α·U·R_se·I` (R_se = 0,04 m²K/W wg
-   PN-EN ISO 6946). Dla dobrze ocieplonych przegród to ~0,8% pochłoniętego
-   promieniowania; opóźnienie wynika z podziału zysków i pojemności cieplnej
-   sieci 5R1C.
+Energia nagrzewnicy wstępnej jest energią systemową. Zwiększa energię końcową i może zwiększać nieodnawialną energię pierwotną, ale nie zwiększa energii użytkowej.
 
-## Zyski wewnętrzne (wartości normowe)
+## 11. Zyski słoneczne
 
-Domyślne gęstości zysków wewnętrznych pochodzą z tabeli 26 rozporządzenia
-(Dz.U. 2015 poz. 376): jednorodzinny 6,8 W/m², wielorodzinny 7,1 W/m²,
-biurowy 5,7 W/m² (przykład standardowy P₁=0,6, β=0,3), pozostałe wiersze
-wg wzorów q = a·β + b·(1−β) przy β = 0,3. Wartości są edytowalne w UI.
+Dla analizy godzinowej promieniowanie słoneczne jest wyznaczane dla rzeczywistej orientacji i nachylenia każdej przegrody.
 
-## Zyski wewnętrzne
+Dla okna zysk zależy między innymi od:
 
-Zyski od osób, oświetlenia i sprzętu obliczane są zgodnie z harmonogramem użytkowania:
+- powierzchni przeszklenia,
+- całkowitego współczynnika przepuszczania energii słonecznej,
+- udziału ramy,
+- współczynnika zacienienia,
+- promieniowania padającego na daną powierzchnię.
 
-```
-Q_int(t) = φ_occ(t) · q_occ · A_floor + φ_light(t) · q_light · A_floor + φ_equip(t) · q_equip · A_floor
-```
+Dane godzinowe wykorzystywane w tej analizie nie są automatycznie przenoszone do formalnego silnika świadectwa.
 
-- `φ(t)` – współczynnik jednoczesności (0–1) dla danej godziny,
-- `q` – gęstość obciążenia [W/m² powierzchni podłogi].
+## 12. Zyski wewnętrzne
 
-Wartość normowa `q_int` z tabeli 26 jest wartością uśrednioną. Dla pełnego
-modelu godzinowego należy przekazać osobne harmonogramy `Schedule` dla osób,
-oświetlenia i wyposażenia. Brak harmonogramu oznacza stałe wykorzystanie i nie
-odtwarza rzeczywistych godzin użytkowania.
+Zyski wewnętrzne obejmują energię cieplną pochodzącą między innymi od:
 
-## Systemy techniczne i energia końcowa
+- ludzi,
+- oświetlenia,
+- urządzeń i wyposażenia.
 
-Dla godzinowego bilansu zapotrzebowania:
+Jeżeli użytkownik nie poda szczegółowych harmonogramów, aplikacja może korzystać z jawnie określonych wartości profilowych zgodnie z przyjętą metodą obliczeniową.
 
-```
-Q_H(t), Q_C(t) = wynik godzinowego bilansu 5R1C
-```
+W trybie formalnym wymagane dane i źródła są kontrolowane osobno.
 
-Końcowa energia systemów jest następnie wyznaczana z sezonowych sprawności
-całkowitych `ηH,tot` i `ηC,tot` zgodnie z metodologią. Silnik nie tworzy
-samodzielnie krzywej COP z temperatury zewnętrznej; jeśli projekt ma zweryfikowaną
-charakterystykę godzinową producenta, wymaga ona osobnego, jawnego modelu danych.
+## 13. Ogrzewanie i chłodzenie
 
-Ciepła woda użytkowa:
-- roczne zapotrzebowanie `Q_W,annual` obliczane jest z profilu normowego tabeli 27
-  rozporządzenia,
-- obecna implementacja rozdziela tę roczną wartość równomiernie na 8760 godzin;
-  nie udaje pełnego godzinowego modelu poboru CWU.
+W modelu godzinowym system ogrzewania lub chłodzenia reaguje na temperaturę strefy i zadane temperatury graniczne.
 
-## Energia pierwotna i emisje
+Godzinowe zapotrzebowanie użytkowe jest następnie sumowane do wartości miesięcznych i rocznych dla potrzeb analizy technicznej.
 
-```
-E_p = Σ (E_k,i · f_p,i)
-E_C = Σ (E_k,i · W_e,i)
-```
+W trybie świadectwa formalne wartości miesięczne są jednak liczone przez osobny silnik zgodny z polską metodologią.
 
-- `f_p,i` – współczynnik przeliczenia energii końcowej `i` na energię pierwotną,
-- `W_e,i` – wskaźnik emisji CO₂ dla nośnika `i`.
+## 14. Ciepła woda użytkowa
 
-Wartości domyślne pochodzą z polskich aktów wykonawczych / konfiguracji projektu.
-Wymagają kontroli i aktualizacji dla konkretnej daty sporządzenia świadectwa;
-nie są samodzielnym dowodem aktualności danych KOBiZE.
+Zapotrzebowanie na energię użytkową do przygotowania ciepłej wody użytkowej jest obliczane osobno od ogrzewania i chłodzenia.
 
-## Ocena zgodności
+Przeliczenie na energię końcową uwzględnia parametry systemu, w tym sprawność źródła, dystrybucji, magazynowania i wykorzystania.
 
-Aplikacja pokazuje informacyjne kontrole wskaźników. Nie należy ich traktować
-jak formalnego porównania z WT ani jako prawnego statusu `PASS` / `FAIL`;
-aktualne wymagania zależą od zakresu oceny, daty i podstawy prawnej.
+Jeżeli system z zasobnikiem nie ma danych potrzebnych do wyznaczenia strat postojowych, aplikacja zgłasza to jako brak albo jawne założenie zamiast ukrywać problem.
 
-## Ograniczenia i założenia MVP
+## 15. Energia użytkowa, końcowa i pierwotna
 
-- Obliczenia dotyczą ciepła jawnego (sensible); wilgotność i obciążenia utajone nie są uwzględniane.
-- Strefy termiczne traktowane są jako jednorodne pod względem temperatury (brak CFD).
-- Domyślnie przyjmuje się dane TMYx z `climate.onebuilding.org`; wersja produkcyjna powinna wykorzystywać oficjalne polskie dane TLY / TMY (np. z projektu TLM2000).
-- Przypadki, w których norma dopuszcza wiele wariantów obliczeń, są parametryzowane i jawnie udokumentowane.
+### Energia użytkowa (`Eu`)
 
-## Zaimplementowane elementy uzupełniające (2026-08)
+Opisuje potrzeby użytkowe budynku przed uwzględnieniem strat i sprawności instalacji.
 
-- **Straty zasobnika CWU (tabela 13, wzory 29–30)**: po podaniu pojemności
-  zasobnika straty postoju ΔQ_W,s wyznaczane są z tabeli 13 (q_S wg
-  lokalizacji, pojemności, rodzaju i izolacji), a energia końcowa
-  Q_k,W = (Q_W,nd + ΔQ_W,d + ΔQ_W,s)/η_W,g.
-- **Energia pomocnicza E_el,pom (tabela 20, wzory 37–39)**: pompy obiegowe
-  (wiersze 1–2), napędy źródeł (kocioł, PC, węzeł) oraz wentylatory (wiersze
-  12/13, czas pracy 8760·β) wliczane do energii końcowej elektrycznej. Formularz pozwala
-  podać roczne zużycie `E_el,pom` osobno dla ogrzewania i chłodzenia; wartość
-  jawna zastępuje fallback normatywny, a energia pomocnicza nie jest częścią
-  `Eu`.
-- **Sprawność całkowita systemu**: formularz pokazuje kontrolny iloczyn
-  `η_tot = η_g/COP/SEER × η_d × η_s × η_e`; dla bilansu końcowej energii
-  używany jest sezonowy COP/SEER podany w projekcie lub wynikający z katalogu
-  metodologii.
-- **Wentylacja normatywna (tabele 21/22/24/25)**: przy strumieniu 0 m³/h
-  podstawowy strumień V0 pobierany jest wg profilu użytkowania budynku,
-  z redukcją r_n = 0,75 dla nawiewno-wywiewnej i udziałem β poza okresem
-  użytkowania (0,2·V0 / 0,1·V_ex / 0 zależnie od typu wentylacji).
-- **Wentylacja okresowa w metodzie godzinowej**: dla `operation_mode =
-  periodic` strumień nominalny, dodatkowa infiltracja przy pracy wentylatorów
-  `Vx` i infiltracja poza pracą `Vinf` są składane godzinowo według profilu
-  `Ventilation.schedule`; jeśli profil nie jest podany, β jest stosowane jako
-  uśredniony godzinowy udział pracy. Współczynnik `H_ve` trafia bezpośrednio
-  do godzinowego solvera 5R1C. Jawny harmonogram ma pierwszeństwo przed β.
-  Dla danych ze zrzutu Arcadia odpowiada to: `airflow_rate = 19715 m³/h`,
-  `η = 0,73`, `β = 0,30`, `infiltration_rate = 0,20 1/h` oraz
-  `fan_infiltration_rate = 0,04 1/h`; średnia z tych strumieni daje
-  `H_ve ≈ 972,21 W/K` przy `V = 8682,26 m³`. W metodzie godzinowej wartość
-  `airflow_rate` pozostaje nominalna — nie pomniejsza się jej ręcznie o `β`
-  ani o odzysk.
-- **Infiltracja (wzory 69–70)**: przy braku jawnej wartości `n` silnik przyjmuje
-  `0,2 1/h` dla budynków wzniesionych po 1995 r. i `0,3 1/h` dla starszych;
-  wpisana wartość, w tym wynik próby szczelności, ma pierwszeństwo.
-- **Oświetlenie wbudowane (wzór (35))**: Q_k,L = LENI·A_L wg PN-EN 15193;
-  pole opcjonalne dla budynków niemieszkalnych (dla mieszkalnych nie wyznacza
-  się wg metodologii).
-- **Współczynnik energii pierwotnej**: domyślna wartość dla energii elektrycznej
-  wynosi 2,50 wg tabeli 1 po nowelizacji Dz.U. 2023 poz. 697; współczynniki
-  dostawcy/projektu mogą ją nadpisać.
+### Energia końcowa (`Ek`)
 
-## Pozostałe ograniczenia (świadome)
+Opisuje energię dostarczaną do systemów technicznych po uwzględnieniu sprawności, strat i energii pomocniczej.
 
-- **Pełny model gruntu ISO 13370** — podłogi gruntowane napędzane są
-  sinusoidą średnioroczną (amp. 5 K, opóźnienie ~2 mies.) zamiast pełnym
-  modelem równoważnej płyty (B', d_t); tekst normy jest płatny, a stałych
-  nie wolno zgadywać. Wprowadzenie wymaga dostępu do PN-EN ISO 13370.
-- **Straty przesyłu CWU z tabeli 10** (długości i izolacje odcinków) —
-  aproksymowane multiplikatywną sprawnością ηW,d (tabela 12).
-- **Infiltracja z tabeli 23** (V_inf wg wyposażenia w wiatrołapy) —
-  przyjmowana jako zadana krotność wymian ACH.
-- **Sprzężenie stref** — przegroda `heated_zone` jest pomijana wyłącznie dla
-  stref o identycznych aktywnych setpointach; różne setpointy są odrzucane,
-  ponieważ wymagają pełnego wielostrefowego solvera.
-- **Promieniowanie długofalowe i grunt** — pole `emissivity` oraz uproszczony
-  model temperatury gruntu nie zastępują pełnych procedur ISO 52016/13370;
-  wymagają dodatkowych danych klimatycznych i parametrów konstrukcji.
+### Nieodnawialna energia pierwotna (`Ep`)
 
-## Benchmarki
+Opisuje energię końcową przeliczoną za pomocą właściwych współczynników nakładu nieodnawialnej energii pierwotnej.
 
-Wyniki silnika porównywane są z:
-- ręcznie zweryfikowanymi przykładami użytkownika,
-- biblioteką `pyBuildingEnergy` (tam gdzie możliwe),
-- przypadkami testowymi BESTEST/ASHRAE 140.
+Nie istnieje uniwersalna zasada, że `Ep ≥ Ek ≥ Eu`. Na przykład pompa ciepła może mieć energię końcową niższą od energii użytkowej, ponieważ część energii pobiera ze środowiska.
 
-Automatyczna macierz `backend/tests/test_validation_matrix.py` wykonuje 72
-pełne przebiegi roczne i sprawdza niezmienniki godzinowe, miesięczne oraz
-bilans Eu. `backend/tests/test_external_bestest.py` zawiera mapowanie masy
-cieplnej BESTEST 600/900 do parametrów 5R1C oraz opcjonalny test na publicznym
-pliku `DRYCOLDTMY.epw` z repozytorium BESTEST-GSR:
+## 16. Współczynniki nakładu energii pierwotnej
 
-```bash
-cd backend
-RUN_EXTERNAL_BENCHMARKS=1 PYTHONPATH=$(pwd) .venv/bin/pytest -q
-```
+Dla każdego nośnika energii stosowana jest odpowiednia wartość współczynnika nakładu nieodnawialnej energii pierwotnej.
 
-Referencje zewnętrzne:
+W trybie świadectwa zapisuje się nie tylko wartość, ale także jej źródło.
 
-- [DOE: test procedures for building simulation tools](https://www.energy.gov/cmei/buildings/articles/test-procedures-building-energy-simulation-tools),
-- [NREL BESTEST/ASHRAE 140 update](https://www1.eere.energy.gov/buildings/publications/pdfs/building_america/bestest_update_ashrae140.pdf),
-- [LBL: opublikowane przedziały wyników Case 600](https://simulationresearch.lbl.gov/modelica/releases/v10.1.1/help/Buildings_ThermalZones_ISO13790_Validation_BESTEST_Data.html),
-- [NREL BESTEST-GSR: plik EPW i wyniki EnergyPlus](https://github.com/NatLabRockies/BESTEST-GSR).
+Nie należy traktować wartości domyślnej jako wystarczającego dowodu poprawności dla konkretnego świadectwa.
 
-Porównanie BESTEST jest kontrolą regresji i wykrywaczem wyników odstających,
-a nie dowodem formalnej zgodności z każdą procedurą ISO 52016/ASHRAE 140.
-W szczególności plik IDF BESTEST opisuje optykę szyb warstwowo, natomiast
-formularz aplikacji przyjmuje zintegrowany współczynnik `g`; ten krok jest w
-teście jawnie oznaczony jako przybliżenie diagnostyczne. Nadal obowiązują
-ograniczenia modelu gruntu, promieniowania długofalowego i uproszczonego
-sprzężenia stref wymienione powyżej.
+## 17. Kontrola kompletności danych
 
-Pełna techniczna specyfikacja kolejności obliczeń, równań, jednostek, reguł
-domyślnych i poziomu pewności znajduje się w
-[`COMPUTATION_LOGIC.md`](COMPUTATION_LOGIC.md).
+Przed właściwym obliczeniem aplikacja wykonuje kontrolę danych wejściowych.
+
+Kontrola może wykrywać między innymi:
+
+- niespójne powierzchnie przegród i otworów,
+- brakujące części obudowy budynku,
+- nietypową relację powierzchni do kubatury,
+- brak mostków cieplnych,
+- brak danych zasobnika ciepłej wody użytkowej,
+- brak rodzaju instalacji potrzebnego do oceny energii pomocniczej,
+- brak danych normowych wymaganych w trybie świadectwa.
+
+Część problemów powoduje ostrzeżenie, a część blokuje obliczenie.
+
+## 18. Zasada blokowania wyniku formalnego
+
+Jeżeli użytkownik włączy tryb świadectwa, aplikacja nie może tworzyć formalnego wyniku na podstawie nieudokumentowanych wartości zastępczych.
+
+Jeżeli brakuje danych wymaganych do poprawnego formalnego obliczenia, wynik jest blokowany do czasu uzupełnienia danych.
+
+## 19. Powiązane dokumenty
+
+- `POLISH_CERTIFICATE_METHOD.md` – formalna metoda świadectwa,
+- `NORMATIVE_HOURLY_V2.md` – model godzinowy, grunt, odzysk ciepła i projektowe obciążenie cieplne,
+- `COMPUTATION_LOGIC.md` – techniczny przebieg obliczeń,
+- `INPUT_SCHEMA.md` – struktura danych wejściowych,
+- `VALIDATION.md` – testowanie i walidacja,
+- `AUDIT_FIXES_2026-08-17.md` – poprawki wykonane po audycie obliczeń.
