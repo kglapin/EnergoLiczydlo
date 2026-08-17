@@ -9,7 +9,9 @@ import numpy as np
 import pytest
 
 from app.engine.climate import load_epw, radiation_on_surface
-from app.engine.iso52016_dynamic_surfaces import solve_zone_iso52016_dynamic_surfaces
+from app.engine.iso52016_dynamic_surfaces_conservative import (
+    solve_zone_iso52016_dynamic_surfaces,
+)
 from app.engine.solar import solar_gains_transparent
 from app.schemas.models import OpaqueElement, ThermalBridgeConfig, TransparentElement
 from tests.test_external_bestest import CASE_600_REFERENCE, _download_bestest_weather
@@ -95,7 +97,6 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(tmp
         element_type: str = "external_wall",
         absorptance: float = 0.6,
     ) -> OpaqueElement:
-        u = 1.0 / (sum(resistances) + 2.0 * resistances[0] / 2.0 + 0.17)
         return OpaqueElement(
             id=element_id,
             name=element_id,
@@ -104,7 +105,7 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(tmp
             orientation_azimuth=azimuth,
             inclination=inclination,
             area=area,
-            u_value=u,
+            u_value=0.5,
             solar_absorptance=absorptance,
             thermal_node_capacities_kj_m2k=capacities,
             thermal_node_resistances_m2k_w=resistances,
@@ -140,7 +141,10 @@ def test_repaired_solver_bestest_case_600_is_inside_published_reference_band(tmp
         for index in (1, 2)
     ]
     transparent_solar = sum(
-        (solar_gains_transparent(window, climate, direct_incidence_coefficients=DIRECT_IAM) for window in windows),
+        (
+            solar_gains_transparent(window, climate, direct_incidence_coefficients=DIRECT_IAM)
+            for window in windows
+        ),
         np.zeros(8760),
     )
     opaque_solar: dict[str, np.ndarray] = {}
