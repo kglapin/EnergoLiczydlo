@@ -1,14 +1,9 @@
 """Compatibility façade for the rebuilt PN-EN ISO 52016-1 hourly solver.
 
 The underlying implementation lives in the historical sibling module
-``iso52016_hourly.py``. This package separates the legacy request for explicit
-construction nodes from full strict conformance, and patches two boundary
-conditions that must not be approximated silently in strict mode:
-
-* window long-wave exchange with the sky is represented exactly, for the
-  linearized surface balance, by an equivalent exterior boundary temperature;
-* an unconditioned adjacent zone requires an explicit verified temperature in
-  strict mode instead of the historical ``T_e + 3 K`` heuristic.
+``iso52016_hourly.py``. This package separates legacy compatibility from full
+strict conformance and patches boundary conditions that must not be silently
+approximated in strict mode.
 """
 from __future__ import annotations
 
@@ -29,7 +24,6 @@ if _spec is None or _spec.loader is None:  # pragma: no cover
 _core = importlib.util.module_from_spec(_spec)
 sys.modules[_LEGACY_NAME] = _core
 _spec.loader.exec_module(_core)
-
 for _name in dir(_core):
     if not _name.startswith("__"):
         globals()[_name] = getattr(_core, _name)
@@ -77,8 +71,8 @@ def _prepare(*args, **kwargs):
         if total_external <= 0.0:
             boundary = path.boundary
         else:
-            # A(hce+hre)(Tsurf-Teq) = A(hce+hre)(Tsurf-Te)
-            #                           + A*hre*Fsky*DeltaTsky.
+            # Linearized window exterior balance represented by an exactly
+            # equivalent boundary temperature including long-wave sky loss.
             boundary = np.asarray(path.boundary, dtype=float) - (
                 film.h_re / total_external
             ) * view * sky_delta
@@ -120,12 +114,16 @@ def solve_zone_iso52016(*args, **kwargs):
                     "heuristic is not permitted."
                 )
 
+    # Construction explicitness is checked by this façade. The core receives
+    # only the actual strict-conformance intent.
     kwargs["require_explicit_construction_nodes"] = False
     kwargs["strict_conformance"] = strict
 
-    # Compatibility mode deliberately has no assumed Annex-B sky delta. Strict
-    # mode receives an explicit value from normative settings.
     if not strict:
+        # Compatibility mode intentionally reproduces the historical air-
+        # temperature thermostat and omits a guessed Annex-B sky delta. It is
+        # explicitly reported as non-conformant by preflight_systems.py.
+        kwargs["operative_air_weight"] = 1.0
         kwargs["sky_temperature_difference_k"] = 0.0
 
     result = _core_solve(*args, **kwargs)
