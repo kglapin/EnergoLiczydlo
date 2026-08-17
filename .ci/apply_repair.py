@@ -6,13 +6,17 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def replace(path: str, old: str, new: str) -> None:
+    """Apply a one-time textual repair without re-applying embedded patterns."""
     target = ROOT / path
     text = target.read_text(encoding="utf-8")
+    if new and new in text:
+        print(f"SKIP {path}: already applied")
+        return
     if old not in text:
-        status = "already applied" if new in text else "pattern not present"
+        status = "already applied" if not new else "pattern not present"
         print(f"SKIP {path}: {status}")
         return
-    target.write_text(text.replace(old, new), encoding="utf-8")
+    target.write_text(text.replace(old, new, 1), encoding="utf-8")
 
 
 # ISO 52016 hourly core: preserve U-value exactly in compatibility mode,
