@@ -8,7 +8,12 @@ import pytest
 from app.engine.audited_calculator import prepare_project_for_audited_calculation
 from app.engine.envelope import zone_transmission_network
 from app.engine.primary_energy import share_of_renewable_energy
-from app.schemas.models import BuildingProject, ComplianceCheck, OpaqueElement, TransparentElement
+from app.schemas.models import (
+    BuildingProject,
+    ComplianceCheck,
+    OpaqueElement,
+    TransparentElement,
+)
 from scripts.test_building import make_test_project
 
 
