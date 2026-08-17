@@ -1,8 +1,320 @@
-Deterministic repair patch applied
-error: invalid value 'F821' for '--extend-per-file-ignores <EXTEND_PER_FILE_IGNORES>': Expected <FilePattern>:<RuleCode> pattern
+484 | ) -> tuple[ISO52016ZoneSolution, FloatArray]:
+485 |     n = len(t_supply)
+486 |     size = prepared.matrix.shape[0]
+    |     ^^^^
+487 |     outputs = [_arr(np.zeros(n)) for _ in range(10)]
+488 |     t_air, t_mrt, t_op, t_mass, t_mass_mean, q_h, q_c, q_tr, unmet_h, unmet_c = outputs
+    |
+help: Remove assignment to unused variable `size`
 
-For more information, try '--help'.
-51 files reformatted, 15 files left unchanged
-error: invalid value 'F821' for '--extend-per-file-ignores <EXTEND_PER_FILE_IGNORES>': Expected <FilePattern>:<RuleCode> pattern
+E501 Line too long (104 > 100)
+  --> app/engine/preflight_systems.py:41:101
+   |
+39 |                 audit_check(
+40 |                     "HEATING_INSTALLATION_NOT_CLASSIFIED",
+41 |                     "No heating installation type and no explicit auxiliary electricity were provided. "
+   |                                                                                                     ^^^^
+42 |                     "Select an installation type or enter auxiliary_energy_kwh_year before treating EK/EP as final.",
+43 |                 )
+   |
 
-For more information, try '--help'.
+E501 Line too long (117 > 100)
+  --> app/engine/preflight_systems.py:42:101
+   |
+40 |                     "HEATING_INSTALLATION_NOT_CLASSIFIED",
+41 |                     "No heating installation type and no explicit auxiliary electricity were provided. "
+42 |                     "Select an installation type or enter auxiliary_energy_kwh_year before treating EK/EP as final.",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^
+43 |                 )
+44 |             )
+   |
+
+E501 Line too long (123 > 100)
+  --> app/engine/preflight_systems.py:54:101
+   |
+52 |                 audit_check(
+53 |                     "DHW_STORAGE_LOSSES_NOT_DEFINED",
+54 |                     "The selected DHW source normally includes storage, but no tank geometry was supplied and ηW,s=1.000. "
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^
+55 |                     "Enter tank data or an explicit non-unity storage efficiency.",
+56 |                 )
+   |
+
+E501 Line too long (130 > 100)
+  --> app/engine/preflight_systems.py:70:101
+   |
+68 |             audit_check(
+69 |                 "THERMAL_BRIDGES_NOT_ENTERED",
+70 |                 "No linear or point thermal bridges were entered. H_bridge=0 W/K is used and may understate transmission losses.",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+71 |             )
+72 |         )
+   |
+
+E501 Line too long (201 > 100)
+  --> app/engine/preflight_systems.py:89:101
+   |
+87 | …
+88 | …
+89 | …ed surface, construction, sky, ground or zone-capacity inputs cause calculation failure instead of silent defaults.",
+   |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+90 | …
+91 | …
+   |
+
+E501 Line too long (111 > 100)
+  --> app/engine/preflight_systems.py:97:101
+   |
+95 |             audit_check(
+96 |                 "ISO52016_COMPATIBILITY_INPUT_MODE",
+97 |                 "The hourly ISO 52016 solver may infer compatibility values for missing EPB-delegated inputs. "
+   |                                                                                                     ^^^^^^^^^^^
+98 |                 "The resulting analytical run must not be labelled fully conformant until strict_conformance=true succeeds.",
+99 |             )
+   |
+
+E501 Line too long (125 > 100)
+   --> app/engine/preflight_systems.py:98:101
+    |
+ 96 |                 "ISO52016_COMPATIBILITY_INPUT_MODE",
+ 97 |                 "The hourly ISO 52016 solver may infer compatibility values for missing EPB-delegated inputs. "
+ 98 |                 "The resulting analytical run must not be labelled fully conformant until strict_conformance=true succeeds.",
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+ 99 |             )
+100 |         )
+    |
+
+E501 Line too long (121 > 100)
+   --> app/engine/preflight_systems.py:112:101
+    |
+110 |             audit_check(
+111 |                 "ISO52016_LEGACY_SURFACE_FILM_RESISTANCES",
+112 |                 "Six-resistance legacy construction data include surface films and are accepted only for compatibility. "
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^
+113 |                 "Strict ISO 52016 uses four core resistances plus explicit h_ci/h_ri/h_ce/h_re. Affected: "
+114 |                 + ", ".join(legacy_resistance_elements),
+    |
+
+E501 Line too long (107 > 100)
+   --> app/engine/preflight_systems.py:113:101
+    |
+111 |                 "ISO52016_LEGACY_SURFACE_FILM_RESISTANCES",
+112 |                 "Six-resistance legacy construction data include surface films and are accepted only for compatibility. "
+113 |                 "Strict ISO 52016 uses four core resistances plus explicit h_ci/h_ri/h_ce/h_re. Affected: "
+    |                                                                                                     ^^^^^^^
+114 |                 + ", ".join(legacy_resistance_elements),
+115 |             )
+    |
+
+E501 Line too long (144 > 100)
+   --> app/engine/preflight_systems.py:124:101
+    |
+122 | …
+123 | …
+124 | …one require the 6.5.9 adjacent-zone temperature method or a verified boundary profile. "
+    |                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+125 | …ted as a strict ISO 52016 input.",
+126 | …
+    |
+
+E501 Line too long (116 > 100)
+   --> app/engine/preflight_systems.py:141:101
+    |
+139 |             audit_check(
+140 |                 "GROUND_MODEL_SIMPLIFIED",
+141 |                 "Without certificate-grade ground settings, ground elements retain a diagnostic periodic boundary. "
+    |                                                                                                     ^^^^^^^^^^^^^^^^
+142 |                 "Strict ISO 52016 requires the ISO 13370/13789 virtual-ground resistance and monthly virtual temperatures.",
+143 |             )
+    |
+
+E501 Line too long (124 > 100)
+   --> app/engine/preflight_systems.py:142:101
+    |
+140 |                 "GROUND_MODEL_SIMPLIFIED",
+141 |                 "Without certificate-grade ground settings, ground elements retain a diagnostic periodic boundary. "
+142 |                 "Strict ISO 52016 requires the ISO 13370/13789 virtual-ground resistance and monthly virtual temperatures.",
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^
+143 |             )
+144 |         )
+    |
+
+E501 Line too long (172 > 100)
+   --> app/engine/preflight_systems.py:152:101
+    |
+150 | …
+151 | …
+152 | …s represented by constant η={recovery:.3f}; frost, bypass and manufacturer maps are not represented.",
+    |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+153 | …
+154 | …
+    |
+
+E501 Line too long (200 > 100)
+   --> app/engine/preflight_systems.py:159:101
+    |
+157 | …
+158 | …
+159 | …sign load must use either the separate PN-EN 12831-1 room path or the ISO 52016 design-weather sequence procedure.",
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+160 | …
+161 | …
+    |
+
+E501 Line too long (106 > 100)
+   --> app/engine/preflight_systems.py:169:101
+    |
+167 |             "VENTILATION_INPUTS",
+168 |             f"Ventilation inputs: type={vent_type}, airflow={airflow:.2f} m³/h ({airflow_origin}), "
+169 |             f"infiltration={float(ventilation.infiltration_rate):.3f} 1/h, heat recovery={recovery:.3f}, "
+    |                                                                                                     ^^^^^^
+170 |             f"beta={beta if beta is not None else 'profile default'}.",
+171 |             passed=True,
+    |
+
+E501 Line too long (179 > 100)
+   --> app/engine/preflight_systems.py:178:101
+    |
+176 | …
+177 | …
+178 | …electricity_fp:.3f}. Verify carrier factors against the legal basis applicable on the certificate date.",
+    |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+179 | …
+180 | …
+    |
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+  --> tests/test_iso52016_conformance.py:18:12
+   |
+17 |   def _strict_wall(**updates):
+18 |       data = dict(
+   |  ____________^
+19 | |         id="wall",
+20 | |         name="Wall",
+21 | |         zone_id="z1",
+22 | |         area=10.0,
+23 | |         u_value=0.5,
+24 | |         solar_absorptance=0.0,
+25 | |         thermal_node_capacities_kj_m2k=[0.0, 20.0, 40.0, 20.0, 0.0],
+26 | |         thermal_node_resistances_m2k_w=[0.40, 0.40, 0.40, 0.40],
+27 | |         h_ci_w_m2k=2.5,
+28 | |         h_ri_w_m2k=5.0,
+29 | |         h_ce_w_m2k=20.0,
+30 | |         h_re_w_m2k=5.0,
+31 | |         sky_view_factor=0.0,
+32 | |     )
+   | |_____^
+33 |       data.update(updates)
+34 |       return OpaqueElement(**data)
+   |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+  --> tests/test_iso52016_conformance.py:38:12
+   |
+37 |   def _strict_window(**updates):
+38 |       data = dict(
+   |  ____________^
+39 | |         id="window",
+40 | |         name="Window",
+41 | |         zone_id="z1",
+42 | |         area=2.0,
+43 | |         u_value=1.2,
+44 | |         g_value=0.6,
+45 | |         frame_factor=0.0,
+46 | |         shading_factor=1.0,
+47 | |         h_ci_w_m2k=2.5,
+48 | |         h_ri_w_m2k=5.0,
+49 | |         h_ce_w_m2k=20.0,
+50 | |         h_re_w_m2k=5.0,
+51 | |         core_thermal_resistance_m2k_w=0.66,
+52 | |         sky_view_factor=0.5,
+53 | |     )
+   | |_____^
+54 |       data.update(updates)
+55 |       return TransparentElement(**data)
+   |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_iso52016_conformance.py:161:14
+    |
+159 |   def test_opaque_longwave_sky_exchange_increases_heating_load() -> None:
+160 |       wall = _strict_wall(sky_view_factor=1.0)
+161 |       common = dict(
+    |  ______________^
+162 | |         opaque_elements=[wall],
+163 | |         transparent_elements=[],
+164 | |         bridges=ThermalBridgeConfig(),
+165 | |         zone_id="z1",
+166 | |         h_ve=0.0,
+167 | |         t_e=np.zeros(24),
+168 | |         phi_int=np.zeros(24),
+169 | |         phi_sol_transparent=np.zeros(24),
+170 | |         opaque_solar_absorbed_w_by_element={"wall": np.zeros(24)},
+171 | |         t_set_heating=20.0,
+172 | |         t_set_cooling=None,
+173 | |         air_furniture_heat_capacity_j_k=1_000_000.0,
+174 | |         strict_conformance=True,
+175 | |     )
+    | |_____^
+176 |       base = solve_zone_iso52016(**common, sky_temperature_difference_k=0.0)
+177 |       sky = solve_zone_iso52016(**common, sky_temperature_difference_k=11.0)
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_iso52016_conformance.py:184:14
+    |
+182 |       wall = _strict_wall(sky_view_factor=0.0)
+183 |       window = _strict_window(sky_view_factor=1.0)
+184 |       common = dict(
+    |  ______________^
+185 | |         opaque_elements=[wall],
+186 | |         transparent_elements=[window],
+187 | |         bridges=ThermalBridgeConfig(),
+188 | |         zone_id="z1",
+189 | |         h_ve=0.0,
+190 | |         t_e=np.zeros(24),
+191 | |         phi_int=np.zeros(24),
+192 | |         phi_sol_transparent=np.zeros(24),
+193 | |         opaque_solar_absorbed_w_by_element={"wall": np.zeros(24)},
+194 | |         t_set_heating=20.0,
+195 | |         t_set_cooling=None,
+196 | |         air_furniture_heat_capacity_j_k=1_000_000.0,
+197 | |         strict_conformance=True,
+198 | |     )
+    | |_____^
+199 |       base = solve_zone_iso52016(**common, sky_temperature_difference_k=0.0)
+200 |       sky = solve_zone_iso52016(**common, sky_temperature_difference_k=11.0)
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+  --> tests/test_iso52016_monthly.py:32:14
+   |
+31 |   def _monthly(**updates):
+32 |       kwargs = dict(
+   |  ______________^
+33 | |         heating_heat_transfer_kwh=np.full(12, 100.0),
+34 | |         heating_heat_gains_kwh=np.zeros(12),
+35 | |         cooling_heat_transfer_kwh=np.full(12, 100.0),
+36 | |         cooling_heat_gains_kwh=np.zeros(12),
+37 | |         effective_internal_capacity_j_k=36_000_000.0,
+38 | |         heating_transmission_h_w_k=80.0,
+39 | |         heating_ventilation_h_w_k=20.0,
+40 | |         cooling_transmission_h_w_k=80.0,
+41 | |         cooling_ventilation_h_w_k=20.0,
+42 | |         heating_reference_a0=1.0,
+43 | |         heating_reference_tau0_h=15.0,
+44 | |         cooling_reference_a0=1.0,
+45 | |         cooling_reference_tau0_h=15.0,
+46 | |     )
+   | |_____^
+47 |       kwargs.update(updates)
+48 |       return calculate_monthly_zone_energy(**kwargs)
+   |
+help: Rewrite as a literal
+
+Found 25 errors.
+No fixes available (6 hidden fixes can be enabled with the `--unsafe-fixes` option).

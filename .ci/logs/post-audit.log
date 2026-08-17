@@ -28,7 +28,7 @@ tests/test_post_repair_audit.py::test_manual_16_room_design_load_one_wall_is_100
 tests/test_post_repair_audit.py::test_manual_17_monthly_january_transmission_is_372kwh PASSED
 tests/test_post_repair_audit.py::test_edge_zero_ventilation_and_zero_gains_are_finite PASSED
 tests/test_post_repair_audit.py::test_edge_negative_ventilation_is_rejected PASSED
-tests/test_post_repair_audit.py::test_three_day_new_solver_energy_balance_closes_hour_by_hour POST_REPAIR_3DAY_BALANCE_W= {'winter': 4.547473508864641e-12, 'transition': 6.650680006714538e-12, 'summer': 1.014655026665423e-11}
+tests/test_post_repair_audit.py::test_three_day_new_solver_energy_balance_closes_hour_by_hour POST_REPAIR_3DAY_BALANCE_W= {'winter': 4.206412995699793e-12, 'transition': 5.6417093219351955e-12, 'summer': 1.014655026665423e-11}
 PASSED
 tests/test_post_repair_audit.py::test_hourly_and_monthly_match_constant_reference_and_units POST_REPAIR_ENGINE_CROSSCHECK= {'hourly_kwh': 4379.999999999997, 'monthly_kwh': 4380.0, 'manual_kwh': 4380.0, 'relative_difference': 6.229415765568002e-16}
 PASSED
@@ -37,4 +37,4 @@ tests/test_post_repair_audit.py::test_each_opaque_construction_has_its_own_five_
 tests/test_post_repair_audit.py::test_heat_recovery_is_not_double_counted_and_uses_correct_sign PASSED
 tests/test_post_repair_audit.py::test_cooling_energy_need_is_nonnegative PASSED
 
-============================== 25 passed in 2.51s ==============================
+============================== 25 passed in 1.79s ==============================
