@@ -1,22 +1,22 @@
 {
-  "tested_sha": "0fb50456650fc17d3cf3ab01e80d82db968766f2",
+  "tested_sha": "92de7794253c72697a96cd8ade3daa1d5b7eb480",
   "backend": {
-    "result": "failure",
-    "repair": "success",
-    "install": "success",
-    "lint": "failure",
-    "mypy": "success",
-    "conformance": "success",
-    "audit_repairs": "success",
-    "post_repair_audit": "success",
-    "bestest": "failure",
-    "full_regression": "success"
+    "result": "cancelled",
+    "repair": "skipped",
+    "install": "cancelled",
+    "lint": "skipped",
+    "mypy": "skipped",
+    "conformance": "skipped",
+    "audit_repairs": "skipped",
+    "post_repair_audit": "skipped",
+    "bestest": "skipped",
+    "full_regression": "skipped"
   },
   "frontend": {
-    "result": "success",
+    "result": "cancelled",
     "install": "success",
     "lint": "success",
-    "typecheck": "success",
-    "build": "success"
+    "typecheck": "cancelled",
+    "build": "skipped"
   }
 }
