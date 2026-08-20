@@ -469,6 +469,7 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
     dhw_system = project.systems.dhw
     Q_dhw_hourly = np.zeros(n, dtype=float)
     E_k_DHW: np.ndarray
+    dhw_total_efficiency: float | None = None
     if str(dhw_system.system_type) != "none":
         Q_dhw_year = annual_dhw_useful_energy(
             project.general.conditioned_floor_area,
@@ -506,6 +507,12 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
             total_dhw_kwh = Q_dhw_year / 1000.0 + delta_d_kwh + standby_loss_kwh
             # rozkład rocznej energii końcowej równomiernie na godziny
             E_k_DHW = np.full(n, total_dhw_kwh * 1000.0 / dhw_generation / n)
+            # Gdy straty zasobnika liczone są dokładnie z tabeli 13, ηW,tot nie
+            # jest prostym iloczynem składowych; wyznacz efektywną sprawność
+            # całkowitą jako Q_W,nd / E_k,DHW.
+            e_k_dhw_total_wh = float(np.sum(E_k_DHW))
+            if e_k_dhw_total_wh > 0.0:
+                dhw_total_efficiency = float(Q_dhw_year / e_k_dhw_total_wh)
         else:
             dhw_efficiency = (
                 dhw_generation
@@ -514,6 +521,7 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
                 * dhw_system.utilization_efficiency
             )
             E_k_DHW = np.asarray(final_energy_dhw(Q_dhw_hourly, dhw_efficiency))
+            dhw_total_efficiency = float(dhw_efficiency)
     else:
         E_k_DHW = np.zeros(n, dtype=float)
 
@@ -528,6 +536,7 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
     # Energia pomocnicza E_el,pom (wzory (37)-(38), tabela 20): pompy i
     # regulacja źródeł oraz wentylatory.
     E_aux_wh = 0.0
+    dhw_aux_wh = 0.0
     if str(heating_sys.system_type) != "none":
         heating_auxiliary = _explicit_auxiliary_energy_wh(heating_sys)
         E_aux_wh += (
@@ -544,11 +553,17 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
         if cooling_auxiliary is not None:
             E_aux_wh += cooling_auxiliary
     if str(dhw_system.system_type) != "none":
-        E_aux_wh += dhw_auxiliary_demand_wh(
-            str(dhw_system.system_type),
-            conditioned_area,
-            distribution_type=str(getattr(dhw_system.distribution_type, "value", "")),
+        dhw_auxiliary_explicit = _explicit_auxiliary_energy_wh(dhw_system)
+        dhw_aux_wh = (
+            dhw_auxiliary_explicit
+            if dhw_auxiliary_explicit is not None
+            else dhw_auxiliary_demand_wh(
+                str(dhw_system.system_type),
+                conditioned_area,
+                distribution_type=str(getattr(dhw_system.distribution_type, "value", "")),
+            )
         )
+        E_aux_wh += dhw_aux_wh
 
     # Ventilation auxiliary (fans, tabela 20 rows 12/13): energia roczna
     # wentylatorów [Wh], rozłożona równomiernie na godziny pracy 8760·β.
@@ -670,6 +685,8 @@ def calculate_building_energy(project: BuildingProject) -> CalculationResult:
             heating_kwh_m2_year=heating_m2,
             cooling_kwh_m2_year=cooling_m2,
             dhw_kwh_m2_year=dhw_m2,
+            dhw_total_efficiency=dhw_total_efficiency,
+            dhw_auxiliary_energy_kwh_year=dhw_aux_wh / 1000.0,
         ),
         monthly=monthly,
         hourly={

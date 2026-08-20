@@ -9,6 +9,7 @@ import {
   GitBranch,
   Info,
   Layers3,
+  Lightbulb,
   Loader2,
   MapPin,
   PanelTop,
@@ -16,6 +17,7 @@ import {
   SunMedium,
   Trash2,
   Upload,
+  Users,
   Wind,
   type LucideIcon,
 } from "lucide-react"
@@ -69,6 +71,7 @@ import {
   heatingSourceOptions,
   normativeInternalGains,
   totalSystemEfficiency,
+  dhwTotalEfficiency,
 } from "@/lib/system-options"
 import {
   normalizeHourlyProfileInput,
@@ -153,6 +156,9 @@ const hourlyProfileTextSchema = z.string().optional().refine(
 const internalGainSourceSchema = z.object({
   power_density: z.coerce.number().min(0),
   schedule: scheduleSchema.optional(),
+  schedule_weekday_profile: hourlyProfileTextSchema,
+  schedule_saturday_profile: hourlyProfileTextSchema,
+  schedule_sunday_profile: hourlyProfileTextSchema,
 })
 
 const zoneSchema = z.object({
@@ -243,6 +249,7 @@ const dhwSchema = z.object({
   storage_volume_dm3: optionalPositiveNumber,
   storage_location: z.enum(["heated", "unheated"]).optional(),
   storage_insulation_mm: optionalPositiveNumber,
+  auxiliary_energy_kwh_year: optionalNonNegativeNumber,
 })
 
 const formSchema = z.object({
@@ -355,6 +362,7 @@ const validationFieldLabels: Record<string, string> = {
   "systems.dhw.storage_volume_dm3": "Pojemność zasobnika CWU",
   "systems.dhw.storage_location": "Lokalizacja zasobnika CWU",
   "systems.dhw.storage_insulation_mm": "Izolacja zasobnika CWU",
+  "systems.dhw.auxiliary_energy_kwh_year": "Energia pomocnicza CWU",
   "systems.heating.generation_efficiency": "Sprawność wytwarzania ogrzewania / COP",
   "systems.heating.distribution_efficiency": "Sprawność przesyłu ogrzewania",
   "systems.heating.storage_efficiency": "Sprawność akumulacji ogrzewania",
@@ -735,6 +743,7 @@ const defaultValues: FormValues = {
       storage_volume_dm3: undefined,
       storage_location: undefined,
       storage_insulation_mm: undefined,
+      auxiliary_energy_kwh_year: undefined,
     },
   },
 }
@@ -813,6 +822,38 @@ function withoutLegacyInputs<T extends object>(
   return sanitized as T
 }
 
+type InternalGainSourceForm = z.infer<typeof internalGainSourceSchema>
+
+function mapInternalGainSourceToForm(source: {
+  power_density: number
+  schedule?: BuildingProject["ventilation"]["schedule"]
+}): InternalGainSourceForm {
+  const incomingSchedule = source.schedule
+  const mappedSchedule = incomingSchedule
+    ? {
+        type: incomingSchedule.type as "constant" | "weekday_weekend" | "hourly_profile",
+        constant_value: incomingSchedule.constant_value ?? undefined,
+        weekday: incomingSchedule.weekday ?? undefined,
+        saturday: incomingSchedule.saturday ?? undefined,
+        sunday: incomingSchedule.sunday ?? undefined,
+        holiday: incomingSchedule.holiday ?? undefined,
+      }
+    : undefined
+  return {
+    power_density: source.power_density,
+    schedule: mappedSchedule,
+    schedule_weekday_profile: normalizeHourlyProfileInput(
+      incomingSchedule?.weekday?.join(", ") ?? "",
+    ),
+    schedule_saturday_profile: normalizeHourlyProfileInput(
+      incomingSchedule?.saturday?.join(", ") ?? "",
+    ),
+    schedule_sunday_profile: normalizeHourlyProfileInput(
+      incomingSchedule?.sunday?.join(", ") ?? "",
+    ),
+  }
+}
+
 function mergeFormValues(project: unknown): FormValues {
   const incoming = (project ?? {}) as Partial<FormValues>
   const incomingSystems = (incoming.systems ?? {}) as Partial<FormValues["systems"]>
@@ -888,7 +929,14 @@ function mergeFormValues(project: unknown): FormValues {
     },
     // Preserve explicit hourly gain schedules from imported/API projects;
     // the form does not replace them with normative defaults on round-trip.
-    internal_gains: incoming.internal_gains,
+    internal_gains: incoming.internal_gains
+      ? {
+          occupancy: mapInternalGainSourceToForm(incoming.internal_gains.occupancy),
+          lighting: mapInternalGainSourceToForm(incoming.internal_gains.lighting),
+          equipment: mapInternalGainSourceToForm(incoming.internal_gains.equipment),
+          normative_power_density_w_m2: incoming.internal_gains.normative_power_density_w_m2,
+        }
+      : undefined,
     systems: {
       ...defaultValues.systems,
       ...incomingSystems,
@@ -896,6 +944,50 @@ function mergeFormValues(project: unknown): FormValues {
       cooling: { ...defaultValues.systems.cooling, ...(incomingCooling ?? {}) },
       dhw: { ...defaultValues.systems.dhw, ...(incomingDhw ?? {}) },
     },
+  }
+}
+
+function buildInternalGainSourcePayload(source: InternalGainSourceForm) {
+  const weekdayProfile = parseHourlyProfile(source.schedule_weekday_profile)
+  const saturdayProfile = parseHourlyProfile(source.schedule_saturday_profile)
+  const sundayProfile = parseHourlyProfile(source.schedule_sunday_profile)
+  const schedule = weekdayProfile
+    ? {
+        type: "hourly_profile" as const,
+        weekday: weekdayProfile,
+        ...(saturdayProfile ? { saturday: saturdayProfile } : {}),
+        ...(sundayProfile ? { sunday: sundayProfile } : {}),
+      }
+    : source.schedule ?? { type: "constant" as const, constant_value: 1.0 }
+  return {
+    power_density: source.power_density,
+    schedule,
+  }
+}
+
+function buildInternalGainsPayload(gains: NonNullable<FormValues["internal_gains"]>) {
+  // Gdy użytkownik nie podał własnych harmonogramów ani zmienionej mocy,
+  // zachowaj marker normatywny — w przeciwnym razie usuń go, bo własne
+  // wartości mają pierwszeństwo przed normatywą.
+  const hasCustomSchedule =
+    Boolean(gains.occupancy.schedule_weekday_profile?.trim())
+    || Boolean(gains.lighting.schedule_weekday_profile?.trim())
+    || Boolean(gains.equipment.schedule_weekday_profile?.trim())
+  const occupancy = buildInternalGainSourcePayload(gains.occupancy)
+  const lighting = buildInternalGainSourcePayload(gains.lighting)
+  const equipment = buildInternalGainSourcePayload(gains.equipment)
+  const allConstant = [occupancy, lighting, equipment].every(
+    (s) => s.schedule?.type === "constant" && (s.schedule?.constant_value ?? 1) === 1.0,
+  )
+  return {
+    occupancy,
+    lighting,
+    equipment,
+    // Zachowaj marker normatywny tylko gdy wszystkie harmonogramy są stałe=1.0
+    // i moc nie została zmieniona — inaczej backend ma użyć własnych wartości.
+    normative_power_density_w_m2: hasCustomSchedule || !allConstant
+      ? undefined
+      : gains.normative_power_density_w_m2,
   }
 }
 
@@ -947,14 +1039,14 @@ function createProjectPayload(values: FormValues): BuildingProject {
     // dobrane do typu budynku i profilu użytkowania CWU.  Umieszczamy to po
     // spreadzie formularza, aby puste opcjonalne pole nie nadpisało wartości
     // domyślnej przez ``undefined``.
-    internal_gains:
-      values.internal_gains ??
-      normativeInternalGains(
-        values.general.building_type,
-        values.general.dhw_usage_profile,
-        values.ventilation.usage_share_beta ??
-          (values.general.dhw_usage_profile.startsWith("residential") ? 1 : 0.3),
-      ),
+    internal_gains: values.internal_gains
+      ? buildInternalGainsPayload(values.internal_gains)
+      : normativeInternalGains(
+          values.general.building_type,
+          values.general.dhw_usage_profile,
+          values.ventilation.usage_share_beta ??
+            (values.general.dhw_usage_profile.startsWith("residential") ? 1 : 0.3),
+        ),
     // Chłodzenie liczone jest wyłącznie dla stref chłodzonych (§ 5.4
     // metodologii) - dla pozostałych typów stref setpoint jest ignorowany,
     // więc nie wysyłamy go, żeby nie sugerować, że działa.
@@ -999,6 +1091,92 @@ function AnalysisSectionHeading({
         <span className="mt-1 block text-xs font-normal leading-5 text-slate-500">{description}</span>
       </span>
     </span>
+  )
+}
+
+type InternalGainScheduleEditorProps = {
+  label: string
+  icon: LucideIcon
+  prefix: "internal_gains.occupancy" | "internal_gains.lighting" | "internal_gains.equipment"
+  form: ReturnType<typeof useForm<FormValues>>
+  weekdayProfile?: string
+}
+
+function InternalGainScheduleEditor({
+  label,
+  icon: Icon,
+  prefix,
+  form,
+  weekdayProfile,
+}: InternalGainScheduleEditorProps) {
+  const watchedWeekday = useWatch({
+    control: form.control,
+    name: `${prefix}.schedule_weekday_profile` as const,
+  })
+  return (
+    <div className="space-y-3 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
+      <div className="flex items-center gap-2">
+        <Icon className="h-4 w-4 text-slate-600" aria-hidden="true" />
+        <h4 className="text-sm font-semibold text-slate-800">{label} — harmonogram</h4>
+      </div>
+      <p className="text-xs text-slate-500">
+        Wartość 0 = brak zysków, 1 = pełna moc, wartości pośrednie = częściowe użytkowanie.
+        Pusty harmonogram oznacza stałą moc (1.0) przez całą dobę.
+      </p>
+      <Controller
+        name={`${prefix}.schedule_weekday_profile` as const}
+        control={form.control}
+        render={({ field, fieldState }) => (
+          <FormField
+            label="Dni robocze (poniedziałek–piątek)"
+            tooltip="Profil dla godzin 00:00–23:00. Pusty = stała moc 1.0 przez całą dobę."
+            error={fieldState.error?.message}
+          >
+            <HourlyProfileEditor
+              value={field.value}
+              onChange={field.onChange}
+              emptyHint="Brak profilu = stała moc (1.0)."
+            />
+          </FormField>
+        )}
+      />
+      <Controller
+        name={`${prefix}.schedule_saturday_profile` as const}
+        control={form.control}
+        render={({ field, fieldState }) => (
+          <FormField
+            label="Sobota"
+            tooltip="Profil dla godzin 00:00–23:00. Puste pole oznacza powielenie profilu dni roboczych."
+            error={fieldState.error?.message}
+          >
+            <HourlyProfileEditor
+              value={field.value}
+              onChange={field.onChange}
+              copyValue={watchedWeekday ?? weekdayProfile}
+              emptyHint="Brak profilu = powielenie dni roboczych."
+            />
+          </FormField>
+        )}
+      />
+      <Controller
+        name={`${prefix}.schedule_sunday_profile` as const}
+        control={form.control}
+        render={({ field, fieldState }) => (
+          <FormField
+            label="Niedziela"
+            tooltip="Profil dla godzin 00:00–23:00. Puste pole oznacza powielenie profilu dni roboczych."
+            error={fieldState.error?.message}
+          >
+            <HourlyProfileEditor
+              value={field.value}
+              onChange={field.onChange}
+              copyValue={watchedWeekday ?? weekdayProfile}
+              emptyHint="Brak profilu = powielenie dni roboczych."
+            />
+          </FormField>
+        )}
+      />
+    </div>
   )
 }
 
@@ -1295,8 +1473,17 @@ function BuildingFormContent() {
     control: form.control,
     name: "systems.cooling",
   })
+  const watchedDhwSystem = useWatch({
+    control: form.control,
+    name: "systems.dhw",
+  })
+  const watchedInternalGains = useWatch({
+    control: form.control,
+    name: "internal_gains",
+  })
   const heatingTotalEfficiency = totalSystemEfficiency(watchedHeatingSystem)
   const coolingTotalEfficiency = totalSystemEfficiency(watchedCoolingSystem)
+  const dhwTotalEfficiencyValue = dhwTotalEfficiency(watchedDhwSystem)
   const zoneOptions = (watchedZones ?? [])
     .filter((zone) => zone.id.trim().length > 0)
     .filter(
@@ -2256,6 +2443,31 @@ function BuildingFormContent() {
                       <Input type="number" step="0.01" {...form.register("systems.dhw.utilization_efficiency")} className={inputClass} />
                     </FormField>
                     <FormField
+                      label="Eel,pom,W – energia pomocnicza (kWh/rok)"
+                      tooltip="Roczne zapotrzebowanie końcowej energii elektrycznej na pompy, napędy i automatykę systemu CWU (np. pompa cyrkulacyjna, napęd kotła). Puste pole oznacza użycie wartości normatywnej z tabeli 20; wpisanie 0 oznacza brak energii pomocniczej."
+                    >
+                      <Input
+                        type="number"
+                        min="0"
+                        step="1"
+                        placeholder="puste = tabela 20"
+                        {...form.register("systems.dhw.auxiliary_energy_kwh_year")}
+                        className={inputClass}
+                      />
+                    </FormField>
+                    <FormField
+                      label="ηW,tot – sprawność całkowita"
+                      tooltip="Wartość obliczona jako ηW,g/COP × ηW,s × ηW,d × ηW,e. Gdy podano pojemność zasobnika, straty postoju ΔQW,s liczone są dokładnie z tabeli 13 i ηW,tot jest sprawnością efektywną QW,nd/Ek,DHW, a nie prostym iloczynem składowych."
+                    >
+                      <Input
+                        type="number"
+                        step="0.001"
+                        value={dhwTotalEfficiencyValue?.toFixed(3) ?? ""}
+                        readOnly
+                        className={`${inputClass} bg-slate-50`}
+                      />
+                    </FormField>
+                    <FormField
                       label="Zasobnik – pojemność (dm³)"
                       tooltip="V_S zasobnika CWU. Po podaniu pojemności straty postoju ΔQW,s liczone są dokładnie z tabeli 13 i wzoru (30) metodologii (pole ηW,s jest wtedy pomijane)."
                     >
@@ -2493,6 +2705,113 @@ function BuildingFormContent() {
                     )}
                   />
                 </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="internal-gains">
+            <AccordionTrigger>
+              <AnalysisSectionHeading
+                icon={Users}
+                title="Zyski wewnętrzne"
+                description="Osoby, oświetlenie i urządzenia — moc cieplna i harmonogramy"
+                iconClassName="bg-amber-100 text-amber-700"
+              />
+            </AccordionTrigger>
+            <AccordionContent>
+              <p className="text-sm text-slate-600 mb-4">
+                Zyski wewnętrzne (q_int) pochodzą od osób, oświetlenia i urządzeń
+                elektrycznych. Domyślnie stosowane są wartości normatywne z tabeli 26
+                metodologii (Dz.U. 2015 poz. 376), dobrane do typu budynku i profilu
+                użytkowania. Możesz przejść na tryb własny, aby wprowadzić rzeczywistą
+                moc cieplną i harmonogramy godzinowe dla każdego źródła.
+              </p>
+
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
+                  <input
+                    type="checkbox"
+                    id="use-custom-internal-gains"
+                    className="h-4 w-4 rounded border-slate-300"
+                    checked={watchedInternalGains != null}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        const normative = normativeInternalGains(
+                          form.getValues("general.building_type"),
+                          form.getValues("general.dhw_usage_profile"),
+                          form.getValues("ventilation.usage_share_beta") ??
+                            (form.getValues("general.dhw_usage_profile").startsWith("residential") ? 1 : 0.3),
+                        )
+                        form.setValue("internal_gains", {
+                          occupancy: { power_density: normative.occupancy.power_density, schedule: { type: "constant", constant_value: 1.0 }, schedule_weekday_profile: "", schedule_saturday_profile: "", schedule_sunday_profile: "" },
+                          lighting: { power_density: normative.lighting.power_density, schedule: { type: "constant", constant_value: 1.0 }, schedule_weekday_profile: "", schedule_saturday_profile: "", schedule_sunday_profile: "" },
+                          equipment: { power_density: normative.equipment.power_density, schedule: { type: "constant", constant_value: 1.0 }, schedule_weekday_profile: "", schedule_saturday_profile: "", schedule_sunday_profile: "" },
+                          normative_power_density_w_m2: normative.normative_power_density_w_m2,
+                        }, { shouldDirty: true })
+                      } else {
+                        form.setValue("internal_gains", undefined, { shouldDirty: true })
+                      }
+                    }}
+                  />
+                  <label htmlFor="use-custom-internal-gains" className="text-sm font-medium text-slate-700">
+                    Użyj własnych zysków wewnętrznych (zamiast normatywnych z tabeli 26)
+                  </label>
+                </div>
+
+                {watchedInternalGains != null && (
+                  <>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <FormField
+                        label="Osoby – moc cieplna (W/osoba)"
+                        tooltip="Strumień ciepła oddawany przez jedną osobę. Normatywnie 80 W/osoba (wartość odniesienia z tabeli 26)."
+                      >
+                        <Input type="number" step="0.1" placeholder="np. 80" {...form.register("internal_gains.occupancy.power_density")} className={inputClass} />
+                      </FormField>
+                      <FormField
+                        label="Oświetlenie – gęstość mocy (W/m²)"
+                        tooltip="Gęstość mocy cieplnej wbudowanej instalacji oświetlenia odniesiona do powierzchni podłogi."
+                      >
+                        <Input type="number" step="0.01" placeholder="np. 2.0" {...form.register("internal_gains.lighting.power_density")} className={inputClass} />
+                      </FormField>
+                      <FormField
+                        label="Urządzenia – gęstość mocy (W/m²)"
+                        tooltip="Gęstość mocy cieplnej urządzeń elektrycznych (sprzęt, AGD/RTV) odniesiona do powierzchni podłogi."
+                      >
+                        <Input type="number" step="0.01" placeholder="np. 2.4" {...form.register("internal_gains.equipment.power_density")} className={inputClass} />
+                      </FormField>
+                    </div>
+
+                    <InternalGainScheduleEditor
+                      label="Osoby"
+                      icon={Users}
+                      prefix="internal_gains.occupancy"
+                      form={form}
+                      weekdayProfile={watchedInternalGains.occupancy?.schedule_weekday_profile}
+                    />
+                    <InternalGainScheduleEditor
+                      label="Oświetlenie"
+                      icon={Lightbulb}
+                      prefix="internal_gains.lighting"
+                      form={form}
+                      weekdayProfile={watchedInternalGains.lighting?.schedule_weekday_profile}
+                    />
+                    <InternalGainScheduleEditor
+                      label="Urządzenia"
+                      icon={Settings2}
+                      prefix="internal_gains.equipment"
+                      form={form}
+                      weekdayProfile={watchedInternalGains.equipment?.schedule_weekday_profile}
+                    />
+                  </>
+                )}
+
+                {watchedInternalGains == null && (
+                  <div className="rounded-md border border-dashed bg-slate-50 p-3 text-sm text-slate-600">
+                    Aktywne są normatywne zyski wewnętrzne z tabeli 26 metodologii,
+                    dobrane do typu budynku i profilu użytkowania CWU. Zaznacz pole
+                    powyżej, aby wprowadzić własne wartości mocy i harmonogramy.
+                  </div>
+                )}
               </div>
             </AccordionContent>
           </AccordionItem>

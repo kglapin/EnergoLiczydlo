@@ -422,10 +422,13 @@ def _zone_monthly_useful_energy(
     return heating, cooling, internal, solar, report_tr, report_ve, used_default_reduction
 
 
-def _dhw_final_energy_wh(project: BuildingProject, dhw_useful_wh: float) -> float:
+def _dhw_final_energy_wh(
+    project: BuildingProject, dhw_useful_wh: float
+) -> tuple[float, float | None]:
+    """Return (final energy [Wh], total efficiency ηW,tot or None)."""
     system = project.systems.dhw
     if _enum_value(system.system_type) == "none":
-        return 0.0
+        return 0.0, None
     generation = core._generation_efficiency(system, default=0.96)
     tank_kind = (
         "electric"
@@ -442,14 +445,17 @@ def _dhw_final_energy_wh(project: BuildingProject, dhw_useful_wh: float) -> floa
             insulation_mm=system.storage_insulation_mm,
         )
         delta_d_kwh = dhw_useful_wh / 1000.0 * (1.0 / system.distribution_efficiency - 1.0)
-        return float((dhw_useful_wh / 1000.0 + delta_d_kwh + standby) * 1000.0 / generation)
+        e_k = float((dhw_useful_wh / 1000.0 + delta_d_kwh + standby) * 1000.0 / generation)
+        # Gdy straty zasobnika z tabeli 13, ηW,tot nie jest prostym iloczynem.
+        total_eff = float(dhw_useful_wh / e_k) if e_k > 0.0 else None
+        return e_k, total_eff
     total_efficiency = (
         generation
         * system.storage_efficiency
         * system.distribution_efficiency
         * system.utilization_efficiency
     )
-    return float(dhw_useful_wh / total_efficiency)
+    return float(dhw_useful_wh / total_efficiency), float(total_efficiency)
 
 
 def _final_energy_by_carrier(
@@ -459,7 +465,8 @@ def _final_energy_by_carrier(
     dhw_useful_wh: float,
     settings: PolishCertificateMonthlySettings,
     fan_hours: float,
-) -> dict[str, float]:
+) -> tuple[dict[str, float], float | None, float]:
+    """Return (final by carrier, dhw_total_efficiency, dhw_aux_wh)."""
     final: dict[str, float] = {}
     heating = project.systems.heating
     if _enum_value(heating.system_type) != "none":
@@ -480,15 +487,15 @@ def _final_energy_by_carrier(
         final[carrier] = final.get(carrier, 0.0) + cooling_useful_wh / efficiency
 
     dhw = project.systems.dhw
+    dhw_total_efficiency: float | None = None
     if _enum_value(dhw.system_type) != "none":
         carrier = core._system_carrier(dhw)
-        final[carrier] = final.get(carrier, 0.0) + _dhw_final_energy_wh(
-            project,
-            dhw_useful_wh,
-        )
+        e_k_dhw, dhw_total_efficiency = _dhw_final_energy_wh(project, dhw_useful_wh)
+        final[carrier] = final.get(carrier, 0.0) + e_k_dhw
 
     area = float(project.general.conditioned_floor_area)
     electric_aux_wh = 0.0
+    dhw_aux_wh = 0.0
     if _enum_value(heating.system_type) != "none":
         explicit = core._explicit_auxiliary_energy_wh(heating)
         electric_aux_wh += (
@@ -505,11 +512,17 @@ def _final_energy_by_carrier(
         if explicit is not None:
             electric_aux_wh += explicit
     if _enum_value(dhw.system_type) != "none":
-        electric_aux_wh += dhw_auxiliary_demand_wh(
-            _enum_value(dhw.system_type),
-            area,
-            distribution_type=_enum_value(dhw.distribution_type),
+        dhw_explicit = core._explicit_auxiliary_energy_wh(dhw)
+        dhw_aux_wh = (
+            dhw_explicit
+            if dhw_explicit is not None
+            else dhw_auxiliary_demand_wh(
+                _enum_value(dhw.system_type),
+                area,
+                distribution_type=_enum_value(dhw.distribution_type),
+            )
         )
+        electric_aux_wh += dhw_aux_wh
 
     ventilation = project.ventilation
     if ventilation.ventilation_type in {
@@ -546,7 +559,7 @@ def _final_energy_by_carrier(
         electric_aux_wh += leni * lighting_area * 1000.0
 
     final["electricity"] = final.get("electricity", 0.0) + electric_aux_wh
-    return final
+    return final, dhw_total_efficiency, dhw_aux_wh
 
 
 def _formal_fan_hours(
@@ -625,7 +638,7 @@ def calculate_polish_monthly_certificate(
     heating_useful_wh = float(np.sum(total_h)) * 1000.0
     cooling_useful_wh = float(np.sum(total_c)) * 1000.0
     fan_hours = _formal_fan_hours(project, settings)
-    final = _final_energy_by_carrier(
+    final, dhw_total_efficiency, dhw_aux_wh = _final_energy_by_carrier(
         project,
         heating_useful_wh,
         cooling_useful_wh,
@@ -646,6 +659,8 @@ def calculate_polish_monthly_certificate(
         heating_kwh_m2_year=heating_useful_wh / 1000.0 / area,
         cooling_kwh_m2_year=cooling_useful_wh / 1000.0 / area,
         dhw_kwh_m2_year=dhw_useful_wh / 1000.0 / area,
+        dhw_total_efficiency=dhw_total_efficiency,
+        dhw_auxiliary_energy_kwh_year=dhw_aux_wh / 1000.0,
     )
 
     monthly = tuple(

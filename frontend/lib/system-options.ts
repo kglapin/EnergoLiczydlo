@@ -24,6 +24,28 @@ export function totalSystemEfficiency(system: {
 }
 
 /**
+ * Sprawność całkowita CWU ηW,tot = ηW,g · ηW,s · ηW,d · ηW,e.
+ * Zwraca null, gdy któraś składowa jest nieprawidłowa (analogicznie do
+ * totalSystemEfficiency dla ogrzewania/chłodzenia, ale z utilization_efficiency
+ * zamiast control_efficiency).
+ */
+export function dhwTotalEfficiency(system: {
+  generation_efficiency?: unknown
+  storage_efficiency?: unknown
+  distribution_efficiency?: unknown
+  utilization_efficiency?: unknown
+}): number | null {
+  const values = [
+    system.generation_efficiency,
+    system.storage_efficiency,
+    system.distribution_efficiency,
+    system.utilization_efficiency,
+  ].map(Number)
+  if (values.some((value) => !Number.isFinite(value) || value <= 0)) return null
+  return values.reduce((product, value) => product * value, 1)
+}
+
+/**
  * Normatywne obciążenie cieplne q_int [W/m²] z tabeli 26 rozporządzenia
  * w sprawie metodologii (Dz.U. 2015 poz. 376). Wiersze z β (udział czasu
  * użytkowania budynku) przyjmują β = 0,3 analogicznie do przykładu

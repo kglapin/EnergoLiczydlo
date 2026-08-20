@@ -119,6 +119,7 @@ export interface BuildingProject {
       distribution_efficiency?: number
       utilization_efficiency?: number
       distribution_type?: string
+      auxiliary_energy_kwh_year?: number
     }
   }
   primary_energy?: Record<string, unknown>
@@ -137,6 +138,8 @@ export interface CalculationResult {
     heating_kwh_m2_year: number
     cooling_kwh_m2_year: number
     dhw_kwh_m2_year: number
+    dhw_total_efficiency?: number | null
+    dhw_auxiliary_energy_kwh_year?: number
   }
   monthly: Array<{
     month: number

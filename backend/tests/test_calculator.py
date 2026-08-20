@@ -146,6 +146,63 @@ def test_total_system_efficiency_is_the_product_of_all_components():
     assert total_system_efficiency(3.0, 0.95, 0.9, 0.8) == pytest.approx(2.052)
 
 
+def test_dhw_total_efficiency_is_product_of_four_components():
+    """ηW,tot = ηW,g · ηW,s · ηW,d · ηW,e (gdy brak pojemności zasobnika)."""
+    project = make_test_project()
+    project.systems.dhw.generation_efficiency = 0.92
+    project.systems.dhw.storage_efficiency = 0.98
+    project.systems.dhw.distribution_efficiency = 0.8
+    project.systems.dhw.utilization_efficiency = 1.0
+    project.systems.dhw.storage_volume_dm3 = None
+
+    result = calculate_building_energy(project)
+    expected = 0.92 * 0.98 * 0.8 * 1.0
+    assert result.annual_indicators.dhw_total_efficiency == pytest.approx(expected, rel=1e-6)
+
+
+def test_dhw_total_efficiency_is_none_when_storage_volume_provided():
+    """Gdy podano pojemność zasobnika, straty z tabeli 13 — ηW,tot nie jest iloczynem."""
+    project = make_test_project()
+    project.systems.dhw.system_type = "gas_boiler"
+    project.systems.dhw.fuel_or_carrier = "natural_gas"
+    project.systems.dhw.storage_volume_dm3 = 200.0
+    project.systems.dhw.storage_location = "unheated"
+    project.systems.dhw.storage_insulation_mm = 50.0
+
+    result = calculate_building_energy(project)
+    assert result.annual_indicators.dhw_total_efficiency is not None
+    # Efektywna ηW,tot = Q_W,nd / E_k,DHW — powinna być > 0 i < ηW,g
+    assert 0.0 < result.annual_indicators.dhw_total_efficiency < 1.0
+
+
+def test_dhw_auxiliary_energy_kwh_year_overrides_table_20():
+    """Jawna energia pomocnicza DHW zastępuje wartość z tabeli 20."""
+    baseline_project = make_test_project()
+    baseline = calculate_building_energy(baseline_project)
+    baseline_dhw_aux = baseline.annual_indicators.dhw_auxiliary_energy_kwh_year
+    assert baseline_dhw_aux >= 0.0  # tabela 20 dla electric_storage = 0
+
+    # Zmień źródło na gazowe, żeby tabela 20 dawała niezerową energię pomocniczą
+    gas_project = baseline_project.model_copy(deep=True)
+    gas_project.systems.dhw.system_type = "gas_boiler"
+    gas_project.systems.dhw.fuel_or_carrier = "natural_gas"
+    gas_project.systems.dhw.generation_efficiency = 0.83
+    gas_baseline = calculate_building_energy(gas_project)
+    gas_baseline_aux = gas_baseline.annual_indicators.dhw_auxiliary_energy_kwh_year
+    assert gas_baseline_aux > 0.0  # tabela 20 dla kotła gazowego > 0
+
+    # Nadpisz jawną wartością
+    explicit_project = gas_project.model_copy(deep=True)
+    explicit_project.systems.dhw.auxiliary_energy_kwh_year = 500.0
+    explicit = calculate_building_energy(explicit_project)
+
+    assert explicit.annual_indicators.dhw_auxiliary_energy_kwh_year == pytest.approx(500.0)
+    # Energia końcowa powinna wzrosnąć o różnicę energii pomocniczej
+    ek_delta = explicit.annual_indicators.ek_kwh_m2_year - gas_baseline.annual_indicators.ek_kwh_m2_year
+    aux_delta_kwh = 500.0 - gas_baseline_aux
+    assert ek_delta == pytest.approx(aux_delta_kwh / 150.0, rel=1e-4)
+
+
 def test_system_efficiency_components_change_final_energy():
     efficient_project = make_test_project()
     efficient_project.systems.heating = SystemHeatingCooling(
@@ -301,6 +358,43 @@ def test_omitted_internal_gains_use_building_type_normative_default():
         pd.date_range("2023-01-01", periods=8760, freq="h"),
     )
     np.testing.assert_allclose(hourly, 5.68 * 100.0)
+
+
+def test_custom_internal_gains_with_hourly_schedule_reach_engine():
+    """Własne zyski wewnętrzne z harmonogramem godzinowym trafiają do silnika
+    i zmieniają wynik godzinowy w stosunku do zysków normatywnych."""
+    from app.schemas.models import InternalGainSource, InternalGains, Schedule, ScheduleType
+
+    project = make_test_project()
+    baseline = calculate_building_energy(project)
+
+    # Harmonogram: pełna moc w godzinach 8-18 dni roboczych, 0 poza tym
+    weekday = [0.0] * 8 + [1.0] * 10 + [0.0] * 6
+    assert len(weekday) == 24
+    custom_project = project.model_copy(deep=True)
+    custom_project.internal_gains = InternalGains(
+        occupancy=InternalGainSource(
+            power_density=80.0,
+            schedule=Schedule(type=ScheduleType.HOURLY_PROFILE, weekday=weekday),
+        ),
+        lighting=InternalGainSource(
+            power_density=3.0,
+            schedule=Schedule(type=ScheduleType.CONSTANT, constant_value=1.0),
+        ),
+        equipment=InternalGainSource(
+            power_density=5.0,
+            schedule=Schedule(type=ScheduleType.CONSTANT, constant_value=1.0),
+        ),
+    )
+
+    custom_result = calculate_building_energy(custom_project)
+    # Wynik powinien się różnić — harmonogram godzinowy zmienia rozkład zysków
+    assert custom_result.status == "success"
+    # Suma miesięcznych zysków wewnętrznych powinna być mniejsza niż przy
+    # stałej mocy normatywnej, bo harmonogram ogranicza pracę do 10h/dobę.
+    baseline_gains = sum(m.internal_gains_kwh for m in baseline.monthly)
+    custom_gains = sum(m.internal_gains_kwh for m in custom_result.monthly)
+    assert custom_gains != pytest.approx(baseline_gains, rel=0.01)
 
 
 def test_building_project_rejects_duplicate_thermal_zone_ids():

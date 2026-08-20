@@ -419,6 +419,11 @@ class SystemDHW(BaseModel):
     storage_volume_dm3: float | None = Field(None, gt=0.0)
     storage_location: str | None = Field(None)  # "heated" / "unheated"
     storage_insulation_mm: float | None = Field(None, gt=0.0)  # 100/50/20
+    # Explicit annual final electricity for pumps, controls and other DHW
+    # auxiliaries [kWh/year]. None keeps the methodology fallback from
+    # tabela 20; zero is an explicit statement that no auxiliary electricity
+    # is required (np. podgrzewacz elektryczny bez pomp obiegowych).
+    auxiliary_energy_kwh_year: float | None = Field(None, ge=0.0)
     # Legacy input retained for imported JSON files from the previous schema.
     efficiency: float | None = Field(None, gt=0.0)
 
@@ -674,6 +679,13 @@ class AnnualIndicators(BaseModel):
     heating_kwh_m2_year: float
     cooling_kwh_m2_year: float
     dhw_kwh_m2_year: float
+    # Sprawność całkowita DHW ηW,tot = ηW,g·ηW,s·ηW,d·ηW,e. None gdy
+    # podano pojemność zasobnika — wtedy straty postoju ΔQW,s liczone są
+    # dokładnie z tabeli 13 i ηW,tot nie jest prostym iloczynem składowych.
+    dhw_total_efficiency: float | None = None
+    # Roczne zapotrzebowanie na energię elektryczną do napędu urządzeń
+    # pomocniczych DHW (pompy, regulacja, cyrkulacja) [kWh/rok].
+    dhw_auxiliary_energy_kwh_year: float = 0.0
 
 
 class ComplianceCheck(BaseModel):

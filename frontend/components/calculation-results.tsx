@@ -58,17 +58,19 @@ type MetricCardProps = {
   icon: LucideIcon
   iconClassName: string
   accentClassName: string
+  unit?: string
+  precision?: number
 }
 
-function MetricCard({ label, value, icon: Icon, iconClassName, accentClassName }: MetricCardProps) {
+function MetricCard({ label, value, icon: Icon, iconClassName, accentClassName, unit = "kWh/(m²·rok)", precision = 1 }: MetricCardProps) {
   return (
     <Card className={`overflow-hidden border-slate-200 border-l-4 shadow-sm ${accentClassName}`}>
       <CardContent className="p-5">
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="text-sm font-medium text-slate-600">{label}</p>
-            <p className="mt-3 text-3xl font-bold tracking-tight text-slate-950">{value.toFixed(1)}</p>
-            <p className="mt-1 text-xs text-slate-500">kWh/(m²·rok)</p>
+            <p className="mt-3 text-3xl font-bold tracking-tight text-slate-950">{value.toFixed(precision)}</p>
+            <p className="mt-1 text-xs text-slate-500">{unit}</p>
           </div>
           <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${iconClassName}`}>
             <Icon className="h-4 w-4" aria-hidden="true" />
@@ -163,6 +165,27 @@ export function CalculationResults({ result, project }: CalculationResultsProps)
           <MetricCard label="Energia użytkowa do ogrzewania" value={indicators.heating_kwh_m2_year} icon={Thermometer} iconClassName="bg-orange-100 text-orange-700" accentClassName="border-l-orange-500" />
           <MetricCard label="Energia użytkowa do chłodzenia" value={indicators.cooling_kwh_m2_year} icon={Snowflake} iconClassName="bg-cyan-100 text-cyan-700" accentClassName="border-l-cyan-500" />
           <MetricCard label="Energia użytkowa do przygotowania ciepłej wody" value={indicators.dhw_kwh_m2_year} icon={Droplets} iconClassName="bg-sky-100 text-sky-700" accentClassName="border-l-sky-500" />
+          {indicators.dhw_total_efficiency != null && (
+            <MetricCard
+              label="Sprawność całkowita CWU (ηW,tot)"
+              value={indicators.dhw_total_efficiency}
+              unit=""
+              precision={3}
+              icon={Gauge}
+              iconClassName="bg-sky-100 text-sky-700"
+              accentClassName="border-l-sky-500"
+            />
+          )}
+          {indicators.dhw_auxiliary_energy_kwh_year != null && indicators.dhw_auxiliary_energy_kwh_year > 0 && (
+            <MetricCard
+              label="Energia pomocnicza CWU"
+              value={indicators.dhw_auxiliary_energy_kwh_year}
+              unit="kWh/rok"
+              icon={Zap}
+              iconClassName="bg-emerald-100 text-emerald-700"
+              accentClassName="border-l-emerald-500"
+            />
+          )}
         </div>
         <Alert className="mt-5">
           <AlertTitle>Jak czytać trzy główne wskaźniki?</AlertTitle>
