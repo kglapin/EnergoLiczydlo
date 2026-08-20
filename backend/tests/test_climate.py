@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import pytest
+from fastapi import HTTPException
 
 import app.engine.climate as climate_module
 from app.api import climate as climate_api
@@ -134,3 +135,19 @@ def test_resolve_location_selects_station_nearest_to_geocoded_point(monkeypatch)
     assert result["matched_location"] == "Warszawa, Mazowieckie, Polska"
     assert result["station"]["id"] == "POL_MZ_Okecie-Warszawa-Chopina.Intl.AP.123750_TMYx.2009-2023"
     assert result["station"]["distance_km"] > 0
+
+
+def test_resolve_location_blocks_when_no_stations_available(monkeypatch):
+    """Brak danych TMY ma skutkować czytelną blokadą obliczenia, a nie błędem 500."""
+    monkeypatch.setattr(
+        climate_api,
+        "_geocode_location",
+        lambda query: ("Warszawa, Mazowieckie, Polska", 52.2297, 21.0122),
+    )
+    monkeypatch.setattr(climate_api, "_available_stations", lambda: [])
+
+    with pytest.raises(HTTPException) as exc_info:
+        climate_api.resolve_location("Warszawa")
+
+    assert exc_info.value.status_code == 503
+    assert "stacji klimatycznych" in exc_info.value.detail

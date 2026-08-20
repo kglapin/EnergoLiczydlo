@@ -70,7 +70,12 @@ def _geocode_location(query: str) -> tuple[str, float, float]:
     if response.status_code != 200:
         raise HTTPException(status_code=502, detail="Geokoder zwrócił błąd")
 
-    payload = response.json()
+    try:
+        payload = response.json()
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=502, detail="Geokoder zwrócił nieprawidłowe dane"
+        ) from exc
     results = payload.get("results", [])
     if not results:
         raise HTTPException(status_code=404, detail="Nie znaleziono podanej lokalizacji w Polsce")
@@ -104,7 +109,17 @@ def resolve_location(location: str) -> dict[str, Any]:
         )
 
     matched_location, latitude, longitude = _geocode_location(query)
-    station, distance_km = nearest_climate_station(latitude, longitude, _available_stations())
+    stations = _available_stations()
+    try:
+        station, distance_km = nearest_climate_station(latitude, longitude, stations)
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail=(
+                "Brak dostępnych stacji klimatycznych — nie można dobrać stacji "
+                "dla podanej lokalizacji. Sprawdź, czy dane TMY są dostępne."
+            ),
+        ) from exc
 
     return {
         "query": query,

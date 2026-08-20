@@ -13,10 +13,33 @@ export async function GET(request: NextRequest) {
 
   try {
     const res = await fetch(backendUrl, { cache: "no-store" })
-    const data = await res.json()
+    const text = await res.text()
+    let data: unknown = null
+    if (text) {
+      try {
+        data = JSON.parse(text)
+      } catch {
+        // Backend zwrócił odpowiedź niebędącą JSON-em (np. plain-text 500).
+        return NextResponse.json(
+          {
+            error:
+              "Backend zwrócił nieprawidłową odpowiedź. Sprawdź, czy usługa backendowa działa poprawnie.",
+          },
+          { status: 502 }
+        )
+      }
+    }
+
     if (!res.ok) {
+      const detail =
+        typeof data === "object" &&
+        data !== null &&
+        ("detail" in data || "error" in data)
+          ? ((data as { detail?: string; error?: string }).detail ??
+            (data as { error?: string }).error)
+          : undefined
       return NextResponse.json(
-        { error: data.detail || data.error || "Nie udało się dobrać stacji" },
+        { error: detail || "Nie udało się dobrać stacji" },
         { status: res.status }
       )
     }
@@ -24,7 +47,9 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error"
     return NextResponse.json(
-      { error: `Failed to reach backend: ${message}` },
+      {
+        error: `Nie udało się połączyć z backendem: ${message}. Sprawdź, czy usługa backendowa jest uruchomiona.`,
+      },
       { status: 502 }
     )
   }

@@ -92,7 +92,7 @@ export async function fetchStations(): Promise<ClimateStation[]> {
   const data = await res.json()
   if (!res.ok) {
     const text = data.error || JSON.stringify(data)
-    throw new Error(`Failed to fetch stations: ${res.status} ${text}`)
+    throw new Error(`Nie udało się pobrać listy stacji: ${res.status} ${text}`)
   }
   return data
 }
