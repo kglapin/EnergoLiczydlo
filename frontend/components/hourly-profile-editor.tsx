@@ -85,19 +85,31 @@ export function HourlyProfileEditor({
               : emptyHint}
           </p>
         </div>
-        <button
-          type="button"
-          className={actionClassName}
-          onClick={() => {
-            if (isActive) {
-              onChange("")
-              return
-            }
-            updateProfile(draftValues)
-          }}
-        >
-          {isActive ? "Wyłącz profil" : "Włącz edytor 24 godzin"}
-        </button>
+        <div className="flex flex-wrap gap-2">
+          {!isActive && (
+            <button
+              type="button"
+              className={actionClassName}
+              onClick={() => updateProfile(makeProfile(0))}
+              title="Ustaw 0 dla wszystkich 24 godzin — brak aktywności tego dnia"
+            >
+              Brak aktywności (0)
+            </button>
+          )}
+          <button
+            type="button"
+            className={actionClassName}
+            onClick={() => {
+              if (isActive) {
+                onChange("")
+                return
+              }
+              updateProfile(draftValues)
+            }}
+          >
+            {isActive ? "Powiel dni robocze" : "Włącz edytor 24 godzin"}
+          </button>
+        </div>
       </div>
 
       {isActive ? (
@@ -124,10 +136,10 @@ export function HourlyProfileEditor({
 
           <div className="flex flex-wrap gap-2 border-t border-slate-100 pt-3">
             <button type="button" className={actionClassName} onClick={() => updateProfile(makeProfile(0))}>
-              Wyłącz cały dzień
+              Brak aktywności (0)
             </button>
             <button type="button" className={actionClassName} onClick={() => updateProfile(makeProfile(1))}>
-              Włącz cały dzień
+              Pełna aktywność (1)
             </button>
             <button
               type="button"
@@ -149,7 +161,8 @@ export function HourlyProfileEditor({
 
           <p className="text-xs text-slate-500">
             Wpisz wartość od 0 do 1 dla każdej godziny. 0 oznacza wyłączenie, 1 pełną pracę,
-            a wartości pośrednie częściowe użytkowanie.
+            a wartości pośrednie częściowe użytkowanie. «Brak aktywności» ustawia 0 dla całego
+            dnia — to co innego niż «Powiel dni robocze», które kopiuje profil dni roboczych.
           </p>
         </div>
       ) : null}

@@ -1153,7 +1153,7 @@ function InternalGainScheduleEditor({
               value={field.value}
               onChange={field.onChange}
               copyValue={watchedWeekday ?? weekdayProfile}
-              emptyHint="Brak profilu = powielenie dni roboczych."
+              emptyHint="Brak profilu = powielenie dni roboczych. Kliknij „Brak aktywności (0)”, aby wyłączyć zyski w sobotę."
             />
           </FormField>
         )}
@@ -1164,14 +1164,14 @@ function InternalGainScheduleEditor({
         render={({ field, fieldState }) => (
           <FormField
             label="Niedziela"
-            tooltip="Profil dla godzin 00:00–23:00. Puste pole oznacza powielenie profilu dni roboczych."
+            tooltip="Profil dla godzin 00:00–23:00. Puste pole oznacza powielenie profilu dni roboczych. Kliknij „Brak aktywności (0)”, aby wyłączyć zyski w niedzielę."
             error={fieldState.error?.message}
           >
             <HourlyProfileEditor
               value={field.value}
               onChange={field.onChange}
               copyValue={watchedWeekday ?? weekdayProfile}
-              emptyHint="Brak profilu = powielenie dni roboczych."
+              emptyHint="Brak profilu = powielenie dni roboczych. Kliknij „Brak aktywności (0)”, aby wyłączyć zyski w niedzielę."
             />
           </FormField>
         )}
@@ -2673,14 +2673,14 @@ function BuildingFormContent() {
                     render={({ field, fieldState }) => (
                       <FormField
                         label="Sobota"
-                        tooltip="Profil dla godzin 00:00–23:00. Puste pole oznacza powielenie profilu dni roboczych."
+                        tooltip="Profil dla godzin 00:00–23:00. Puste pole oznacza powielenie profilu dni roboczych. Kliknij „Brak aktywności (0)”, aby wyłączyć wentylację w sobotę."
                         error={fieldState.error?.message}
                       >
                         <HourlyProfileEditor
                           value={field.value}
                           onChange={field.onChange}
                           copyValue={watchedWeekdayProfile}
-                          emptyHint="Brak profilu = powielenie profilu dni roboczych."
+                          emptyHint="Brak profilu = powielenie profilu dni roboczych. Kliknij „Brak aktywności (0)”, aby wyłączyć wentylację w sobotę."
                         />
                       </FormField>
                     )}
@@ -2692,14 +2692,14 @@ function BuildingFormContent() {
                     render={({ field, fieldState }) => (
                       <FormField
                         label="Niedziela"
-                        tooltip="Profil dla godzin 00:00–23:00. Puste pole oznacza powielenie profilu dni roboczych."
+                        tooltip="Profil dla godzin 00:00–23:00. Puste pole oznacza powielenie profilu dni roboczych. Kliknij „Brak aktywności (0)”, aby wyłączyć wentylację w niedzielę."
                         error={fieldState.error?.message}
                       >
                         <HourlyProfileEditor
                           value={field.value}
                           onChange={field.onChange}
                           copyValue={watchedWeekdayProfile}
-                          emptyHint="Brak profilu = powielenie profilu dni roboczych."
+                          emptyHint="Brak profilu = powielenie profilu dni roboczych. Kliknij „Brak aktywności (0)”, aby wyłączyć wentylację w niedzielę."
                         />
                       </FormField>
                     )}
