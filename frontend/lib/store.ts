@@ -180,6 +180,7 @@ interface AppState {
   autoSaveProject: (project: BuildingProject) => string
   addToHistory: () => void
   loadHistoryItem: (id: string) => void
+  duplicateHistoryItem: (id: string) => string | null
   removeHistoryItem: (id: string) => void
   startNewProject: () => void
   reset: () => void
@@ -252,6 +253,30 @@ export const useAppStore = create<AppState>()(
         if (item) {
           set({ project: item.project, result: item.result, activeHistoryId: item.id })
         }
+      },
+      duplicateHistoryItem: (id) => {
+        const item = get().history.find((h) => h.id === id)
+        if (!item) return null
+        const newId = createDraftId()
+        const duplicatedProject: BuildingProject = {
+          ...item.project,
+          project_name: `Kopia – ${item.project_name || "Projekt bez nazwy"}`,
+        }
+        const newItem: HistoryItem = {
+          id: newId,
+          project_name: duplicatedProject.project_name,
+          building_name: item.building_name,
+          eu: item.eu,
+          ek: item.ek,
+          ep: item.ep,
+          savedAt: new Date().toISOString(),
+          project: duplicatedProject,
+          result: item.result,
+        }
+        set((state) => ({
+          history: [newItem, ...state.history],
+        }))
+        return newId
       },
       removeHistoryItem: (id) => {
         set((state) => ({

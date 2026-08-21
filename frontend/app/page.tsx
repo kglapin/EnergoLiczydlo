@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowRight, FolderOpen, Pencil, Plus, Trash2 } from "lucide-react"
+import { ArrowRight, Copy, FolderOpen, Pencil, Plus, Trash2 } from "lucide-react"
 import { useRouter } from "next/navigation"
 
 import { Badge } from "@/components/ui/badge"
@@ -23,11 +23,19 @@ export default function Home() {
   const router = useRouter()
   const history = useAppStore((state) => state.history)
   const loadHistoryItem = useAppStore((state) => state.loadHistoryItem)
+  const duplicateHistoryItem = useAppStore((state) => state.duplicateHistoryItem)
   const removeHistoryItem = useAppStore((state) => state.removeHistoryItem)
 
   function handleLoad(id: string) {
     loadHistoryItem(id)
     router.push(`/building?history=${encodeURIComponent(id)}`)
+  }
+
+  function handleDuplicate(id: string) {
+    const newId = duplicateHistoryItem(id)
+    if (newId) {
+      router.push(`/building?history=${encodeURIComponent(newId)}`)
+    }
   }
 
   function handleRemove(id: string, projectName: string) {
@@ -108,6 +116,15 @@ export default function Home() {
                     <Button type="button" size="sm" onClick={() => handleLoad(item.id)}>
                       <Pencil className="mr-2 h-4 w-4" />
                       Edytuj
+                    </Button>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="ghost"
+                      aria-label={`Duplikuj projekt ${item.project_name || "bez nazwy"}`}
+                      onClick={() => handleDuplicate(item.id)}
+                    >
+                      <Copy className="h-4 w-4" />
                     </Button>
                     <Button
                       type="button"
