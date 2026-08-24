@@ -151,11 +151,33 @@ export interface CalculationResult {
     transmission_losses_kwh: number
     ventilation_losses_kwh: number
   }>
+  hourly?: Record<string, unknown> | null
   compliance: Array<{
     name: string
     passed: boolean
     message: string
   }>
+}
+
+/**
+ * Removes the `hourly` field from a CalculationResult before storing it in
+ * history. The hourly dataset (8760 hours × multiple series) is large and
+ * not needed for project editing — it can be recomputed by re-running the
+ * calculation. Without this, localStorage quota is exceeded after ~4 projects.
+ */
+function stripHourlyForStorage(result: CalculationResult | null): CalculationResult | null {
+  if (!result) return null
+  const { hourly: _hourly, ...rest } = result
+  return rest as CalculationResult
+}
+
+/** Maximum number of projects kept in history. Older entries are pruned. */
+const MAX_HISTORY_ITEMS = 50
+
+/** Trims history to MAX_HISTORY_ITEMS, removing oldest entries first. */
+function trimHistory(history: HistoryItem[]): HistoryItem[] {
+  if (history.length <= MAX_HISTORY_ITEMS) return history
+  return history.slice(0, MAX_HISTORY_ITEMS)
 }
 
 export interface HistoryItem {
@@ -210,7 +232,7 @@ export const useAppStore = create<AppState>()(
         const { activeHistoryId, history, result } = get()
         const id = activeHistoryId ?? createDraftId()
         const previousItem = history.find((item) => item.id === id)
-        const savedResult = result ?? previousItem?.result ?? null
+        const savedResult = stripHourlyForStorage(result ?? previousItem?.result ?? null)
         const item: HistoryItem = {
           id,
           project_name: project.project_name,
@@ -224,7 +246,7 @@ export const useAppStore = create<AppState>()(
         }
         set((state) => ({
           project,
-          history: [item, ...state.history.filter((historyItem) => historyItem.id !== id)],
+          history: trimHistory([item, ...state.history.filter((historyItem) => historyItem.id !== id)]),
           activeHistoryId: id,
         }))
         return id
@@ -241,10 +263,10 @@ export const useAppStore = create<AppState>()(
           ep: result.annual_indicators.ep_kwh_m2_year,
           savedAt: new Date().toISOString(),
           project,
-          result,
+          result: stripHourlyForStorage(result),
         }
         set((state) => ({
-          history: [item, ...state.history.filter((h) => h.id !== item.id)],
+          history: trimHistory([item, ...state.history.filter((h) => h.id !== item.id)]),
           activeHistoryId: item.id,
         }))
       },
@@ -271,10 +293,10 @@ export const useAppStore = create<AppState>()(
           ep: item.ep,
           savedAt: new Date().toISOString(),
           project: duplicatedProject,
-          result: item.result,
+          result: stripHourlyForStorage(item.result),
         }
         set((state) => ({
-          history: [newItem, ...state.history],
+          history: trimHistory([newItem, ...state.history]),
         }))
         return newId
       },
@@ -289,6 +311,10 @@ export const useAppStore = create<AppState>()(
     }),
     {
       name: "energoliczydlo-store",
+      partialize: (state) => ({
+        history: state.history,
+        activeHistoryId: state.activeHistoryId,
+      }),
     }
   )
 )
